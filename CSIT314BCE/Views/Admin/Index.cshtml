@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Admin Control Panel</h2>
+
+<ul>
+    <li>@Html.ActionLink("Create User", "CreateUser", "Admin")</li>
+    <!----<li>@Html.ActionLink("Create Role", "CreateRole", "Admin")</li>--Redundant, not needed/Extra functions-->
+    <!----<li>@Html.ActionLink("Assign Role", "AssignRole", "Admin")</li>--Redundant, not needed/Extra functions-->
+    <li>@Html.ActionLink("List Users", "ListUsers", "Admin")</li>
+</ul>
