@@ -31,5 +31,8 @@ namespace CSIT314BCE.Models
         {
             return new ApplicationDbContext();
         }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Admin> Admin { get; set; }
+        public DbSet<Moderator> Moderators { get; set; }
     }
 }

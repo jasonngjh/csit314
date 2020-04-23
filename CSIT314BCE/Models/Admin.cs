@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace CSIT314BCE.Models
 {
@@ -11,16 +10,45 @@ namespace CSIT314BCE.Models
     {
         ApplicationDbContext context = new ApplicationDbContext();
 
-
         public List<ApplicationUser> GetUserList() {
             return context.Users.ToList();
         }
 
-        public bool CreateUser() {
-
-
-
-            return true;
+        public async Task<bool> CreateUser(CreateUserViewModel model) {
+            if (model.Role == "Student") 
+            {
+                var userManager = new UserManager<Student>(new UserStore<Student>(context));
+                var user = new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0 };
+                var result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user.Id,"Student");
+                    return true;
+                }
+            }
+            else if(model.Role == "Admin") 
+            {
+                var userManager = new UserManager<Admin>(new UserStore<Admin>(context));
+                var user = new Admin { UserName = model.UserName, Email = model.Email, FullName = model.Fullname};
+                var result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user.Id, "Admin");
+                    return true;
+                }
+            }
+            else if(model.Role == "Moderator")
+            {
+                var userManager = new UserManager<Moderator>(new UserStore<Moderator>(context));
+                var user = new Moderator { UserName = model.UserName, Email = model.Email, FullName = model.Fullname };
+                var result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user.Id, "Moderator");
+                    return true;
+                }
+            }
+            return false;
         }
 
         public EditUserViewModel EditUser(ApplicationUser user) {
@@ -30,7 +58,6 @@ namespace CSIT314BCE.Models
 
             if (role.FirstOrDefault() == "Student")
             {
-                var store = new UserStore<Student>(context);
                 var studentManager = new UserManager<Student>(new UserStore<Student>(context));
                 Student student = studentManager.FindById(user.Id);
                 editUserViewModel.Id = student.Id;
@@ -60,15 +87,78 @@ namespace CSIT314BCE.Models
             return editUserViewModel;
         }
 
-        /*        public bool EditUser(EditUserViewModel model) {
-                    switch (model.Discriminator) {
-                        case "Student": var store = new UserStore<Student>(context);
-                                        var userManager = new UserManager<Student>(new UserStore<Student>(context));
+        public async Task<bool> EditUser(EditUserViewModel model)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var role = userManager.GetRoles(model.Id);
 
-                                        break;
-                        case "Moderator": break;
-                        case "Admin": break;
-                    }
-                }*/
+            if (role.FirstOrDefault() == "Student")
+            {
+                var studentStore = new UserStore<Student>(context);
+                var studentManager = new UserManager<Student>(new UserStore<Student>(context));
+                Student user = studentManager.FindById(model.Id);
+
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                user.FullName = model.FullName;
+                user.UserName = model.UserName;
+                user.LockoutEnabled = model.LockoutEnabled;
+                user.LockoutEndDateUtc = model.LockoutEndDateUtc;
+                user.Ratings = model.Ratings;
+
+                var result = await studentManager.UpdateAsync(user);
+                var ctx = studentStore.Context;
+                ctx.SaveChanges();
+
+                if (result.Succeeded) {
+                    return true;
+                }
+            }
+            else if (role.FirstOrDefault() == "Admin")
+            {
+                var adminStore = new UserStore<Admin>(context);
+                var adminManager = new UserManager<Admin>(new UserStore<Admin>(context));
+                Admin user = adminManager.FindById(model.Id);
+
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                user.FullName = model.FullName;
+                user.UserName = model.UserName;
+                user.LockoutEnabled = model.LockoutEnabled;
+                user.LockoutEndDateUtc = model.LockoutEndDateUtc;
+
+                var result = await adminManager.UpdateAsync(user);
+                var ctx = adminStore.Context;
+                ctx.SaveChanges();
+
+                if (result.Succeeded)
+                {
+                    return true;
+                }
+            }
+            else if (role.FirstOrDefault() == "Moderator")
+            {
+                var moderatorStore = new UserStore<Moderator>(context);
+                var moderatorManager = new UserManager<Moderator>(new UserStore<Moderator>(context));
+                Moderator user = moderatorManager.FindById(model.Id);
+
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                user.FullName = model.FullName;
+                user.UserName = model.UserName;
+                user.LockoutEnabled = model.LockoutEnabled;
+                user.LockoutEndDateUtc = model.LockoutEndDateUtc;
+
+                var result = await moderatorManager.UpdateAsync(user);
+                var ctx = moderatorStore.Context;
+                ctx.SaveChanges();
+
+                if (result.Succeeded)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

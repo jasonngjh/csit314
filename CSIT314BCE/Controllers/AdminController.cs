@@ -2,19 +2,14 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CSIT314BCE.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();
@@ -26,37 +21,19 @@ namespace CSIT314BCE.Controllers
             return View(admin.GetUserList());
         }
 
+        // GET: Admin/CreateUser
         public ActionResult CreateUser()
         {
             ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
             return View();
         }
 
+        // GET: Admin/CreateUser
         [HttpPost]
-        public ActionResult CreateUser(FormCollection form)
+        public async Task<ActionResult> CreateUser(CreateUserViewModel model)
         {
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            string UserName = form["txtUsername"];
-            string email = form["txtEmail"];
-            string pwd = form["txtPassword"];
-            string name = form["txtFullname"];
-
-            //create default user
-            var user2 = new ApplicationUser();
-            user2.UserName = UserName;
-            user2.Email = email;
-            user2.FullName = name;
-
-
-            var newuser = userManager.Create(user2, pwd);
-
-            string usrname = form["txtUsername"];
-            string rolname = form["RoleName"];
-            ApplicationUser user = context.Users.Where(u => u.UserName.Equals(usrname, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            userManager.AddToRole(user.Id, rolname);
-
-
-            return View("Index");
+            await admin.CreateUser(model);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -110,15 +87,13 @@ namespace CSIT314BCE.Controllers
               : message == ManageMessageId.ResetUserPasswordSuccess ? "User's password has been reset!"
               : "";
 
-            ApplicationUser user = new ApplicationUser();
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            user = userManager.FindById(id);
+            var user = userManager.FindById(id);
             if (user == null)
             {
                 return View("Index");
             }
             return View(admin.EditUser(user));
-
         }
 
         [HttpPost]
@@ -129,29 +104,21 @@ namespace CSIT314BCE.Controllers
                 return View(model);
             }
 
-            var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            var user = userManager.FindById(model.Id);
-            user.UserName = model.UserName;
-            user.Email = model.Email;
-            user.FullName = model.FullName;
-            user.UserName = model.UserName;
-            user.LockoutEnabled = model.LockoutEnabled;
-            user.LockoutEndDateUtc = model.LockoutEndDateUtc;
-
-            await userManager.UpdateAsync(user);
-            var ctx = store.Context;
-            ctx.SaveChanges();
-
-            return RedirectToAction("Edit", new { id = model.Id, Message = ManageMessageId.EditUserSuccess });
+            if (await admin.EditUser(model) == true)
+            {
+                return RedirectToAction("Edit", new { id = model.Id, Message = ManageMessageId.EditUserSuccess });
+            }
+            else 
+            {
+                return View(model);
+            }
         }
 
         // GET: /Admin/ResetUserPassword/Id
         public ActionResult ResetUserPassword(string id)
         {
-            ApplicationUser user = new ApplicationUser();
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            user = userManager.FindById(id);
+            var user = userManager.FindById(id);
             if (user == null)
             {
                 return RedirectToAction("Edit", new { id = id });
