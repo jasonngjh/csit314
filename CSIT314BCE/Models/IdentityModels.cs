@@ -30,8 +30,5 @@ namespace CSIT314BCE.Models
         {
             return new ApplicationDbContext();
         }
-
-        //public System.Data.Entity.DbSet<CSIT314BCE.Models.AspNetUser> AspNetUsers { get; set; }
-
     }
 }

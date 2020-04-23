@@ -5,8 +5,8 @@ using System.Web;
 
 namespace CSIT314BCE.Models
 {
-    public class Student : ApplicationUser
+    public class Moderator : ApplicationUser
     {
-        public int Ratings { get; set; }
+        //public int numQuestionsModerated { get; set; }
     }
 }
