@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,7 +21,7 @@ namespace CSIT314BCE.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            return View(context.Users.ToList());
         }
 
         public ActionResult CreateUser()
@@ -49,9 +50,9 @@ namespace CSIT314BCE.Controllers
 
             string usrname = form["txtUsername"];
             string rolname = form["RoleName"];
-            ApplicationUser user = context.Users.Where(u => u.UserName.Equals(usrname, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();          
+            ApplicationUser user = context.Users.Where(u => u.UserName.Equals(usrname, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
             userManager.AddToRole(user.Id, rolname);
-         
+
 
             return View("Index");
         }
@@ -73,6 +74,7 @@ namespace CSIT314BCE.Controllers
 
         public ActionResult AssignRole()
         {
+            ViewBag.Users = context.Users.Select(r => new SelectListItem { Value = r.UserName, Text = r.UserName }).ToList();
             ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
             return View();
         }
@@ -91,45 +93,115 @@ namespace CSIT314BCE.Controllers
 
         public ActionResult ListUsers()
         {
-            using (dbModel dbModel = new dbModel())
-            {
-                return View(dbModel.AspNetUsers.ToList());
-            }
+            return View(context.Users.ToList());
         }
 
         public ActionResult ViewDetails(string id)
         {
-            using (dbModel dbModel = new dbModel())
-            {
-                return View(dbModel.AspNetUsers.Where(x => x.Id ==id).FirstOrDefault());
-            }
+            return View(context.Users.Where(x => x.Id == id).FirstOrDefault());
         }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, ManageMessageId? message)
         {
-            using (dbModel dbModel = new dbModel())
+            ViewBag.StatusMessage =
+              message == ManageMessageId.EditUserSuccess ? "User has been updated!"
+              : message == ManageMessageId.ResetUserPasswordSuccess ? "User's password has been reset!"
+              : "";
+
+            ApplicationUser user = new ApplicationUser();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            user = userManager.FindById(id);
+            if (user == null)
             {
-                return View(dbModel.AspNetUsers.Where(x => x.Id == id).FirstOrDefault());
+                return View("Index");
             }
+
+            EditUserViewModel editUserViewModel = new EditUserViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FullName = user.FullName,
+                UserName = user.UserName,
+                LockoutEnabled = user.LockoutEnabled,
+                LockoutEndDateUtc = user.LockoutEndDateUtc
+            };
+            return View(editUserViewModel);
+
         }
 
         [HttpPost]
-        public ActionResult Edit(AspNetUser users)
+        public async Task<ActionResult> Edit(EditUserViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                using (dbModel dbModel = new dbModel())
-                {
-                    dbModel.Entry(users).State = EntityState.Modified;
-                    dbModel.SaveChanges();
-                }
-                return RedirectToAction("ListUsers");
+                return View(model);
             }
-            catch
-            {
-                return View();
-            }
+
+            var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var user = userManager.FindById(model.Id);
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.FullName = model.FullName;
+            user.UserName = model.UserName;
+            user.LockoutEnabled = model.LockoutEnabled;
+            user.LockoutEndDateUtc = model.LockoutEndDateUtc;
+
+            await userManager.UpdateAsync(user);
+            var ctx = store.Context;
+            ctx.SaveChanges();
+
+            return RedirectToAction("Edit", new { id = model.Id, Message = ManageMessageId.EditUserSuccess });
         }
 
+        // GET: /Admin/ResetUserPassword/Id
+        public ActionResult ResetUserPassword(string id)
+        {
+            ApplicationUser user = new ApplicationUser();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            user = userManager.FindById(id);
+            if (user == null)
+            {
+                return RedirectToAction("Edit", new { id = id });
+            }
+
+            ResetUserPasswordViewModel reset = new ResetUserPasswordViewModel
+            {
+                Id = id
+            };
+            return View(reset);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetUserPassword(ResetUserPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var user = userManager.FindById(model.Id);
+                if (user == null)
+                {
+                    return View(model);
+                }
+
+                await userManager.RemovePasswordAsync(model.Id);
+                var result = await userManager.AddPasswordAsync(model.Id, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Edit", new { id = model.Id, Message = ManageMessageId.ResetUserPasswordSuccess });
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        public enum ManageMessageId
+        {
+            EditUserSuccess,
+            ResetUserPasswordSuccess,
+            Error
+        }
     }
 }

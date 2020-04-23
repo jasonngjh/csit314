@@ -12,13 +12,13 @@ namespace CSIT314BCE.Models
         {
         }
 
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        /*public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetUser>()
                 .Property(e => e.FullName)
                 .IsUnicode(false);
-        }
+        }*/
     }
 }
