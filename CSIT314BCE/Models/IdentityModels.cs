@@ -10,6 +10,7 @@ namespace CSIT314BCE.Models
     public class ApplicationUser : IdentityUser
     {
         public string FullName { set; get; }
+        public virtual string Discriminator { get; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

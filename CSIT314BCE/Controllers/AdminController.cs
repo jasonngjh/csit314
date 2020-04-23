@@ -18,10 +18,12 @@ namespace CSIT314BCE.Controllers
     public class AdminController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();
+        Admin admin = new Admin();
+
         // GET: Admin
         public ActionResult Index()
         {
-            return View(context.Users.ToList());
+            return View(admin.GetUserList());
         }
 
         public ActionResult CreateUser()
@@ -73,7 +75,7 @@ namespace CSIT314BCE.Controllers
         }
 
         public ActionResult AssignRole()
-        {
+        { 
             ViewBag.Users = context.Users.Select(r => new SelectListItem { Value = r.UserName, Text = r.UserName }).ToList();
             ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
             return View();
@@ -115,17 +117,7 @@ namespace CSIT314BCE.Controllers
             {
                 return View("Index");
             }
-
-            EditUserViewModel editUserViewModel = new EditUserViewModel
-            {
-                Id = user.Id,
-                Email = user.Email,
-                FullName = user.FullName,
-                UserName = user.UserName,
-                LockoutEnabled = user.LockoutEnabled,
-                LockoutEndDateUtc = user.LockoutEndDateUtc
-            };
-            return View(editUserViewModel);
+            return View(admin.EditUser(user));
 
         }
 

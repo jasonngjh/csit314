@@ -40,6 +40,11 @@ namespace CSIT314BCE
                     userManager.AddToRole(user.Id, "SuperAdmin");
                 }
             }
+
+            if (!roleManager.RoleExists("Student")) {
+                var role = new IdentityRole("Student");
+                roleManager.Create(role);
+            }
         }
     }
 }

@@ -27,6 +27,11 @@ namespace CSIT314BCE.Models
 
         [Display(Name = "Suspended")]
         public bool LockoutEnabled { get; set; }
+
+        [Display(Name = "Role")]
+        public string Discriminator { get; set; }
+        [Display(Name = "Ratings")]
+        public int? Ratings { get; set; }
     }
 
     public class ResetUserPasswordViewModel
