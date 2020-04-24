@@ -17,6 +17,7 @@ namespace CSIT314BCE.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationUser user = new ApplicationUser();
 
         public AccountController()
         {
@@ -73,9 +74,8 @@ namespace CSIT314BCE.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await user.Login(model,SignInManager);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,23 +151,10 @@ namespace CSIT314BCE.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0 };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    await UserManager.AddToRoleAsync(user.Id, "Student");
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                if (await user.Register(model, UserManager, SignInManager)) {
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -391,7 +378,7 @@ namespace CSIT314BCE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            user.LogOff(AuthenticationManager);
             return RedirectToAction("Index", "Home");
         }
 
