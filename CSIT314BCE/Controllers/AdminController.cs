@@ -12,7 +12,7 @@ namespace CSIT314BCE.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        ApplicationDbContext _context = new ApplicationDbContext();
         Admin admin = new Admin();
 
         // GET: Admin
@@ -24,7 +24,7 @@ namespace CSIT314BCE.Controllers
         // GET: Admin/CreateUser
         public ActionResult CreateUser()
         {
-            ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
+            ViewBag.Roles = _context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
             return View();
         }
 
@@ -40,7 +40,7 @@ namespace CSIT314BCE.Controllers
         public ActionResult NewRole(FormCollection form)
         {
             string rolename = form["RoleName"];
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
             if (!roleManager.RoleExists(rolename))
             {
                 //create super admin role
@@ -53,8 +53,8 @@ namespace CSIT314BCE.Controllers
 
         public ActionResult AssignRole()
         { 
-            ViewBag.Users = context.Users.Select(r => new SelectListItem { Value = r.UserName, Text = r.UserName }).ToList();
-            ViewBag.Roles = context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
+            ViewBag.Users = _context.Users.Select(r => new SelectListItem { Value = r.UserName, Text = r.UserName }).ToList();
+            ViewBag.Roles = _context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
             return View();
         }
 
@@ -63,8 +63,8 @@ namespace CSIT314BCE.Controllers
         {
             string usrname = form["txtUserName"];
             string rolname = form["RoleName"];
-            ApplicationUser user = context.Users.Where(u => u.UserName.Equals(usrname, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            ApplicationUser user = _context.Users.Where(u => u.UserName.Equals(usrname, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             userManager.AddToRole(user.Id, rolname);
 
             return View("Index");
@@ -72,12 +72,12 @@ namespace CSIT314BCE.Controllers
 
         public ActionResult ListUsers()
         {
-            return View(context.Users.ToList());
+            return View(_context.Users.ToList());
         }
 
         public ActionResult ViewDetails(string id)
         {
-            return View(context.Users.Where(x => x.Id == id).FirstOrDefault());
+            return View(_context.Users.Where(x => x.Id == id).FirstOrDefault());
         }
 
         public ActionResult Edit(string id, ManageMessageId? message)
@@ -87,7 +87,7 @@ namespace CSIT314BCE.Controllers
               : message == ManageMessageId.ResetUserPasswordSuccess ? "User's password has been reset!"
               : "";
 
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var user = userManager.FindById(id);
             if (user == null)
             {
@@ -117,7 +117,7 @@ namespace CSIT314BCE.Controllers
         // GET: /Admin/ResetUserPassword/Id
         public ActionResult ResetUserPassword(string id)
         {
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var user = userManager.FindById(id);
             if (user == null)
             {
@@ -137,7 +137,7 @@ namespace CSIT314BCE.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
                 var user = userManager.FindById(model.Id);
                 if (user == null)
                 {

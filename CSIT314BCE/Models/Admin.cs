@@ -8,7 +8,7 @@ namespace CSIT314BCE.Models
 {
     public class Admin : ApplicationUser
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        private ApplicationDbContext context = new ApplicationDbContext();
 
         public List<ApplicationUser> GetUserList() {
             return context.Users.ToList();

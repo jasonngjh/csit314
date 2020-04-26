@@ -14,8 +14,17 @@ namespace CSIT314BCE.Models
         {
             return new ApplicationDbContext();
         }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Admin> Admin { get; set; }
-        public DbSet<Moderator> Moderators { get; set; }
+
+        public System.Data.Entity.DbSet<CSIT314BCE.Models.Post> Posts { get; set; }
+        public System.Data.Entity.DbSet<CSIT314BCE.Models.Comment> Comments { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+           /* modelBuilder.Entity<Post>().ToTable("Posts");
+            modelBuilder.Entity<Comment>().ToTable("Comments");*/
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public System.Data.Entity.DbSet<CSIT314BCE.Models.Student> ApplicationUsers { get; set; }
     }
 }
