@@ -14,11 +14,12 @@ namespace CSIT314BCE.Controllers
     {
         ApplicationDbContext _context = new ApplicationDbContext();
         Admin admin = new Admin();
+        AspNetUserDBModel db = new AspNetUserDBModel();
 
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
-            return View(admin.GetUserList());
+            return View(db.AspNetUsers.Where(x => x.UserName.Contains(search) || search == null).ToList());
         }
 
         // GET: Admin/CreateUser

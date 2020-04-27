@@ -17,13 +17,12 @@ namespace CSIT314BCE.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationUser user = new ApplicationUser();
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,9 +34,9 @@ namespace CSIT314BCE.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -74,8 +73,9 @@ namespace CSIT314BCE.Controllers
                 return View(model);
             }
 
-            var result = await user.Login(model,SignInManager);
-
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -120,7 +120,7 @@ namespace CSIT314BCE.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,9 +151,20 @@ namespace CSIT314BCE.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await user.Register(model, UserManager, SignInManager)) {
+                var user = new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0, LockoutEnabled = false };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    await UserManager.AddToRoleAsync(user.Id, "Student");
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     return RedirectToAction("Index", "Home");
                 }
+                AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -378,7 +389,7 @@ namespace CSIT314BCE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            user.LogOff(AuthenticationManager);
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
 

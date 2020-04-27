@@ -1,8 +1,22 @@
 ﻿using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CSIT314BCE.Models
 {
+    public class ApplicationUser : IdentityUser
+    {
+        public string FullName { set; get; }
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        {
+            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add custom user claims here
+            return userIdentity;
+        }
+    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -20,8 +34,6 @@ namespace CSIT314BCE.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           /* modelBuilder.Entity<Post>().ToTable("Posts");
-            modelBuilder.Entity<Comment>().ToTable("Comments");*/
             base.OnModelCreating(modelBuilder);
         }
 

@@ -61,7 +61,8 @@ namespace CSIT314BCE.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                else {
+                else 
+                {
                     return View(model);
                 }
             }
