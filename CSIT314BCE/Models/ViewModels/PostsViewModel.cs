@@ -17,4 +17,20 @@ namespace CSIT314BCE.Models
         [Required]
         public string OwnerId { get; set; }
     }
+
+    public class DetailsViewModel
+    {
+        public Post Question { get; set; }
+
+        public List<Post> Answer { get; set; }
+    }
+
+    public class PostAnsViewModel
+    {
+        [Required]
+        public string Body { get; set; }
+
+        [Required]
+        public int PostId { get; set; }
+    }
 }

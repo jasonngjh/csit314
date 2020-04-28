@@ -39,17 +39,25 @@ namespace CSIT314BCE.Controllers
             return View();
         }
 
-        public ActionResult UserProfile()
+        public ActionResult UserProfile(string userId)
         {
-            string userId = User.Identity.GetUserId();
-            if (userId == null)
+            if (userId != null)
             {
-                return RedirectToAction("Login", "Account");
+                var user = (new ApplicationDbContext()).Users.FirstOrDefault(s => s.Id == userId);
+                return View(user);
             }
             else
             {
-                var user = (new ApplicationDbContext()).Users.FirstOrDefault(s => s.Id == userId); 
-                return View(user);
+                userId = User.Identity.GetUserId();
+                if (userId == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    var user = (new ApplicationDbContext()).Users.FirstOrDefault(s => s.Id == userId);
+                    return View(user);
+                }
             }
         }
     }

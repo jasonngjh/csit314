@@ -10,48 +10,30 @@ namespace CSIT314BCE.Models
     {
         private ApplicationDbContext context = new ApplicationDbContext();
 
-        public List<ApplicationUser> GetUserList() {
+        public List<ApplicationUser> GetUserList()
+        {
             return context.Users.ToList();
         }
 
-        public async Task<bool> CreateUser(CreateUserViewModel model) {
-            if (model.Role == "Student") 
+        public ApplicationUser CreateUser(CreateUserViewModel model)
+        {
+            if (model.Role == "Student")
             {
-                var userManager = new UserManager<Student>(new UserStore<Student>(context));
-                var user = new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0 };
-                var result = await userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user.Id,"Student");
-                    return true;
-                }
+                return new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0 };
             }
-            else if(model.Role == "Admin") 
+            else if (model.Role == "Admin")
             {
-                var userManager = new UserManager<Admin>(new UserStore<Admin>(context));
-                var user = new Admin { UserName = model.UserName, Email = model.Email, FullName = model.Fullname};
-                var result = await userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user.Id, "Admin");
-                    return true;
-                }
+                return new Admin { UserName = model.UserName, Email = model.Email, FullName = model.Fullname };
             }
-            else if(model.Role == "Moderator")
+            else if (model.Role == "Moderator")
             {
-                var userManager = new UserManager<Moderator>(new UserStore<Moderator>(context));
-                var user = new Moderator { UserName = model.UserName, Email = model.Email, FullName = model.Fullname };
-                var result = await userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user.Id, "Moderator");
-                    return true;
-                }
+                return new Moderator { UserName = model.UserName, Email = model.Email, FullName = model.Fullname };
             }
-            return false;
+            return null;
         }
 
-        public EditUserViewModel EditUser(ApplicationUser user) {
+        public EditUserViewModel EditUser(ApplicationUser user)
+        {
             EditUserViewModel editUserViewModel = new EditUserViewModel();
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var role = userManager.GetRoles(user.Id);
@@ -68,7 +50,7 @@ namespace CSIT314BCE.Models
                 editUserViewModel.LockoutEndDateUtc = student.LockoutEndDateUtc;
                 editUserViewModel.Ratings = student.Ratings;
             }
-            else 
+            else
             {
                 editUserViewModel.Id = user.Id;
                 editUserViewModel.Email = user.Email;
@@ -77,12 +59,12 @@ namespace CSIT314BCE.Models
                 editUserViewModel.LockoutEnabled = user.LockoutEnabled;
                 editUserViewModel.LockoutEndDateUtc = user.LockoutEndDateUtc;
             }
-           /* As of now Admin and moderator does not have additional attributes. so we do not need to cast it.
-            * else if (role.FirstOrDefault() == "Admin")
-            {
-            }
-            else if(role.FirstOrDefault() == "Moderator") { 
-            }*/
+            /* As of now Admin and moderator does not have additional attributes. so we do not need to cast it.
+             * else if (role.FirstOrDefault() == "Admin")
+             {
+             }
+             else if(role.FirstOrDefault() == "Moderator") { 
+             }*/
 
             return editUserViewModel;
         }
@@ -110,7 +92,8 @@ namespace CSIT314BCE.Models
                 var ctx = studentStore.Context;
                 ctx.SaveChanges();
 
-                if (result.Succeeded) {
+                if (result.Succeeded)
+                {
                     return true;
                 }
             }

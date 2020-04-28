@@ -31,7 +31,8 @@ namespace CSIT314BCE.Controllers
             {
                 return HttpNotFound();
             }
-            return View(post);
+            DetailsViewModel model = post.GetDetails(post.PostId);
+            return View(model);
         }
 
         // GET: Posts/Ask
@@ -57,11 +58,11 @@ namespace CSIT314BCE.Controllers
             if (ModelState.IsValid)
             {
                 var result = post.Create(model);
-                if (result)
+                if (result != 0)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Details", new { id = result });
                 }
-                else 
+                else
                 {
                     return View(model);
                 }
@@ -126,6 +127,12 @@ namespace CSIT314BCE.Controllers
             db.Posts.Remove(post);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult PostAnswer(string body, int PostId)
+        {
+            var userId = User.Identity.GetUserId();
+            return View();
         }
 
         protected override void Dispose(bool disposing)

@@ -1,10 +1,12 @@
 ﻿using CSIT314BCE.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CSIT314BCE.Controllers
@@ -15,6 +17,28 @@ namespace CSIT314BCE.Controllers
         ApplicationDbContext _context = new ApplicationDbContext();
         Admin admin = new Admin();
         AspNetUserDBModel db = new AspNetUserDBModel();
+        private ApplicationUserManager _userManager;
+
+        public AdminController()
+        {
+        }
+
+        public AdminController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: Admin
         public ActionResult Index(string search)
@@ -33,9 +57,36 @@ namespace CSIT314BCE.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateUser(CreateUserViewModel model)
         {
-            await admin.CreateUser(model);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var user = admin.CreateUser(model);
+                if (user != null) 
+                {
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                        ViewBag.Roles = _context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
+                        return View(model);
+                    }
+                }
+            }
+            ViewBag.Roles = _context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
+            return View(model);
         }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
 
         [HttpPost]
         public ActionResult NewRole(FormCollection form)
@@ -53,7 +104,7 @@ namespace CSIT314BCE.Controllers
         }
 
         public ActionResult AssignRole()
-        { 
+        {
             ViewBag.Users = _context.Users.Select(r => new SelectListItem { Value = r.UserName, Text = r.UserName }).ToList();
             ViewBag.Roles = _context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
             return View();
@@ -109,7 +160,7 @@ namespace CSIT314BCE.Controllers
             {
                 return RedirectToAction("Edit", new { id = model.Id, Message = ManageMessageId.EditUserSuccess });
             }
-            else 
+            else
             {
                 return View(model);
             }

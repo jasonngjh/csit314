@@ -1,106 +1,101 @@
-﻿@model CSIT314BCE.Models.Post
+﻿@model CSIT314BCE.Models.DetailsViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Question.Title;
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Post</h4>
+<div class="container-fluid">
+    <div id="Question">
+        <h2>@Model.Question.Title</h2>
+        <div class="row">
+            <div class="col-md-3"><p>Asked on @Model.Question.CreationDate</p></div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-1">
+                <div class="row">Up</div>
+                <div class="row"><h3>@Model.Question.VoteCount</h3></div>
+            </div>
+            <div class="col-md-11">
+                <p>@Model.Question.Body</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+            </div>
+            <div class="col-md-2">
+                <div class="well">
+                    Asked by @Html.ActionLink(Model.Question.OwnerUsername, "UserProfile", "Home", new { userId = Model.Question.OwnerId }, null)
+                </div>
+            </div>
+        </div>
+        @{if (Model.Question.comments.Count != 0)
+            {
+                <div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
+                        <hr />
+                        @{
+                            foreach (var qcomment in Model.Question.comments)
+                            {
+                                <p>@qcomment.Text - Asked by @Html.ActionLink(qcomment.OwnerUsername, "UserProfile", "Home", new { userId = qcomment.OwnerId }, null) @qcomment.CreationDate</p>
+                                <hr />
+                            }
+                        }
+                        <p>Add a comment</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Student.FullName)
-        </dt>
+    @{
+        if (Model.Answer.Count != 0)
+        {
+            <div class="row"><h3>@Model.Answer.Count Answers</h3></div>
+            <div id="Answers">
+                @{
+                    foreach (var answer in Model.Answer)
+                    {
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="row">Up</div>
+                                <div class="row"><h3>@answer.VoteCount</h3></div>
+                            </div>
+                            <div class="col-md-11">
+                                <p>@answer.Body</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                            </div>
+                            <div class="col-md-2">
+                                <div class="well">
+                                    Asked by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null)
+                                </div>
+                            </div>
+                        </div>
+                        if (answer.comments.Count != 0)
+                        {
+                            <div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    <hr />
+                                    @{
+                                        foreach (var acomment in answer.comments)
+                                        {
+                                            <p>@acomment.Text - @Html.ActionLink(acomment.OwnerUsername, "UserProfile", "Home", new { userId = acomment.OwnerId }, null) @acomment.CreationDate</p>
+                                            <hr />
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                }
+            </div>
+        }
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Student.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AcceptedAnswerId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AcceptedAnswerId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ParentId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ParentId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VoteCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VoteCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AnswerCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AnswerCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletionDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletionDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ClosedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ClosedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Body)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OwnerUsername)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OwnerUsername)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PostId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
