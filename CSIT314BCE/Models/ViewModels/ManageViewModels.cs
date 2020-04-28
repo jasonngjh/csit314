@@ -58,6 +58,20 @@ namespace CSIT314BCE.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeInfoViewModel
+    {
+
+        [Required]
+        [Display(Name = "FullName")]
+        public string FullName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+    }
+
     public class AddPhoneNumberViewModel
     {
         [Required]

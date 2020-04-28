@@ -76,6 +76,37 @@ namespace CSIT314BCE.Controllers
         }
 
         //
+        // GET: /Manage/ChangeInfo
+        public ActionResult ChangeInfo()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ChangeInfoViewModel model = new ChangeInfoViewModel();
+            model.FullName = user.FullName;
+            model.Email = user.Email;
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeInfo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeInfo(ChangeInfoViewModel model)
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                user.Email = model.Email;
+                user.FullName = model.FullName;
+                await UserManager.UpdateAsync(user);
+            }
+            return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+        }
+
+        //
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]

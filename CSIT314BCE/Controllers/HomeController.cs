@@ -11,6 +11,8 @@ namespace CSIT314BCE.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
+        private Post post = new Post();
         public HomeController()
         {
         }
@@ -21,7 +23,7 @@ namespace CSIT314BCE.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            return View(db.Posts.ToList());
         }
 
         public ActionResult About()
