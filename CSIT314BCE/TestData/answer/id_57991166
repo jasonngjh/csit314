@@ -1,0 +1,11 @@
+<p>I would like to suggest to remove one array item using delete and filter:</p>
+
+<blockquote>
+<pre><code>var arr = [1,2,3,4,5,5,6,7,8,9];
+delete arr[5];
+arr = arr.filter(function(item){ return item != undefined; });
+//result: [1,2,3,4,5,6,7,8,9]
+</code></pre>
+</blockquote>
+
+<p>So, we can remove only one specific array item instead of all items with the same value.</p>

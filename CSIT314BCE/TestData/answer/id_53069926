@@ -1,0 +1,16 @@
+<p>I want to answer based on <a href="https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_-_ECMAScript_2015" rel="noreferrer">ECMAScript&nbsp;6</a>. Assume, you have an array like below:</p>
+
+<pre><code>let arr = [1,2,3,4];
+</code></pre>
+
+<p>If you want to delete at a special index like <code>2</code>, write the below code:</p>
+
+<pre><code>arr.splice(2, 1); //=&gt; arr became [1,2,4]
+</code></pre>
+
+<p>But if you want to delete a special item like <code>3</code> and you don't know its index, do like below:</p>
+
+<pre><code>arr = arr.filter(e =&gt; e !== 3); //=&gt; arr became [1,2,4]
+</code></pre>
+
+<p><strong>Hint</strong>: please use an arrow function for filter callback unless you will get an empty array.</p>

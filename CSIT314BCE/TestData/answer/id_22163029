@@ -1,0 +1,18 @@
+<h3>For a local commit</h3>
+
+<pre><code>git reset --soft HEAD~1
+</code></pre>
+
+<p>or if you do not remember exactly in which commit it is, you might use</p>
+
+<pre><code>git rm --cached &lt;file&gt;
+</code></pre>
+
+<h3>For a pushed commit</h3>
+
+<p>The proper way of removing files from the repository history is using <code>git filter-branch</code>. That is,</p>
+
+<pre class="lang-bash prettyprint-override"><code>git filter-branch --index-filter 'git rm --cached &lt;file&gt;' HEAD
+</code></pre>
+
+<p>But I recomnend you use this command with care. Read more at <em><a href="https://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html">git-filter-branch(1) Manual Page</a></em>.</p>

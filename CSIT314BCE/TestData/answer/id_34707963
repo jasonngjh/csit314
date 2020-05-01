@@ -1,0 +1,29 @@
+<p>ECMAScript 2015 (or ES6) came with built-in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect">Reflect</a> object. It is possible to delete object property by calling <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/deleteProperty">Reflect.deleteProperty()</a> function with target object and property key as parameters:</p>
+
+<pre><code>Reflect.deleteProperty(myJSONObject, 'regex');
+</code></pre>
+
+<p>which is equivalent to:</p>
+
+<pre><code>delete myJSONObject['regex'];
+</code></pre>
+
+<p>But if the property of the object is not configurable it cannot be deleted neither with deleteProperty function nor delete operator:</p>
+
+<pre><code>let obj = Object.freeze({ prop: "value" });
+let success = Reflect.deleteProperty(obj, "prop");
+console.log(success); // false
+console.log(obj.prop); // value
+</code></pre>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze()</a> makes all properties of object not configurable (besides other things). <code>deleteProperty</code> function (as well as <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete">delete operator</a>) returns <code>false</code> when tries to delete any of it's properties. If property is configurable it returns <code>true</code>, even if property does not exist.</p>
+
+<p>The difference between <code>delete</code> and <code>deleteProperty</code> is when using strict mode:</p>
+
+<pre><code>"use strict";
+
+let obj = Object.freeze({ prop: "value" });
+Reflect.deleteProperty(obj, "prop"); // false
+delete obj["prop"];
+// TypeError: property "prop" is non-configurable and can't be deleted
+</code></pre>

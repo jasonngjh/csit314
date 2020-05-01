@@ -1,0 +1,24 @@
+<p>All the above is basically correct. One can check it. Just write a short method</p>
+
+<pre><code>public static void Main()
+{
+    var s = "a string";
+}
+</code></pre>
+
+<p>compile it and open <code>.exe</code> with <code>ildasm</code> to see</p>
+
+<pre><code>.method private hidebysig static void  Main(string[] args) cil managed
+{
+  .entrypoint
+  // Code size       8 (0x8)
+  .maxstack  1
+  .locals init ([0] string s)
+  IL_0000:  nop
+  IL_0001:  ldstr      "a string"
+  IL_0006:  stloc.0
+  IL_0007:  ret
+} // end of method Program::Main
+</code></pre>
+
+<p>then change <code>var</code> to <code>string</code> and <code>String</code>, compile, open with <code>ildasm</code> and see <code>IL</code> does not change. It also shows the creators of the language prefer just <code>string</code> when difining variables (spoiler: when calling members they prefer <code>String</code>).</p>

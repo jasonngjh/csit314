@@ -1,0 +1,11 @@
+<p>I got the commit ID from <code>bitbucket</code> and then did:</p>
+
+<pre><code>git checkout commitID .
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>git checkout 7991072 .
+</code></pre>
+
+<p>And it reverted it back up to that working copy of that commit.</p>

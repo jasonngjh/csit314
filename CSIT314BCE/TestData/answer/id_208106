@@ -1,0 +1,26 @@
+<p>Like this:</p>
+
+<pre><code>delete myObject.regex;
+// or,
+delete myObject['regex'];
+// or,
+var prop = "regex";
+delete myObject[prop];
+</code></pre>
+
+<p>Demo
+<div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var myObject = {
+    "ircEvent": "PRIVMSG",
+    "method": "newURI",
+    "regex": "^http://.*"
+};
+delete myObject.regex;
+
+console.log(myObject);</code></pre>
+</div>
+</div>
+</p>
+
+<p>For anyone interested in reading more about it, Stack Overflow user <a href="https://stackoverflow.com/users/130652/kangax">kangax</a> has written an incredibly in-depth blog post about the <code>delete</code> statement on their blog, <em><a href="http://perfectionkills.com/understanding-delete/" rel="noreferrer">Understanding delete</a></em>. It is highly recommended.</p>

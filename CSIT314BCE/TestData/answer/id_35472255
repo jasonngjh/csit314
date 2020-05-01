@@ -1,0 +1,55 @@
+<p>There are many ways to do it:</p>
+
+<p>Git command to undo the last commit/ previous commits:</p>
+
+<p><strong>Warning:</strong> Do Not use --hard if you do not know what you are doing.
+--hard is too <strong>dangerous</strong>, and it might <strong>delete your files.</strong></p>
+
+<p><strong>Basic command to revert the commit in Git is:</strong></p>
+
+<pre><code>$ git reset --hard &lt;COMMIT -ID&gt;
+</code></pre>
+
+<p>or</p>
+
+<pre><code>$ git reset --hard HEAD~&lt;n&gt;
+</code></pre>
+
+<p><strong>COMMIT-ID</strong>: ID for the commit</p>
+
+<p><strong>n:</strong>  is number of last commits you want to revert</p>
+
+<p>You can get the commit id as shown below:</p>
+
+<pre><code>$ **git log --oneline**
+
+d81d3f1 function to subtract two numbers
+
+be20eb8 function to add two numbers
+
+bedgfgg function to mulitply two numbers
+</code></pre>
+
+<p>where <strong>d81d3f1</strong> and <strong>be20eb8</strong> are commit id.</p>
+
+<p><strong>Now let's see some cases:</strong></p>
+
+<p><em>Suppose you want to revert the last commit 'd81d3f1'.  Here are two options:</em></p>
+
+<pre><code>$ git reset --hard d81d3f1
+</code></pre>
+
+<p>or</p>
+
+<pre><code>$ git reset --hard HEAD~1
+</code></pre>
+
+<p><em>Suppose you want to revert the commit 'be20eb8':</em></p>
+
+<pre><code>$ git reset --hard be20eb8
+</code></pre>
+
+<p>For more detailed information you can refer and try out some other commands too for resetting head to a specified state:</p>
+
+<pre><code>$ git reset --help
+</code></pre>

@@ -1,0 +1,12 @@
+<p>It is a special for when a Python file is called from the command line. This is typically used to call a "main()" function or execute other appropriate startup code, like commandline arguments handling for instance.</p>
+
+<p>It could be written in several ways. Another is:</p>
+
+<pre><code>def some_function_for_instance_main():
+    dosomething()
+
+
+__name__ == '__main__' and some_function_for_instance_main()
+</code></pre>
+
+<p>I am not saying you should use this in production code, but it serves to illustrate that there is nothing "magical" about <code>if __name__ == '__main__'</code>. It is a good convention for invoking a main function in Python files.</p>

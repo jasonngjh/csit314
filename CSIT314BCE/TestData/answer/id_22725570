@@ -1,0 +1,3 @@
+<p>There's a good talk by some people who were on the ECMAScript committee: <a href="http://www.youtube.com/watch?v=Kq4FpMe6cRs" rel="noreferrer">Changes to JavaScript, Part 1: ECMAScript 5"</a> about how incremental use of the <code>"use strict"</code> switch allows JavaScript implementers to clean up a lot of the dangerous features of JavaScript without suddenly breaking every website in the world.</p>
+
+<p>Of course it also talks about just what a lot of those misfeatures are (were) and how ECMAScript 5 fixes them.</p>

@@ -1,0 +1,6 @@
+<p>I don't want to rename a remote branch, as described in <em><a href="https://stackoverflow.com/questions/1526794/rename-master-branch-for-both-local-and-remote-git-repositories?answertab=votes#tab-top">Rename master branch for both local and remote Git repositories</a></em>.</p>
+
+<p>How can I rename a local branch which hasn't been pushed to a remote branch?</p>
+
+<p>In case you need to rename <strong>remote</strong> branch as well:<br>
+<em><a href="https://stackoverflow.com/questions/30590083/how-to-rename-a-remote-git-branch-name/30590238#30590238">How do I rename both a Git local and remote branch name</a></em></p>

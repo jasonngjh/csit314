@@ -1,0 +1,18 @@
+<p>We are using <a href="https://github.com/sindresorhus/strip-json-comments"><code>strip-json-comments</code></a> for our project. It supports something like:</p>
+
+<pre><code>/*
+ * Description 
+*/
+{
+    // rainbows
+    "unicorn": /* ❤ */ "cake"
+}
+</code></pre>
+
+<p>Simply <code>npm install --save strip-json-comments</code> to install and use it like:</p>
+
+<pre><code>var strip_json_comments = require('strip-json-comments')
+var json = '{/*rainbows*/"unicorn":"cake"}';
+JSON.parse(strip_json_comments(json));
+//=&gt; {unicorn: 'cake'}
+</code></pre>

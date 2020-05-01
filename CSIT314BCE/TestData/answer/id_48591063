@@ -1,0 +1,139 @@
+<p>This is the best way to answer the question imo...</p>
+
+<p>First, we must understand that, in Java, the <em>parameter passing behavior</em>...</p>
+
+<pre><code>public void foo(Object param)
+{
+  // some code in foo...
+}
+
+public void bar()
+{
+  Object obj = new Object();
+
+  foo(obj);
+}
+</code></pre>
+
+<p>is exactly the same as...</p>
+
+<pre><code>public void bar()
+{
+  Object obj = new Object();
+
+  Object param = obj;
+
+  // some code in foo...
+}
+</code></pre>
+
+<p>not considering stack locations, which aren't relevant in this discussion.</p>
+
+<p>So, in fact, what we're looking for in Java is how <em>variable assignment</em> works. I found it in <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html" rel="noreferrer">the docs</a> :</p>
+
+<blockquote>
+  <p>One of the most common operators that you'll encounter is the simple assignment operator "=" [...] <b>it assigns the value</b> on its right to the operand on its left:</p>
+  
+  <p>int cadence = 0;<br>
+   int speed = 0;<br>
+   int gear = 1;  </p>
+  
+  <p>This operator can also be used on objects to assign <b>object references</b> [...]</p>
+</blockquote>
+
+<p>It's clear how this operator acts in two distinct ways: assign values and assign references. The last, when it's an object... the first, when it isn't an object, that is, when it's a primitive. But so, can we understand that Java's function params can be <em>pass-by-value</em> and <em>pass-by-reference</em>? </p>
+
+<p>The truth is in the code. Let's try it:</p>
+
+<pre><code>public class AssignmentEvaluation
+{
+  static public class MyInteger
+  {
+    public int value = 0;
+  }
+
+  static public void main(String[] args)
+  {
+    System.out.println("Assignment operator evaluation using two MyInteger objects named height and width\n");
+
+    MyInteger height = new MyInteger();
+    MyInteger width  = new MyInteger();
+
+    System.out.println("[1] Assign distinct integers to height and width values");
+
+    height.value = 9;
+    width.value  = 1;
+
+    System.out.println("-&gt;  height is " + height.value + " and width is " + width.value + ", we are different things! \n");
+
+    System.out.println("[2] Assign to height's value the width's value");
+
+    height.value = width.value;
+
+    System.out.println("-&gt;  height is " + height.value + " and width is " + width.value + ", are we the same thing now? \n");
+
+    System.out.println("[3] Assign to height's value an integer other than width's value");
+
+    height.value = 9;
+
+    System.out.println("-&gt;  height is " + height.value + " and width is " + width.value + ", we are different things yet! \n");
+
+    System.out.println("[4] Assign to height the width object");
+
+    height = width;
+
+    System.out.println("-&gt;  height is " + height.value + " and width is " + width.value + ", are we the same thing now? \n");
+
+    System.out.println("[5] Assign to height's value an integer other than width's value");
+
+    height.value = 9;
+
+    System.out.println("-&gt;  height is " + height.value + " and width is " + width.value + ", we are the same thing now! \n");
+
+    System.out.println("[6] Assign to height a new MyInteger and an integer other than width's value");
+
+    height = new MyInteger();
+    height.value = 1;
+
+    System.out.println("-&gt;  height is " + height.value + " and width is " + width.value + ", we are different things again! \n");
+  }
+}
+</code></pre>
+
+<p>This is the output of my run:</p>
+
+<pre>
+Assignment operator evaluation using two MyInteger objects named height and width
+
+[1] Assign distinct integers to height and width values
+->  height is 9 and width is 1, we are different things! 
+
+[2] Assign to height's value the width's value
+->  height is 1 and width is 1, are we the same thing now? 
+
+[3] Assign to height's value an integer other than width's value
+->  height is 9 and width is 1, we are different things yet! 
+
+[4] Assign to height the width object
+->  height is 1 and width is 1, are we the same thing now? 
+
+[5] Assign to height's value an integer other than width's value
+->  height is 9 and width is 9, we are the same thing now! 
+
+[6] Assign to height a new MyInteger and an integer other than width's value
+->  height is 1 and width is 9, we are different things again! 
+</pre>
+
+<p>In <em>[2]</em> we have distinct objects and assign one variable's value to the other. But after assigning a new value in <em>[3]</em> the objects had different values, which means that in <em>[2]</em> the assigned value was a copy of the primitive variable, usually called <strong>pass-by-value</strong>, otherwise, the values printed in <em>[3]</em> should be the same.</p>
+
+<p>In <em>[4]</em> we still have distinct objects and assign one object to the other. And after assigning a new value in <em>[5]</em> the objects had the same values, which means that in <em>[4]</em> the assigned object was not a copy of the other, which should be called <strong>pass-by-reference</strong>. But, if we look carefully in <em>[6]</em>, we can't be so sure that no copy was done... ?????</p>
+
+<p>We can't be so sure because in <em>[6]</em> the objects were the same, then we assigned a new object to one of them, and after, the objects had different values! How can they be distinct now if they were the same? They should be the same here too!  ?????</p>
+
+<p>We'll need to remember <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html" rel="noreferrer">the docs</a> to understand what's going on:</p>
+
+<blockquote>
+  <p>This operator can also be used on objects to assign <b>object references</b></p>
+</blockquote>
+
+<p>So our two variables were storing references... our variables had the same reference after <em>[4]</em> and different references after <em>[6]</em>... if such a thing is possible, this means that assignment of objects is done by copy of the object's reference, otherwise, if it was not a copy of reference, the printed value of the variables in <em>[6]</em> should be the same. So objects (references), just like primitives, are copied to variables through assignment, what people usually call <em>pass-by-value</em>. That's the only <em>pass-by-</em> in Java.</p>

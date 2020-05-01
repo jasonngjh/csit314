@@ -1,0 +1,16 @@
+<p>Say I create an object as follows:</p>
+
+<pre><code>let myObject = {
+    "ircEvent": "PRIVMSG",
+    "method": "newURI",
+    "regex": "^http://.*"
+};
+</code></pre>
+
+<p>What is the best way to remove the property <code>regex</code> to end up with new <code>myObject</code> as follows?</p>
+
+<pre><code>let myObject = {
+    "ircEvent": "PRIVMSG",
+    "method": "newURI"
+};
+</code></pre>

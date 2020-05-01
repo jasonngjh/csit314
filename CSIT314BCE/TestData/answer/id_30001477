@@ -1,0 +1,7 @@
+<pre><code>git push origin --delete &lt;branch Name&gt;
+</code></pre>
+
+<p>is easier to remember than</p>
+
+<pre><code>git push origin :branchName
+</code></pre>

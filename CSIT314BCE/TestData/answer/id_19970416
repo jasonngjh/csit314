@@ -1,0 +1,81 @@
+<p>The Java programming language passes arguments only by value, that is,
+you cannot change the argument value in the calling method from within
+the called method.</p>
+
+<hr>
+
+<p>However, when an object instance is passed as an argument to a method,
+the value of the argument is not the object itself but a reference to the
+object. You can change the contents of the object in the called method but
+not the object reference.</p>
+
+<hr>
+
+<p>To many people, this looks like pass-by-reference, and behaviorally, it has
+much in common with pass-by-reference. However, there are two reasons
+this is inaccurate.</p>
+
+<ul>
+<li><p>Firstly, the ability to change the thing passed into a
+method only applies to objects, not primitive values. </p></li>
+<li><p>Second, the actual
+value associated with a variable of object type is the reference to the
+object, and not the object itself. This is an important distinction in other
+ways, and if clearly understood, is entirely supporting of the point that
+the Java programming language passes arguments by value.</p></li>
+</ul>
+
+<hr>
+
+<pre><code>The following code example illustrates this point:
+1 public class PassTest {
+2
+3   // Methods to change the current values
+4   public static void changeInt(int value) {
+5     value = 55;
+6  }
+7   public static void changeObjectRef(MyDate ref) {
+8     ref = new MyDate(1, 1, 2000);
+9  }
+10   public static void changeObjectAttr(MyDate ref) {
+11     ref.setDay(4);
+12   }
+13
+14 public static void main(String args[]) {
+15     MyDate date;
+16     int val;
+17
+18     // Assign the int
+19     val = 11;
+20     // Try to change it
+21     changeInt(val);
+22     // What is the current value?
+23     System.out.println("Int value is: " + val);
+24
+25 // Assign the date
+26     date = new MyDate(22, 7, 1964);
+27     // Try to change it
+28     changeObjectRef(date);
+29     // What is the current value?
+30 System.out.println("MyDate: " + date);
+31
+32 // Now change the day attribute
+33     // through the object reference
+34     changeObjectAttr(date);
+35     // What is the current value?
+36 System.out.println("MyDate: " + date);
+37   }
+38 }
+</code></pre>
+
+<hr>
+
+<pre><code>This code outputs the following:
+java PassTest
+Int value is: 11
+MyDate: 22-7-1964
+MyDate: 4-7-1964
+The MyDate object is not changed by the changeObjectRef method;
+however, the changeObjectAttr method changes the day attribute of the
+MyDate object.
+</code></pre>

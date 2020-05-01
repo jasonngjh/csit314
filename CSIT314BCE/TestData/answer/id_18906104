@@ -1,0 +1,5 @@
+<p>git pull == ( git fetch + git merge) </p>
+
+<p>git fetch does not changes to local branches.</p>
+
+<p>If you already have a local repository with a remote set up for the desired project, you can grab all branches and tags for the existing remote using git fetch . ... Fetch does not make any changes to local branches, so you will need to merge a remote branch with a paired local branch to incorporate newly fetch changes. <a href="https://help.github.com/articles/fetching-a-remote">from github</a></p>

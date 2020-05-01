@@ -1,0 +1,20 @@
+<p>A very naive implementation would be as follows:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>Array.prototype.remove = function(data) {
+    const dataIdx = this.indexOf(data)
+    if(dataIdx &gt;= 0) {
+        this.splice(dataIdx ,1);
+    }
+    return this.length;
+}
+
+let a = [1,2,3];
+// This will change arr a to [1, 3]
+a.remove(2);</code></pre>
+</div>
+</div>
+</p>
+
+<p>I return the length of the array from the function to comply with the other methods, like <code>Array.prototype.push()</code>.</p>

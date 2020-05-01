@@ -1,0 +1,86 @@
+<h1>The Straw Man</h1>
+
+<p>I need to know how many times a button has been clicked and do something on every third click...</p>
+
+<h2>Fairly Obvious Solution</h2>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>// Declare counter outside event handler's scope
+var counter = 0;
+var element = document.getElementById('button');
+
+element.addEventListener("click", function() {
+  // Increment outside counter
+  counter++;
+
+  if (counter === 3) {
+    // Do something every third time
+    console.log("Third time's the charm!");
+
+    // Reset counter
+    counter = 0;
+  }
+});</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;button id="button"&gt;Click Me!&lt;/button&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>Now this will work, but it does encroach into the outer scope by adding a variable, whose sole purpose is to keep track of the count. In some situations, this would be preferable as your outer application might need access to this information. But in this case, we are only changing every third click's behavior, so it is preferable to <strong>enclose this functionality inside the event handler</strong>.</p>
+
+<h2>Consider this option</h2>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var element = document.getElementById('button');
+
+element.addEventListener("click", (function() {
+  // init the count to 0
+  var count = 0;
+
+  return function(e) { // &lt;- This function becomes the click handler
+    count++; //    and will retain access to the above `count`
+
+    if (count === 3) {
+      // Do something every third time
+      console.log("Third time's the charm!");
+
+      //Reset counter
+      count = 0;
+    }
+  };
+})());</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;button id="button"&gt;Click Me!&lt;/button&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>Notice a few things here.</p>
+
+<p>In the above example, I am using the closure behavior of JavaScript. <strong>This behavior allows any function to have access to the scope in which it was created, indefinitely.</strong> To practically apply this, I immediately invoke a function that returns another function, and because the function I'm returning has access to the internal count variable (because of the closure behavior explained above) this results in a private scope for usage by the resulting function... Not so simple? Let's dilute it down...</p>
+
+<p><strong>A simple one-line closure</strong></p>
+
+<pre><code>//          _______________________Immediately invoked______________________
+//         |                                                                |
+//         |        Scope retained for use      ___Returned as the____      |
+//         |       only by returned function   |    value of func     |     |
+//         |             |            |        |                      |     |
+//         v             v            v        v                      v     v
+var func = (function() { var a = 'val'; return function() { alert(a); }; })();
+</code></pre>
+
+<p>All variables outside the returned function are available to the returned function, but they are not directly available to the returned function object...</p>
+
+<pre><code>func();  // Alerts "val"
+func.a;  // Undefined
+</code></pre>
+
+<p>Get it? So in our primary example, the count variable is contained within the closure and always available to the event handler, so it retains its state from click to click.</p>
+
+<p>Also, this private variable state is <strong>fully</strong> accessible, for both readings and assigning to its private scoped variables.</p>
+
+<p>There you go; you're now fully encapsulating this behavior.</p>
+
+<p><strong><a href="http://jondavidjohn.com/javascript-closure-explained-using-events/" rel="noreferrer">Full Blog Post</a></strong> (including jQuery considerations)</p>

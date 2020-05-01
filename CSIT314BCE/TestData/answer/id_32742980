@@ -1,0 +1,19 @@
+<p>In the same line (I think this was not highlighted by any answer) it's good to mention that sometimes (specially in software where the performance matters—like in the Linux kernel) you can find some if statements like the following:</p>
+
+<pre><code>if (likely( everything_is_ok ))
+{
+    /* Do something */
+}
+</code></pre>
+
+<p>or similarly:</p>
+
+<pre><code>if (unlikely(very_improbable_condition))
+{
+    /* Do something */    
+}
+</code></pre>
+
+<p>Both <code>likely()</code> and <code>unlikely()</code> are in fact macros that are defined by using something like the GCC's <code>__builtin_expect</code> to help the compiler insert prediction code to favour the condition taking into account the information provided by the user. GCC supports other builtins that could change the behavior of the running program or emit low level instructions like clearing the cache, etc. See <a href="https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html" rel="noreferrer">this documentation</a> that goes through the available GCC's builtins.</p>
+
+<p>Normally this kind of optimizations are mainly found in hard-real time applications or embedded systems where execution time matters and it's critical. For example, if you are checking for some error condition that only happens 1/10000000 times, then why not inform the compiler about this? This way, by default, the branch prediction would assume that the condition is false.</p>

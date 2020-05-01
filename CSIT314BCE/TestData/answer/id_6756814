@@ -1,0 +1,27 @@
+<p>You're having a sleep over and you invite Dan.
+You tell Dan to bring one XBox controller.</p>
+
+<p>Dan invites Paul.
+Dan asks Paul to bring one controller. How many controllers were brought to the party?</p>
+
+<pre class="lang-js prettyprint-override"><code>function sleepOver(howManyControllersToBring) {
+
+    var numberOfDansControllers = howManyControllersToBring;
+
+    return function danInvitedPaul(numberOfPaulsControllers) {
+        var totalControllers = numberOfDansControllers + numberOfPaulsControllers;
+        return totalControllers;
+    }
+}
+
+var howManyControllersToBring = 1;
+
+var inviteDan = sleepOver(howManyControllersToBring);
+
+// The only reason Paul was invited is because Dan was invited. 
+// So we set Paul's invitation = Dan's invitation.
+
+var danInvitedPaul = inviteDan(howManyControllersToBring);
+
+alert("There were " + danInvitedPaul + " controllers brought to the party.");
+</code></pre>

@@ -1,0 +1,17 @@
+<pre><code>if ( $(element).css('display') == 'none' || $(element).css("visibility") == "hidden"){
+    // element is hidden
+}
+</code></pre>
+
+<p>Above method does not consider the visibility of the parent. To consider the parent as well, you should use <code>.is(":hidden")</code> or <code>.is(":visible")</code>.</p>
+
+<p>For example,</p>
+
+<pre><code>&lt;div id="div1" style="display:none"&gt;
+  &lt;div id="div2" style="display:block"&gt;Div2&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<blockquote>
+  <p>The above method will consider <code>div2</code> visible while <code>:visible</code> not. But the above might be useful in many cases, especially when you need to find if there is any error divs visible in the hidden parent because in such conditions <code>:visible</code> will not work.</p>
+</blockquote>

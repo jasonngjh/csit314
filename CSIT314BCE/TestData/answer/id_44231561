@@ -1,0 +1,31 @@
+<p>In the conventional way we would define a condition in the <code>while</code> loop parenthesis <code>()</code> and a terminating condition inside the braces <code>{}</code>, but <code>--&gt;</code> defines both at once.</p>
+
+<p>For example:</p>
+
+<pre><code>int abc(void)
+{
+    int a = 5
+    while((a--) &gt; 0) // Decrement and comparison both at once
+    {
+        // Code
+    }
+}
+</code></pre>
+
+<p>This decrements <code>a</code> and runs the loop while <code>a</code> is greater than <code>0</code>.</p>
+
+<p>Conventionally, it would be like:</p>
+
+<pre><code>int abc(void)
+{
+    int a = 5;
+    while(a &gt; 0)
+    {
+        a--;
+        // Code
+    }
+    a--;
+}
+</code></pre>
+
+<p>Both ways, we do the same thing and achieve the same goals.</p>

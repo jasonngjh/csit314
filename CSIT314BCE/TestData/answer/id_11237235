@@ -1,0 +1,112 @@
+<p>The reason why performance improves drastically when the data is sorted is that the branch prediction penalty is removed, as explained beautifully in <a href="https://stackoverflow.com/questions/11227809/why-is-it-faster-to-process-a-sorted-array-than-an-unsorted-array/11227902#11227902">Mysticial's answer</a>.</p>
+
+<p>Now, if we look at the code</p>
+
+<pre><code>if (data[c] &gt;= 128)
+    sum += data[c];
+</code></pre>
+
+<p>we can find that the meaning of this particular <code>if... else...</code> branch is to add something when a condition is satisfied. This type of branch can be easily transformed into a <strong>conditional move</strong> statement, which would be compiled into a conditional move instruction: <code>cmovl</code>, in an <code>x86</code> system. The branch and thus the potential branch prediction penalty is removed.</p>
+
+<p>In <code>C</code>, thus <code>C++</code>, the statement, which would compile directly (without any optimization) into the conditional move instruction in <code>x86</code>, is the ternary operator <code>... ? ... : ...</code>. So we rewrite the above statement into an equivalent one:</p>
+
+<pre><code>sum += data[c] &gt;=128 ? data[c] : 0;
+</code></pre>
+
+<p>While maintaining readability, we can check the speedup factor.</p>
+
+<p>On an Intel <a href="http://en.wikipedia.org/wiki/Intel_Core#Core_i7" rel="noreferrer">Core i7</a>-2600K @ 3.4&nbsp;GHz and Visual Studio 2010 Release Mode, the benchmark is (format copied from Mysticial):</p>
+
+<p><strong>x86</strong></p>
+
+<pre><code>//  Branch - Random
+seconds = 8.885
+
+//  Branch - Sorted
+seconds = 1.528
+
+//  Branchless - Random
+seconds = 3.716
+
+//  Branchless - Sorted
+seconds = 3.71
+</code></pre>
+
+<p><strong>x64</strong></p>
+
+<pre><code>//  Branch - Random
+seconds = 11.302
+
+//  Branch - Sorted
+ seconds = 1.830
+
+//  Branchless - Random
+seconds = 2.736
+
+//  Branchless - Sorted
+seconds = 2.737
+</code></pre>
+
+<p>The result is robust in multiple tests. We get a great speedup when the branch result is unpredictable, but we suffer a little bit when it is predictable. In fact, when using a conditional move, the performance is the same regardless of the data pattern.</p>
+
+<p>Now let's look more closely by investigating the <code>x86</code> assembly they generate. For simplicity, we use two functions <code>max1</code> and <code>max2</code>.</p>
+
+<p><code>max1</code> uses the conditional branch <code>if... else ...</code>:</p>
+
+<pre><code>int max1(int a, int b) {
+    if (a &gt; b)
+        return a;
+    else
+        return b;
+}
+</code></pre>
+
+<p><code>max2</code> uses the ternary operator <code>... ? ... : ...</code>:</p>
+
+<pre><code>int max2(int a, int b) {
+    return a &gt; b ? a : b;
+}
+</code></pre>
+
+<p>On a x86-64 machine, <code>GCC -S</code> generates the assembly below.</p>
+
+<pre><code>:max1
+    movl    %edi, -4(%rbp)
+    movl    %esi, -8(%rbp)
+    movl    -4(%rbp), %eax
+    cmpl    -8(%rbp), %eax
+    jle     .L2
+    movl    -4(%rbp), %eax
+    movl    %eax, -12(%rbp)
+    jmp     .L4
+.L2:
+    movl    -8(%rbp), %eax
+    movl    %eax, -12(%rbp)
+.L4:
+    movl    -12(%rbp), %eax
+    leave
+    ret
+
+:max2
+    movl    %edi, -4(%rbp)
+    movl    %esi, -8(%rbp)
+    movl    -4(%rbp), %eax
+    cmpl    %eax, -8(%rbp)
+    cmovge  -8(%rbp), %eax
+    leave
+    ret
+</code></pre>
+
+<p><code>max2</code> uses much less code due to the usage of instruction <code>cmovge</code>. But the real gain is that <code>max2</code> does not involve branch jumps, <code>jmp</code>, which would have a significant performance penalty if the predicted result is not right.</p>
+
+<p>So why does a conditional move perform better?</p>
+
+<p>In a typical <code>x86</code> processor, the execution of an instruction is divided into several stages. Roughly, we have different hardware to deal with different stages. So we do not have to wait for one instruction to finish to start a new one. This is called <strong><a href="http://en.wikipedia.org/wiki/Pipeline_%28computing%29" rel="noreferrer">pipelining</a></strong>.</p>
+
+<p>In a branch case, the following instruction is determined by the preceding one, so we cannot do pipelining. We have to either wait or predict.</p>
+
+<p>In a conditional move case, the execution conditional move instruction is divided into several stages, but the earlier stages like <code>Fetch</code> and <code>Decode</code> does not depend on the result of the previous instruction; only latter stages need the result. Thus, we wait a fraction of one instruction's execution time. This is why the conditional move version is slower than the branch when prediction is easy.</p>
+
+<p>The book <em><a href="https://rads.stackoverflow.com/amzn/click/com/0136108040" rel="noreferrer" rel="nofollow noreferrer">Computer Systems: A Programmer's Perspective, second edition</a></em> explains this in detail. You can check Section 3.6.6 for <em>Conditional Move Instructions</em>, entire Chapter 4 for <em>Processor Architecture</em>, and Section 5.11.2 for a special treatment for <em>Branch Prediction and Misprediction Penalties</em>.</p>
+
+<p>Sometimes, some modern compilers can optimize our code to assembly with better performance, sometimes some compilers can't (the code in question is using Visual Studio's native compiler). Knowing the performance difference between branch and conditional move when unpredictable can help us write code with better performance when the scenario gets so complex that the compiler can not optimize them automatically.</p>

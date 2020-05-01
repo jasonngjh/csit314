@@ -1,0 +1,9 @@
+<p>You can do it easily with the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" rel="noreferrer">filter</a> method:</p>
+
+<pre><code>function remove(arrOriginal, elementToRemove){
+    return arrOriginal.filter(function(el){return el !== elementToRemove});
+}
+console.log(remove([1, 2, 1, 0, 3, 1, 4], 1));
+</code></pre>
+
+<p>This removes all elements from the array and also works faster than a combination of <code>slice</code> and <code>indexOf</code>.</p>

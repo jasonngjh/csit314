@@ -1,0 +1,6 @@
+<p>If you want to redirect to a route within the same app simply</p>
+
+<pre><code>window.location.pathname = '/examplepath'
+</code></pre>
+
+<p>would be the way to go.</p>

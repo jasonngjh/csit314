@@ -1,0 +1,25 @@
+<p>By my solution you can remove one or more than one item in an array thanks to pure JavaScript. There is no need for another JavaScript library.</p>
+
+<pre><code>var myArray = [1,2,3,4,5]; // First array
+
+var removeItem = function(array,value) {  // My clear function
+    if(Array.isArray(value)) {  // For multi remove
+        for(var i = array.length - 1; i &gt;= 0; i--) {
+            for(var j = value.length - 1; j &gt;= 0; j--) {
+                if(array[i] === value[j]) {
+                    array.splice(i, 1);
+                };
+            }
+        }
+    }
+    else { // For single remove
+        for(var i = array.length - 1; i &gt;= 0; i--) {
+            if(array[i] === value) {
+                array.splice(i, 1);
+            }
+        }
+    }
+}
+
+removeItem(myArray,[1,4]); // myArray will be [2,3,5]
+</code></pre>

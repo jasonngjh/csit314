@@ -1,0 +1,20 @@
+<p>The short and easy answer is that <code>git pull</code> is simply <code>git fetch</code> followed by <code>git merge</code>.</p>
+
+<p>It is very important to note that <code>git pull</code> will <strong>automatically merge whether you like it or not</strong>. This could, of course, result in merge conflicts. Let's say your remote is <code>origin</code> and your branch is <code>master</code>. If you <code>git diff origin/master</code> before pulling, you should have some idea of potential merge conflicts and could prepare your local branch accordingly. </p>
+
+<p>In addition to pulling and pushing, <a href="https://web.archive.org/web/20150321185928/http://mettadore.com/2011/09/07/the-ever-deployable-github-workflow//" rel="noreferrer">some workflows</a> involve <code>git rebase</code>, such as this one, which I paraphrase from the linked article:</p>
+
+<pre><code>git pull origin master
+git checkout foo-branch
+git rebase master
+git push origin foo-branch
+</code></pre>
+
+<p>If you find yourself in such a situation, you may be tempted to <code>git pull --rebase</code>. Unless you really, really know what you are doing, I would advise against that. This warning is from the <code>man</code> page for <code>git-pull</code>, version <code>2.3.5</code>:</p>
+
+<blockquote>
+  <p>This is a potentially dangerous mode of operation. It rewrites
+  history, which does not bode well when you published that history
+  already. Do not use this option unless you have read git-rebase(1)
+  carefully.</p>
+</blockquote>

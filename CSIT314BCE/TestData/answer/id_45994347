@@ -1,0 +1,51 @@
+<p>uggested Command for <strong>Removing Untracked Files from git docs</strong> is <strong>git clean</strong> </p>
+
+<p><strong>git clean</strong> - Remove untracked files from the working tree</p>
+
+<p><strong>Suggested Method:</strong>  Interative Mode by using <code>git clean -i</code>
+so we can have control over it. let see remaining available options.</p>
+
+<p><strong>Available Options:</strong></p>
+
+<pre><code>git clean 
+    -d -f -i -n -q -e -x -X (can use either)
+</code></pre>
+
+<p><strong>Explanation:</strong></p>
+
+<p><strong>1.</strong> <strong>-d</strong></p>
+
+<p>Remove untracked directories in addition to untracked files. If an untracked directory is managed by a different Git repository,
+   it is not removed by default. Use -f option twice if you really want to remove such a directory.</p>
+
+<p><strong>2. -f, --force</strong></p>
+
+<p>If the Git configuration variable clean.requireForce is not set to false, git clean will refuse to run unless given -f, -n or
+   -i.</p>
+
+<p><strong>3. -i, --interactive</strong></p>
+
+<p>Show what would be done and clean files interactively. See “Interactive mode” for details.</p>
+
+<p><strong>4. -n, --dry-run</strong></p>
+
+<p>Don’t actually remove anything, just show what would be done.</p>
+
+<p><strong>5. -q, --quiet</strong></p>
+
+<p>Be quiet, only report errors, but not the files that are successfully removed.</p>
+
+<p><strong>6. -e , --exclude=</strong></p>
+
+<p>In addition to those found in .gitignore (per directory) and $GIT_DIR/info/exclude, also consider these patterns to be in the
+   set of the ignore rules in effect.</p>
+
+<p><strong>7. -x</strong></p>
+
+<p>Don’t use the standard ignore rules read from .gitignore (per directory) and $GIT_DIR/info/exclude, but do still use the ignore
+   rules given with -e options. This allows removing all untracked files, including build products. This can be used (possibly in
+   conjunction with git reset) to create a pristine working directory to test a clean build.</p>
+
+<p><strong>8. -X</strong></p>
+
+<p>Remove only files ignored by Git. This may be useful to rebuild everything from scratch, but keep manually created files.</p>

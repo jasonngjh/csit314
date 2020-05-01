@@ -1,0 +1,7 @@
+<p>I couldn't revert mine manually for some reason so here is how I ended up doing it.</p>
+
+<ol>
+<li>Checked out the branch I wanted to have, copied it.</li>
+<li>Checked out the latest branch.</li>
+<li>Copied the contents from the branch I wanted to the latest branch's directory overwriting the changes and committing that.</li>
+</ol>

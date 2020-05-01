@@ -1,0 +1,5 @@
+<p>To rename the current branch (except for detached HEAD state) you can also use this alias:</p>
+
+<pre><code>[alias]
+    mvh = !sh -c 'git branch -m `git rev-parse --abbrev-ref HEAD` $1'
+</code></pre>

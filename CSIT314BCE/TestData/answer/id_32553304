@@ -1,0 +1,6 @@
+<p>Actually Git maintains a copy of your own code and 
+the remote repository.</p>
+
+<p>The command <code>git fetch</code> makes your local copy up to date by getting data from remote repository. The reason we need this is because somebody else might have made some changes to the code and you want to keep yourself updated.  </p>
+
+<p>The command <code>git pull</code> brings the changes in the remote repository to where you keep your own code. Normally, <code>git pull</code> does this by doing a ‘git fetch’ first to bring the local copy of the remote repository up to date, and then it merges the changes into your own code repository and possibly your working copy.</p>

@@ -1,0 +1,42 @@
+<p>I think this simple explanation might help you understand as I wanted to understand this same thing when I was struggling through this.</p>
+
+<p>When you pass a primitive data to a function call it's content is being copied to the function's argument and when you pass an object it's reference is being copied to the function's argument. Speaking of object, you can't change the copied reference-<em>the argument variable is referencing to</em> in the calling function.</p>
+
+<p>Consider this simple example, String is an object in java and when you change the content of a string the reference variable will now point to some new reference as String objects are immutable in java.</p>
+
+<pre class="lang-java prettyprint-override"><code>String name="Mehrose";  // name referencing to 100
+
+ChangeContenet(String name){
+ name="Michael"; // refernce has changed to 1001
+
+} 
+System.out.print(name);  //displays Mehrose
+</code></pre>
+
+<p>Fairly simple because as I mentioned you are not allowed to change the copied reference in the calling function. But the problem is with the array when you pass an array of String/Object. Let us see.</p>
+
+<pre class="lang-java prettyprint-override"><code>String names[]={"Mehrose","Michael"};
+
+changeContent(String[] names){
+  names[0]="Rose";
+  names[1]="Janet"
+
+}
+
+System.out.println(Arrays.toString(names)); //displays [Rose,Janet]
+</code></pre>
+
+<p>As we said that we can't change the copied reference in the function call and we also have seen in the case of a single String object. The reason is names[] variable referencing to let's say 200 and names[0] referencing to 205 and so on. You see we didn't change the names[] reference it still points to the old same reference still after the function call but now names[0] and names[1] reference has been changed. We Still stand on our definition that we can't change the reference variable's reference so we didn't.</p>
+
+<p>The same thing happens when you pass a Student object to a method and you are still able to change the Student name or other attributes, the point is we are not changing the actual Student object rather we are changing the contents of it</p>
+
+<p>You can't do this</p>
+
+<pre class="lang-java prettyprint-override"><code>Student student1= new Student("Mehrose");
+
+changeContent(Student Obj){
+ obj= new Student("Michael") //invalid
+ obj.setName("Michael")  //valid
+
+}
+</code></pre>

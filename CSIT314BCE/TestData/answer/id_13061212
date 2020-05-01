@@ -1,0 +1,15 @@
+<p>I prefer to use <code>git rebase -i</code> for this job, because a nice list pops up where I can choose the commits to get rid of. It might not be as direct as some other answers here, but it just <em>feels right</em>.</p>
+
+<p>Choose how many commits you want to list, then invoke like this (to enlist last three)</p>
+
+<pre><code>git rebase -i HEAD~3
+</code></pre>
+
+<p>Sample list</p>
+
+<pre><code>pick aa28ba7 Sanity check for RtmpSrv port
+pick c26c541 RtmpSrv version option
+pick 58d6909 Better URL decoding support
+</code></pre>
+
+<p>Then Git will remove commits for any line that you remove.</p>

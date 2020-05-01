@@ -1,0 +1,23 @@
+<p>if variable is defined and you want to check if it has value you can just <code>a or b</code></p>
+
+<pre><code>def test(myvar=None):
+    # shorter than: print myvar if myvar else "no Input"
+    print myvar or "no Input"
+
+test()
+test([])
+test(False)
+test('hello')
+test(['Hello'])
+test(True)
+</code></pre>
+
+<p>will output</p>
+
+<pre><code>no Input
+no Input
+no Input
+hello
+['Hello']
+True
+</code></pre>

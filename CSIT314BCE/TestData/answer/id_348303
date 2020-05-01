@@ -1,0 +1,16 @@
+<p>If you type:</p>
+
+<pre><code>git status
+</code></pre>
+
+<p>Git will tell you what is staged, etc., including instructions on how to unstage:</p>
+
+<pre><code>use "git reset HEAD &lt;file&gt;..." to unstage
+</code></pre>
+
+<p>I find Git does a pretty good job of nudging me to do the right thing in situations like this.</p>
+
+<p><strong>Note: Recent Git versions (1.8.4.x) have changed this message:</strong></p>
+
+<pre><code>(use "git rm --cached &lt;file&gt;..." to unstage)
+</code></pre>

@@ -1,0 +1,22 @@
+<p>There are good answers, but, in case that you have a ton of branches, deleting them one by one locally and remotely, would be a tedious tasks. You can use this script to automate these tasks.</p>
+
+<pre><code>branch_not_delete=( "master" "develop" "our-branch-1" "our-branch-2")
+
+for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v master`; do
+
+    # Delete prefix remotes/origin/ from branch name
+    branch_name="$(awk '{gsub("remotes/origin/", "");print}' &lt;&lt;&lt; $branch)"
+
+    if ! [[ " ${branch_not_delete[*]} " == *" $branch_name "* ]]; then
+        # Delete branch remotly and locally
+        git push origin :$branch_name
+    fi
+done
+</code></pre>
+
+<ul>
+<li>List the branches that you don't want to delete</li>
+<li>Iterate over the remote's branches and if they aren't in our "preserve list", deleted them.</li>
+</ul>
+
+<p>Source: <em><a href="http://levipy.com/removing-git-branches-at-once/" rel="nofollow noreferrer">Removing Git branches at once</a></em></p>

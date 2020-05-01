@@ -1,0 +1,5 @@
+<h1>The simplest, shortest, most-easy-to-understand answer:</h1>
+
+<p>A closure is a block of code where each line can reference the same set of variables with the same variable names. </p>
+
+<p>If "this" means something different than it does somewhere else, then you know it is two different closures.</p>

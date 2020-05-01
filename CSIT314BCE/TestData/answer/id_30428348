@@ -1,0 +1,11 @@
+<p>You need to do the easy and fast</p>
+
+<pre><code>    git commit --amend
+</code></pre>
+
+<p>if it's a private branch or</p>
+
+<pre><code>    git commit -m 'Replace .class files with .java files'
+</code></pre>
+
+<p>if it's a shared or public branch.</p>

@@ -1,0 +1,20 @@
+<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/string" rel="noreferrer"><code>string</code></a> is an alias in C# for <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string" rel="noreferrer"><code>System.String</code></a>.<br>
+So technically, there is no difference.  It's like <a href="https://stackoverflow.com/questions/62503/c-int-or-int32-should-i-care"><code>int</code> <em>vs.</em> <code>System.Int32</code></a>.</p>
+
+<p>As far as guidelines, it's generally recommended to use <code>string</code> any time you're referring to an object.</p>
+
+<p>e.g. </p>
+
+<pre><code>string place = "world";
+</code></pre>
+
+<p>Likewise, I think it's generally recommended to use <code>String</code> if you need to refer specifically to the class.</p>
+
+<p>e.g.</p>
+
+<pre><code>string greet = String.Format("Hello {0}!", place);
+</code></pre>
+
+<h2>This is the style that Microsoft tends to use in <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string.format#examples" rel="noreferrer">their examples</a>.</h2>
+
+<p>It appears that the guidance in this area may have changed, as <a href="https://github.com/StyleCop" rel="noreferrer">StyleCop</a> now enforces the use of the C# specific aliases.</p>

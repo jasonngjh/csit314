@@ -1,0 +1,13 @@
+<p><strong>git pull</strong> </p>
+
+<p>It performs two functions using a single command.</p>
+
+<p>It fetches all the changes that were made to the remote branch and then merges those changes into your local branch. You can also modify the behaviour of pull by passing --rebase. The difference between merge and rebase can be read <a href="https://stackoverflow.com/questions/16666089/whats-the-difference-between-git-merge-and-git-rebase">here</a></p>
+
+<p><strong>git fetch</strong></p>
+
+<p>Git fetch does only half the work of git pull. It just brings the remote changes into your local repo but does not apply them onto your branches.You have to explicitly apply those changes. This can be done as follows:</p>
+
+<pre><code>git fetch
+git rebase origin/master
+</code></pre>

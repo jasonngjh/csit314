@@ -1,0 +1,10 @@
+<p>You need to put this line in your code:</p>
+
+<pre><code>$(location).attr("href","http://stackoverflow.com");
+</code></pre>
+
+<p>If you don't have jQuery, go with JavaScript:</p>
+
+<pre><code>window.location.replace("http://stackoverflow.com");
+window.location.href("http://stackoverflow.com");
+</code></pre>

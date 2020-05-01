@@ -1,0 +1,9 @@
+<p>You can fetch from a remote repository, see the differences and then pull or merge.</p>
+
+<p>This is an example for a remote repository called <code>origin</code> and a branch called <code>master</code> tracking the remote branch <code>origin/master</code>:</p>
+
+<pre><code>git checkout master                                                  
+git fetch                                        
+git diff origin/master
+git rebase origin master
+</code></pre>

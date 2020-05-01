@@ -1,0 +1,11 @@
+<p>if you want to reset to the remote tracking branch in a generic way use:</p>
+
+<pre><code>git fetch
+git reset --keep origin/$(git rev-parse --abbrev-ref HEAD)
+</code></pre>
+
+<p>if you want to reset your local changes too:</p>
+
+<pre><code>git fetch
+git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+</code></pre>

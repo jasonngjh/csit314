@@ -1,0 +1,13 @@
+<p>I made this little diagram that shows how the data gets created and passed</p>
+
+<p><a href="https://i.stack.imgur.com/77ppY.png" rel="noreferrer"><img src="https://i.stack.imgur.com/77ppY.png" alt="Diagram of how data is created and passed"></a></p>
+
+<p>Note: Primitive values are passed as a value, the first reference to to that value is the method's argument</p>
+
+<p>That means:</p>
+
+<ul>
+<li>You can change the value of <code>myObject</code> <em>inside</em> the function</li>
+<li>But you can't change what <code>myObject</code> references to, inside the function, because <code>point</code> is not <code>myObject</code></li>
+<li>Remember, both <code>point</code> and <code>myObject</code> are <strong>references</strong>, different <strong>references</strong>, however, those references <strong>point</strong> at the same <code>new Point(0,0)</code></li>
+</ul>

@@ -1,0 +1,10 @@
+<pre><code>is_spacial=True if gender = "Female" else (True if age &gt;= 65 else False)
+</code></pre>
+
+<p>**</p>
+
+<blockquote>
+  <p>it can be nested as your need. best of luck</p>
+</blockquote>
+
+<p>**</p>

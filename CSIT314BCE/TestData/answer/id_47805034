@@ -1,0 +1,66 @@
+<h1>Property Removal in JavaScript</h1>
+
+<p>There are many different options presented on this page, not because most of the options are wrong—or because the answers are duplicates—but because the appropriate technique depends on the situation you're in and the goals of the tasks you and/or you team are trying to fulfill. To answer you question unequivocally, one needs to know:</p>
+
+<ol>
+<li>The version of ECMAScript you're targeting</li>
+<li>The range of object types you want to remove properties on and the type of property names you need to be able to omit (Strings only? Symbols? Weak references mapped from arbitrary objects? These have all been types of property pointers in JavaScript for years now)</li>
+<li>The programming ethos/patterns you and your team use. Do you favor functional approaches and mutation is verboten on your team, or do you employ wild west mutative object-oriented techniques?</li>
+<li>Are you looking to achieve this in pure JavaScript or are you willing &amp; able to use a 3rd-party library?</li>
+</ol>
+
+<p>Once those four queries have been answered, there are essentially four categories of "property removal" in JavaScript to chose from in order to meet your goals. They are:</p>
+
+<h2>Mutative object property deletion, unsafe</h2>
+
+<p>This category is for operating on object literals or object instances when you want to retain/continue to use the original reference and aren't using stateless functional principles in your code. An example piece of syntax in this category:</p>
+
+<pre><code>'use strict'
+const iLikeMutatingStuffDontI = { myNameIs: 'KIDDDDD!', [Symbol.for('amICool')]: true }
+delete iLikeMutatingStuffDontI[Symbol.for('amICool')] // true
+Object.defineProperty({ myNameIs: 'KIDDDDD!', 'amICool', { value: true, configurable: false })
+delete iLikeMutatingStuffDontI['amICool'] // throws
+</code></pre>
+
+<p>This category is the oldest, most straightforward &amp; most widely supported category of property removal. It supports <code>Symbol</code> &amp; array indexes in addition to strings and works in every version of JavaScript except for the very first release. However, it's mutative which violates some programming principles and has performance implications. It also can result in uncaught exceptions when used on <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete" rel="noreferrer">non-configurable properties in strict mode</a>.</p>
+
+<h2>Rest-based string property omission</h2>
+
+<p>This category is for operating on plain object or array instances in newer ECMAScript flavors when a non-mutative approach is desired and you don't need to account for Symbol keys:</p>
+
+<pre><code>const foo = { name: 'KIDDDDD!', [Symbol.for('isCool')]: true }
+const { name, ...coolio } = foo // coolio doesn't have "name"
+const { isCool, ...coolio2 } = foo // coolio2 has everything from `foo` because `isCool` doesn't account for Symbols :(
+</code></pre>
+
+<h2>Mutative object property deletion, safe</h2>
+
+<p>This category is for operating on object literals or object instances when you want to retain/continue to use the original reference while guarding against exceptions being thrown on unconfigurable properties:</p>
+
+<pre><code>'use strict'
+const iLikeMutatingStuffDontI = { myNameIs: 'KIDDDDD!', [Symbol.for('amICool')]: true }
+Reflect.deleteProperty(iLikeMutatingStuffDontI, Symbol.for('amICool')) // true
+Object.defineProperty({ myNameIs: 'KIDDDDD!', 'amICool', { value: true, configurable: false })
+Reflect.deleteProperty(iLikeMutatingStuffDontI, 'amICool') // false
+</code></pre>
+
+<p>In addition, while mutating objects in-place isn't stateless, you can use the functional nature of <code>Reflect.deleteProperty</code> to do partial application and other functional techniques that aren't possible with <code>delete</code> statements.</p>
+
+<h2>Syntax-based string property omission</h2>
+
+<p>This category is for operating on plain object or array instances in newer ECMAScript flavors when a non-mutative approach is desired and you don't need to account for Symbol keys:</p>
+
+<pre><code>const foo = { name: 'KIDDDDD!', [Symbol.for('isCool')]: true }
+const { name, ...coolio } = foo // coolio doesn't have "name"
+const { isCool, ...coolio2 } = foo // coolio2 has everything from `foo` because `isCool` doesn't account for Symbols :(
+</code></pre>
+
+<h2>Library-based property omission</h2>
+
+<p>This category is generally allows for greater functional flexibility, including accounting for Symbols &amp; omitting more than one property in one statement:</p>
+
+<pre><code>const o = require("lodash.omit")
+const foo = { [Symbol.for('a')]: 'abc', b: 'b', c: 'c' }
+const bar = o(foo, 'a') // "'a' undefined"
+const baz = o(foo, [ Symbol.for('a'), 'b' ]) // Symbol supported, more than one prop at a time, "Symbol.for('a') undefined"
+</code></pre>

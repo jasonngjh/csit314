@@ -1,0 +1,22 @@
+<p>For JSON text:</p>
+
+<p><strong><code>application/json</code></strong></p>
+
+<blockquote>
+  <p>The MIME media type for JSON text is <strong><code>application/json</code></strong>. The default encoding is UTF-8. (Source: <a href="http://www.ietf.org/rfc/rfc4627.txt" rel="noreferrer">RFC 4627</a>).</p>
+</blockquote>
+
+<p>For <a href="http://en.wikipedia.org/wiki/JSONP" rel="noreferrer">JSONP</a> (runnable javascript) with callback:</p>
+
+<blockquote>
+  <p><strong><code>application/javascript</code></strong></p>
+</blockquote>
+
+<p>Here are some blog posts that were mentioned in the comments that are relevant.</p>
+
+<ul>
+<li><a href="http://jibbering.com/blog/?p=514" rel="noreferrer">Why you shouldn't use <code>text/html</code> for JSON</a></li>
+<li><a href="https://web.archive.org/web/20180102070201/www.entwicklungsgedanken.de/2008/06/06/problems-with-internet-explorer-and-applicationjson/" rel="noreferrer">Internet&nbsp;Explorer sometimes has issues with <code>application/json</code></a></li>
+<li><a href="https://github.com/h5bp/server-configs-nginx/blob/master/mime.types" rel="noreferrer">A rather complete list of Mimetypes and what to use them for</a></li>
+<li><a href="http://www.iana.org/assignments/media-types/application/" rel="noreferrer">The official mime type list at IANA</a> from @gnrfan's answer below</li>
+</ul>

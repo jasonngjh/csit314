@@ -1,0 +1,3 @@
+<p>Usually I would expect a <code>String.contains()</code> method, but there doesn't seem to be one. </p>
+
+<p>What is a reasonable way to check for this?</p>

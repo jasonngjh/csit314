@@ -1,0 +1,26 @@
+<p>In JavaScript there are two ways to create functions:</p>
+
+<ol>
+<li><p>Function declaration:</p>
+
+<pre><code>function fn(){
+  console.log("Hello");
+}
+fn();
+</code></pre>
+
+<p>This is very basic, self-explanatory, used in many languages and standard across C family of languages. We declared a function defined it and executed it by calling it.</p>
+
+<p>What you should be knowing is that functions are actually objects in JavaScript; internally we have created an object for above function and given it a name called fn or the reference to the object is stored in fn. Functions are objects in JavaScript; an instance of function is actually an object instance.</p></li>
+<li><p>Function expression:</p>
+
+<pre><code>var fn=function(){
+  console.log("Hello");
+}
+fn();
+</code></pre>
+
+<p>JavaScript has first-class functions, that is, create a function and assign it to a variable just like you create a string or number and assign it to a variable. Here, the fn variable is assigned to a function. The reason for this concept is functions are objects in JavaScript; fn is pointing to the object instance of the above function. We have initialized a function and assigned it to a variable. It's not executing the function and assigning the result.</p></li>
+</ol>
+
+<p>Reference: <em><a href="http://jkoder.com/javascript-function-declaration-syntax-var-fn-function-vs-function-fn/" rel="noreferrer">JavaScript function declaration syntax: var fn = function() {} vs function fn() {}</a></em></p>

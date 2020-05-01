@@ -1,0 +1,31 @@
+<p>Java passes parameters by value, but for object variables, the values are essentially references to objects. Since arrays are objects the following <a href="http://theoryapp.com/parameter-passing-in-java/" rel="noreferrer">example code</a> shows the difference.</p>
+
+<pre><code>public static void dummyIncrease(int[] x, int y)
+{
+    x[0]++;
+    y++;
+}
+public static void main(String[] args)
+{
+    int[] arr = {3, 4, 5};
+    int b = 1;
+    dummyIncrease(arr, b);
+    // arr[0] is 4, but b is still 1
+}
+
+main()
+  arr +---+       +---+---+---+
+      | # | ----&gt; | 3 | 4 | 5 |
+      +---+       +---+---+---+
+  b   +---+             ^
+      | 1 |             | 
+      +---+             |
+                        |
+dummyIncrease()         |
+  x   +---+             |
+      | # | ------------+
+      +---+      
+  y   +---+ 
+      | 1 | 
+      +---+ 
+</code></pre>

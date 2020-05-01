@@ -1,0 +1,2 @@
+<pre><code>.is(":not(':hidden')") /*if shown*/
+</code></pre>

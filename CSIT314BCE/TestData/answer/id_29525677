@@ -1,0 +1,41 @@
+<p>(I am not taking the 6-years-old thing into account.)</p>
+
+<p>In a language like JavaScript, where you can pass functions as parameters to other functions (languages where functions are <em>first class citizens</em>), you will often find yourself doing something like:</p>
+
+<pre><code>var name = 'Rafael';
+
+var sayName = function() {
+  console.log(name);
+};
+</code></pre>
+
+<p>You see, <code>sayName</code> doesn't have the definition for the <code>name</code> variable, but it does use the value of <code>name</code> that was defined outside of <code>sayName</code> (in a parent scope).</p>
+
+<p>Let's say you pass <code>sayName</code> as a parameter to another function, that will call <code>sayName</code> as a callback:</p>
+
+<pre><code>functionThatTakesACallback(sayName);
+</code></pre>
+
+<p>Note that:</p>
+
+<ol>
+<li><code>sayName</code> will be called from inside <code>functionThatTakesACallback</code> (assume that, since I haven't implemented <code>functionThatTakesACallback</code> in this example).</li>
+<li>When <code>sayName</code> is called, it will log the value of the <code>name</code> variable.</li>
+<li><code>functionThatTakesACallback</code> doesn't define a <code>name</code> variable (well, it could, but it wouldn't matter, so assume it doesn't).</li>
+</ol>
+
+<p>So we have <code>sayName</code> being called inside <code>functionThatTakesACallback</code> and referring to a <code>name</code> variable that is not defined inside <code>functionThatTakesACallback</code>.</p>
+
+<p>What happens then? A <code>ReferenceError: name is not defined</code>?</p>
+
+<p>No! The value of <code>name</code> is captured inside a <strong>closure</strong>. You can think of this closure as <strong>context associated to a function</strong>, that holds the values that were available where that function was defined.</p>
+
+<p>So: Even though <code>name</code> is not in scope where the function <code>sayName</code> will be called (inside <code>functionThatTakesACallback</code>), <code>sayName</code> can access the value for <code>name</code> that is captured in the closure associated with <code>sayName</code>.</p>
+
+<p>--</p>
+
+<p>From the book <em>Eloquent JavaScript</em>:</p>
+
+<blockquote>
+  <p>A good mental model is to think of function values as containing both the code in their body and the environment in which they are created. When called, the function body sees its original environment, not the environment in which the call is made.</p>
+</blockquote>

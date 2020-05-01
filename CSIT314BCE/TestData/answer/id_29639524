@@ -1,0 +1,29 @@
+<p>Here's the most Zen answer I can give:</p>
+
+<p>What would you expect this code to do? Tell me in a comment before you run it. I'm curious!</p>
+
+<pre><code>function foo() {
+  var i = 1;
+  return function() {
+    console.log(i++);
+  }
+}
+
+var bar = foo();
+bar();
+bar();
+bar();
+
+var baz = foo();
+baz();
+baz();
+baz();
+</code></pre>
+
+<p>Now open the console in your browser (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd> or <kbd>F12</kbd>, hopefully) and paste the code in and hit <kbd>Enter</kbd>.</p>
+
+<p>If this code printed what you expect (JavaScript newbies - ignore the "undefined" at the end), then you already have <em>wordless understanding</em>.  <em>In words</em>, the variable <code>i</code> is part of the inner function <em>instance's</em> closure.</p>
+
+<p>I put it this way because, once I understood that this code is putting instances of <code>foo()</code>'s inner function in <code>bar</code> and <code>baz</code> and then calling them via those variables, nothing else surprised me.</p>
+
+<p>But if I'm wrong and the console output surprised you, let me know!</p>

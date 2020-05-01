@@ -1,0 +1,14 @@
+<p>On <a href="https://www.atlassian.com/software/sourcetree/overview">SourceTree</a> (GUI for GitHub), you may right-click the commit and do a 'Reverse Commit'. This should undo your changes.</p>
+
+<p>On the terminal:</p>
+
+<p>You may alternatively use:</p>
+
+<pre><code>git revert
+</code></pre>
+
+<p>Or:</p>
+
+<pre class="lang-bash prettyprint-override"><code>git reset --soft HEAD^ # Use --soft if you want to keep your changes.
+git reset --hard HEAD^ # Use --hard if you don't care about keeping your changes.
+</code></pre>

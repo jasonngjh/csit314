@@ -1,0 +1,44 @@
+<p>The difference is that <code>functionOne</code> is a function expression and so only defined when that line is reached, whereas <code>functionTwo</code> is a function declaration and is defined as soon as its surrounding function or script is executed (due to <a href="http://adripofjavascript.com/blog/drips/variable-and-function-hoisting.html" rel="noreferrer">hoisting</a>).  </p>
+
+<p>For example, a function expression:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>// TypeError: functionOne is not a function
+functionOne();
+
+var functionOne = function() {
+  console.log("Hello!");
+};</code></pre>
+</div>
+</div>
+</p>
+
+<p>And, a function declaration:   </p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>// Outputs: "Hello!"
+functionTwo();
+
+function functionTwo() {
+  console.log("Hello!");
+}</code></pre>
+</div>
+</div>
+</p>
+
+<p>Historically, function declarations defined within blocks were handled inconsistently between browsers. Strict mode (introduced in ES5) resolved this by scoping function declarations to their enclosing block.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>'use strict';    
+{ // note this block!
+  function functionThree() {
+    console.log("Hello!");
+  }
+}
+functionThree(); // ReferenceError</code></pre>
+</div>
+</div>
+</p>

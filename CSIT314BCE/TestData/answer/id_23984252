@@ -1,0 +1,9 @@
+<p>I think it is valuable to take a step back, and examine a more general notion of a "closure" -- the so-called "join operator".</p>
+
+<p>In mathematics, a "join" operator is a function on a partially ordered set which returns the smallest object greater than or equal to its arguments.  In symbols, join [a,b] = d such that d >= a and d >= b, but there does not exist an e such that d > e >= a or d > e >= b.</p>
+
+<p>So the join gives you the smallest thing "bigger" than the parts.</p>
+
+<p>Now, note that JavaScript scopes are a partially ordered structure.  So that there is a sensible notion of a join.  In particular, a join of scopes is the smallest scope bigger than the original scopes.  That scope is called the <strong>closure</strong>.</p>
+
+<p>So a closure for the variables a, b, c is the smallest scope (in the lattice of scopes for your program!) that brings a, b, and c into scope.</p>

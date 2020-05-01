@@ -1,0 +1,4 @@
+<p>You can use </p>
+
+<pre><code>Array.splice(index);
+</code></pre>

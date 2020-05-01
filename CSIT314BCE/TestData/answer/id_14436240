@@ -1,0 +1,20 @@
+<p>To clone a Git repository, do: </p>
+
+<pre><code>git clone &lt;either ssh url /http url&gt;
+</code></pre>
+
+<p>The above command checks out all of the branches, but only the <code>master</code> branch will be initialized. If you want to checkout the other branches, do:</p>
+
+<pre><code>git checkout -t origin/future_branch (for example)
+</code></pre>
+
+<p>This command checks out the remote branch, and your local branch name will be same as the remote branch.</p>
+
+<p>If you want to override your local branch name on checkout:</p>
+
+<pre><code>git checkout -t -b enhancement origin/future_branch
+</code></pre>
+
+<p>Now your local branch name is <code>enhancement</code>, but your remote branch name is <code>future_branch</code>. </p>
+
+<p><a href="http://madhan-tech-updates.blogspot.in/2013/01/checkout-branch-from-github.html" rel="noreferrer">Documentation</a></p>

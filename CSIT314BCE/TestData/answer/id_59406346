@@ -1,0 +1,8 @@
+<p>Remove a specific element from an array can be done in one line with the filter option, and it's supported by all browsers: <a href="https://caniuse.com/#search=filter%20array" rel="nofollow noreferrer">https://caniuse.com/#search=filter%20array</a></p>
+
+<pre><code>function removeValueFromArray(array, value) {
+    return array.filter(e =&gt; e != value)
+}
+</code></pre>
+
+<p>I tested this function here: <a href="https://bit.dev/joshk/jotils/remove-value-from-array/~code#test.ts" rel="nofollow noreferrer">https://bit.dev/joshk/jotils/remove-value-from-array/~code#test.ts</a></p>

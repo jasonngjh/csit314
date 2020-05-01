@@ -1,0 +1,32 @@
+<p>If you want to delete a property deeply nested in the object then you can use the following recursive function with path to the property as the second argument:</p>
+
+<pre><code>var deepObjectRemove = function(obj, path_to_key){
+    if(path_to_key.length === 1){
+        delete obj[path_to_key[0]];
+        return true;
+    }else{
+        if(obj[path_to_key[0]])
+            return deepObjectRemove(obj[path_to_key[0]], path_to_key.slice(1));
+        else
+            return false;
+    }
+};
+</code></pre>
+
+<p>Example: </p>
+
+<pre><code>var a = {
+    level1:{
+        level2:{
+            level3: {
+                level4: "yolo"
+            }
+        }
+    }
+};
+
+deepObjectRemove(a, ["level1", "level2", "level3"]);
+console.log(a);
+
+//Prints {level1: {level2: {}}}
+</code></pre>

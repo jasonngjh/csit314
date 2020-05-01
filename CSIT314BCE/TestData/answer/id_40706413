@@ -1,0 +1,3 @@
+<p>Normally, JavaScript does not follow strict rules, hence increasing chances of errors. After using <code>"use strict"</code>, the JavaScript code should follow strict set of rules as in other programming languages such as use of terminators, declaration before initialization, etc. </p>
+
+<p>If <code>"use strict"</code> is used, the code should be written by following a strict set of rules, hence decreasing the chances of errors and ambiguities.</p>

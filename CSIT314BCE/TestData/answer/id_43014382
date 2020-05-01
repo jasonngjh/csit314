@@ -1,0 +1,36 @@
+<p>To be fair the question pre-dates this answer.</p>
+
+<p>I add it not to criticise the OP but to help anyone still asking this question.</p>
+
+<p>The correct way to determine whether something is visible is to consult your view-model;</p>
+
+<p>If you don't know what that means then you are about to embark on a journey of discovery that will make your work a great deal less difficult.</p>
+
+<p>Here's an overview of the <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel" rel="nofollow noreferrer">model-view-view-model</a> architecture (MVVM).</p>
+
+<p><a href="http://knockoutjs.com" rel="nofollow noreferrer">KnockoutJS</a> is a binding library that will let you try this stuff out without learning an entire framework.</p>
+
+<p>And here's some JS and a DIV that may or may not be visible.</p>
+
+<pre><code>&lt;html&gt;
+&lt;body&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var vm = {
+        IsDivVisible: ko.observable(true);
+    }
+    vm.toggle = function(data, event) {
+      //get current visibility state for the div
+      var x = IsDivVisible();
+      //set it to the opposite
+      IsDivVisible(!x);
+    }
+    ko.applyBinding(vm);
+&lt;/script&gt;
+&lt;div data-bind="visible: IsDivVisible"&gt;Peekaboo!&lt;/div&gt;
+&lt;button data-bind="click: toggle"&gt;Toggle the div's visibility&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Notice that the toggle function does not consult the DOM to determine the visibility of the div, it consults the view-model.</p>

@@ -1,0 +1,9 @@
+<p>If you have complex objects in the array you can use filters? 
+In situations where $.inArray or array.splice is not as easy to use. Especially if the objects are perhaps shallow in the array.</p>
+
+<p>E.g. if you have an object with an Id field and you want the object removed from an array:</p>
+
+<pre><code>this.array = this.array.filter(function(element, i) {
+    return element.id !== idToRemove;
+});
+</code></pre>

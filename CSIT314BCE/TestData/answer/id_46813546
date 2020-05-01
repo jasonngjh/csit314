@@ -1,0 +1,3 @@
+<p>I prefer to use <code>string</code> because this type is used so much that I don't want the syntax highlighter blending it in with all the other classes. Although it is a class it is used more like a primitive therefore I think the different highlight colour is appropriate.</p>
+
+<p>If you right click on the <code>string</code> keyword and select <code>Go to definition</code> from the context menu it'll take you to the <code>String</code> class - it's just syntactic sugar but it improves readability imo.</p>

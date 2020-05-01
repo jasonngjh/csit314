@@ -1,0 +1,3 @@
+<p>Trying to be clear and simple.</p>
+
+<p>The <strong>git pull</strong> command is actually a <code>shortcut</code> for <strong>git fetch</strong> followed by the <strong>git merge</strong> or the <strong>git rebase</strong> command depending on your configuration. You can configure your Git repository so that <strong>git pull</strong> is a fetch followed by a rebase.</p>

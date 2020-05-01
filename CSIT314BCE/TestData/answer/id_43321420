@@ -1,0 +1,136 @@
+<p>Let's start from here, As defined on MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures" rel="noreferrer"><strong>Closures</strong></a> are functions that refer to independent (free) variables (variables that are used locally, but defined in an enclosing scope). In other words, these functions 'remember' the environment in which they were created.</p>
+
+<p><strong>Lexical scoping</strong><br>
+Consider the following:</p>
+
+<pre><code>function init() {
+  var name = 'Mozilla'; // name is a local variable created by init
+  function displayName() { // displayName() is the inner function, a closure
+    alert(name); // use variable declared in the parent function    
+  }
+  displayName();    
+}
+init();
+</code></pre>
+
+<p>init() creates a local variable called name and a function called displayName(). The displayName() function is an inner function that is defined inside init() and is only available within the body of the  init() function. The displayName() function has no local variables of its own. However, because inner functions have access to the variables of outer functions, displayName() can access the variable name declared in the parent function, init().</p>
+
+<pre><code>function init() {
+    var name = "Mozilla"; // name is a local variable created by init
+    function displayName() { // displayName() is the inner function, a closure
+        alert (name); // displayName() uses variable declared in the parent function    
+    }
+    displayName();    
+}
+init();
+</code></pre>
+
+<p>Run the code and notice that the alert() statement within the displayName() function successfully displays the value of the name variable, which is declared in its parent function. This is an example of lexical scoping, which describes how a parser resolves variable names when functions are nested. The word "lexical" refers to the fact that lexical scoping uses the location where a variable is declared within the source code to determine where that variable is available. Nested functions have access to variables declared in their outer scope.</p>
+
+<p><strong>Closure</strong><br>
+Now consider the following example:</p>
+
+<pre><code>function makeFunc() {
+  var name = 'Mozilla';
+  function displayName() {
+    alert(name);
+  }
+  return displayName;
+}
+
+var myFunc = makeFunc();
+myFunc();
+</code></pre>
+
+<p>Running this code has exactly the same effect as the previous example of the init() function above: this time, the string "Mozilla" will be displayed in a JavaScript alert box. What's different — and interesting — is that the displayName() inner function is returned from the outer function before being executed.</p>
+
+<p>At first glance, it may seem unintuitive that this code still works. In some programming languages, the local variables within a function exist only for the duration of that function's execution. Once makeFunc() has finished executing, you might expect that the name variable would no longer be accessible. However, because the code still works as expected, this is obviously not the case in JavaScript.</p>
+
+<p>The reason is that functions in JavaScript form closures. A closure is the combination of a function and the lexical environment within which that function was declared. This environment consists of any local variables that were in-scope at the time that the closure was created. In this case, myFunc is a reference to the instance of the function displayName created when makeFunc is run. The instance of displayName maintains a reference to its lexical environment, within which the variable name exists. For this reason, when myFunc is invoked, the variable name remains available for use and "Mozilla" is passed to alert.</p>
+
+<p>Here's a slightly more interesting example — a makeAdder function:</p>
+
+<pre><code>function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var add5 = makeAdder(5);
+var add10 = makeAdder(10);
+
+console.log(add5(2));  // 7
+console.log(add10(2)); // 12
+</code></pre>
+
+<p>In this example, we have defined a function makeAdder(x), which takes a single argument, x, and returns a new function. The function it returns takes a single argument, y, and returns the sum of x and y.</p>
+
+<p>In essence, makeAdder is a function factory — it creates functions which can add a specific value to their argument. In the above example we use our function factory to create two new functions — one that adds 5 to its argument, and one that adds 10.</p>
+
+<p>add5 and add10 are both closures. They share the same function body definition, but store different lexical environments. In add5's lexical environment, x is 5, while in the lexical environment for add10, x is 10.</p>
+
+<p><strong>Practical closures</strong></p>
+
+<p>Closures are useful because they let you associate some data (the lexical environment) with a function that operates on that data. This has obvious parallels to object oriented programming, where objects allow us to associate some data (the object's properties) with one or more methods.</p>
+
+<p>Consequently, you can use a closure anywhere that you might normally use an object with only a single method.</p>
+
+<p>Situations where you might want to do this are particularly common on the web. Much of the code we write in front-end JavaScript is event-based — we define some behavior, then attach it to an event that is triggered by the user (such as a click or a keypress). Our code is generally attached as a callback: a single function which is executed in response to the event.</p>
+
+<p>For instance, suppose we wish to add some buttons to a page that adjust the text size. One way of doing this is to specify the font-size of the body element in pixels, then set the size of the other elements on the page (such as headers) using the relative em unit:</p>
+
+<pre><code>body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.2em;
+}
+</code></pre>
+
+<p>Our interactive text size buttons can change the font-size property of the body element, and the adjustments will be picked up by other elements on the page thanks to the relative units.
+Here's the JavaScript:</p>
+
+<pre><code>function makeSizer(size) {
+  return function() {
+    document.body.style.fontSize = size + 'px';
+  };
+}
+
+var size12 = makeSizer(12);
+var size14 = makeSizer(14);
+var size16 = makeSizer(16);
+</code></pre>
+
+<p>size12, size14, and size16 are now functions which will resize the body text to 12, 14, and 16 pixels, respectively. We can attach them to buttons (in this case links) as follows:</p>
+
+<pre><code>document.getElementById('size-12').onclick = size12;
+document.getElementById('size-14').onclick = size14;
+document.getElementById('size-16').onclick = size16;
+
+&lt;a href="#" id="size-12"&gt;12&lt;/a&gt;
+&lt;a href="#" id="size-14"&gt;14&lt;/a&gt;
+&lt;a href="#" id="size-16"&gt;16&lt;/a&gt;
+
+
+function makeSizer(size) {
+  return function() {
+    document.body.style.fontSize = size + 'px';
+  };
+}
+
+var size12 = makeSizer(12);
+var size14 = makeSizer(14);
+var size16 = makeSizer(16);
+
+document.getElementById('size-12').onclick = size12;
+document.getElementById('size-14').onclick = size14;
+document.getElementById('size-16').onclick = size16;
+</code></pre>
+
+<p>for reading more about closures, visit the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures" rel="noreferrer">link on MDN</a></p>

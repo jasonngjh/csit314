@@ -1,0 +1,82 @@
+<p><strong>Expression in JS</strong>:  Something that returns a value <br>
+Example: Try out following in chrome console:</p>
+
+<pre><code>a = 10
+output : 10
+
+(1 + 3)
+output = 4
+</code></pre>
+
+<p><strong>Declaration/Statement</strong>: Something that does not return a value <br>
+Example:</p>
+
+<pre><code>if (1 &gt; 2) {
+ // do something. 
+}
+</code></pre>
+
+<p>here (1>2) is an expression but the 'if' statament is not. Its not returning anything. </p>
+
+<p><br></p>
+
+<p>Similarly, we have Function Declaration/Statement vs Function Expression <br>
+Lets take an example:</p>
+
+<pre><code>// test.js
+
+var a = 10;
+
+// function expression
+var fun_expression = function() {
+   console.log("Running function Expression");
+}
+
+// funciton expression
+
+function fun_declaration() {
+   console.log("Running function Statement");
+}
+</code></pre>
+
+<p><strong>Important:</strong> 
+What happens when JavaScript engines runs the above js file.</p>
+
+<ul>
+<li><p>When this js runs following things will happen:</p>
+
+<ol>
+<li>Memory will be created variable 'a' and 'fun_expression'. And memory will be created for function statement 'fun_declaration'</li>
+<li>'a' will be assigned 'undefined'. 'fun_expression' will be assigned 'undefined'. 'fun_declaration' will be in the memory in its entirety. <br> 
+<strong>Note: Step 1 and 2 above are called 'Execution Context - Creation Phase'</strong>. </li>
+</ol></li>
+</ul>
+
+<p>Now suppose we update the js to.</p>
+
+<pre><code>// test.js
+
+console.log(a)  //output: udefined (No error)
+console.log(fun_expression)  // output: undefined (No error)
+console.log(fun_expression()) // output: Error. As we trying to invoke undefined. 
+console.log(fun_declaration()) // output: running function statement  (As fun_declaration is already hoisted in the memory). 
+
+var a = 10;
+
+// function expression
+var fun_expression = function() {
+   console.log('Running function expression')
+}
+
+// function declaration
+
+function fun_declaration() {
+   console.log('running function declaration')
+}
+
+console.log(a)   // output: 10
+console.log(fun_expression()) //output: Running function expression
+console.log(fun_declaration()) //output: running function declaration
+</code></pre>
+
+<p>The output mentioned above in the comments, should be useful to understand the different between function expression and function statement/declaration.</p>

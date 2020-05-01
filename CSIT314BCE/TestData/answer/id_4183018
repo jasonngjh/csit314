@@ -1,0 +1,8 @@
+<p><strong>No</strong>, comments of the form <code>//…</code> or <code>/*…*/</code> are not allowed in JSON. This answer is based on:</p>
+
+<ul>
+<li><a href="http://www.json.org" rel="noreferrer">http://www.json.org</a></li>
+<li><a href="http://www.ietf.org/rfc/rfc4627.txt" rel="noreferrer">RFC 4627</a>:
+The <code>application/json</code> Media Type for JavaScript Object Notation (JSON)</li>
+<li><a href="https://tools.ietf.org/html/rfc8259" rel="noreferrer">RFC 8259</a> The JavaScript Object Notation (JSON) Data Interchange Format (supercedes RFCs 4627, 7158, 7159)</li>
+</ul>

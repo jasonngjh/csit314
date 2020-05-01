@@ -1,0 +1,21 @@
+<p><strong>Exotic one</strong></p>
+
+<pre><code>myObject.regex = undefined;
+myObject = JSON.parse(JSON.stringify(myObject));
+</code></pre>
+
+<p><div class="snippet" data-lang="js" data-hide="true" data-console="true" data-babel="false">
+<div class="snippet-code snippet-currently-hidden">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var myObject = {
+    "ircEvent": "PRIVMSG",
+    "method": "newURI",
+    "regex": "^http://.*"
+};
+
+myObject.regex = undefined;
+myObject = JSON.parse(JSON.stringify(myObject));    // immutable
+
+console.log(myObject);</code></pre>
+</div>
+</div>
+</p>

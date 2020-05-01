@@ -1,0 +1,12 @@
+<p>I already use the function redirect() of JavaScript. It's working.</p>
+
+<pre><code>&lt;script type="text/javascript"&gt;
+    $(function () {
+        //It's similar to HTTP redirect
+        window.location.replace("http://www.Technomark.in");
+
+        //It's similar to clicking on a link
+        window.location.href = "Http://www.Technomark.in";
+    })
+&lt;/script&gt;
+</code></pre>

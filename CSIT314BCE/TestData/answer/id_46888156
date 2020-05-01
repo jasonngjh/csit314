@@ -1,0 +1,11 @@
+<p>According to the latest document using a terminal we can delete in the following way.</p>
+
+<p><strong>Delete in local:</strong></p>
+
+<pre><code>git branch -D usermanagement
+</code></pre>
+
+<p><strong>Delete in remote location:</strong></p>
+
+<pre><code>git push --delete origin usermanagement
+</code></pre>

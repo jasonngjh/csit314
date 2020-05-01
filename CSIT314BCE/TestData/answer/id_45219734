@@ -1,0 +1,33 @@
+<p><strong>OK,</strong> going back to a previous commit in Git is quite easy...</p>
+
+<p>Revert back <strong>without keeping</strong> the changes:</p>
+
+<pre><code>git reset --hard &lt;commit&gt;
+</code></pre>
+
+<p>Revert back <strong>with keeping</strong> the changes:</p>
+
+<pre><code>git reset --soft &lt;commit&gt;
+</code></pre>
+
+<p><strong>Explanation:</strong> using <code>git reset</code>, you can reset to a specific state. It's common using it with a commit hash as you see above.</p>
+
+<p>But as you see the difference is using the two flags <code>--soft</code> and <code>--hard</code>, by default <code>git reset</code> using <code>--soft</code> flag, but it's a good practice always using the flag, I explain each flag:</p>
+
+<hr/>
+
+<h2>--soft</h2>
+
+<p>The default flag as explained, not need to provide it, does not change the working tree, but it adds all changed files ready to commit, so you go back to the commit status which changes to files get unstaged.</p>
+
+<hr/>
+
+<h2>--hard</h2>
+
+<p>Be careful with this flag. It resets the working tree and all changes to tracked files and all will be gone!</p>
+
+<hr/>
+
+<p>I also created the image below that may happen in a real life working with Git:</p>
+
+<p><a href="https://i.stack.imgur.com/y6Xgj.png" rel="noreferrer"><img src="https://i.stack.imgur.com/y6Xgj.png" alt="Git reset to a commit"></a></p>

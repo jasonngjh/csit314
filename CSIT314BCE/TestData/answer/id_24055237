@@ -1,0 +1,25 @@
+<p>The first example is a function declaration:</p>
+
+<pre><code>function abc(){}
+</code></pre>
+
+<p>The second example is a function expression:</p>
+
+<pre><code>var abc = function() {};
+</code></pre>
+
+<p>The main difference is how they are hoisted (lifted and declared). In the first example, the whole function declaration is hoisted. In the second example only the var 'abc' is hoisted, its value (the function) will be undefined, and the function itself remains at the position that it is declared.</p>
+
+<p>To put it simply:</p>
+
+<pre><code>//this will work
+abc(param);
+function abc(){}
+
+//this would fail
+abc(param);
+var abc = function() {}
+</code></pre>
+
+<p>To study more about this topic I strongly recommend you this
+<a href="http://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/#comment-43792">link</a></p>

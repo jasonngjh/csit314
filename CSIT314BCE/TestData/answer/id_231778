@@ -1,0 +1,5 @@
+<p><code>yield</code> is just like <code>return</code> - it returns whatever you tell it to (as a generator). The difference is that the next time you call the generator, execution starts from the last call to the <code>yield</code> statement. Unlike return, <strong>the stack frame is not cleaned up when a yield occurs, however control is transferred back to the caller, so its state will resume the next time the function is called.</strong></p>
+
+<p>In the case of your code, the function <code>get_child_candidates</code> is acting like an iterator so that when you extend your list, it adds one element at a time to the new list.</p>
+
+<p><code>list.extend</code> calls an iterator until it's exhausted. In the case of the code sample you posted, it would be much clearer to just return a tuple and append that to the list.</p>

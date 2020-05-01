@@ -1,0 +1,32 @@
+<p>The following method will remove all entries of a given value from an array without creating a new array and with only one iteration which is <em>superfast</em>. And it works in ancient <a href="https://en.wikipedia.org/wiki/Internet_Explorer_5" rel="noreferrer">Internet&nbsp;Explorer 5.5</a> browser:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="false" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function removeFromArray(arr, removeValue) {
+  for (var i = 0, k = 0, len = arr.length &gt;&gt;&gt; 0; i &lt; len; i++) {
+    if (k &gt; 0)
+      arr[i - k] = arr[i];
+
+    if (arr[i] === removeValue)
+      k++;
+  }
+
+  for (; k--;)
+    arr.pop();
+}
+
+var a = [0, 1, 0, 2, 0, 3];
+
+document.getElementById('code').innerHTML =
+  'Initial array [' + a.join(', ') + ']';
+//Initial array [0, 1, 0, 2, 0, 3]
+
+removeFromArray(a, 0);
+
+document.getElementById('code').innerHTML +=
+  '&lt;br&gt;Resulting array [' + a.join(', ') + ']';
+//Resulting array [1, 2, 3]</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;code id="code"&gt;&lt;/code&gt;</code></pre>
+</div>
+</div>
+</p>

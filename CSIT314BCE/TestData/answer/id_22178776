@@ -1,0 +1,13 @@
+<p>If you want to "uncommit", erase the last commit message, and put the modified files back in staging, you would use the command:</p>
+
+<pre><code>git reset --soft HEAD~1
+</code></pre>
+
+<ul>
+<li><code>--soft</code> indicates that the uncommitted files should be retained as working files opposed to <code>--hard</code> which would discard them.</li>
+<li><code>HEAD~1</code> is the last commit.  If you want to rollback 3 commits you could use <code>HEAD~3</code>.  If you want to rollback to a specific revision number, you could also do that using its SHA hash.</li>
+</ul>
+
+<p>This is an extremely useful command in situations where you committed the wrong thing and you want to undo that last commit.</p>
+
+<p>Source: <a href="http://nakkaya.com/2009/09/24/git-delete-last-commit/">http://nakkaya.com/2009/09/24/git-delete-last-commit/</a></p>

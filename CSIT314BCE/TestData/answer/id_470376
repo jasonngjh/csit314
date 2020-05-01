@@ -1,0 +1,15 @@
+<p>You can index into a tuple:</p>
+
+<pre><code>(falseValue, trueValue)[test]
+</code></pre>
+
+<p><code>test</code> needs to return <em>True</em> or <em>False</em>.<br>
+It might be safer to always implement it as:</p>
+
+<pre><code>(falseValue, trueValue)[test == True]
+</code></pre>
+
+<p>or you can use the built-in <a href="https://docs.python.org/3.3/library/functions.html#bool" rel="noreferrer" title="bool"><code>bool()</code></a> to assure a <a href="https://en.wikipedia.org/wiki/Boolean_data_type" rel="noreferrer" title="Boolean data type">Boolean</a> value:</p>
+
+<pre><code>(falseValue, trueValue)[bool(&lt;expression&gt;)]
+</code></pre>

@@ -1,0 +1,6 @@
+<p><code>Content-Type: application/json</code> - json
+<br><code>Content-Type: application/javascript</code> - json-P
+<br><code>Content-Type: application/x-javascript</code> - javascript
+<br><code>Content-Type: text/javascript</code> - javascript BUT obsolete, older IE versions used to use as html attribute.
+<br><code>Content-Type: text/x-javascript</code> - JavaScript Media Types BUT obsolete
+<br><code>Content-Type: text/x-json</code> - json before application/json got officially registered.</p>

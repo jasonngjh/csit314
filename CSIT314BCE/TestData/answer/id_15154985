@@ -1,0 +1,13 @@
+<p>If the branch is on something other than the <code>origin</code> remote I like to do the following:</p>
+
+<pre><code>$ git fetch
+$ git checkout -b second/next upstream/next
+</code></pre>
+
+<p>This will checkout the <code>next</code> branch on the <code>upstream</code> remote in to a local branch called <code>second/next</code>. Which means if you already have a local branch named next it will not conflict.</p>
+
+<pre><code>$ git branch -a
+* second/next
+  remotes/origin/next
+  remotes/upstream/next
+</code></pre>

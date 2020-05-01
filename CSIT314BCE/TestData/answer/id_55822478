@@ -1,0 +1,2 @@
+<pre><code>[2,3,5].filter(i =&gt; ![5].includes(i))
+</code></pre>

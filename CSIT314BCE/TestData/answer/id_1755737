@@ -1,0 +1,1 @@
+<p>The usage of <code>--&gt;</code> has historical relevance. Decrementing was (and still is in some cases), faster than incrementing on the x86 architecture. Using <code>--&gt;</code> suggests that <code>x</code> is going to <code>0</code>, and appeals to those with mathematical backgrounds.</p>

@@ -1,0 +1,7 @@
+<pre><code>if($('#postcode_div').is(':visible')) {
+    if($('#postcode_text').val()=='') {
+        $('#spanPost').text('\u00a0');
+    } else {
+        $('#spanPost').text($('#postcode_text').val());
+}
+</code></pre>

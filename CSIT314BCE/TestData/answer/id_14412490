@@ -1,0 +1,7 @@
+<p>In <a href="http://en.wikipedia.org/wiki/JavaServer_Pages">JSP</a>, you can use this in page directive:</p>
+
+<pre><code>&lt;%@ page language="java" contentType="application/json; charset=UTF-8"
+    pageEncoding="UTF-8"%&gt;
+</code></pre>
+
+<p>The correct <a href="http://en.wikipedia.org/wiki/MIME">MIME</a> media type for JSON is <code>application/json</code>.  JSP will use it for sending a response to the client.</p>

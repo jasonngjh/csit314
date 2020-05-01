@@ -1,0 +1,24 @@
+<p>If the python interpreter is running a particular module then <code>__name__</code> global  variable will have value <code>"__main__"</code></p>
+
+<pre><code>  def a():
+      print("a")
+  def b():
+      print("b")
+
+  if __name__ == "__main__": 
+
+          print ("you can see me" )
+          a()
+  else: 
+
+          print ("You can't see me")
+          b()
+</code></pre>
+
+<p>When you run this script prints <strong>you can see me</strong> </p>
+
+<p><strong>a</strong></p>
+
+<p>If you import this file say A to file B  and execute the file B then <code>if __name__ == "__main__"</code> in file A becomes false, so it prints  <strong>You can't see me</strong></p>
+
+<p><strong>b</strong></p>

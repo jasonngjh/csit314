@@ -1,0 +1,12 @@
+<p>This will <a href="https://en.wikipedia.org/wiki/DWIM">DWIM</a> for a remote not named origin (<a href="http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html">documentation</a>):</p>
+
+<pre><code>$ git checkout -t remote_name/remote_branch
+</code></pre>
+
+<p>To add a new remote, you will need to do the following first:</p>
+
+<pre><code>$ git remote add remote_name location_of_remote
+$ git fetch remote_name
+</code></pre>
+
+<p>The first tells Git the remote exists, the second gets the commits.</p>

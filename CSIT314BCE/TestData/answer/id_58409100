@@ -1,0 +1,20 @@
+<p>As already answered, yes there is a ternary operator in python:</p>
+
+<pre><code>&lt;expression 1&gt; if &lt;condition&gt; else &lt;expression 2&gt;
+</code></pre>
+
+<p>Additional information:</p>
+
+<p>If <code>&lt;expression 1&gt;</code> is the condition you can use <a href="https://en.wikipedia.org/wiki/Short-circuit_evaluation" rel="noreferrer">Short-cirquit evaluation</a>:</p>
+
+<pre class="lang-py prettyprint-override"><code>a = True
+b = False
+
+# Instead of this:
+x = a if a else b
+
+# You could use Short-cirquit evaluation:
+x = a or b
+</code></pre>
+
+<p>PS: Of course, a Short-cirquit evaluation is not a ternary operator but often the ternary is used in cases where the short circuit would be enough.</p>

@@ -1,0 +1,10 @@
+<p>Fetch from the remote and checkout the branch.</p>
+
+<pre><code>git fetch &lt;remote_name&gt; &amp;&amp; git checkout &lt;branch_name&gt; 
+</code></pre>
+
+<p>E.g.:</p>
+
+<blockquote>
+  <p>git fetch origin &amp;&amp; git checkout feature/XYZ-1234-Add-alerts </p>
+</blockquote>

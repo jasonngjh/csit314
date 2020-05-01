@@ -1,0 +1,20 @@
+<p>I don't know how you are expecting <code>array.remove(int)</code> to behave. There are three possibilities I can think of that you might want.</p>
+
+<p>To remove an element of an array at an index <code>i</code>:</p>
+
+<pre class="lang-js prettyprint-override"><code>array.splice(i, 1);
+</code></pre>
+
+<p>If you want to remove every element with value <code>number</code> from the array:</p>
+
+<pre class="lang-js prettyprint-override"><code>for(var i = array.length - 1; i &gt;= 0; i--) {
+    if(array[i] === number) {
+        array.splice(i, 1);
+    }
+}
+</code></pre>
+
+<p>If you just want to make the element at index <code>i</code> no longer exist, but you don't want the indexes of the other elements to change:</p>
+
+<pre><code>delete array[i];
+</code></pre>

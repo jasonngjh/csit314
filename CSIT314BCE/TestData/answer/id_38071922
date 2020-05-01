@@ -1,0 +1,15 @@
+<p>Use <a href="http://api.jquery.com/jquery.grep/" rel="noreferrer">jQuery.grep()</a>:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var y = [1, 2, 3, 9, 4]
+var removeItem = 9;
+
+y = jQuery.grep(y, function(value) {
+  return value != removeItem;
+});
+console.log(y)</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"&gt;&lt;/script&gt;</code></pre>
+</div>
+</div>
+</p>

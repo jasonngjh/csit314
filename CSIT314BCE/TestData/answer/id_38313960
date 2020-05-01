@@ -1,0 +1,4 @@
+<pre><code>git reset filename.txt
+</code></pre>
+
+<p>Will remove a file named filename.txt from the current index, the "about to be committed" area, without changing anything else.</p>

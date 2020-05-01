@@ -1,0 +1,9 @@
+<p>In my case I accidentally committed some files I did not want to. So I did the following and it worked:</p>
+
+<pre><code>git reset --soft HEAD^
+git rm --cached [files you do not need]
+git add [files you need]
+git commit -c ORIG_HEAD
+</code></pre>
+
+<p>Verify the results with gitk or git log --stat</p>

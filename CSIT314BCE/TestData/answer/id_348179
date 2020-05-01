@@ -1,0 +1,4 @@
+<p><code>git remove</code> or <code>git rm</code> can be used for this, with the <code>--cached</code> flag. Try:</p>
+
+<pre><code>git help rm
+</code></pre>

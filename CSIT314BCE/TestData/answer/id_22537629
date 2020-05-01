@@ -1,0 +1,7 @@
+<p>JSON does not support comments. It was also never intended to be used for configuration files where comments would be needed.</p>
+
+<p>Hjson is a configuration file format for humans. Relaxed syntax, fewer mistakes, more comments.</p>
+
+<p><a href="https://i.stack.imgur.com/u2E8q.gif"><img src="https://i.stack.imgur.com/u2E8q.gif" alt="Hjson intro"></a></p>
+
+<p>See <a href="http://hjson.org">hjson.org</a> for JavaScript, Java, Python, PHP, Rust, Go, Ruby and C# libraries.</p>

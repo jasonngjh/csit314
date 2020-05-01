@@ -1,0 +1,9 @@
+<p>to get all remote branches use this : </p>
+
+<pre><code>git fetch --all
+</code></pre>
+
+<p>then checkout to the branch :</p>
+
+<pre><code>git checkout test
+</code></pre>

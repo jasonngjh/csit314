@@ -1,0 +1,69 @@
+<p>The <code>delete</code> operator is used to remove properties from objects.</p>
+
+<pre><code>const obj = { foo: "bar" }
+delete obj.foo
+obj.hasOwnProperty("foo") // false
+</code></pre>
+
+<p>Note that, for arrays, <strong>this is not the same as removing an element</strong>. To remove an element from an array, use <code>Array#splice</code> or <code>Array#pop</code>. For example:</p>
+
+<pre><code>arr // [0, 1, 2, 3, 4]
+arr.splice(3,1); // 3
+arr // [0, 1, 2, 4]
+</code></pre>
+
+<h1>Details</h1>
+
+<p><code>delete</code> in JavaScript has a different function to that of the keyword in C and C++: it does not directly free memory. Instead, its sole purpose is to remove properties from objects.</p>
+
+<p>For arrays, deleting a property corresponding to an index, creates a sparse array (ie. an array with a "hole" in it). Most browsers represent these missing array indices as "empty".</p>
+
+<pre><code>var array = [0, 1, 2, 3]
+delete array[2] // [0, 1, empty, 3]
+</code></pre>
+
+<p>Note that <code>delete</code> does not relocate <code>array[3]</code> into <code>array[2]</code>.</p>
+
+<p>Different built-in functions in JavaScript handle sparse arrays differently.</p>
+
+<ul>
+<li><p><code>for...in</code> will skip the empty index completely. </p></li>
+<li><p>A traditional <code>for</code> loop will return <code>undefined</code> for the value at the index.</p></li>
+<li><p>Any method using <code>Symbol.iterator</code> will return <code>undefined</code> for the value at the index.</p></li>
+<li><p><code>forEach</code>, <code>map</code> and <code>reduce</code> will simply skip the missing index.</p></li>
+</ul>
+
+<p>So, the <code>delete</code> operator should not be used for the common use-case of removing elements from an array. Arrays have a dedicated methods for removing elements and reallocating memory: <code>Array#splice()</code> and <code>Array#pop</code>.</p>
+
+<h2>Array#splice(start[, deleteCount[, item1[, item2[, ...]]]])</h2>
+
+<p><code>Array#splice</code> mutates the array, and returns any removed indices. <code>deleteCount</code> elements are removed from index <code>start</code>, and <code>item1, item2... itemN</code> are inserted into the array from index <code>start</code>. If <code>deleteCount</code> is omitted then elements from startIndex are removed to the end of the array.</p>
+
+<pre><code>let a = [0,1,2,3,4]
+a.splice(2,2) // returns the removed elements [2,3]
+// ...and `a` is now [0,1,4]
+</code></pre>
+
+<p>There is also a similarly named, but different, function on <code>Array.prototype</code>: <code>Array#slice</code>.</p>
+
+<h2>Array#slice([begin[, end]])</h2>
+
+<p><code>Array#slice</code> is non-destructive, and returns a new array containing the indicated indices from <code>start</code> to <code>end</code>. If <code>end</code> is left unspecified, it defaults to the end of the array. If <code>end</code> is positive, it specifies the zero-based <strong>non-inclusive</strong> index to stop at. If <code>end</code> is negative it, it specifies the index to stop at by counting back from the end of the array (eg. -1 will omit the final index). If <code>end &lt;= start</code>, the result is an empty array.</p>
+
+<pre><code>let a = [0,1,2,3,4]
+let slices = [
+    a.slice(0,2),
+    a.slice(2,2),
+    a.slice(2,3),
+    a.slice(2,5) ]
+
+//   a           [0,1,2,3,4]
+//   slices[0]   [0 1]- - -   
+//   slices[1]    - - - - -
+//   slices[2]    - -[3]- -
+//   slices[3]    - -[2 4 5]
+</code></pre>
+
+<h1>Array#pop</h1>
+
+<p><code>Array#pop</code> removes the last element from an array, and returns that element. This operation changes the length of the array.</p>

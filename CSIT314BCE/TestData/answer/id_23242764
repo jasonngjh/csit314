@@ -1,0 +1,16 @@
+<p><strong>How to undo the last Git commit?</strong></p>
+
+<p>To restore everything back to the way it was prior to the last commit, we need to reset to the commit before HEAD.</p>
+
+<ol>
+<li><p>If you don't want to keep your changes that you made:</p>
+
+<pre><code>git reset --hard HEAD^
+</code></pre></li>
+<li><p>If you want to keep your changes:</p>
+
+<pre><code>git reset --soft HEAD^
+</code></pre></li>
+</ol>
+
+<p>Now check your git log. It will show that our last commit has been removed.</p>

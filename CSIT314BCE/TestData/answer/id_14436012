@@ -1,0 +1,10 @@
+<pre><code>git branch -m old_branch_name new_branch_name
+</code></pre>
+
+<p>The above command will change your branch name, but you have to be very careful using the renamed branch, because it will still refer to the old upstream branch associated with it, if any.</p>
+
+<p>If you want to push some changes into master after your local branch is renamed into new_branch_name (example name):</p>
+
+<p><code>git push origin new_branch_name:master</code> (now changes will go to master branch but your local branch name is new_branch_name)</p>
+
+<p>For more details, see "<a href="http://madhan-tech-updates.blogspot.in/2013/01/how-to-rename-your-local-branch-name-in.html">How to rename your local branch name in Git</a>."</p>

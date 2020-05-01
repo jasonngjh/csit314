@@ -1,0 +1,1 @@
+<p>I had the same problem and for some reason, even a <code>git clean -f -d</code> would not do it. Here is why: For some reason, if your file is ignored by Git (via a .gitignore entry, I assume), it still bothers about overwriting this with a later <em>pull</em>, but a <em>clean</em> will not remove it, unless you add <code>-x</code>.</p>

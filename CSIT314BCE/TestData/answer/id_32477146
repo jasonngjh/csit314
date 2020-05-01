@@ -1,0 +1,77 @@
+<p>I'm listing out the differences below:</p>
+
+<ol>
+<li><p>A function declaration can be placed anywhere in the code. Even if it is invoked before the definition appears in code, it gets executed as function declaration is committed to memory or in a way it is hoisted up, before any other code in the page starts execution.</p>
+
+<p>Take a look at the function below:</p>
+
+<pre><code>function outerFunction() {
+    function foo() {
+       return 1;
+    }
+    return foo();
+    function foo() {
+       return 2;
+    }
+}
+alert(outerFunction()); // Displays 2
+</code></pre>
+
+<p>This is because, during execution, it looks like:-</p>
+
+<pre><code>function foo() {  // The first function declaration is moved to top
+    return 1;
+}
+function foo() {  // The second function declaration is moved to top
+    return 2;
+}
+function outerFunction() {
+    return foo();
+}
+alert(outerFunction()); //So executing from top to bottom,
+                        //the last foo() returns 2 which gets displayed
+</code></pre>
+
+<p>A function expression, if not defined before calling it, will result in an error. Also, here the function definition itself is not moved to the top or committed to memory like in the function declarations. But the variable to which we assign the function gets hoisted up and <strong>undefined</strong> gets assigned to it.</p>
+
+<p>Same function using function expressions:</p>
+
+<pre><code>function outerFunction() {
+    var foo = function() {
+       return 1;
+    }
+    return foo();
+    var foo = function() {
+       return 2;
+    }
+}
+alert(outerFunction()); // Displays 1
+</code></pre>
+
+<p>This is because during execution, it looks like:</p>
+
+<pre><code>function outerFunction() {
+   var foo = undefined;
+   var foo = undefined;
+
+   foo = function() {
+      return 1;
+   };
+   return foo ();
+   foo = function() {   // This function expression is not reachable
+      return 2;
+   };
+}
+alert(outerFunction()); // Displays 1
+</code></pre></li>
+<li><p>It is not safe to write function declarations in non-function blocks like <strong>if</strong> because they won't be accessible.</p>
+
+<pre><code>if (test) {
+    function x() { doSomething(); }
+}
+</code></pre></li>
+<li><p>Named function expression like the one below, may not work in Internet&nbsp;Explorer browsers prior to version 9.</p>
+
+<pre><code>var today = function today() {return new Date()}
+</code></pre></li>
+</ol>

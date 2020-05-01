@@ -1,0 +1,50 @@
+<h1>1 • jQuery solution</h1>
+
+<h3>Methods to determine if an element is visible in JQuery</h3>
+
+<pre><code>&lt;script&gt;
+if ($("#myelement").is(":visible")){alert ("#myelement is visible");}
+if ($("#myelement").is(":hidden")){alert ("#myelement is hidden"); }
+&lt;/script&gt;
+</code></pre>
+
+<h3>Loop on all <em>visible</em> div children of the element of id 'myelement'  :</h3>
+
+<pre><code>$("#myelement div:visible").each( function() {
+ //Do something
+});
+</code></pre>
+
+<h3>Peeked at source of jQuery</h3>
+
+<p>This is how jQuery implements this feature :</p>
+
+<pre><code>jQuery.expr.filters.visible = function( elem ) {
+    return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+};
+</code></pre>
+
+<h1>2 • <a href="https://stackoverflow.com/questions/8897289/how-to-check-if-an-element-is-off-screen">How to check if an element is off-screen - CSS</a></h1>
+
+<p>Using Element.getBoundingClientRect() you can easily detect whether or not your element is within the boundries of your viewport (i.e. onscreen or offscreen):</p>
+
+<pre><code>jQuery.expr.filters.offscreen = function(el) {
+  var rect = el.getBoundingClientRect();
+  return (
+           (rect.x + rect.width) &lt; 0 
+             || (rect.y + rect.height) &lt; 0
+             || (rect.x &gt; window.innerWidth || rect.y &gt; window.innerHeight)
+         );
+};
+</code></pre>
+
+<p>You could then use that in several ways:</p>
+
+<pre><code>// returns all elements that are offscreen
+$(':offscreen');
+
+// boolean returned if element is offscreen
+$('div').is(':offscreen');
+</code></pre>
+
+<p>If you use Angular, check : <a href="http://www.talkingdotnet.com/dont-use-hidden-attribute-angularjs-2/" rel="noreferrer">Don’t use hidden attribute with Angular</a></p>

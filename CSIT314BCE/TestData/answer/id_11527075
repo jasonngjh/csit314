@@ -1,0 +1,45 @@
+<p>I have struggled with this as well.  In fact I got here with a google search of exactly the same question.  Reading all these answers finally painted a picture in my head and I decided to try to get this down looking at the state of the 2 repositories and 1 sandbox and actions performed over time while watching the version of them.  So here is what I came up with.  Please correct me if I messed up anywhere.</p>
+
+<p>The three repos with a fetch:</p>
+
+<pre><code>---------------------     -----------------------     -----------------------
+- Remote Repo       -     - Remote Repo         -     - Remote Repo         -
+-                   -     - gets pushed         -     -                     -
+- @ R01             -     - @ R02               -     - @ R02               -
+---------------------     -----------------------     -----------------------
+
+---------------------     -----------------------     -----------------------
+- Local Repo        -     - Local Repo          -     - Local Repo          -
+- pull              -     -                     -     - fetch               -
+- @ R01             -     - @ R01               -     - @ R02               -
+---------------------     -----------------------     -----------------------
+
+---------------------     -----------------------     -----------------------
+- Local Sandbox     -     - Local Sandbox       -     - Local Sandbox       -
+- Checkout          -     - new work done       -     -                     -
+- @ R01             -     - @ R01+              -     - @R01+               -
+---------------------     -----------------------     -----------------------
+</code></pre>
+
+<p>The three repos with a pull</p>
+
+<pre><code>---------------------     -----------------------     -----------------------
+- Remote Repo       -     - Remote Repo         -     - Remote Repo         -
+-                   -     - gets pushed         -     -                     -
+- @ R01             -     - @ R02               -     - @ R02               -
+---------------------     -----------------------     -----------------------
+
+---------------------     -----------------------     -----------------------
+- Local Repo        -     - Local Repo          -     - Local Repo          -
+- pull              -     -                     -     - pull                -
+- @ R01             -     - @ R01               -     - @ R02               -
+---------------------     -----------------------     -----------------------
+
+---------------------     -----------------------     -----------------------
+- Local Sandbox     -     - Local Sandbox       -     - Local Sandbox       -
+- Checkout          -     - new work done       -     - merged with R02     -
+- @ R01             -     - @ R01+              -     - @R02+               -
+---------------------     -----------------------     -----------------------
+</code></pre>
+
+<p>This helped me understand why a fetch is pretty important.</p>

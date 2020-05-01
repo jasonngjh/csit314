@@ -1,0 +1,4 @@
+<p>This works for every browser:</p>
+
+<pre><code>window.location.href = 'your_url';
+</code></pre>

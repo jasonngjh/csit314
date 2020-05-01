@@ -1,0 +1,1 @@
+<p>String (<code>System.String</code>) is a class in the base class library. string (lower case) is a reserved work in C# that is an alias for System.String. Int32 vs int is a similar situation as is <code>Boolean vs. bool</code>. These C# language specific keywords enable you to declare primitives in a style similar to C. </p>

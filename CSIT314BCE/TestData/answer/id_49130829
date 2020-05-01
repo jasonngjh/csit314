@@ -1,0 +1,27 @@
+<p>You can undo your commits from the local repository. Please follow the below scenario.</p>
+
+<p>In the below image I check out the 'test' branch (using Git command <code>git checkout -b test</code>) as a local and check status (using Git command <code>git status</code>) of local branch that there is nothing to commit.</p>
+
+<p><a href="https://i.stack.imgur.com/kQ0Ds.png" rel="noreferrer"><img src="https://i.stack.imgur.com/kQ0Ds.png" alt="Enter image description here"></a></p>
+
+<p>In the next image image you can see here I made a few changes in <strong>Filter1.txt</strong> and added that file to the staging area and then committed my changes with some message (using Git command <code>git commit -m "Doing commit to test revert back"</code>).</p>
+
+<p><strong>"-m is for commit message"</strong></p>
+
+<p><a href="https://i.stack.imgur.com/OpWzO.png" rel="noreferrer"><img src="https://i.stack.imgur.com/OpWzO.png" alt="Enter image description here"></a></p>
+
+<p>In the next image you can see your commits log whatever you have made commits (using Git command <code>git log</code>).</p>
+
+<p><a href="https://i.stack.imgur.com/2keAh.png" rel="noreferrer"><img src="https://i.stack.imgur.com/2keAh.png" alt="Enter image description here"></a></p>
+
+<p>So in the above image you can see the commit id with each commit and with your commit message now whatever commit you want to revert back or undo copy that commit id and hit the below Git command,
+<code>git revert {"paste your commit id"}</code>. Example:</p>
+
+<pre><code>git revert 9ca304ed12b991f8251496b4ea452857b34353e7
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/mi04t.png" rel="noreferrer"><img src="https://i.stack.imgur.com/mi04t.png" alt="Enter image description here"></a></p>
+
+<p>I have reverted back my last commit. Now if you check your Git status, you can see the modified file which is <strong>Filter1.txt</strong> and yet to commit.</p>
+
+<p><a href="https://i.stack.imgur.com/dfdMu.png" rel="noreferrer"><img src="https://i.stack.imgur.com/dfdMu.png" alt="Enter image description here"></a></p>

@@ -1,0 +1,36 @@
+<p>Java is always pass-by-value, the parameters are copies of what the variables passed, all Objects are defined using a reference, and reference is a variable that stores a memory address of where the object is in memory.</p>
+
+<p>Check the comments to understand what happens in execution; follow numbers as they show the flow of execution ..</p>
+
+<pre><code>class Example
+{
+    public static void test (Cat ref)
+    {
+        // 3 - &lt;ref&gt; is a copy of the reference &lt;a&gt;
+        // both currently reference Grumpy
+        System.out.println(ref.getName());
+
+        // 4 - now &lt;ref&gt; references a new &lt;Cat&gt; object named "Nyan"
+        ref = new Cat("Nyan");
+
+        // 5 - this should print "Nyan"
+        System.out.println( ref.getName() );
+    }
+
+    public static void main (String [] args)
+    {
+        // 1 - a is a &lt;Cat&gt; reference that references a Cat object in memory with name "Grumpy"
+        Cat a = new Cat("Grumpy");
+
+        // 2 - call to function test which takes a &lt;Cat&gt; reference
+        test (a);
+
+        // 6 - function call ends, and &lt;ref&gt; life-time ends
+        // "Nyan" object has no references and the Garbage
+        // Collector will remove it from memory when invoked
+
+        // 7 - this should print "Grumpy"
+        System.out.println(a.getName());
+    }
+}
+</code></pre>

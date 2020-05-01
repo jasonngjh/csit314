@@ -1,0 +1,4 @@
+<pre><code>git rm --cached . -r
+</code></pre>
+
+<p>will "un-add" everything you've added from your current directory recursively </p>

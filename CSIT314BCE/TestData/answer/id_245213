@@ -1,0 +1,7 @@
+<p>The idea behind JSON is to provide simple data exchange between applications. These are typically web based and the language is JavaScript.</p>
+
+<p>It doesn't really allow for comments as such, however, passing a comment as one of the name/value pairs in the data would certainly work, although that data would obviously need to be ignored or handled specifically by the parsing code.</p>
+
+<p>All that said, it's not the intention that the JSON file should contain comments in the traditional sense. It should just be the data.</p>
+
+<p>Have a look at the <a href="http://www.json.org/" rel="noreferrer">JSON website</a> for more detail.</p>

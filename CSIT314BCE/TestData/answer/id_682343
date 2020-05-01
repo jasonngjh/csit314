@@ -1,0 +1,74 @@
+<p>You want:</p>
+
+<pre><code>git rm --cached &lt;added_file_to_undo&gt;
+</code></pre>
+
+<p>Reasoning:</p>
+
+<p>When I was new to this, I first tried</p>
+
+<pre><code>git reset .
+</code></pre>
+
+<p>(to undo my entire initial add), only to get this (not so) helpful message:</p>
+
+<pre><code>fatal: Failed to resolve 'HEAD' as a valid ref.
+</code></pre>
+
+<p>It turns out that this is because the HEAD ref (branch?) doesn't exist until after the first commit. That is, you'll run into the same beginner's problem as me if your workflow, like mine, was something like:</p>
+
+<ol>
+<li>cd to my great new project directory to try out Git, the new hotness</li>
+<li><code>git init</code></li>
+<li><code>git add .</code></li>
+<li><p><code>git status</code></p>
+
+<p>... lots of crap scrolls by ...</p>
+
+<p>=> Damn, I didn't want to add all of that.</p></li>
+<li><p>google "undo git add"</p>
+
+<p>=> find Stack Overflow - yay</p></li>
+<li><p><code>git reset .</code></p>
+
+<p>=>    fatal: Failed to resolve 'HEAD' as a valid ref.</p></li>
+</ol>
+
+<p>It further turns out that there's <a href="http://kerneltrap.org/mailarchive/git/2008/2/13/846664/thread" rel="noreferrer">a bug logged</a> against the unhelpfulness of this in the mailing list.</p>
+
+<p>And that the correct solution was right there in the Git status output (which, yes, I glossed over as 'crap)</p>
+
+<blockquote>
+<pre><code>...
+# Changes to be committed:
+#   (use "git rm --cached &lt;file&gt;..." to unstage)
+...
+</code></pre>
+</blockquote>
+
+<p>And the solution indeed is to use <code>git rm --cached FILE</code>.</p>
+
+<p>Note the warnings elsewhere here - <code>git rm</code> deletes your local working copy of the file, but <em>not</em> if you use <strong>--cached</strong>.  Here's the result of <code>git help rm</code>:</p>
+
+<blockquote>
+  <p>--cached
+      Use this option to unstage and remove paths only from the index.
+      Working tree files, whether modified or not, will be left.</p>
+</blockquote>
+
+<p>I proceed to use</p>
+
+<pre><code>git rm --cached .
+</code></pre>
+
+<p>to remove everything and start again. Didn't work though, because while <code>add .</code> is recursive, turns out <code>rm</code> needs <code>-r</code> to recurse. Sigh.</p>
+
+<pre><code>git rm -r --cached .
+</code></pre>
+
+<p>Okay, now I'm back to where I started. Next time I'm going to use <code>-n</code> to do a dry run and see what will be added:</p>
+
+<pre><code>git add -n .
+</code></pre>
+
+<p>I zipped up everything to a safe place before trusting <code>git help rm</code> about the <code>--cached</code> not destroying anything (and what if I misspelled it).</p>

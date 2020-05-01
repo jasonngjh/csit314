@@ -1,0 +1,62 @@
+<p>One way to avoid branch prediction errors is to build a lookup table, and index it using the data. Stefan de Bruijn discussed that in his answer.</p>
+
+<p>But in this case, we know values are in the range [0, 255] and we only care about values >= 128. That means we can easily extract a single bit that will tell us whether we want a value or not: by shifting the data to the right 7 bits, we are left with a 0 bit or a 1 bit, and we only want to add the value when we have a 1 bit. Let's call this bit the "decision bit".</p>
+
+<p>By using the 0/1 value of the decision bit as an index into an array, we can make code that will be equally fast whether the data is sorted or not sorted. Our code will always add a value, but when the decision bit is 0, we will add the value somewhere we don't care about. Here's the code:</p>
+
+<p>// Test</p>
+
+<pre><code>clock_t start = clock();
+long long a[] = {0, 0};
+long long sum;
+
+for (unsigned i = 0; i &lt; 100000; ++i)
+{
+    // Primary loop
+    for (unsigned c = 0; c &lt; arraySize; ++c)
+    {
+        int j = (data[c] &gt;&gt; 7);
+        a[j] += data[c];
+    }
+}
+
+double elapsedTime = static_cast&lt;double&gt;(clock() - start) / CLOCKS_PER_SEC;
+sum = a[1];
+</code></pre>
+
+<p>This code wastes half of the adds but never has a branch prediction failure. It's tremendously faster on random data than the version with an actual if statement.</p>
+
+<p>But in my testing, an explicit lookup table was slightly faster than this, probably because indexing into a lookup table was slightly faster than bit shifting. This shows how my code sets up and uses the lookup table (unimaginatively called lut for "LookUp Table" in the code). Here's the C++ code:</p>
+
+<p>// Declare and then fill in the lookup table</p>
+
+<pre><code>int lut[256];
+for (unsigned c = 0; c &lt; 256; ++c)
+    lut[c] = (c &gt;= 128) ? c : 0;
+
+// Use the lookup table after it is built
+for (unsigned i = 0; i &lt; 100000; ++i)
+{
+    // Primary loop
+    for (unsigned c = 0; c &lt; arraySize; ++c)
+    {
+        sum += lut[data[c]];
+    }
+}
+</code></pre>
+
+<p>In this case, the lookup table was only 256 bytes, so it fits nicely in a cache and all was fast. This technique wouldn't work well if the data was 24-bit values and we only wanted half of them... the lookup table would be far too big to be practical. On the other hand, we can combine the two techniques shown above: first shift the bits over, then index a lookup table. For a 24-bit value that we only want the top half value, we could potentially shift the data right by 12 bits, and be left with a 12-bit value for a table index. A 12-bit table index implies a table of 4096 values, which might be practical.</p>
+
+<p>The technique of indexing into an array, instead of using an if statement, can be used for deciding which pointer to use. I saw a library that implemented binary trees, and instead of having two named pointers (pLeft and pRight or whatever) had a length-2 array of pointers and used the "decision bit" technique to decide which one to follow. For example, instead of:</p>
+
+<pre><code>if (x &lt; node-&gt;value)
+    node = node-&gt;pLeft;
+else
+    node = node-&gt;pRight;
+this library would do something like:
+
+i = (x &lt; node-&gt;value);
+node = node-&gt;link[i];
+</code></pre>
+
+<p>it's a nice solution maybe it will work</p>

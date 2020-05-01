@@ -1,0 +1,14 @@
+<p><strong>Include comments if you choose; strip them out with a minifier before parsing or transmitting.</strong></p>
+
+<p>I just released <strong><a href="http://github.com/getify/JSON.minify" rel="noreferrer">JSON.minify()</a></strong> which strips out comments and whitespace from a block of JSON and makes it valid JSON that can be parsed. So, you might use it like:  </p>
+
+<pre><code>JSON.parse(JSON.minify(my_str));
+</code></pre>
+
+<p>When I released it, I got a huge backlash of people disagreeing with even the idea of it, so I decided that I'd write a comprehensive blog post on why <a href="http://web.archive.org/web/20100629021329/http://blog.getify.com/2010/06/json-comments/" rel="noreferrer">comments make sense in JSON</a>. It includes this notable comment from the creator of JSON:</p>
+
+<blockquote>
+  <p>Suppose you are using JSON to keep configuration files, which you would like to annotate. Go ahead and insert all the comments you like. Then pipe it through JSMin before handing it to your JSON parser. - <a href="https://plus.google.com/118095276221607585885/posts/RK8qyGVaGSr" rel="noreferrer">Douglas Crockford, 2012</a></p>
+</blockquote>
+
+<p>Hopefully that's helpful to those who disagree with why <strong>JSON.minify()</strong> could be useful.</p>

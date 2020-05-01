@@ -1,0 +1,5 @@
+<p>Normal <code>git clean</code> command doesn't remove untracked files with my <code>git version 2.9.0.windows.1</code>.</p>
+
+<pre><code>$ git clean -fdx     # doesn't remove untracked files
+$ git clean -fdx *   # Append star then it works!
+</code></pre>

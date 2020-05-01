@@ -1,0 +1,4 @@
+<p>As already mentioned, <code>git commit --amend</code> is the way to overwrite the last commit. One note: if you would like to also <strong>overwrite the files</strong>, the command would be </p>
+
+<pre class="lang-c prettyprint-override"><code>git commit -a --amend -m "My new commit message"
+</code></pre>

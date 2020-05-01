@@ -1,0 +1,7 @@
+<pre><code>var array = [2, 5, 9];
+array.splice(array.findIndex(x =&gt; x==5), 1);
+</code></pre>
+
+<p>Using Array.findindex, we can reduce the number of lines of code.</p>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex" rel="noreferrer">developer.mozilla.org</a></p>

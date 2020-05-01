@@ -1,0 +1,51 @@
+<p>To understand closures you have to get down to the program and literally execute as if you are the run time. Let's look at this simple piece of code:</p>
+
+<p><a href="https://i.stack.imgur.com/kWR82.png" rel="noreferrer"><img src="https://i.stack.imgur.com/kWR82.png" alt="Enter image description here"></a></p>
+
+<p>JavaScript runs the code in two phases:</p>
+
+<ul>
+<li>Compilation Phase    // JavaScript is not a pure interpreted language</li>
+<li>Execution Phase</li>
+</ul>
+
+<p>When JavaScript goes through the compilation phase it extract out the declarations of variables and functions. This is called hoisting. Functions encountered in this phase are saved as text blobs in memory also known as lambda. After compilation JavaScript enters the execution phase where it assigns all the values and runs the function. To run the function it prepares the execution context by assigning memory from the heap and repeating the compilation and execution phase for the function. This memory area is called scope of the function. There is a global scope when execution starts. Scopes are the key in understanding closures.</p>
+
+<p>In this example, in first go, variable <code>a</code> is defined and then <code>f</code> is defined in the compilation phase. All undeclared variables are saved in the global scope. In the execution phase <code>f</code> is called with an argument. <code>f</code>'s scope is assigned and the compilation and execution phase is repeated for it.</p>
+
+<p>Arguments are also saved in this local scope for <code>f</code>. Whenever a local execution context or scope is created it contain a reference pointer to its parent scope. All variable access follows this lexical scope chain to find its value. If a variable is not found in the local scope it follows the chain and find it in its parent scope. This is also why a local variable overrides variables in the parent scope. The parent scope is called the "Closure" for local a scope or function.</p>
+
+<p>Here when <code>g</code>'s scope is being set up it got a lexical pointer to its parents scope of <code>f</code>. The scope of <code>f</code> is the closure for <code>g</code>. In JavaScript, if there is some reference to functions, objects or scopes if you can reach them somehow, it will not get garbage collected. So when myG is running, it has a pointer to scope of <code>f</code> which is its closure. This area of memory will not get garbage collected even <code>f</code> has returned. This is a closure as far as the runtime is concerned.</p>
+
+<h2>SO WHAT IS A CLOSURE?</h2>
+
+<ul>
+<li>It is an implicit, permanent link between a function and its scope chain...</li>
+<li>A function definition's (lambda) hidden <code>[[scope]]</code> reference.</li>
+<li>Holds the scope chain (preventing garbage collection).</li>
+<li>It is used and copied as the "outer environment reference" anytime the function is run.</li>
+</ul>
+
+<h2>IMPLICIT CLOSURE</h2>
+
+<pre><code>var data = "My Data!";
+setTimeout(function() {
+  console.log(data); // Prints "My Data!"
+}, 3000);
+</code></pre>
+
+<h2>EXPLICIT CLOSURES</h2>
+
+<pre><code>function makeAdder(n) {
+  var inc = n;
+  var sum = 0;
+  return function add() {
+    sum = sum + inc;
+    return sum;
+  };
+}
+
+var adder3 = makeAdder(3);
+</code></pre>
+
+<p>A very interesting talk on closures and more is <em><a href="https://www.youtube.com/watch?v=QyUFheng6J0" rel="noreferrer">Arindam Paul - JavaScript VM internals, EventLoop, Async and ScopeChains</a></em>.</p>

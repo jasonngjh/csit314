@@ -1,0 +1,14 @@
+<p>More a tip than an answer (don't need to repeat the obvious for the hundreth time), but I sometimes use it as a oneliner shortcut in such constructs:</p>
+
+<pre><code>if conditionX:
+    print('yes')
+else:
+    print('nah')
+</code></pre>
+
+<p>, becomes:</p>
+
+<pre><code>print('yes') if conditionX else print('nah')
+</code></pre>
+
+<p>Some (many :) may frown upon it as unpythonic (even, ruby-ish :), but I personally find it more natural - i.e. how you'd express it normally, plus a bit more visually appealing in large blocks of code.</p>

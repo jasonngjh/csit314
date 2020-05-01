@@ -1,0 +1,13 @@
+<p>This compiles:</p>
+
+<pre><code>public class MyClass&lt;String&gt;
+{
+}
+</code></pre>
+
+<p>This does not:</p>
+
+<pre><code>public class MyClass&lt;string&gt;
+{
+}
+</code></pre>

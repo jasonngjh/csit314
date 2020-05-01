@@ -1,0 +1,20 @@
+<p><strong><em>User interactive approach:</em></strong>    </p>
+
+<pre><code>git clean -i -fd
+
+Remove .classpath [y/N]? N
+Remove .gitignore [y/N]? N
+Remove .project [y/N]? N
+Remove .settings/ [y/N]? N
+Remove src/com/arsdumpgenerator/inspector/ [y/N]? y
+Remove src/com/arsdumpgenerator/manifest/ [y/N]? y
+Remove src/com/arsdumpgenerator/s3/ [y/N]? y
+Remove tst/com/arsdumpgenerator/manifest/ [y/N]? y
+Remove tst/com/arsdumpgenerator/s3/ [y/N]? y
+</code></pre>
+
+<p>-i for interactive<br>
+-f for force<br>
+-d for directory<br>
+-x for ignored files(add if required)<br><br>
+<strong>Note:</strong> <em>Add <strong>-n</strong> or <strong>--dry-run</strong> to just check what it will do.</em></p>

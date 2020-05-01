@@ -1,0 +1,15 @@
+<p>The least complicated way I have found to revert a branch to any particular commit, where you can't change the history, is to:</p>
+
+<ol>
+<li>Check out the commit or branch your wish to revert from.</li>
+<li>Edit .git/HEAD and change the ref to the branch you which to revert to.</li>
+</ol>
+
+<p>Such as:</p>
+
+<pre><code>echo 'ref: refs/heads/example' &gt; .git/HEAD
+</code></pre>
+
+<p>If you then do <code>git status</code>, you should see all the changes between the branch you're on and the one you wish to revert to.</p>
+
+<p>If everything looks good, you can commit. You can also use <code>git diff revert</code>..example to ensure that it's the same.</p>

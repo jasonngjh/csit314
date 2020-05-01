@@ -1,0 +1,28 @@
+<p><strong>Idea:</strong> You basically want to replace the current working tree state with the one from a previous commit and then create a commit out of it. Ignored files should best be not changed. Here is how:</p>
+
+<ol>
+<li><p>Emtpy the working tree *.</p>
+
+<pre><code>git rm -r --cached . &amp;&amp; git clean -f -d
+</code></pre></li>
+<li><p>Bring the working tree in the state we want **.</p>
+
+<pre><code>git checkout 0d1d7fc3 .
+</code></pre></li>
+<li><p>Create the revert commit.</p>
+
+<pre><code>git add --all &amp;&amp; git commit -m "revert to 0d1d7fc3"
+</code></pre></li>
+</ol>
+
+<hr>
+
+<p>At first I thought that <a href="https://stackoverflow.com/a/21718540/1788806">Yarins answer</a> would be the best, but it doesn't work for a merge commits. This solution does.</p>
+
+<p>Additionally it does not delete anything (pushed or upushed) from the history. It produces one clean commit which represents the state we want to revert back to.</p>
+
+<hr>
+
+<p><sub>* by removing untracked but not ignored files (the ones specified in <em>.gitignore</em>) from working tree. The working tree is empty except for the ignored files which we wanted to keep (if not specifiy <code>-x</code> option for <code>clean</code>)</sub></p>
+
+<p><sub>** When a path is specified (here: <code>.</code>), checkout leaves HEAD alone.</sub></p>

@@ -1,0 +1,49 @@
+<ol>
+<li><p><strong>location.assign():</strong></p>
+
+<p>To assign a route path by passing a path into it.. <strong>Assign</strong> will give you  a history even after the path was assigned.</p>
+
+<p><strong>Usage Method:</strong> value should be passed into it.</p>
+
+<p><strong>For example:</strong> <code>location.assign("http://google.com")</code></p>
+
+<p><a href="https://i.stack.imgur.com/FMfAy.png" rel="noreferrer"><img src="https://i.stack.imgur.com/FMfAy.png" alt="Enter image description here"></a></p></li>
+<li><p><strong>location.href</strong></p>
+
+<p>Can define give a path into it... And it will redirect into a given path once it setup, and it will keep history...</p>
+
+<p><strong>Usage Method:</strong> value should be assign into it.</p>
+
+<p><strong>For example:</strong> <code>location.href = "http://google.com"</code></p></li>
+<li><p><strong>location.replace():</strong></p>
+
+<p>It will help to replace a path if you don't want to keep history. It won't give you a history once you replace its path.</p>
+
+<p><strong>Usage Method:</strong> value should be pass into it.</p>
+
+<p><strong>For example:</strong> <code>location.replace("http://google.com")</code></p>
+
+<p><a href="https://i.stack.imgur.com/bL4bM.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/bL4bM.jpg" alt="Enter image description here"></a></p></li>
+</ol>
+
+<hr>
+
+<p><code>assign()</code> and <code>href</code> are similar, and both can hold history. <code>assign</code> will work by passing a value and href works by assigning.</p>
+
+<p>You can achieve it using JavaScript itself without using jQuery by assigning,</p>
+
+<pre><code>window.location = "http://google.com"
+location.href = "http://google.com"
+</code></pre>
+
+<p>You can achieve similar thing using jQuery like below. It will do exactly the same like above,</p>
+
+<pre><code>$(window).attr('location', "http://www.google.com");
+$(location).attr('href', "http://www.google.com");
+</code></pre>
+
+<p>You can easily understand the difference between both...</p>
+
+<p>Here is the Location object, </p>
+
+<p><a href="https://i.stack.imgur.com/no5kR.png" rel="noreferrer"><img src="https://i.stack.imgur.com/no5kR.png" alt="Location API from chrome"></a></p>

@@ -1,0 +1,4 @@
+<pre><code>git branch -m [old-branch] [new-branch]
+</code></pre>
+
+<p>-m means move all from [old-branch] to [new-branch] and remember you can use -M for other file systems.</p>

@@ -1,0 +1,45 @@
+<p>The code under <code>if __name__ == '__main__':</code> <strong>will only be executed if the module is invoked as a script</strong>. </p>
+
+<p>As an example, consider the following module <code>my_test_module.py</code>: </p>
+
+<pre><code># my_test_module.py
+
+print('This is going to be printed out, no matter what')
+
+if __name__ == '__main__':
+    print('This is going to be printed out, only if user invokes the module as a script')
+</code></pre>
+
+<hr>
+
+<p><strong>1st possibility: Import <code>my_test_module.py</code> in another module</strong></p>
+
+<pre><code># main.py
+
+import my_test_module
+
+if __name__ == '__main__':
+    print('Hello from main.py')
+</code></pre>
+
+<p>Now if you invoke <code>main.py</code>: </p>
+
+<pre><code>python main.py 
+
+&gt;&gt; 'This is going to be printed out, no matter what'
+&gt;&gt; 'Hello from main.py'
+</code></pre>
+
+<p>Note that only the top-level <code>print()</code> statement in <code>my_test_module</code> is executed. </p>
+
+<hr>
+
+<p><strong>2nd possibility: Invoke <code>my_test_module.py</code> as a script</strong></p>
+
+<p>Now if you run <code>my_test_module.py</code> as a Python script, both <code>print()</code> statements will be exectued: </p>
+
+<pre><code>python my_test_module.py
+
+&gt;&gt;&gt; 'This is going to be printed out, no matter what'
+&gt;&gt;&gt; 'This is going to be printed out, only if user invokes the module as a script'
+</code></pre>

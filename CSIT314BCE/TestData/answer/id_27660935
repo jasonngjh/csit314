@@ -1,0 +1,31 @@
+<p><strong>Original question:</strong> "How to redirect using jQuery?", hence the answer implements jQuery >> Complimentary usage case.</p>
+
+<hr>
+
+<p>To just redirect to a page with JavaScript:</p>
+
+<pre><code>window.location.href = "/contact/";
+</code></pre>
+
+<p>Or if you need a delay:</p>
+
+<pre><code>setTimeout(function () {
+  window.location.href = "/contact/";
+}, 2000);   // Time in milliseconds
+</code></pre>
+
+<p>jQuery allows you to select elements from a web page with ease. You can find anything you want on a page and then use jQuery to add special effects, react to user actions, or show and hide content inside or outside the element you have selected. All these tasks start with knowing <a href="http://learn.jquery.com/using-jquery-core/selecting-elements/" rel="noreferrer">how to select an element or an event</a>.</p>
+
+<pre><code>$('a,img').on('click',function(e){
+  e.preventDefault();
+  $(this).animate({
+    opacity: 0 //Put some CSS animation here
+  }, 500);
+  setTimeout(function(){
+    // OK, finished jQuery staff, let's go redirect
+    window.location.href = "/contact/";
+  },500);
+});
+</code></pre>
+
+<p>Imagine someone wrote a script/plugin with 10000 lines of code. With jQuery you can connect to this code with just a line or two.</p>

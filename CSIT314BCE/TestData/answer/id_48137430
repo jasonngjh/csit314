@@ -1,0 +1,18 @@
+<p>The <code>git remote show &lt;origin name&gt;</code> command will list all branches (including un-tracked branches). Then you can find the remote branch name that you need to fetch.</p>
+
+<p>Example:</p>
+
+<pre><code>$ git remote show origin
+</code></pre>
+
+<p>Use these steps to fetch remote branches:</p>
+
+<pre><code>git fetch &lt;origin name&gt; &lt;remote branch name&gt;:&lt;local branch name&gt;
+git checkout &lt;local branch name &gt; (local branch name should the name that you given fetching)
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>$ git fetch origin test:test
+$ git checkout test
+</code></pre>

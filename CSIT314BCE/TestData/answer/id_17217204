@@ -1,0 +1,4 @@
+<p>To rename your current branch:</p>
+
+<pre><code>git branch -m &lt;newname&gt;
+</code></pre>

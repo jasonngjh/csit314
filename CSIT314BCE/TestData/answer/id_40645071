@@ -1,0 +1,10 @@
+<p>A <strong>one-liner</strong> command to delete <em>both local, and remote</em>:</p>
+
+<pre><code>D=branch-name; git branch -D $D; git push origin :$D
+</code></pre>
+
+<p>Or add the alias below to your <em>~/.gitconfig</em>. Usage: <code>git kill branch-name</code></p>
+
+<pre><code>[alias]
+    kill = "!f(){ git branch -D \"$1\";  git push origin --delete \"$1\"; };f"
+</code></pre>

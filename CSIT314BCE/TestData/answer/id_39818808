@@ -1,0 +1,4 @@
+<p>To undo <code>git add</code>, use:</p>
+
+<pre><code>git reset filename
+</code></pre>

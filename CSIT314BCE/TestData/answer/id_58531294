@@ -1,0 +1,5 @@
+<p>This question is rooted in Branch Prediction Models on CPUs. I'd recommend reading this paper: </p>
+
+<p><a href="https://pdfs.semanticscholar.org/5634/4be375cfed0f79cb9d009ac838682e1bace3.pdf" rel="noreferrer"><strong>Increasing the Instruction Fetch Rate via Multiple Branch Prediction and a Branch Address Cache</strong></a></p>
+
+<p>When you have sorted elements, IR could not be bothered to fetch all CPU instructions, again and again, It fetches them from cache.</p>

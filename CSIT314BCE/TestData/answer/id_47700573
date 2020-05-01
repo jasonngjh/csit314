@@ -1,0 +1,38 @@
+<p>Sorted arrays are processed faster than an unsorted array, due to a phenomena called branch prediction.</p>
+
+<p>The branch predictor is a digital circuit (in computer architecture) trying to predict which way a branch will go, improving the flow in the instruction pipeline. The circuit/computer predicts the next step and executes it.</p>
+
+<p>Making a wrong prediction leads to going back to the previous step, and executing with another prediction. Assuming the prediction is correct, the code will continue to the next step. A wrong prediction results in repeating the same step, until a correct prediction occurs.</p>
+
+<p>The answer to your question is very simple.</p>
+
+<p>In an unsorted array, the computer makes multiple predictions, leading to an increased chance of errors.
+Whereas, in a sorted array, the computer makes fewer predictions, reducing the chance of errors.
+Making more predictions requires more time.</p>
+
+<p>Sorted Array: Straight Road
+    ____________________________________________________________________________________
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</p>
+
+<p>Unsorted Array: Curved Road</p>
+
+<pre><code>______   ________
+|     |__|
+</code></pre>
+
+<p>Branch prediction: Guessing/predicting which road is straight and following it without checking</p>
+
+<pre><code>___________________________________________ Straight road
+ |_________________________________________|Longer road
+</code></pre>
+
+<p>Although both the roads reach the same destination, the straight road is shorter, and the other is longer. If then you choose the other by mistake, there is no turning back, and so you will waste some extra time if you choose the longer road. This is similar to what happens in the computer, and I hope this helped you understand better.</p>
+
+<hr>
+
+<p>Also I want to cite <a href="https://stackoverflow.com/users/16940/simon-weaver">@Simon_Weaver</a> from the comments:</p>
+
+<blockquote>
+  <p>It doesn’t make fewer predictions - it makes fewer incorrect predictions. It still has to predict for each time through the loop...</p>
+</blockquote>

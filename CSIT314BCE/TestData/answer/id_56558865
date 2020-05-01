@@ -1,0 +1,53 @@
+<p>Every module in python has a attribute called <code>__name__</code>. The value of <code>__name__</code>  attribute is  <code>__main__</code>  when the module is run directly, like <code>python my_module.py</code>. Otherwise (like when you say <code>import my_module</code>) the value of <code>__name__</code>  is the name of the module.</p>
+
+<p>Small example to explain in short.</p>
+
+<pre><code>#Script test.py
+
+apple = 42
+
+def hello_world():
+    print("I am inside hello_world")
+
+if __name__ == "__main__":
+    print("Value of __name__ is: ", __name__)
+    print("Going to call hello_world")
+    hello_world()
+</code></pre>
+
+<p>We can execute this directly as</p>
+
+<pre><code>python test.py  
+</code></pre>
+
+<p>Output</p>
+
+<pre><code>Value of __name__ is: __main__
+Going to call hello_world
+I am inside hello_world
+</code></pre>
+
+<p>Now suppose we call above script from other script</p>
+
+<pre><code>#script external_calling.py
+
+import test
+print(test.apple)
+test.hello_world()
+
+print(test.__name__)
+</code></pre>
+
+<p>When you execute this</p>
+
+<pre><code>python external_calling.py
+</code></pre>
+
+<p>Output</p>
+
+<pre><code>42
+I am inside hello_world
+test
+</code></pre>
+
+<p>So, above is self explanatory that when you call test from other script, if loop <code>__name__</code> in <code>test.py</code> will not execute.</p>

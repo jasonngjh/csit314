@@ -1,0 +1,1 @@
+<p>If you have <a href="https://github.com/visionmedia/git-extras" rel="noreferrer">Git Extras</a> installed, you can run <code>git undo</code> to undo the latest commit. <code>git undo 3</code> will undo the last three commits.</p>

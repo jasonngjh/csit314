@@ -1,0 +1,4 @@
+<p>You can redirect in jQuery like this:</p>
+
+<pre><code>$(location).attr('href', 'http://yourPage.com/');
+</code></pre>

@@ -1,0 +1,4 @@
+<p>Write the below code after the PHP, HTML or jQuery section. If in the middle of the PHP or HTML section, then use the &lt;script> tag.</p>
+
+<pre><code>location.href = "http://google.com"
+</code></pre>

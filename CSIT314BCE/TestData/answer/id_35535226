@@ -1,0 +1,6 @@
+<p>Use:</p>
+
+<pre><code>git checkout -b &lt;BRANCH-NAME&gt; &lt;REMOTE-NAME&gt;/&lt;BRANCH-NAME&gt;
+</code></pre>
+
+<p>Other answers do not work with modern Git in my benign case. You might need to pull first if the remote branch is new, but I haven't checked that case.</p>

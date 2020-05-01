@@ -1,0 +1,3 @@
+<p>The crux of the matter is that the word <em>reference</em> in the expression "pass by reference" means something completely different from the usual meaning of the word <em>reference</em> in Java. </p>
+
+<p>Usually in Java <em>reference</em> means a a <em>reference to an object</em>. But the technical terms <em>pass by reference/value</em> from programming language theory is talking about a <em>reference to the memory cell holding the variable</em>, which is something completely different.</p>

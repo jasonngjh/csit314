@@ -1,0 +1,1 @@
+<p><code>if __name__ == "__main__"</code> is the part that runs when the script is run from (say) the command line using a command like <code>python myscript.py</code>.</p>

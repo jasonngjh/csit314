@@ -1,0 +1,3 @@
+<p>It depends on your JSON library. <a href="https://github.com/JamesNK/Newtonsoft.Json" rel="noreferrer">Json.NET</a> supports JavaScript-style comments, <code>/* commment */</code>.</p>
+
+<p>See <a href="https://stackoverflow.com/a/10325432/166286">another Stack&nbsp;Overflow question</a>.</p>

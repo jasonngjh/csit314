@@ -1,0 +1,5 @@
+<p>I'm sorry to say, but the time discontinuity has moved a bit in</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Java_version_history#Java_SE_6_.28December_11.2C_2006.29" rel="noreferrer">JDK 6</a> two years ago, and in <a href="https://en.wikipedia.org/wiki/Java_version_history#Java_SE_7_.28July_28.2C_2011.29" rel="noreferrer">JDK 7</a> just recently in <a href="https://en.wikipedia.org/wiki/Java_version_history#cite_note-131" rel="noreferrer">update 25</a>.</p>
+
+<p>Lesson to learn: avoid non-UTC times at all costs, except maybe for display.</p>

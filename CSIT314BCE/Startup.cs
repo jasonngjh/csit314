@@ -5,8 +5,8 @@ using Microsoft.Owin;
 using Owin;
 using System;
 using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Linq;
+using System.Web;
 
 [assembly: OwinStartupAttribute(typeof(CSIT314BCE.Startup))]
 namespace CSIT314BCE
@@ -17,14 +17,59 @@ namespace CSIT314BCE
         {
             ConfigureAuth(app);
             CreateRootUserAndRoles();
-            /*AddQuestions();
-            AddAnswers();*/
+            //AddDataIntoDb();
         }
 
-        public void AddComments() { }
+        public void AddDataIntoDb() 
+        {
+            AddUser();
+            AddQuestions();
+            AddAnswers();
+            AddComments();
+        }
+
+        public void AddComments() 
+        {
+            string path = HttpContext.Current.Server.MapPath(@"~\TestData\comments.txt");
+            string[] commentsFile = File.ReadAllLines(path);
+            ApplicationDbContext context = new ApplicationDbContext();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            string[] token = { "><" };
+            string[] commentArray;
+            string postid;
+            foreach (string comment in commentsFile) 
+            {
+                commentArray = comment.Split(token, System.StringSplitOptions.RemoveEmptyEntries);
+                postid = ReturnQuestionId(commentArray[0]);
+                if (postid == null) 
+                {
+                    postid = ReturnAnswerId(commentArray[0]);
+                }
+
+                var user = userManager.FindByName(commentArray[3]);
+                DateTime odate = Convert.ToDateTime(commentArray[1]);
+
+                if (user != null && postid != "" && commentArray[2] != "") 
+                {
+                    Comment c = new Comment()
+                    {
+                        PostId = Int32.Parse(postid),
+                        Text = commentArray[2],
+                        CreationDate = odate,
+                        OwnerId = user.Id,
+                        OwnerUsername = user.UserName
+                    };
+
+                    context.Comments.Add(c);
+                    context.SaveChanges();
+                }
+                postid = "";
+            }
+        }
 
         public string ReturnQuestionId(string answerQuestionId) {
-            string[] qtoDb = File.ReadAllLines(@"C:\Users\Jason\Desktop\questionIdToDB.txt");
+            string path = HttpContext.Current.Server.MapPath(@"~\TestData\questionIdToDB.txt");
+            string[] qtoDb = File.ReadAllLines(path);
             string[] qDB;
             foreach (string q in qtoDb)
             {
@@ -40,8 +85,9 @@ namespace CSIT314BCE
         {
             ApplicationDbContext context = new ApplicationDbContext();
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            string[] alines = File.ReadAllLines(@"C:\Users\Jason\Desktop\answer.txt");
-            string folderPath = @"C:\Users\Jason\Desktop\answer\id_";
+            string answerPath = HttpContext.Current.Server.MapPath(@"~\TestData\answer.txt");
+            string[] alines = File.ReadAllLines(answerPath);
+            string folderPath = @"~\TestData\answer\id_";
             string[] answer;
             string[] token = { "><" };
 
@@ -54,7 +100,8 @@ namespace CSIT314BCE
                 if (user != null)
                 {
                     folderPath += answer[1];
-                    answerBody = File.ReadAllText(folderPath);
+                    string fp = HttpContext.Current.Server.MapPath(folderPath);
+                    answerBody = File.ReadAllText(fp);
                     DateTime odate = Convert.ToDateTime(answer[3]);
 
                     Post post = new Post() {
@@ -70,22 +117,66 @@ namespace CSIT314BCE
                     context.SaveChanges();
                     context.Entry(post).GetDatabaseValues();
 
-                    using (StreamWriter sw = File.AppendText(@"C:\Users\Jason\Desktop\answerIdToDB.txt"))
+                    string answerDb = HttpContext.Current.Server.MapPath(@"~\TestData\answerIdToDB.txt");
+                    using (StreamWriter sw = File.AppendText(answerDb))
                     {
                         sw.WriteLine(answer[1] + ";" + (post.PostId).ToString());
                     }
-                    folderPath = @"C:\Users\Jason\Desktop\answer\id_";
+                    folderPath = @"~\TestData\answer\id_";
                 }
-                
             }
+
+            string qToDb = HttpContext.Current.Server.MapPath(@"~\TestData\questionIdToDB.txt");
+            string[] questionToDb = File.ReadAllLines(qToDb);
+            string[] questionLine;
+            string acceptedAnsId;
+            var posts = context.Posts.Where(p => p.Title != null).ToList();
+            foreach(Post post in posts) {
+                var count = context.Posts
+                            .Where(p => p.ParentId == post.PostId)
+                            .Count();
+                post.AnswerCount = count;
+
+                foreach (string q in questionToDb)
+                {
+                    questionLine = q.Split(';');
+                    if (questionLine[1] != "") 
+                    {
+                        if (Int32.Parse(questionLine[2]) == post.PostId)
+                        {
+                            acceptedAnsId = ReturnAnswerId(questionLine[1]);
+                            post.AcceptedAnswerId = Int32.Parse(acceptedAnsId);
+                        }
+                    }
+                }
+                context.SaveChanges();
+            }
+        }
+
+
+        public string ReturnAnswerId(string acceptedAnswer)
+        {
+            string path = HttpContext.Current.Server.MapPath(@"~\TestData\answerIdToDB.txt");
+            string[] atoDb = File.ReadAllLines(path);
+            string[] aDB;
+            foreach (string a in atoDb)
+            {
+                aDB = a.Split(';');
+                if (acceptedAnswer == aDB[0])
+                {
+                    return aDB[1];
+                }
+            }
+            return null;
         }
 
         public void AddQuestions() 
         {
             ApplicationDbContext context = new ApplicationDbContext();
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            string folderPath = @"C:\Users\Jason\Desktop\question\id_";
-            string[] lines = File.ReadAllLines(@"C:\Users\Jason\Desktop\question.txt");
+            string folderPath = @"~\TestData\question\id_";
+            string path = HttpContext.Current.Server.MapPath(@"~\TestData\question.txt");
+            string[] lines = File.ReadAllLines(path);
             string[] question;
             string[] token = { "><" };
             string questionBody;
@@ -96,8 +187,8 @@ namespace CSIT314BCE
                 if (user != null) 
                 {
                     folderPath += question[0];
-                    questionBody = File.ReadAllText(folderPath);
-                    //DateTime odate = DateTime.ParseExact(question[2], "yyyy-MM-dd hh:mm:ss tt", null);
+                    string fp = HttpContext.Current.Server.MapPath(folderPath);
+                    questionBody = File.ReadAllText(fp);
                     DateTime odate = Convert.ToDateTime(question[2]);
                     Post post = new Post() {
                         OwnerId = user.Id,
@@ -113,7 +204,8 @@ namespace CSIT314BCE
                     context.SaveChanges();
                     context.Entry(post).GetDatabaseValues();
 
-                    using (StreamWriter sw = File.AppendText(@"C:\Users\Jason\Desktop\questionIdToDB.txt"))
+                    string qidtoDB = HttpContext.Current.Server.MapPath(@"~\TestData\questionIdToDB.txt");
+                    using (StreamWriter sw = File.AppendText(qidtoDB))
                     {
                         if (question.Length == 6)
                         {
@@ -125,7 +217,7 @@ namespace CSIT314BCE
                         }
                         
                     }
-                    folderPath = @"C:\Users\Jason\Desktop\question\id_";
+                    folderPath = @"~\TestData\question\id_";
                 }
             }
         }
@@ -135,7 +227,8 @@ namespace CSIT314BCE
             ApplicationDbContext context = new ApplicationDbContext();
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-            string[] lines = File.ReadAllLines(@"C:\Users\Jason\Desktop\users.txt");
+            string path = HttpContext.Current.Server.MapPath(@"~\TestData\users.txt");
+            string[] lines = File.ReadAllLines(path);
             string[] user;
             string pwd = "@Abc123";
             foreach (string line in lines)

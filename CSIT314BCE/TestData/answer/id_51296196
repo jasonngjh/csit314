@@ -1,0 +1,5 @@
+<p>As you already know <code>string</code> is just alias for <code>System.String</code>. But what should I use? it just personal preference.</p>
+
+<p>In my case, I love to use <code>string</code> rather than use <code>System.String</code> because <code>String</code> requires a namespace <code>using System;</code> or a full name <code>System.String</code>. </p>
+
+<p>So I believe the alias  <code>string</code> was created for simplicity and I love it!</p>

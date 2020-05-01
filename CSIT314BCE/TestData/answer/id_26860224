@@ -1,0 +1,20 @@
+<p>In JavaScript closures are awesome and unique, where variables or arguments are available to inner functions, and they will be alive even after the outer function has returned. Closures are used in most of the design patterns in JS </p>
+
+<pre><code>function getFullName(a, b) {
+  return a + b;
+}
+
+function makeFullName(fn) {
+
+  return function(firstName) {
+
+    return function(secondName) {
+
+      return fn(firstName, secondName);
+
+    }
+  }
+}
+
+makeFullName(getFullName)("stack")("overflow"); // Stackoverflow
+</code></pre>

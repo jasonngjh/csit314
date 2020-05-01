@@ -1,0 +1,3 @@
+<p>To undo your local commit you use <code>git reset &lt;commit&gt;</code>. Also <a href="https://www.atlassian.com/git/tutorials/undoing-changes/git-reset" rel="noreferrer">that tutorial</a> is very helpful to show you how it works.</p>
+
+<p>Alternatively, you can use <code>git revert &lt;commit&gt;</code>: <a href="https://www.atlassian.com/git/tutorials/undoing-changes/git-revert/" rel="noreferrer">reverting</a> should be used when you want to add another commit that rolls back the changes (but keeps them in the project history).</p>

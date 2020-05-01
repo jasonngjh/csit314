@@ -1,0 +1,23 @@
+<p>Use <code>fetch</code> to pull all your remote</p>
+
+<pre><code>   git fetch --all
+</code></pre>
+
+<p>To list remote branches:</p>
+
+<pre><code>   git branch -r
+</code></pre>
+
+<p>For list all your branches</p>
+
+<pre><code>   git branch -l
+   &gt;&gt;outpots like-
+     * develop
+       test
+       master
+</code></pre>
+
+<p>To checkout/change a branch</p>
+
+<pre><code>   git checkout master
+</code></pre>

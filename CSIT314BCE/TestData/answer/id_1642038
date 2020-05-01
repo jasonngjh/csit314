@@ -1,0 +1,4 @@
+<pre><code>while( x-- &gt; 0 )
+</code></pre>
+
+<p>is how that's parsed.</p>

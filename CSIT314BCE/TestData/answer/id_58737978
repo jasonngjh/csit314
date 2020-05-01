@@ -1,0 +1,9 @@
+<p>To find and remove a particular string from an array of strings:</p>
+
+<pre><code>var colors = ["red","blue","car","green"];
+var carIndex = colors.indexOf("car"); // Get "car" index
+// Remove car from the colors array
+colors.splice(carIndex, 1); // colors = ["red", "blue", "green"]
+</code></pre>
+
+<p>Source: <a href="https://www.codegrepper.com/?search_term=remove+a+particular+element+from+array" rel="nofollow noreferrer">https://www.codegrepper.com/?search_term=remove+a+particular+element+from+array</a></p>

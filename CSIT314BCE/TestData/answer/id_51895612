@@ -1,0 +1,20 @@
+<p>A simple generator function</p>
+
+<pre><code>def my_gen():
+    n = 1
+    print('This is printed first')
+    # Generator function contains yield statements
+    yield n
+
+    n += 1
+    print('This is printed second')
+    yield n
+
+    n += 1
+    print('This is printed at last')
+    yield n
+</code></pre>
+
+<p>yield statement pauses the function saving all its states and later continues from there on successive calls.</p>
+
+<p><a href="https://www.programiz.com/python-programming/generator" rel="noreferrer">https://www.programiz.com/python-programming/generator</a></p>

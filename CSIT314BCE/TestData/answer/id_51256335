@@ -1,0 +1,3 @@
+<p>none of these answers worked for me. this worked: </p>
+
+<p><code>git checkout -b feature/branch remotes/origin/feature/branch</code></p>

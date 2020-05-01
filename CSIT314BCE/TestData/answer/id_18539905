@@ -1,0 +1,34 @@
+<p>John Resig <a href="http://ejohn.org/blog/javascript-array-remove/" rel="noreferrer">posted a good implementation</a>:</p>
+
+<pre><code>// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from &lt; 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+</code></pre>
+
+<p>If you don’t want to extend a global object, you can do something like the following, instead:</p>
+
+<pre><code>// Array Remove - By John Resig (MIT Licensed)
+Array.remove = function(array, from, to) {
+    var rest = array.slice((to || from) + 1 || array.length);
+    array.length = from &lt; 0 ? array.length + from : from;
+    return array.push.apply(array, rest);
+};
+</code></pre>
+
+<p>But the main reason I am posting this is to warn users against the alternative implementation suggested in the comments on that page (Dec 14, 2007):</p>
+
+<pre><code>Array.prototype.remove = function(from, to){
+  this.splice(from, (to=[0,from||1,++to-from][arguments.length])&lt;0?this.length+to:to);
+  return this.length;
+};
+</code></pre>
+
+<p>It seems to work well at first, but through a painful process I discovered it fails when trying to remove the second to last element in an array. For example, if you have a 10-element array and you try to remove the 9th element with this:</p>
+
+<pre><code>myArray.remove(8);
+</code></pre>
+
+<p>You end up with an 8-element array. Don't know why but I confirmed John's original implementation doesn't have this problem.</p>

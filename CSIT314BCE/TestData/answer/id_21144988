@@ -1,0 +1,34 @@
+<p><a href="http://www.youtube.com/watch?v=ikqUUIg8gmk">This YouTube</a> video demonstrates practically how they differ. </p>
+
+<p>But now for a long textual answer.</p>
+
+<p>When we talk about <code>.NET</code> there are two different things one there is <code>.NET</code> framework and the other there are languages ( <code>C#</code> , <code>VB.NET</code> etc) which use that framework.</p>
+
+<p><img src="https://i.stack.imgur.com/jQUcj.png" alt="enter image description here"></p>
+
+<p>"<code>System.String</code>" a.k.a "String" ( capital "S") is a <code>.NET</code> framework data type while "string" is a <code>C#</code> data type.</p>
+
+<p><img src="https://i.stack.imgur.com/tKhjh.png" alt="enter image description here"></p>
+
+<p>In short "String" is an alias ( the same thing called with different names) of "string". So technically both the below code statements will give the same output.</p>
+
+<pre><code>String s = "I am String";
+</code></pre>
+
+<p>or</p>
+
+<pre><code>string s = "I am String";
+</code></pre>
+
+<p>In the same way there are aliases for other c# data type as shown below:-</p>
+
+<p>object: <code>System.Object</code>, string: <code>System.String</code>, bool: <code>System.Boolean</code>, byte: <code>System.Byte</code>, sbyte: <code>System.SByte</code>, short: <code>System.Int16</code> and so on</p>
+
+<p><strong>Now the million dollar question from programmer's point of view So when to use "String" and "string"?</strong></p>
+
+<p>First thing to avoid confusion use one of them consistently. But from best practices perspective when you do variable declaration it's good to use "string" ( small "s") and when you are using it as a class name then "String" ( capital "S") is preferred.</p>
+
+<p>In the below code the left hand side is a variable declaration and it declared using "string". At the right hand side we are calling a method so "String" is more sensible.</p>
+
+<pre><code>string s = String.ToUpper() ;
+</code></pre>

@@ -1,0 +1,4 @@
+<p>On Windows, do this single command:</p>
+
+<pre><code>git fetch --all &amp; git reset --hard origin/master
+</code></pre>

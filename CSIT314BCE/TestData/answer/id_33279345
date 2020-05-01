@@ -1,0 +1,88 @@
+<p><strong>Pinocchio: Closures in 1883 (over a century before JavaScript)</strong></p>
+
+<p>I think it can best be explained to a 6-year-old with a nice adventure... The part of the <a href="https://en.wikipedia.org/wiki/The_Adventures_of_Pinocchio" rel="noreferrer">Adventures of Pinocchio</a> where Pinocchio is being swallowed by an oversized dogfish...</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="false" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var tellStoryOfPinocchio = function(original) {
+
+  // Prepare for exciting things to happen
+  var pinocchioFindsMisterGeppetto;
+  var happyEnding;
+
+  // The story starts where Pinocchio searches for his 'father'
+  var pinocchio = {
+    name: 'Pinocchio',
+    location: 'in the sea',
+    noseLength: 2
+  };
+
+  // Is it a dog... is it a fish...
+  // The dogfish appears, however there is no such concept as the belly
+  // of the monster, there is just a monster...
+  var terribleDogfish = {
+    swallowWhole: function(snack) {
+      // The swallowing of Pinocchio introduces a new environment (for the
+      // things happening inside it)...
+      // The BELLY closure... with all of its guts and attributes
+      var mysteriousLightLocation = 'at Gepetto\'s ship';
+
+      // Yes: in my version of the story the monsters mouth is directly
+      // connected to its belly... This might explain the low ratings
+      // I had for biology...
+      var mouthLocation = 'in the monsters mouth and then outside';
+
+      var puppet = snack;
+
+
+      puppet.location = 'inside the belly';
+      alert(snack.name + ' is swallowed by the terrible dogfish...');
+
+      // Being inside the belly, Pinocchio can now experience new adventures inside it
+      pinocchioFindsMisterGeppetto = function() {
+        // The event of Pinocchio finding Mister Geppetto happens inside the
+        // belly and so it makes sence that it refers to the things inside
+        // the belly (closure) like the mysterious light and of course the
+        // hero Pinocchio himself!
+        alert(puppet.name + ' sees a mysterious light (also in the belly of the dogfish) in the distance and swims to it to find Mister Geppetto! He survived on ship supplies for two years after being swallowed himself. ');
+        puppet.location = mysteriousLightLocation;
+
+        alert(puppet.name + ' tells Mister Geppetto he missed him every single day! ');
+        puppet.noseLength++;
+      }
+
+      happyEnding = function() {
+        // The escape of Pinocchio and Mister Geppetto happens inside the belly:
+        // it refers to Pinocchio and the mouth of the beast.
+        alert('After finding Mister Gepetto, ' + puppet.name + ' and Mister Gepetto travel to the mouth of the monster.');
+        alert('The monster sleeps with its mouth open above the surface of the water. They escape through its mouth. ');
+        puppet.location = mouthLocation;
+        if (original) {
+          alert(puppet.name + ' is eventually hanged for his innumerable faults. ');
+        } else {
+          alert(puppet.name + ' is eventually turned into a real boy and they all lived happily ever after...');
+        }
+      }
+    }
+  }
+
+  alert('Once upon a time...');
+  alert('Fast forward to the moment that Pinocchio is searching for his \'father\'...');
+  alert('Pinocchio is ' + pinocchio.location + '.');
+  terribleDogfish.swallowWhole(pinocchio);
+  alert('Pinocchio is ' + pinocchio.location + '.');
+  pinocchioFindsMisterGeppetto();
+  alert('Pinocchio is ' + pinocchio.location + '.');
+  happyEnding();
+  alert('Pinocchio is ' + pinocchio.location + '.');
+
+  if (pinocchio.noseLength &gt; 2)
+    console.log('Hmmm... apparently a little white lie was told. ');
+}
+
+tellStoryOfPinocchio(false);
+
+ </code></pre>
+</div>
+</div>
+</p>

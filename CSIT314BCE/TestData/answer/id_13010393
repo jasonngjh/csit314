@@ -1,0 +1,15 @@
+<ol>
+<li><p>If you only want to modify your last commit message, then do:</p>
+
+<pre><code>git commit --amend
+</code></pre></li>
+</ol>
+
+<p>That will drop you into your text editor and let you change the last commit message.</p>
+
+<ol start="2">
+<li><p>If you want to change the last three commit messages, or any of the commit messages up to that point, supply <code>HEAD~3</code> to the <code>git rebase -i</code> command:</p>
+
+<pre><code>git rebase -i HEAD~3
+</code></pre></li>
+</ol>

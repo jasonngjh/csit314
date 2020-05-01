@@ -1,0 +1,17 @@
+<p><strong>Undo the last commit:</strong></p>
+
+<pre><code>git reset --soft HEAD^ or git reset --soft HEAD~
+</code></pre>
+
+<p><strong>This will undo the last commit.</strong></p>
+
+<p>Here <code>--soft</code> means reset into staging.</p>
+
+<p><code>HEAD~ or HEAD^</code> means to move to commit before HEAD.</p>
+
+<p>Replace the last commit to new commit:</p>
+
+<pre><code>git commit --amend -m "message"
+</code></pre>
+
+<p>It will replace the last commit with the new commit.</p>

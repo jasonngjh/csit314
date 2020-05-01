@@ -1,0 +1,5 @@
+<ul>
+<li><p>When you use <code>pull</code>, Git tries to automatically do your work for you. <strong>It is context sensitive</strong>, so Git will merge any pulled commits into the branch you are currently working in.  <code>pull</code> <strong>automatically merges the commits without letting you review them first</strong>. If you don’t closely manage your branches, you may run into frequent conflicts.</p></li>
+<li><p>When you <code>fetch</code>, Git gathers any commits from the target branch that do not exist in your current branch and <strong>stores them in your local repository</strong>. However, <strong>it does not merge them with your current branch</strong>. This is particularly useful if you need to keep your repository up to date, but are working on something that might break if you update your files. 
+To integrate the commits into your master branch, you use <code>merge</code>.</p></li>
+</ul>

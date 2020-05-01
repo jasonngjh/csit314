@@ -1,0 +1,6 @@
+<p>Simply check for the <code>display</code> attribute (or <code>visibility</code> depending on what kind of invisibility you prefer). Example :</p>
+
+<pre><code>if ($('#invisible').css('display') == 'none') {
+    // This means the HTML element with ID 'invisible' has its 'display' attribute set to 'none'
+}
+</code></pre>

@@ -1,0 +1,3 @@
+<p>It's returning a generator. I'm not particularly familiar with Python, but I believe it's the same kind of thing as <a href="http://csharpindepth.com/Articles/Chapter11/StreamingAndIterators.aspx" rel="noreferrer">C#'s iterator blocks</a> if you're familiar with those.</p>
+
+<p>The key idea is that the compiler/interpreter/whatever does some trickery so that as far as the caller is concerned, they can keep calling next() and it will keep returning values - <em>as if the generator method was paused</em>. Now obviously you can't really "pause" a method, so the compiler builds a state machine for you to remember where you currently are and what the local variables etc look like. This is much easier than writing an iterator yourself.</p>

@@ -1,0 +1,25 @@
+<p>I know there are a lot of answers already, but many of them seem to over complicate the problem.  Here is a simple, recursive way of removing all instances of a key - calls self until index isn't found.  Yes, it only works in browsers with <code>indexOf</code>, but it's simple and can be easily polyfilled.</p>
+
+<p><strong>Stand-alone function</strong></p>
+
+<pre><code>function removeAll(array, key){
+    var index = array.indexOf(key);
+
+    if(index === -1) return;
+
+    array.splice(index, 1);
+    removeAll(array,key);
+}
+</code></pre>
+
+<p><strong>Prototype method</strong></p>
+
+<pre><code>Array.prototype.removeAll = function(key){
+    var index = this.indexOf(key);
+
+    if(index === -1) return;
+
+    this.splice(index, 1);
+    this.removeAll(key);
+}
+</code></pre>

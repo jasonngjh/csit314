@@ -1,0 +1,19 @@
+<p>Other guys and gals give the solutions, but maybe I can tell you why.</p>
+
+<blockquote>
+  <p>git checkout test which does nothing</p>
+</blockquote>
+
+<p><code>Does nothing</code> doesn't equal <code>doesn't work</code>, so I guess when you type 'git checkout test' in your terminal and press enter key, no message appears and no error occurs. Am I right?</p>
+
+<p>If the answer is 'yes', I can tell you the cause.</p>
+
+<p>The cause is that there is a file (or folder) named 'test' in your work tree.</p>
+
+<p>When <code>git checkout xxx</code> parsed,</p>
+
+<ol>
+<li>Git looks on <code>xxx</code> as a branch name at first, but there isn't any branch named test.</li>
+<li>Then Git thinks <code>xxx</code> is a path, and fortunately (or unfortunately), there is a file named test. So <code>git checkout xxx</code> means discard any modification in <code>xxx</code> file.</li>
+<li>If there isn't file named <code>xxx</code> either, then Git will try to create the <code>xxx</code> according to some rules. One of the rules is create a branch named <code>xxx</code> if <code>remotes/origin/xxx</code> exists.</li>
+</ol>

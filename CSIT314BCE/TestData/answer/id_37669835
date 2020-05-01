@@ -1,0 +1,90 @@
+<p>There is a very simple way to understand this.
+Lets's take C++ pass by reference.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Foo {
+    private:
+        int x;
+    public:
+        Foo(int val) {x = val;}
+        void foo()
+        {
+            cout&lt;&lt;x&lt;&lt;endl;
+        }
+};
+
+void bar(Foo&amp; ref)
+{
+    ref.foo();
+    ref = *(new Foo(99));
+    ref.foo();
+}
+
+int main()
+{
+   Foo f = Foo(1);
+   f.foo();
+   bar(f);
+   f.foo();
+
+   return 0;
+}
+</code></pre>
+
+<p>What is the outcome?</p>
+
+<pre>
+1
+1
+99
+99
+</pre>
+
+<p>So, after bar() assigned a new value to a "reference" passed in, it actually changed the one which was passed in from main itself, explaining the last f.foo() call from main printing 99.</p>
+
+<p>Now, lets see what java says.</p>
+
+<pre><code>public class Ref {
+
+    private static class Foo {
+        private int x;
+
+        private Foo(int x) {
+            this.x = x;
+        }
+
+        private void foo() {
+            System.out.println(x);
+        }
+    }
+
+    private static void bar(Foo f) {
+        f.foo();
+        f = new Foo(99);
+        f.foo();
+    }
+
+    public static void main(String[] args) {
+        Foo f = new Foo(1);
+        System.out.println(f.x);
+        bar(f);
+        System.out.println(f.x);
+    }
+
+}
+</code></pre>
+
+<p>It says:</p>
+
+<pre>
+1
+1
+99
+1
+</pre>
+
+<p>Voilà, the reference of Foo in main that was passed to bar, is still unchanged!</p>
+
+<p>This example clearly shows that java is not the same as C++ when we say "pass by reference". Essentially, java is passing "references" as "values" to functions, meaning java is pass by value.</p>

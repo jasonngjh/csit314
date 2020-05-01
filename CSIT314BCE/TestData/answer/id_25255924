@@ -1,0 +1,17 @@
+<p>Git obtains the branch of the latest version from the remote to the local using two commands: </p>
+
+<ol>
+<li><p>git fetch: Git is going to get the latest version from remote to local,  but it do not automatically merge.
+    
+<code>git fetch origin master</code>
+<code>git log -p master..origin/master</code>
+<code>git merge origin/master</code></p>
+
+<p>     The commands above mean that download latest version of the main branch from origin from the remote to origin master branch. And then compares the local master branch and origin master branch. Finally, merge. </p></li>
+<li><p>git pull: Git is going to get the latest version from the remote and merge into the local.</p>
+
+<p>   
+<code>git pull origin master</code></p>
+
+<p>     The command above is the equivalent to <code>git fetch</code> and <code>git merge</code>. In practice, <code>git fetch</code> maybe more secure because before the merge we can see the changes and decide whether to merge.</p></li>
+</ol>

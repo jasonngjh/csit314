@@ -1,0 +1,37 @@
+<h3><strong>Remove the particular array item</strong></h3>
+
+<p><a href="https://i.stack.imgur.com/Xq2cT.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/Xq2cT.png" alt="Enter image description here"></a></p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var cars = ["Apple", "Banana", "Mango", "Orange", "Grapes"];
+
+document.getElementById("demo").innerHTML = cars;
+
+for( var i = 0; i &lt; cars.length; i++){
+   if ( cars[i] === "Banana") {
+     cars.splice(i, 1);
+     i--;
+   }
+}
+
+document.getElementById("demo2").innerHTML =  cars;</code></pre>
+<pre class="snippet-code-css lang-css prettyprint-override"><code>p {
+  font-size: 20px;
+  padding: 10px;
+  border: 1px dashed tan;
+  color: brown;
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h2&gt;Before&lt;/h2&gt;
+&lt;p id="demo"&gt;&lt;/p&gt;
+&lt;h2&gt;After&lt;/h2&gt;
+&lt;p id="demo2"&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</p>

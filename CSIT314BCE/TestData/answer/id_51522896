@@ -1,0 +1,13 @@
+<h2>Java passes primitive types by value and class types by reference</h2>
+
+<p>Now, people like to bicker endlessly about whether "pass by reference" is the correct way to describe what Java et al. actually do. The point is this:</p>
+
+<ol>
+<li>Passing an object does not copy the object.</li>
+<li>An object passed to a function can have its members modified by the function.</li>
+<li>A primitive value passed to a function cannot be modified by the function. A copy is made.</li>
+</ol>
+
+<p>In my book that's called passing by reference.</p>
+
+<p>&#8212; <a href="https://www.quora.com/profile/Brian-Bi" rel="noreferrer">Brian Bi</a> - <a href="https://www.quora.com/Which-programming-languages-are-pass-by-reference#" rel="noreferrer">Which programming languages are pass by reference?</a></p>

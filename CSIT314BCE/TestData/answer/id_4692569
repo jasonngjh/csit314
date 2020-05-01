@@ -1,0 +1,6 @@
+<p>I had a similar problem.  I had to do this:</p>
+
+<pre><code>git reset --hard HEAD
+git clean -f
+git pull
+</code></pre>

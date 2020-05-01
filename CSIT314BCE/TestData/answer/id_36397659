@@ -1,0 +1,11 @@
+<p>You can just add a class when it is visible. Add a class, <code>show</code>. Then check for it have a class:</p>
+
+<pre><code>$('#elementId').hasClass('show');
+</code></pre>
+
+<p>It returns true if you have the <code>show</code> class.</p>
+
+<p>Add CSS like this:</p>
+
+<pre><code>.show{ display: block; }
+</code></pre>

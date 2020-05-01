@@ -1,0 +1,5 @@
+<p>In the context of <strong>MSDN Documentation</strong>, <code>String</code> class is documented like any other data type (<em>e.g.</em>, <code>XmlReader</code>, <code>StreamReader</code>) in the <strong><a href="http://msdn.microsoft.com/en-us/library/system.string%28v=vs.110%29.aspx" rel="noreferrer">BCL</a></strong>.</p>
+
+<p>And <code>string</code> is documented like a keyword (C# Reference) or like any basic C# language construct (<em>e.g.</em>, <code>for</code>, <code>while</code>, <code>default</code>).</p>
+
+<p><strong><a href="http://msdn.microsoft.com/en-us/library/362314fe.aspx" rel="noreferrer">Reference</a></strong>.</p>

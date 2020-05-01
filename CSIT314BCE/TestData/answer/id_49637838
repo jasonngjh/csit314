@@ -1,0 +1,117 @@
+<p><em>Before explaining anything about <code>if __name__ == '__main__'</code> it is important to understand what <code>__name__</code> is and what it does.</em></p>
+
+<blockquote>
+  <p><strong>What is <code>__name__</code>?</strong></p>
+</blockquote>
+
+<p><code>__name__</code> is a <a href="https://wiki.python.org/moin/DunderAlias" rel="noreferrer">DunderAlias</a> - can be thought of as a global variable (accessible from modules) and works in a similar way to <a href="https://stackoverflow.com/questions/13881395/in-python-what-is-a-global-statement"><code>global</code></a>.</p>
+
+<p>It is a string (global as mentioned above) as indicated by <code>type(__name__)</code> (yielding <code>&lt;class 'str'&gt;</code>), and is an inbuilt standard for both <a href="https://docs.python.org/3/library/__main__.html" rel="noreferrer">Python 3</a> and <a href="https://docs.python.org/2/library/__main__.html" rel="noreferrer">Python 2</a> versions.</p>
+
+<blockquote>
+  <p><strong>Where:</strong></p>
+</blockquote>
+
+<p>It can not only be used in scripts but can also be found in both the interpreter and modules/packages.  </p>
+
+<p><strong>Interpreter:</strong></p>
+
+<pre><code>&gt;&gt;&gt; print(__name__)
+__main__
+&gt;&gt;&gt;
+</code></pre>
+
+<p><strong>Script:</strong></p>
+
+<p><em>test_file.py</em>:</p>
+
+<pre><code>print(__name__)
+</code></pre>
+
+<p>Resulting in <code>__main__</code></p>
+
+<p><strong>Module or package:</strong></p>
+
+<p><em>somefile.py:</em></p>
+
+<pre><code>def somefunction():
+    print(__name__)
+</code></pre>
+
+<p><em>test_file.py:</em></p>
+
+<pre><code>import somefile
+somefile.somefunction()
+</code></pre>
+
+<p>Resulting in <code>somefile</code></p>
+
+<p>Notice that when used in a package or module, <code>__name__</code> takes the name of the file.  The path of the actual module or package path is not given, but has its own DunderAlias <code>__file__</code>, that allows for this.</p>
+
+<p>You should see that, where <code>__name__</code>, where it is the main file (or program) will <em>always</em> return <code>__main__</code>, and if it is a module/package, or anything that is running off some other Python script, will return the name of the file where it has originated from.</p>
+
+<blockquote>
+  <p><strong>Practice:</strong></p>
+</blockquote>
+
+<p>Being a variable means that it's value <em>can</em> be overwritten ("can" does not mean "should"), overwriting the value of <code>__name__</code> will result in a lack of readability.  So do not do it, for any reason.  If you need a variable define a new variable.</p>
+
+<p>It is always assumed that the value of <code>__name__</code> to be <code>__main__</code> or the name of the file.  Once again changing this default value will cause more confusion that it will do good, causing problems further down the line.</p>
+
+<p><em>example:</em></p>
+
+<pre><code>&gt;&gt;&gt; __name__ = 'Horrify' # Change default from __main__
+&gt;&gt;&gt; if __name__ == 'Horrify': print(__name__)
+...
+&gt;&gt;&gt; else: print('Not Horrify')
+...
+Horrify
+&gt;&gt;&gt;
+</code></pre>
+
+<p>It is considered good practice in general to include the <code>if __name__ == '__main__'</code> in scripts.</p>
+
+<blockquote>
+  <p><strong>Now to answer <code>if __name__ == '__main__'</code>:</strong></p>
+</blockquote>
+
+<p><em>Now we know the behaviour of <code>__name__</code> things become clearer:</em></p>
+
+<p>An <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements" rel="noreferrer"><code>if</code></a> is a flow control statement that contains the block of code will execute if the value given is true. We have seen that <code>__name__</code> can take either 
+<code>__main__</code> or the file name it has been imported from.  </p>
+
+<p>This means that if <code>__name__</code> is equal to <code>__main__</code> then the file must be the main file and must actually be running (or it is the interpreter), not a module or package imported into the script.</p>
+
+<p>If indeed <code>__name__</code> does take the value of <code>__main__</code> then whatever is in that block of code will execute.</p>
+
+<p>This tells us that if the file running is the main file (or you are running from the interpreter directly) then that condition must execute.  If it is a package then it should not, and the value will not be <code>__main__</code>.</p>
+
+<blockquote>
+  <p><strong>Modules:</strong></p>
+</blockquote>
+
+<p><code>__name__</code> can also be used in modules to define the name of a module</p>
+
+<blockquote>
+  <p><strong>Variants:</strong>  </p>
+</blockquote>
+
+<p>It is also possible to do other, less common but useful things with <code>__name__</code>, some I will show here:</p>
+
+<p><strong>Executing only if the file is a module or package:</strong></p>
+
+<pre><code>if __name__ != '__main__':
+    # Do some useful things 
+</code></pre>
+
+<p><strong>Running one condition if the file is the main one and another if it is not:</strong></p>
+
+<pre><code>if __name__ == '__main__':
+    # Execute something
+else:
+    # Do some useful things
+</code></pre>
+
+<p>You can also use it to provide runnable help functions/utilities on packages and modules without the elaborate use of libraries.</p>
+
+<p>It also allows modules to be run from the command line as main scripts, which can be also very useful.</p>

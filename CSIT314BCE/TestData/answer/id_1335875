@@ -1,0 +1,8 @@
+<p>It's a new feature of ECMAScript 5. John Resig wrote up <a href="http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/" rel="noreferrer">a nice summary</a> of it.</p>
+
+<p>It's just a string you put in your JavaScript files (either at the top of your file or inside of a function) that looks like this:</p>
+
+<pre><code>"use strict";
+</code></pre>
+
+<p>Putting it in your code now shouldn't cause any problems with current browsers as it's just a string. It may cause problems with your code in the future if your code violates the pragma.  For instance, if you currently have <code>foo = "bar"</code> without defining <code>foo</code> first, your code will start failing...which is a good thing in my opinion.</p>

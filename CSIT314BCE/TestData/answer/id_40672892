@@ -1,0 +1,31 @@
+<p>Think we have <strong><em>code.txt</em></strong> file.
+We make some changes on it and commit.
+<strong>We can undo this commit in three ways</strong>, but first you should know what is the staged file...
+An staged file is a file that ready to commit and if you run <code>git status</code> this file will be shown with green color and if this is not staged for commit will be shown with red color:</p>
+
+<p><a href="https://i.stack.imgur.com/ymNKl.png" rel="noreferrer"><img src="https://i.stack.imgur.com/ymNKl.png" alt="enter image description here"></a></p>
+
+<p>It means if you commit your change, your changes on this file is not saved.
+You can add this file in your stage with <code>git add code.txt</code> and then commit your change:</p>
+
+<p><a href="https://i.stack.imgur.com/36Yag.png" rel="noreferrer"><img src="https://i.stack.imgur.com/36Yag.png" alt="enter image description here"></a></p>
+
+<p><strong>Undo last commit:</strong></p>
+
+<ol>
+<li><p>Now if we want to just undo commit without any other changes, we can use</p>
+
+<p><code>git reset --soft HEAD^</code> </p>
+
+<p><a href="https://i.stack.imgur.com/Tx6x1.png" rel="noreferrer"><img src="https://i.stack.imgur.com/Tx6x1.png" alt="enter image description here"></a></p></li>
+<li><p>If we want to undo commit and its changes (<strong><em>THIS IS DANGEROUS, because your change will lost</em></strong>), we can use</p>
+
+<p><code>git reset --hard HEAD^</code></p>
+
+<p><a href="https://i.stack.imgur.com/8NDBS.png" rel="noreferrer"><img src="https://i.stack.imgur.com/8NDBS.png" alt="enter image description here"></a></p></li>
+<li><p>And if we want to undo commit and remove changes from stage, we can use</p>
+
+<p><code>git reset --mixed HEAD^</code> or in a short form <code>git reset HEAD^</code></p>
+
+<p><a href="https://i.stack.imgur.com/jg8g0.png" rel="noreferrer"><img src="https://i.stack.imgur.com/jg8g0.png" alt="enter image description here"></a></p></li>
+</ol>

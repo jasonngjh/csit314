@@ -1,0 +1,10 @@
+<p>Another way:</p>
+
+<p>Checkout the branch you want to revert, then reset your local working copy back to the commit that you want to be the latest one on the remote server (everything after it will go bye-bye). To do this, in SourceTree I right-clicked on the and selected "Reset BRANCHNAME to this commit".</p>
+
+<p>Then navigate to your repository's local directory and run this command:</p>
+
+<pre><code>git -c diff.mnemonicprefix=false -c core.quotepath=false push -v -f --tags REPOSITORY_NAME BRANCHNAME:BRANCHNAME
+</code></pre>
+
+<p>This will erase all commits after the current one in your local repository but only for that one branch.</p>

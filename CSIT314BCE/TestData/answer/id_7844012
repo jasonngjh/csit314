@@ -1,0 +1,1 @@
+<p><code>string</code> is an alias (or shorthand) of <code>System.String</code>. That means, by typing <code>string</code> we meant <code>System.String</code>. You can read more in think link: <a href="http://www.jeeshenlee.com/2011/10/difference-between-string-and.html" rel="noreferrer">'string' is an alias/shorthand of System.String.</a></p>

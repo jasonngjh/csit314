@@ -1,0 +1,27 @@
+<p>There are many (e.g. Jeffrey Richter in his book <a href="https://stackoverflow.com/questions/7074/what-is-the-difference-between-string-and-string-in-c/12863#12863">CLR Via C#</a>) who are saying that there is no difference between <code>System.String</code> and <code>string</code>, and also <code>System.Int32</code> and <code>int</code>, but we must discriminate a little deeper to really squeeze the juice out of this question so we can get all the nutritional value out of it (write better code).</p>
+
+<p>A. They are the Same...</p>
+
+<ol>
+<li>to the compiler.</li>
+<li>to the developer. (We know #1 and eventually achieve autopilot.)</li>
+</ol>
+
+<p>B. They are Different in Famework and in Non-C# Contexts. Different...</p>
+
+<ol>
+<li>to OTHER languages that are NOT C#</li>
+<li>in an optimized CIL (was MSIL) context (the .NET VM assembly language)</li>
+<li>in a platform-targeted context -- the .NET Framework or Mono or any CIL-type area</li>
+<li>in a book targeting multiple .NET Languages (such as VB.NET, F#, etc.)</li>
+</ol>
+
+<p>So, the true answer is that it is only because C# has to co-own the .NET space with other languages that this question even exists.</p>
+
+<p>C. To Summarize...</p>
+
+<p>You use <code>string</code> and <code>int</code> and the other C# types in a C#-only targeted audience (ask the question, who is going to read this code, or use this library). For your internal company, if you only use C#, then stick to the C# types.</p>
+
+<p>...and you use <code>System.String</code> and <code>System.Int32</code> in a multilingual or framework targeted audience (when C# is not the only audience). For your internal organization, if you also use VB.NET or F# or any other .NET language, or develop libraries for consumption by customers who may, then you should use the "Frameworky" types in those contexts so that everyone can understand your interface, no matter what universe they are from. (What is Klingon for <code>System.String</code>, anyway?)</p>
+
+<p>HTH.</p>

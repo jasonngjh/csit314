@@ -1,0 +1,169 @@
+<h1>Using <code>'use strict';</code> does not suddenly make your code better.</h1>
+
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode" rel="noreferrer">JavaScript strict mode</a> is a feature in <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm" rel="noreferrer">ECMAScript 5</a>. You can enable the strict mode by declaring this in the top of your script/function.</p>
+
+<pre><code>'use strict';
+</code></pre>
+
+<p>When a JavaScript engine sees this <em>directive</em>, it will start to interpret the code in a special mode. In this mode, errors are thrown up when certain coding practices that could end up being potential bugs are detected (which is the reasoning behind the strict mode).</p>
+
+<p>Consider this example:</p>
+
+<pre><code>var a = 365;
+var b = 030;
+</code></pre>
+
+<p>In their obsession to line up the numeric literals, the developer has inadvertently initialized variable <code>b</code> with an octal literal. Non-strict mode will interpret this as a numeric literal with value <code>24</code> (in base 10). However, strict mode will throw an error.</p>
+
+<p>For a non-exhaustive list of specialties in strict mode, see <a href="https://stackoverflow.com/a/27114400/1461424">this answer</a>.</p>
+
+<hr>
+
+<h2>Where should I use <code>'use strict';</code>?</h2>
+
+<ul>
+<li><p>In my <em>new</em> JavaScript application: <strong>Absolutely!</strong> Strict mode can be used as a whistleblower when you are doing something stupid with your code.</p></li>
+<li><p>In my <em>existing</em> JavaScript code: <strong>Probably not!</strong> If your existing JavaScript code has statements that are prohibited in strict-mode, the application will simply break. If you want strict mode, you should be prepared to debug and correct your existing code. This is why <em>using <code>'use strict';</code> does not suddenly make your code better</em>.</p></li>
+</ul>
+
+<hr>
+
+<h2>How do I use strict mode?</h2>
+
+<ol>
+<li><p>Insert a <code>'use strict';</code> statement on top of your script:</p>
+
+<pre><code>// File: myscript.js
+
+'use strict';
+var a = 2;
+....
+</code></pre>
+
+<p>Note that everything in the file <code>myscript.js</code> will be interpreted in strict mode.</p></li>
+<li><p>Or, insert a <code>'use strict';</code> statement on top of your function body:</p>
+
+<pre><code>function doSomething() {
+    'use strict';
+    ...
+}
+</code></pre>
+
+<p>Everything in the <em>lexical scope</em> of function <code>doSomething</code> will be interpreted in strict mode. The word <em>lexical scope</em> is important here. For example, if your <em>strict</em> code calls a function of a library that is <em>not strict</em>, only your code is executed in strict mode, and not the called function. See <a href="https://stackoverflow.com/a/6039163/1461424">this answer</a> for a better explanation.</p></li>
+</ol>
+
+<hr>
+
+<h2>What things are prohibited in strict mode?</h2>
+
+<p>I found a <a href="http://yuiblog.com/blog/2010/12/14/strict-mode-is-coming-to-town/" rel="noreferrer">nice article</a> describing several things that are prohibited in strict mode (note that this is not an exclusive list):</p>
+
+<blockquote>
+  <h2>Scope</h2>
+  
+  <p>Historically, JavaScript has been confused about how functions
+  are scoped. Sometimes they seem to be statically scoped, but some
+  features make them behave like they are dynamically scoped. This is
+  confusing, making programs difficult to read and understand.
+  Misunderstanding causes bugs. It also is a problem for performance.
+  Static scoping would permit variable binding to happen at compile
+  time, but the requirement for dynamic scope means the binding must be
+  deferred to runtime, which comes with a significant performance
+  penalty.</p>
+  
+  <p>Strict mode requires that all variable binding be done statically.
+  That means that the features that previously required dynamic binding
+  must be eliminated or modified. Specifically, the with statement is
+  eliminated, and the eval function’s ability to tamper with the
+  environment of its caller is severely restricted.</p>
+  
+  <p>One of the benefits of strict code is that tools like <a href="http://developer.yahoo.com/yui/compressor/" rel="noreferrer">YUI Compressor</a>
+  can do a better job when processing it.</p>
+  
+  <h2>Implied Global Variables</h2>
+  
+  <p>JavaScript has implied global variables. If
+  you do not explicitly declare a variable, a global variable is
+  implicitly declared for you. This makes programming easier for
+  beginners because they can neglect some of their basic housekeeping
+  chores. But it makes the management of larger programs much more
+  difficult and it significantly degrades reliability. So in strict
+  mode, implied global variables are no longer created. You should
+  explicitly declare all of your variables.</p>
+  
+  <h2>Global Leakage</h2>
+  
+  <p>There are a number of situations that could cause <code>this</code>
+  to be bound to the global object. For example, if you forget to
+  provide the <code>new</code> prefix when calling a constructor function, the
+  constructor's <code>this</code> will be bound unexpectedly to the global object, so
+  instead of initializing a new object, it will instead be silently
+  tampering with global variables. In these situations, strict mode will
+  instead bind <code>this</code> to <code>undefined</code>, which will cause the constructor to
+  throw an exception instead, allowing the error to be detected much
+  sooner.</p>
+  
+  <h2>Noisy Failure</h2>
+  
+  <p>JavaScript has always had read-only properties, but you
+  could not create them yourself until ES5’s <code>Object.createProperty</code>
+  function exposed that capability. If you attempted to assign a value
+  to a read-only property, it would fail silently. The assignment would
+  not change the property’s value, but your program would proceed as
+  though it had. This is an integrity hazard that can cause programs to
+  go into an inconsistent state. In strict mode, attempting to change a
+  read-only property will throw an exception.</p>
+  
+  <h2>Octal</h2>
+  
+  <p>The octal (or base 8) representation of numbers was extremely
+  useful when doing machine-level programming on machines whose word
+  sizes were a multiple of 3. You needed octal when working with the CDC
+  6600 mainframe, which had a word size of 60 bits. If you could read
+  octal, you could look at a word as 20 digits. Two digits represented
+  the op code, and one digit identified one of 8 registers. During the
+  slow transition from machine codes to high level languages, it was
+  thought to be useful to provide octal forms in programming languages.</p>
+  
+  <p>In C, an extremely unfortunate representation of octalness was
+  selected: Leading zero. So in C, <code>0100</code> means 64, not 100, and <code>08</code> is an
+  error, not 8. Even more unfortunately, this anachronism has been
+  copied into nearly all modern languages, including JavaScript, where
+  it is only used to create errors. It has no other purpose. So in
+  strict mode, octal forms are no longer allowed.</p>
+  
+  <h2>Et cetera</h2>
+  
+  <p>The arguments pseudo array becomes a little bit more
+  array-like in ES5. In strict mode, it loses its <code>callee</code> and <code>caller</code>
+  properties. This makes it possible to pass your <code>arguments</code> to untrusted
+  code without giving up a lot of confidential context. Also, the
+  <code>arguments</code> property of functions is eliminated.</p>
+  
+  <p>In strict mode, duplicate keys in a function literal will produce a
+  syntax error. A function can’t have two parameters with the same name.
+  A function can’t have a variable with the same name as one of its
+  parameters. A function can’t <code>delete</code> its own variables. An attempt to
+  <code>delete</code> a non-configurable property now throws an exception. Primitive
+  values are not implicitly wrapped.</p>
+</blockquote>
+
+<hr>
+
+<h2>Reserved words for future JavaScript versions</h2>
+
+<p>ECMAScript 5 adds a list of reserved words. If you use them as variables or arguments, strict mode will throw an error. The reserved words are:</p>
+
+<blockquote>
+  <p><code>implements</code>, <code>interface</code>, <code>let</code>, <code>package</code>, <code>private</code>, <code>protected</code>, <code>public</code>, <code>static</code>, and <code>yield</code></p>
+</blockquote>
+
+<hr>
+
+<h2>Further Reading</h2>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode" rel="noreferrer">Strict Mode - JavaScript | MDN</a></li>
+<li><a href="http://caniuse.com/#feat=use-strict" rel="noreferrer">Browser support for strict mode</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode/Transitioning_to_strict_mode" rel="noreferrer">Transitioning to strict mode</a></li>
+</ul>

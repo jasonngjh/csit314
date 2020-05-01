@@ -1,0 +1,37 @@
+<p>I'm sure, <a href="https://en.wikipedia.org/wiki/Albert_Einstein" rel="nofollow">Einstein</a> didn't say it with a direct expectation for us to pick any esoteric brainstormer thing and run over six-year-olds with futile attempts to get those 'crazy' (and what is even worse for them-boring) things to their childish minds :) If I were six years old I wouldn't like to have such parents or wouldn't make friendship with such boring philanthropists, sorry :)</p>
+
+<p>Anyway, for babies, <strong>closure</strong> is simply a <strong>hug</strong>, I guess, whatever way you try to explain :) And when you hug a friend of yours then you both kind of share anything you guys have at the moment. It's a rite of passage, once you've hugged somebody you're showing her trust and willingness to let her do with you a lot of things you don't allow and would hide from others. It's an act of friendship :).</p>
+
+<p>I really don't know how to explain it to 5-6 years old babies. I neither think they will appreciate any JavaScript code snippets like:</p>
+
+<pre><code>function Baby(){
+    this.iTrustYou = true;
+}
+
+Baby.prototype.hug = function (baby) {
+    var smiles = 0;
+
+    if (baby.iTrustYou) {
+        return function() {
+            smiles++;
+            alert(smiles);
+        };
+    }
+};
+
+var
+   arman = new Baby("Arman"),
+   morgan = new Baby("Morgana");
+
+var hug = arman.hug(morgan);
+hug();
+hug();
+</code></pre>
+
+<p>For children only:</p>
+
+<p><strong>Closure</strong> is <strong>hug</strong></p>
+
+<p><strong>Bug</strong> is <strong>fly</strong></p>
+
+<p><strong>KISS</strong> is <strong>smooch!</strong> :)</p>

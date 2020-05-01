@@ -1,0 +1,2 @@
+<p>Image result for string vs String <a href="http://www.javatpoint.com" rel="nofollow noreferrer">www.javatpoint.com</a> 
+In C#, <code>string</code> is an alias for the <code>String</code> class in .NET framework. In fact, every C# type has an equivalent in .NET.<br/> <strong>Another little difference</strong> is that if you use the <code>String</code> class, you need to import the <code>System</code> namespace, whereas you don't have to import namespace when using the <code>string</code> keyword</p>

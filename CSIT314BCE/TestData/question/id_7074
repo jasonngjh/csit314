@@ -1,0 +1,7 @@
+<p>Example (<em>note the case</em>):</p>
+
+<pre class="lang-cs prettyprint-override"><code>string s = "Hello world!";
+String s = "Hello world!";
+</code></pre>
+
+<p>What are the guidelines for the use of each? And what are the differences?</p>

@@ -1,0 +1,9 @@
+<p>C# is a language which is used together with the CLR.</p>
+
+<p><strong><code>string</code></strong> is a type in C#.</p>
+
+<p><strong><code>System.String</code></strong> is a type in the CLR.</p>
+
+<p>When you use C# together with the CLR <strong><code>string</code></strong> will be mapped to <strong><code>System.String</code></strong>.</p>
+
+<p>Theoretically, you could implement a C#-compiler that generated Java bytecode. A sensible implementation of this compiler would probably map <strong><code>string</code></strong> to <strong><code>java.lang.String</code></strong> in order to interoperate with the Java runtime library.</p>

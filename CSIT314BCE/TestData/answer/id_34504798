@@ -1,0 +1,36 @@
+<p>You can use JSON with comments in it, if you load it as a text file, and then remove comments from it.</p>
+
+<p>You can use <a href="https://www.npmjs.com/package/decomment">decomment</a> library for that. Below is a complete example.</p>
+
+<p><strong>Input JSON (file input.js):</strong></p>
+
+<pre><code>/*
+* multi-line comments
+**/
+{
+    "value": 123 // one-line comment
+}
+</code></pre>
+
+<p><strong>Test Application:</strong></p>
+
+<pre><code>var decomment = require('decomment');
+var fs = require('fs');
+
+fs.readFile('input.js', 'utf8', function (err, data) {
+    if (err) {
+        console.log(err);
+    } else {
+        var text = decomment(data); // removing comments
+        var json = JSON.parse(text); // parsing JSON
+        console.log(json);
+    }
+});
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>{ value: 123 }
+</code></pre>
+
+<p>See also: <a href="https://github.com/vitaly-t/gulp-decomment">gulp-decomment</a>, <a href="https://github.com/vitaly-t/grunt-decomment">grunt-decomment</a></p>

@@ -1,0 +1,93 @@
+<p>In java everything is reference, so when you have something like:
+    <code>Point pnt1 = new Point(0,0);</code> Java does following:</p>
+
+<ol>
+<li>Creates new Point object</li>
+<li>Creates new Point reference and initialize that reference to <em>point (refer to)</em> on previously created Point object.</li>
+<li>From here, through Point object life, you will access to that object through pnt1
+ reference. So we can say that in Java you manipulate object through its reference.<br></li>
+</ol>
+
+<p><img src="https://i.stack.imgur.com/jM54f.png" alt="enter image description here"></p>
+
+<p><strong>Java doesn't pass method arguments by reference; it passes them by value.</strong> I will use example from <a href="http://www.javaworld.com/javaqa/2000-05/03-qa-0526-pass.html" rel="noreferrer">this site</a>: </p>
+
+<pre><code>public static void tricky(Point arg1, Point arg2) {
+  arg1.x = 100;
+  arg1.y = 100;
+  Point temp = arg1;
+  arg1 = arg2;
+  arg2 = temp;
+}
+public static void main(String [] args) {
+  Point pnt1 = new Point(0,0);
+  Point pnt2 = new Point(0,0);
+  System.out.println("X1: " + pnt1.x + " Y1: " +pnt1.y); 
+  System.out.println("X2: " + pnt2.x + " Y2: " +pnt2.y);
+  System.out.println(" ");
+  tricky(pnt1,pnt2);
+  System.out.println("X1: " + pnt1.x + " Y1:" + pnt1.y); 
+  System.out.println("X2: " + pnt2.x + " Y2: " +pnt2.y);  
+}
+</code></pre>
+
+<p>Flow of the program:</p>
+
+<pre><code>Point pnt1 = new Point(0,0);
+Point pnt2 = new Point(0,0);
+</code></pre>
+
+<p>Creating two different Point object with two different reference associated.
+<img src="https://i.stack.imgur.com/5LIKC.png" alt="enter image description here"></p>
+
+<pre><code>System.out.println("X1: " + pnt1.x + " Y1: " +pnt1.y); 
+System.out.println("X2: " + pnt2.x + " Y2: " +pnt2.y);
+System.out.println(" ");
+</code></pre>
+
+<p>As expected output will be:</p>
+
+<pre><code>X1: 0     Y1: 0
+X2: 0     Y2: 0
+</code></pre>
+
+<p><strong>On this line 'pass-by-value' goes into the play...</strong> <br></p>
+
+<pre><code>tricky(pnt1,pnt2);           public void tricky(Point arg1, Point arg2);
+</code></pre>
+
+<p>References <code>pnt1</code> and <code>pnt2</code> are <strong>passed by value</strong> to the tricky method, which means that now yours references <code>pnt1</code> and <code>pnt2</code> have their <code>copies</code> named <code>arg1</code> and <code>arg2</code>.So <code>pnt1</code> and <code>arg1</code> <em>points</em> to the same object. (Same for the <code>pnt2</code> and <code>arg2</code>)
+<img src="https://i.stack.imgur.com/qd1GH.png" alt="enter image description here"></p>
+
+<p>In the <code>tricky</code> method:</p>
+
+<pre><code> arg1.x = 100;
+ arg1.y = 100;
+</code></pre>
+
+<p><img src="https://i.stack.imgur.com/o4WT0.png" alt="enter image description here"></p>
+
+<p>Next in the <code>tricky</code> method</p>
+
+<pre><code>Point temp = arg1;
+arg1 = arg2;
+arg2 = temp;
+</code></pre>
+
+<p>Here, you first create new <code>temp</code> Point reference which will <em>point</em> on same place like <code>arg1</code> reference. Then you move reference <code>arg1</code> to <em>point</em> to the same place like <code>arg2</code> reference.
+Finally <code>arg2</code> will <em>point</em> to the same place like <code>temp</code>.</p>
+
+<p><img src="https://i.stack.imgur.com/fX5Q3.png" alt="enter image description here"></p>
+
+<p>From here scope of <code>tricky</code> method is gone and you don't have access any more to the references: <code>arg1</code>, <code>arg2</code>, <code>temp</code>. <strong>But important note is that everything you do with these references when they are 'in life' will permanently affect object on which they are <em>point</em> to.</strong> </p>
+
+<p>So after executing method <code>tricky</code>, when you return to <code>main</code>, you have this situation:
+<img src="https://i.stack.imgur.com/LRETe.png" alt="enter image description here"></p>
+
+<p>So now, completely execution of program will be:</p>
+
+<pre><code>X1: 0         Y1: 0
+X2: 0         Y2: 0
+X1: 100       Y1: 100
+X2: 0         Y2: 0
+</code></pre>

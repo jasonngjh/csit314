@@ -1,0 +1,9 @@
+<p>First, get the string that identifies the commit in some date, doing:</p>
+
+<pre><code>git rev-list -n 1 --before="2009-07-27 13:37" origin/master
+</code></pre>
+
+<p>It prints the commit identifier, takes the string (for instance XXXX) and does:</p>
+
+<pre><code>git checkout XXXX
+</code></pre>

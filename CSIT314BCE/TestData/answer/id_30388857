@@ -1,0 +1,13 @@
+<p>Javascript:</p>
+
+<pre><code>window.location.href='www.your_url.com';
+window.top.location.href='www.your_url.com';
+window.location.replace('www.your_url.com');
+</code></pre>
+
+<p>Jquery:</p>
+
+<pre><code>var url='www.your_url.com';
+$(location).attr('href',url);
+$(location).prop('href',url);//instead of location you can use window
+</code></pre>

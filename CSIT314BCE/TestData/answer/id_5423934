@@ -1,0 +1,10 @@
+<p>None of these answers address what I understand to be the question, which is what I was searching for, <em>"How do I handle items that have <code>visibility: hidden</code>?"</em>. Neither <code>:visible</code> nor <code>:hidden</code> will handle this, as they are both looking for display per the documentation.  As far as I could determine, there is no selector to handle CSS visibility.  Here is how I resolved it (standard jQuery selectors, there may be a more condensed syntax):</p>
+
+<pre><code>$(".item").each(function() {
+    if ($(this).css("visibility") == "hidden") {
+        // handle non visible state
+    } else {
+        // handle visible state
+    }
+});
+</code></pre>

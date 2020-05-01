@@ -1,0 +1,2 @@
+<pre class="lang-sh prettyprint-override"><code>git commit --amend -m "your new message"
+</code></pre>

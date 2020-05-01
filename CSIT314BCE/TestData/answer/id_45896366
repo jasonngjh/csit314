@@ -1,0 +1,13 @@
+<p>If you want to:</p>
+
+<ul>
+<li>Rename the Git repository, run: <code>git branch -m &lt;oldname&gt; &lt;newname&gt;</code></li>
+<li>Delete the old branch by: <code>git push origin: old-name new-name</code></li>
+<li>Commit it using: <code>git commit &lt;newname&gt;</code>
+
+<ul>
+<li>and then push using: <code>git push origin new_branch_name:master</code></li>
+</ul></li>
+<li>If you want to check the status then use: <code>git status</code></li>
+<li>If you want to check out then use: <code>git checkout</code></li>
+</ul>

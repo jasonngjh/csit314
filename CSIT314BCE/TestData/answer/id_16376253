@@ -1,0 +1,3 @@
+<p>A function is executed in the scope of the object/function in which it is defined. The said function can access the variables defined in the object/function where it has been defined while it is executing.</p>
+
+<p>And just take it literally.... as the code is written :P</p>

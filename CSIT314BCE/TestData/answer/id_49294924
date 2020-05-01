@@ -1,0 +1,9 @@
+<p><strong>To get newly created branches</strong> </p>
+
+<pre><code>git fetch
+</code></pre>
+
+<p><strong>To switch into another branch</strong></p>
+
+<pre><code>git checkout BranchName
+</code></pre>

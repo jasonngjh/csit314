@@ -1,0 +1,175 @@
+<p><strong><a href="http://www.sitepoint.com/back-to-basics-javascript-hoisting/" rel="noreferrer">Hoisting</a></strong> <em>is the JavaScript interpreter’s action of moving all variable and function declarations to the top of the current scope.</em> </p>
+
+<p><em>However, only the actual declarations are hoisted. by leaving assignments where they are.</em></p>
+
+<ul>
+<li>variable's/Function's declared inside the page are global can access anywhere in that page.</li>
+<li>variable's/Functions declared inside the function are having local scope. means they are available/accessed inside the function body (scope), they are not available outside the function body.</li>
+</ul>
+
+<p><strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Variables" rel="noreferrer">Variable</a></strong></p>
+
+<p><em>Javascript is called loosely typed language. Which means Javascript variables can hold value of any <a href="https://msdn.microsoft.com/en-us/library/7wkd9z69(v=vs.94).aspx" rel="noreferrer">Data-Type</a>. Javascript automatically takes care of changing the variable-type based on the value/literal provided during runtime.</em></p>
+
+<pre><code>global_Page = 10;                                               var global_Page;      « undefined
+    « Integer literal, Number Type.   -------------------       global_Page = 10;     « Number         
+global_Page = 'Yash';                 |   Interpreted   |       global_Page = 'Yash'; « String
+    « String literal, String Type.    «       AS        «       global_Page = true;   « Boolean 
+var global_Page = true;               |                 |       global_Page = function (){          « function
+    « Boolean Type                    -------------------                 var local_functionblock;  « undefined
+global_Page = function (){                                                local_functionblock = 777;« Number
+    var local_functionblock = 777;                              };  
+    // Assigning function as a data.
+};  
+</code></pre>
+
+<hr>
+
+<p><strong>Function</strong></p>
+
+<pre><code>function Identifier_opt ( FormalParameterList_opt ) { 
+      FunctionBody | sequence of statements
+
+      « return;  Default undefined
+      « return 'some data';
+}
+</code></pre>
+
+<ul>
+<li>functions declared inside the page are hoisted to top of the page having global access.</li>
+<li>functions declared inside the function-block are hoisted to top of the block.</li>
+<li><p>Default return value of function is '<a href="https://javascriptweblog.wordpress.com/2010/08/16/understanding-undefined-and-preventing-referenceerrors/" rel="noreferrer">undefined</a>', <a href="http://javascript.info/tutorial/variables-and-statements" rel="noreferrer">Variable</a> declaration default value also 'undefined'</p>
+
+<pre><code>Scope with respect to function-block global. 
+Scope with respect to page undefined | not available.
+</code></pre></li>
+</ul>
+
+<p><strong>Function Declaration</strong></p>
+
+<pre><code>function globalAccess() {                                  function globalAccess() {      
+}                                  -------------------     }
+globalAccess();                    |                 |     function globalAccess() { « Re-Defined / overridden.
+localAccess();                     «   Hoisted  As   «         function localAccess() {
+function globalAccess() {          |                 |         }
+     localAccess();                -------------------         localAccess(); « function accessed with in globalAccess() only.
+     function localAccess() {                              }
+     }                                                     globalAccess();
+}                                                          localAccess(); « ReferenceError as the function is not defined
+</code></pre>
+
+<p><strong>Function Expression</strong></p>
+
+<pre><code>        10;                 « literal
+       (10);                « Expression                (10).toString() -&gt; '10'
+var a;                      
+    a = 10;                 « Expression var              a.toString()  -&gt; '10'
+(function invoke() {        « Expression Function
+ console.log('Self Invoking');                      (function () {
+});                                                               }) () -&gt; 'Self Invoking'
+
+var f; 
+    f = function (){        « Expression var Function
+    console.log('var Function');                                   f ()  -&gt; 'var Function'
+    };
+</code></pre>
+
+<p><em>Function assigned to variable Example:</em></p>
+
+<pre><code>(function selfExecuting(){
+    console.log('IIFE - Immediately-Invoked Function Expression');
+}());
+
+var anonymous = function (){
+    console.log('anonymous function Expression');
+};
+
+var namedExpression = function for_InternalUSE(fact){
+    if(fact === 1){
+        return 1;
+    }
+
+    var localExpression = function(){
+        console.log('Local to the parent Function Scope');
+    };
+    globalExpression = function(){ 
+        console.log('creates a new global variable, then assigned this function.');
+    };
+
+    //return; //undefined.
+    return fact * for_InternalUSE( fact - 1);   
+};
+
+namedExpression();
+globalExpression();
+</code></pre>
+
+<p>javascript interpreted as</p>
+
+<pre><code>var anonymous;
+var namedExpression;
+var globalExpression;
+
+anonymous = function (){
+    console.log('anonymous function Expression');
+};
+
+namedExpression = function for_InternalUSE(fact){
+    var localExpression;
+
+    if(fact === 1){
+        return 1;
+    }
+    localExpression = function(){
+        console.log('Local to the parent Function Scope');
+    };
+    globalExpression = function(){ 
+        console.log('creates a new global variable, then assigned this function.');
+    };
+
+    return fact * for_InternalUSE( fact - 1);    // DEFAULT UNDEFINED.
+};
+
+namedExpression(10);
+globalExpression();
+</code></pre>
+
+<p>You can check function declaration, expression test over different browser's using <a href="http://jsperf.com/yashfunctions" rel="noreferrer"><code>jsperf Test Runner</code></a></p>
+
+<hr>
+
+<p><strong><a href="https://stackoverflow.com/a/45759444/5081877">ES5 Constructor Function Classes</a>: Function objects created using Function.prototype.bind</strong></p>
+
+<p>JavaScript treats functions as first-class objects, so being an object, you can assign properties to a function.</p>
+
+<pre><code>function Shape(id) { // Function Declaration
+    this.id = id;
+};
+    // Adding a prototyped method to a function.
+    Shape.prototype.getID = function () {
+        return this.id;
+    };
+    Shape.prototype.setID = function ( id ) {
+        this.id = id;
+    };
+
+var expFn = Shape; // Function Expression
+
+var funObj = new Shape( ); // Function Object
+funObj.hasOwnProperty('prototype'); // false
+funObj.setID( 10 );
+console.log( funObj.getID() ); // 10
+</code></pre>
+
+<hr>
+
+<p>ES6 introduced <strong>Arrow function</strong>: An arrow function expression has a shorter syntax, they are best suited for non-method functions, and they cannot be used as constructors.</p>
+
+<blockquote>
+  <p><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-arrow-function-definitions-static-semantics-early-errors" rel="noreferrer"><code>ArrowFunction : ArrowParameters =&gt; ConciseBody</code></a>.</p>
+
+<pre><code>const fn = (item) =&gt; { return item &amp; 1 ? 'Odd' : 'Even'; };
+console.log( fn(2) ); // Even
+console.log( fn(3) ); // Odd
+</code></pre>
+</blockquote>

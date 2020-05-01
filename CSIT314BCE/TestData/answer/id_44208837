@@ -1,0 +1,35 @@
+<p>I just add another way:</p>
+
+<p>To redirect for any specific page/links of your site to another page, just add this line of code:</p>
+
+<pre><code>&lt;script&gt;
+    if(window.location.href == 'old_url')
+    {
+        window.location.href="new_url";
+    }
+
+    // Another URL redirect
+    if(window.location.href == 'old_url2')
+    {
+        window.location.href="new_url2";
+    }
+&lt;/script&gt;
+</code></pre>
+
+<p>For a real life example,</p>
+
+<pre><code>&lt;script&gt;
+    if(window.location.href == 'https://old-site.com')
+    {
+        window.location.href="https://new-site.com";
+    }
+
+    // Another URL redirect
+    if(window.location.href == 'https://old-site.com/simple-post.html')
+    {
+        window.location.href="https://new-site.com/simple-post.html";
+    }
+&lt;/script&gt;
+</code></pre>
+
+<p>By using this simple code, you can redirect full site or any single page.</p>

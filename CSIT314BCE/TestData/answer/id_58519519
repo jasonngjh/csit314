@@ -1,0 +1,7 @@
+<p>To undo the last local commit, without throwing away its changes, I have this handy alias in <code>~/.gitconfig</code></p>
+
+<pre><code>[alias]
+  undo = reset --soft HEAD^
+</code></pre>
+
+<p>Then I simply use <code>git undo</code> which is super-easy to remember.</p>

@@ -1,0 +1,46 @@
+<h2><strong>Closures are simple:</strong></h2>
+
+<p>The following simple example covers all the main points of JavaScript closures.<sup>*</sup>
+&nbsp;</p>
+
+<p>Here is a factory that produces calculators that can add and multiply:</p>
+
+<pre><code>function make_calculator() {
+  var n = 0; // this calculator stores a single number n
+  return {
+    add: function(a) {
+      n += a;
+      return n;
+    },
+    multiply: function(a) {
+      n *= a;
+      return n;
+    }
+  };
+}
+
+first_calculator = make_calculator();
+second_calculator = make_calculator();
+
+first_calculator.add(3); // returns 3
+second_calculator.add(400); // returns 400
+
+first_calculator.multiply(11); // returns 33
+second_calculator.multiply(10); // returns 4000
+</code></pre>
+
+<p><strong>The key point:</strong> Each call to <code>make_calculator</code> creates a new local variable <code>n</code>, which continues to be usable by that calculator's <code>add</code> and <code>multiply</code> functions long after <code>make_calculator</code> returns.</p>
+
+<p><em>If you are familiar with stack frames, these calculators seem strange: How can they keep accessing <code>n</code> after <code>make_calculator</code> returns?  The answer is to imagine that JavaScript doesn't use "stack frames", but instead uses "heap frames", which can persist after the function call that made them returns.</em></p>
+
+<p>Inner functions like <code>add</code> and <code>multiply</code>, which access variables declared in an outer function<sup>**</sup>, are called <em>closures</em>.</p>
+
+<p><strong>That is pretty much all there is to closures.</strong></p>
+
+<p><br></p>
+
+<hr>
+
+<p><sup><sup>*</sup> For example, it covers all the points in the "Closures for Dummies" article given in <a href="https://stackoverflow.com/a/111111/706054">another answer</a>, except example 6, which simply shows that variables can be used before they are declared, a nice fact to know but completely unrelated to closures. It also covers all the points in <a href="https://stackoverflow.com/a/111200/706054">the accepted answer</a>, except for the points (1) that functions copy their arguments into local variables (the named function arguments), and (2) that copying numbers creates a new number, but copying an object reference gives you another reference to the same object. These are also good to know but again completely unrelated to closures. It is also very similar to the example in <a href="https://stackoverflow.com/a/111114/706054">this answer</a> but a bit shorter and less abstract. It does not cover the point of <a href="https://stackoverflow.com/a/17200991/706054">this answer</a> or <a href="https://stackoverflow.com/questions/111102/how-do-javascript-closures-work/17308587?noredirect=1#comment26377355_111111">this comment</a>, which is that JavaScript makes it difficult to plug the <em>current</em> value of a loop variable into your inner function: The "plugging in" step can only be done with a helper function that encloses your inner function and is invoked on each loop iteration. (Strictly speaking, the inner function accesses the helper function's copy of the variable, rather than having anything plugged in.) Again, very useful when creating closures, but not part of what a closure is or how it works. There is additional confusion due to closures working differently in functional languages like ML, where variables are bound to values rather than to storage space, providing a constant stream of people who understand closures in a way (namely the "plugging in" way) that is simply incorrect for JavaScript, where variables are always bound to storage space, and never to values. </sup></p>
+
+<p><sup><sup>**</sup> Any outer function, if several are nested, or even in the global context, as <a href="https://stackoverflow.com/a/5099447/706054">this answer</a> points out clearly.</sup></p>

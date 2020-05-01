@@ -1,0 +1,14 @@
+<p>Java is always pass by value, with no exceptions, <strong>ever</strong>.</p>
+
+<p>So how is it that anyone can be at all confused by this, and believe that Java is pass by reference, or think they have an example of Java acting as pass by reference? The key point is that Java <strong>never</strong> provides direct access to the values of <em>objects themselves</em>, in <em>any</em> circumstances. The only access to objects is through a <em>reference</em> to that object. Because Java objects are <em>always</em> accessed through a reference, rather than directly, it is common to talk about fields and variables <em>and method arguments</em> as being <em>objects</em>, when pedantically they are only <em>references to objects</em>. <strong>The confusion stems from this (strictly speaking, incorrect) change in nomenclature.</strong></p>
+
+<p>So, when calling a method</p>
+
+<ul>
+<li>For primitive arguments (<code>int</code>, <code>long</code>, etc.), the pass by value is <em>the actual value</em> of the primitive (for example, 3).</li>
+<li>For objects, the pass by value is the value of <em>the reference to the object</em>.</li>
+</ul>
+
+<p>So if you have <code>doSomething(foo)</code> and <code>public void doSomething(Foo foo) { .. }</code> the two Foos have copied <em>references</em> that point to the same objects.</p>
+
+<p>Naturally, passing by value a reference to an object looks very much like (and is indistinguishable in practice from) passing an object by reference.</p>

@@ -1,0 +1,1 @@
+<p>The distinction, or perhaps just the way I remember as I used to be under the same impression as the original poster is this: Java is always pass by value. All objects( in Java, anything except for primitives) in Java are references. These references are passed by value.</p>

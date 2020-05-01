@@ -1,0 +1,92 @@
+<p>Here's a simple <code>yield</code> based approach, to compute the fibonacci series, explained:</p>
+
+<pre><code>def fib(limit=50):
+    a, b = 0, 1
+    for i in range(limit):
+       yield b
+       a, b = b, a+b
+</code></pre>
+
+<p>When you enter this into your REPL and then try and call it, you'll get a mystifying result:</p>
+
+<pre><code>&gt;&gt;&gt; fib()
+&lt;generator object fib at 0x7fa38394e3b8&gt;
+</code></pre>
+
+<p>This is because the presence of <code>yield</code> signaled to Python that you want to create a <em>generator</em>, that is, an object that generates values on demand.</p>
+
+<p>So, how do you generate these values? This can either be done directly by using the built-in function <code>next</code>, or, indirectly by feeding it to a construct that consumes values. </p>
+
+<p>Using the built-in <code>next()</code> function, you directly invoke <code>.next</code>/<code>__next__</code>, forcing the generator to produce a value:</p>
+
+<pre><code>&gt;&gt;&gt; g = fib()
+&gt;&gt;&gt; next(g)
+1
+&gt;&gt;&gt; next(g)
+1
+&gt;&gt;&gt; next(g)
+2
+&gt;&gt;&gt; next(g)
+3
+&gt;&gt;&gt; next(g)
+5
+</code></pre>
+
+<p>Indirectly, if you provide <code>fib</code> to a <code>for</code> loop, a <code>list</code> initializer, a <code>tuple</code> initializer, or anything else that expects an object that generates/produces values, you'll "consume" the generator until no more values can be produced by it (and it returns):</p>
+
+<pre><code>results = []
+for i in fib(30):       # consumes fib
+    results.append(i) 
+# can also be accomplished with
+results = list(fib(30)) # consumes fib
+</code></pre>
+
+<p>Similarly, with a <code>tuple</code> initializer: </p>
+
+<pre><code>&gt;&gt;&gt; tuple(fib(5))       # consumes fib
+(1, 1, 2, 3, 5)
+</code></pre>
+
+<p>A generator differs from a function in the sense that it is lazy. It accomplishes this by maintaining it's local state and allowing you to resume whenever you need to. </p>
+
+<p>When you first invoke <code>fib</code> by calling it:</p>
+
+<pre><code>f = fib()
+</code></pre>
+
+<p>Python compiles the function, encounters the <code>yield</code> keyword and simply returns a generator object back at you. Not very helpful it seems. </p>
+
+<p>When you then request it generates the first value, directly or indirectly, it executes all statements that it finds, until it encounters a <code>yield</code>, it then yields back the value you supplied to <code>yield</code> and pauses. For an example that better demonstrates this, let's use some <code>print</code> calls (replace with <code>print "text"</code> if on Python 2):</p>
+
+<pre><code>def yielder(value):
+    """ This is an infinite generator. Only use next on it """ 
+    while 1:
+        print("I'm going to generate the value for you")
+        print("Then I'll pause for a while")
+        yield value
+        print("Let's go through it again.")
+</code></pre>
+
+<p>Now, enter in the REPL:</p>
+
+<pre><code>&gt;&gt;&gt; gen = yielder("Hello, yield!")
+</code></pre>
+
+<p>you have a generator object now waiting for a command for it to generate a value. Use <code>next</code> and see what get's printed:</p>
+
+<pre><code>&gt;&gt;&gt; next(gen) # runs until it finds a yield
+I'm going to generate the value for you
+Then I'll pause for a while
+'Hello, yield!'
+</code></pre>
+
+<p>The unquoted results are what's printed. The quoted result is what is returned from <code>yield</code>. Call <code>next</code> again now:</p>
+
+<pre><code>&gt;&gt;&gt; next(gen) # continues from yield and runs again
+Let's go through it again.
+I'm going to generate the value for you
+Then I'll pause for a while
+'Hello, yield!'
+</code></pre>
+
+<p>The generator remembers it was paused at <code>yield value</code> and resumes from there. The next message is printed and the search for the <code>yield</code> statement to pause at it performed again (due to the <code>while</code> loop).</p>

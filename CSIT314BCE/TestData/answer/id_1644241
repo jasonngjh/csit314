@@ -1,0 +1,3 @@
+<p>Anyway, we have a "goes to" operator now. <code>"--&gt;"</code> is easy to be remembered as a direction, and "while x goes to zero" is meaning-straight.</p>
+
+<p>Furthermore, it is a little more efficient than <code>"for (x = 10; x &gt; 0; x --)"</code> on some platforms.</p>

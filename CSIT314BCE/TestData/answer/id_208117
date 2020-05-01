@@ -1,0 +1,12 @@
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var myObject = {"ircEvent": "PRIVMSG", "method": "newURI", "regex": "^http://.*"};
+    
+delete myObject.regex;
+
+console.log ( myObject.regex); // logs: undefined</code></pre>
+</div>
+</div>
+</p>
+
+<p>This works in Firefox and Internet&nbsp;Explorer, and I think it works in all others.</p>

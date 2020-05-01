@@ -1,0 +1,12 @@
+<p><strong>Undo</strong> a file which has already been added is quite easy using Git. For resetting <code>myfile.txt</code>, which have already been added, use:</p>
+
+<pre><code>git reset HEAD myfile.txt
+</code></pre>
+
+<p><strong>Explanation:</strong></p>
+
+<p>After you staged unwanted file(s), to undo, you can do <code>git reset</code>. <code>Head</code> is head of your file in the local and the last parameter is the name of your file.</p>
+
+<p>I have created the steps in the image below in more details for you, including all steps which may happen in these cases:</p>
+
+<p><a href="https://i.stack.imgur.com/9JgGD.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/9JgGD.jpg" alt="git reset HEAD file"></a></p>

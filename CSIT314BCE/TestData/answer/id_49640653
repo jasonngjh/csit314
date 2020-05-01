@@ -1,0 +1,93 @@
+<p>Unlike some other languages, Java does not allow you to choose between pass-by-value and pass-by-reference—all arguments are passed by value. A method call can pass two types of values to a method—copies of primitive values (e.g., values of int and double) and copies of references to objects.</p>
+
+<p>When a method modifies a primitive-type parameter, changes to the parameter have no effect on the original argument value in the calling method.</p>
+
+<p>When it comes to objects, objects themselves cannot be passed to methods. So we pass the address of the object which is held in the reference variable. </p>
+
+<p><strong>How Java creates and stores objects:</strong> When we create an object we store the object’s address in a reference variable. Let's analyze the following statement.</p>
+
+<pre><code>Account account1 = new Account();
+</code></pre>
+
+<p>“Account account1” is the type and name of the reference variable, “=” is the assignment operator, “new” asks for the required amount of space from the system. The constructor to the right of keyword new which creates the object is called implicitly by the keyword new. Address of the created object(result of right variable, which is an expression) is assigned to the left variable (which is a reference variable with a name and a type specified) using the assign operator. “new Account()” is called “class instance creation expression”.</p>
+
+<p>Although an object’s reference is passed by value, a method can still interact with the referenced object by calling its public methods using the copy of the object’s reference. Since the reference stored in the parameter is a copy of the reference that was passed as an argument, the parameter in the called method and the argument in the calling method refer to the same object in memory.</p>
+
+<p>Passing references to arrays, instead of the array objects themselves, makes sense for performance reasons. Because everything in Java is passed by value, if array objects were passed,
+a copy of each element would be passed. For large arrays, this would waste time and consume
+considerable storage for the copies of the elements.</p>
+
+<p>In the image below you can see we have two reference variables(These are called pointers in C/C++, and I think that term makes it easier to understand this feature.) in the main method. Primitive and reference variables are kept in stack memory(left side in images below). array1 and array2 reference variables "point" (as C/C++ programmers call it) or reference to a and b arrays respectively, which are objects (values these reference variables hold are addresses of objects) in heap memory (right side in images below).</p>
+
+<p><a href="https://i.stack.imgur.com/sF7QZ.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/sF7QZ.png" alt="Pass by value example 1"></a></p>
+
+<p>If we pass the value of array1 reference variable as an argument to the reverseArray method, a reference variable is created in the method and that reference variable starts pointing to the same array (a). </p>
+
+<pre><code>public class Test
+{
+    public static void reverseArray(int[] array1)
+    {
+        // ...
+    }
+
+    public static void main(String args)
+    {
+        int[] array1 = { 1, 10, -7 };
+
+        reverseArray(array1);
+    }
+}
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/W1wgZ.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/W1wgZ.png" alt="Pass by value example 2"></a></p>
+
+<p>So, if we say </p>
+
+<pre><code>array1[0] = 5;
+</code></pre>
+
+<p>in reverseArray method, it will make a change in array a.</p>
+
+<p>We have another reference variable in reverseArray method (array2) that points to an array c. If we were to say </p>
+
+<pre><code>array1 = array2;
+</code></pre>
+
+<p>in reverseArray method, then the reference variable array1 in method reverseArray would stop pointing to array a and start pointing to array c (Dotted line in second image).</p>
+
+<p>If we return value of reference variable array2 as the return value of method reverseArray and assign this value to reference variable array1 in main method, array1 in main will start pointing to array c.</p>
+
+<pre><code>return array2;
+</code></pre>
+
+<p>So let's write all the things we have done at once now.</p>
+
+<pre><code>public class Test
+{
+    public static int[] reverseArray(int[] array1)
+    {
+        int[] array2 = { -7, 0, -1 };
+
+        array1[0] = 5; // array a becomes 5, 10, -7
+
+        array1 = array2; /* array1 of reverseArray starts
+          pointing to c instead of a (not shown in image below) */
+        return array2;
+    }
+
+    public static void main(String args)
+    {
+        int[] array1 = { 1, 10, -7 };
+        int[] array2 = { 5, -190, 0 };
+
+        array1 = reverseArray(array1); /* array1 of 
+         main starts pointing to c instead of a */
+    }
+}
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/5hRyX.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/5hRyX.png" alt="enter image description here"></a></p>
+
+<p>And now that reverseArray method is over, its reference variables(array1 and array2) are gone. Which means we now only have the two reference variables in main method array1 and array2 which point to c and b arrays respectively. No reference variable is pointing to object (array) a. So it is eligible for garbage collection.</p>
+
+<p>You could also assign value of array2 in main to array1. array1 would start pointing to b.</p>

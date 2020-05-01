@@ -1,0 +1,18 @@
+<p>In JavaScript and jQuery we use this following code to redirect the page:</p>
+
+<pre><code>window.location.href="http://google.com";
+window.location.replace("page1.html");
+</code></pre>
+
+<p>But you can make a function in jQuery to redirect the page:</p>
+
+<pre><code>jQuery.fn.redirect=function(url)
+{
+    window.location.href=url;
+}
+</code></pre>
+
+<p>And call this function:</p>
+
+<pre><code>jQuery(window).redirect("http://stackoverflow.com/")
+</code></pre>

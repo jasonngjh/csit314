@@ -1,0 +1,15 @@
+<p><strong>string</strong> is a keyword, and you can't use string as an identifier. </p>
+
+<p><strong>String</strong> is not a keyword, and you can use it as an identifier:</p>
+
+<p><strong>Example</strong></p>
+
+<pre><code>string String = "I am a string";
+</code></pre>
+
+<p>The keyword <code>string</code>  is an alias for
+ <code>System.String</code> aside from the keyword issue, the two are exactly
+ equivalent.</p>
+
+<pre><code> typeof(string) == typeof(String) == typeof(System.String)
+</code></pre>

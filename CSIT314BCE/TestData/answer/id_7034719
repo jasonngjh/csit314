@@ -1,0 +1,82 @@
+<p><strong>This will give you some insights of how Java really works to the point that in your next discussion about Java passing by reference or passing by value you'll just smile :-)</strong></p>
+
+<p>Step one please erase from your mind that word that starts with 'p' "_ _ _ _ _ _ _", especially if you come from other programming languages. Java and 'p' cannot be written in the same book, forum, or even txt.</p>
+
+<p>Step two remember that when you pass an Object into a method you're passing the Object reference and not the Object itself.</p>
+
+<ul>
+<li><em>Student</em>: Master, does this mean that Java is pass-by-reference?</li>
+<li><em>Master</em>: Grasshopper, No.</li>
+</ul>
+
+<p>Now think of what an Object's reference/variable does/is:</p>
+
+<ol>
+<li><strong>A variable holds the bits that tell the JVM how to get to the referenced Object in memory (Heap).</strong></li>
+<li>When passing arguments to a method <strong>you ARE NOT passing the reference variable, but a copy of the bits in the reference variable</strong>. Something like this: 3bad086a. 3bad086a represents a way to get to the passed object.</li>
+<li>So you're just passing 3bad086a that it's the value of the reference.</li>
+<li>You're passing the value of the reference and not the reference itself (and not the object).</li>
+<li><strong><em>This value is actually COPIED and given to the method</em></strong>. </li>
+</ol>
+
+<p>In the following (please don't try to compile/execute this...):</p>
+
+<pre><code>1. Person person;
+2. person = new Person("Tom");
+3. changeName(person);
+4.
+5. //I didn't use Person person below as an argument to be nice
+6. static void changeName(Person anotherReferenceToTheSamePersonObject) {
+7.     anotherReferenceToTheSamePersonObject.setName("Jerry");
+8. }
+</code></pre>
+
+<p>What happens?</p>
+
+<ul>
+<li>The variable <em>person</em> is created in line #1 and it's null at the beginning.</li>
+<li>A new Person Object is created in line #2, stored in memory, and the variable <em>person</em> is given the reference to the Person object. That is, its address. Let's say 3bad086a.</li>
+<li>The variable <em>person</em> holding the address of the Object is passed to the function in line #3.</li>
+<li>In line #4 you can listen to the sound of silence </li>
+<li>Check the comment on line #5</li>
+<li>A method local variable -<em>anotherReferenceToTheSamePersonObject</em>- is created and then comes the magic in line #6:
+
+<ul>
+<li>The variable/reference <em>person</em> is copied bit-by-bit and passed to <em>anotherReferenceToTheSamePersonObject</em> inside the function.</li>
+<li>No new instances of Person are created.</li>
+<li>Both "<em>person</em>" and "<em>anotherReferenceToTheSamePersonObject</em>" hold the same value of 3bad086a.</li>
+<li>Don't try this but person==anotherReferenceToTheSamePersonObject would be true.</li>
+<li>Both variables have IDENTICAL COPIES of the reference and they both refer to the same Person Object, the SAME Object on the Heap and NOT A COPY.</li>
+</ul></li>
+</ul>
+
+<p>A picture is worth a thousand words:</p>
+
+<p><img src="https://i.stack.imgur.com/Ba3hJ.jpg" alt="Pass by Value"></p>
+
+<p><strong>Note that the anotherReferenceToTheSamePersonObject arrows is directed towards the Object and not towards the variable person!</strong></p>
+
+<p>If you didn't get it then just trust me and remember that it's better to say that <strong>Java is pass by value</strong>. Well, <strong>pass by reference value</strong>. Oh well, even better is <strong><em>pass-by-copy-of-the-variable-value! ;)</em></strong></p>
+
+<p>Now feel free to hate me but note that given this <strong>there is no difference between passing primitive data types and Objects</strong> when talking about method arguments.</p>
+
+<p>You always pass a copy of the bits of the value of the reference!</p>
+
+<ul>
+<li>If it's a primitive data type these bits will contain the value of the primitive data type itself.</li>
+<li>If it's an Object the bits will contain the value of the address that tells the JVM how to get to the Object.</li>
+</ul>
+
+<blockquote>
+  <p>Java is pass-by-value because inside a method you can modify the referenced Object as much as you want but no matter how hard you try you'll never be able to modify the passed variable that will keep referencing (not p _ _ _ _ _ _ _) the same Object no matter what!</p>
+</blockquote>
+
+<hr>
+
+<blockquote>
+  <p>The changeName function above will never be able to modify the actual content (the bit values) of the passed reference. In other word changeName cannot make Person person refer to another Object.</p>
+</blockquote>
+
+<hr>
+
+<p>Of course you can cut it short and just say that  <strong>Java is pass-by-value!</strong></p>

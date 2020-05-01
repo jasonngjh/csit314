@@ -1,0 +1,33 @@
+<p><strong>2017-05-08</strong></p>
+
+<p>Most of the given answers work for strict comparison, meaning that both objects reference the exact same object in memory (or are primitive types), but often you want to remove a non-primitive object from an array that has a certain value. For instance, if you make a call to a server and want to check a retrieved object against a local object.</p>
+
+<pre><code>const a = {'field': 2} // Non-primitive object
+const b = {'field': 2} // Non-primitive object with same value
+const c = a            // Non-primitive object that reference the same object as "a"
+
+assert(a !== b) // Don't reference the same item, but have same value
+assert(a === c) // Do reference the same item, and have same value (naturally)
+
+//Note: there are many alternative implementations for valuesAreEqual
+function valuesAreEqual (x, y) {
+   return  JSON.stringify(x) === JSON.stringify(y)
+}
+
+
+//filter will delete false values
+//Thus, we want to return "false" if the item
+// we want to delete is equal to the item in the array
+function removeFromArray(arr, toDelete){
+    return arr.filter(target =&gt; {return !valuesAreEqual(toDelete, target)})
+}
+
+const exampleArray = [a, b, b, c, a, {'field': 2}, {'field': 90}];
+const resultArray = removeFromArray(exampleArray, a);
+
+//resultArray = [{'field':90}]
+</code></pre>
+
+<p>There are alternative/faster implementations for valuesAreEqual, but this does the job. You can also use a custom comparator if you have a specific field to check (for example, some retrieved UUID vs a local UUID).</p>
+
+<p>Also note that this is a functional operation, meaning that it does not mutate the original array.</p>

@@ -15,7 +15,7 @@ namespace CSIT314BCE.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            var posts = db.Posts.Include(p => p.Student);
+            var posts = db.Posts.Where(p => p.Title != null).Include(p => p.Student);
             return View(posts.ToList());
         }
 

@@ -1,0 +1,4 @@
+<p>To reset every file in a particular folder (and its subfolders), you can use the following command:</p>
+
+<pre><code>git reset *
+</code></pre>

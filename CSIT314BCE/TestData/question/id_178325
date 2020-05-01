@@ -1,0 +1,3 @@
+<p>Is it possible to toggle the visibility of an element, using the functions <code>.hide()</code>, <code>.show()</code> or <code>.toggle()</code>?</p>
+
+<p>How would you test if an element is <code>visible</code> or <code>hidden</code>?</p>

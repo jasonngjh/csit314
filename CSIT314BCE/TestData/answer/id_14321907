@@ -1,0 +1,24 @@
+<p>You might often find</p>
+
+<pre><code>cond and on_true or on_false
+</code></pre>
+
+<p>but this lead to problem when on_true == 0</p>
+
+<pre><code>&gt;&gt;&gt; x = 0
+&gt;&gt;&gt; print x == 0 and 0 or 1 
+1
+&gt;&gt;&gt; x = 1
+&gt;&gt;&gt; print x == 0 and 0 or 1 
+1
+</code></pre>
+
+<p>where you would expect for a  normal ternary operator this result</p>
+
+<pre><code>&gt;&gt;&gt; x = 0
+&gt;&gt;&gt; print 0 if x == 0 else 1 
+0
+&gt;&gt;&gt; x = 1
+&gt;&gt;&gt; print 0 if x == 0 else 1 
+1
+</code></pre>

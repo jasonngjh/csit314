@@ -1,0 +1,36 @@
+<p>Like every answer suggests, <code>yield</code> is used for creating a sequence generator. It's used for generating some sequence dynamically. For example, while reading a file line by line on a network, you can use the <code>yield</code> function as follows:</p>
+
+<pre><code>def getNextLines():
+   while con.isOpen():
+       yield con.read()
+</code></pre>
+
+<p>You can use it in your code as follows:</p>
+
+<pre><code>for line in getNextLines():
+    doSomeThing(line)
+</code></pre>
+
+<p><strong><em>Execution Control Transfer gotcha</em></strong></p>
+
+<p>The execution control will be transferred from getNextLines() to the <code>for</code> loop when yield is executed. Thus, every time getNextLines() is invoked, execution begins from the point where it was paused last time.</p>
+
+<p>Thus in short, a function with the following code</p>
+
+<pre><code>def simpleYield():
+    yield "first time"
+    yield "second time"
+    yield "third time"
+    yield "Now some useful value {}".format(12)
+
+for i in simpleYield():
+    print i
+</code></pre>
+
+<p>will print</p>
+
+<pre><code>"first time"
+"second time"
+"third time"
+"Now some useful value 12"
+</code></pre>

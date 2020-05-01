@@ -1,0 +1,17 @@
+<h3>Amend</h3>
+
+<p>You have a couple of options here. You can do</p>
+
+<pre><code>git commit --amend
+</code></pre>
+
+<p>as long as it's your last commit.</p>
+
+<h3>Interactive rebase</h3>
+
+<p>Otherwise, if it's not your last commit, you can do an interactive rebase,</p>
+
+<pre><code>git rebase -i [branched_from] [hash before commit]
+</code></pre>
+
+<p>Then inside the interactive rebase you simply add edit to that commit. When it comes up, do a <code>git commit --amend</code> and modify the commit message. If you want to roll back before that commit point, you could also use <code>git reflog</code> and just delete that commit. Then you just do a <code>git commit</code> again.</p>

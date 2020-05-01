@@ -1,0 +1,23 @@
+<p>Well technically both of these are the same but with a slight difference. While  “string” is a datatype, whereas “String” represents a class. “string” is an alias for System.String. At execution time both are compiled to the same code. One more difference is the syntax highlighter.</p>
+
+<p>Let us now check a code snippet to understand both of these.</p>
+
+<pre><code>    using System;  
+    using System.Collections.Generic;  
+    using System.Linq;  
+    using System.Text;  
+    using System.Threading.Tasks;  
+    namespace ConsoleApplication2  
+    {  
+        class Program  
+        {  
+            static void Main(string[] args)  
+            {  
+                string FirstName = ".Net";  
+                String Lastname = "Snippets";  
+                Console.WriteLine(FirstName + " " + Lastname);  
+                Console.ReadLine();  
+            }  
+        }  
+    }  
+</code></pre>

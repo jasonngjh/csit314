@@ -1,0 +1,10 @@
+<p>I found this blog post which is showing nine ways to do it:</p>
+
+<p><em><a href="https://love2dev.com/blog/javascript-remove-from-array/" rel="nofollow noreferrer">9 Ways to Remove Elements From A JavaScript Array - Plus How to Safely Clear JavaScript Arrays</a></em></p>
+
+<p>I prefer to use <code>filter()</code>:</p>
+
+<pre><code>var filtered_arr = arr.filter(function(ele){
+   return ele != value;
+})
+</code></pre>

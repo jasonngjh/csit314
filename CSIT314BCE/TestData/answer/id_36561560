@@ -1,0 +1,14 @@
+<p>Note that <code>use strict</code> was introduced in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode" rel="noreferrer">EcmaScript 5</a> and was kept since then.</p>
+
+<p>Below are the conditions to trigger strict mode in <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-strict-mode-code" rel="noreferrer">ES6</a> and <a href="https://tc39.github.io/ecma262/#sec-strict-mode-code" rel="noreferrer">ES7</a>:</p>
+
+<blockquote>
+  <ul>
+  <li>Global code is strict mode code if it begins with a Directive    Prologue that contains a Use Strict Directive (see 14.1.1).</li>
+  <li>Module code is always strict mode code.</li>
+  <li>All parts of a <em>ClassDeclaration</em> or a <em>ClassExpression</em> are strict mode    code.</li>
+  <li>Eval code is strict mode code if it begins with a Directive Prologue    that contains a Use Strict Directive or if the call to eval is a direct eval (see 12.3.4.1) that is contained in strict mode code.</li>
+  <li>Function code is strict mode code if the associated <em>FunctionDeclaration, FunctionExpression, GeneratorDeclaration, GeneratorExpression, MethodDefinition, or ArrowFunction</em> is contained in strict mode code or if the code that produces the value of the function’s [[ECMAScriptCode]] internal slot begins with a Directive Prologue that contains a Use Strict Directive.</li>
+  <li>Function code that is supplied as the arguments to the built-in    Function and Generator constructors is strict mode code if the last argument is a String that when processed is a <em>FunctionBody</em> that begins with a Directive Prologue that contains a Use Strict Directive.</li>
+  </ul>
+</blockquote>

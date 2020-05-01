@@ -1,0 +1,5 @@
+<p>The Dojo Toolkit JavaScript toolkit (at least as of version 1.4), allows you to include comments in your JSON. The comments can be of <code>/* */</code> format. Dojo Toolkit consumes the JSON via the <code>dojo.xhrGet()</code> call.</p>
+
+<p>Other JavaScript toolkits may work similarly.</p>
+
+<p>This can be helpful when experimenting with alternate data structures (or even data lists) before choosing a final option.</p>

@@ -1,0 +1,31 @@
+<p>If the situation is an <strong>urgent one</strong>, and you just want to do what the questioner asked in a <strong>quick and dirty</strong> way, assuming your project is under a directory called, for example, "my project":</p>
+
+<hr>
+
+<p><strong>QUICK AND DIRTY</strong>: depending on the circumstances, quick and dirty may in fact be very GOOD. What my solution here does is <strong>NOT</strong> replace irreversibly the files you have in your working directory with files hauled up/extracted from the depths of the git repository lurking beneath your .git/ directory using fiendishly clever and diabolically powerful git commands, of which there are many. <strong>YOU DO NOT HAVE TO DO SUCH DEEP-SEA DIVING TO RECOVER what may appear to be a disastrous situation, and attempting to do so without sufficient expertise may prove fatal</strong>.</p>
+
+<hr>
+
+<ol>
+<li><p>Copy the whole directory and call it something else, like "my project - copy". Assuming your git repository ("repo") files are under the "my project" directory (the default place for them, under a directory called ".git"), you will now have copied both your work files and your repo files.</p></li>
+<li><p>Do this in the directory "my project":</p>
+
+<pre><code>.../my project $ git reset --hard [first-4-letters&amp;numbers-of-commit's-SHA]
+</code></pre></li>
+</ol>
+
+<p>This will return the state of the repo under "my project" to what it was when you made that commit (a "commit" means a snapshot of your working files). All commits since then will be lost forever under "my project", BUT... <strong>they will still be present</strong> in the repo under "my project - copy" since you copied <em>all</em> those files - including the ones under .../.git/.</p>
+
+<p>You then have two versions on your system... you can examine or copy or modify files of interest, or whatever, from the previous commit. You can completely discard the files under "my project - copy", if you have decided the new work since the restored commit was going nowhere... </p>
+
+<p>The obvious thing if you want to carry on with the state of the project without actually discarding the work since this retrieved commit is to rename your directory again: Delete the project containing the retrieved commit (or give it a temporary name) and rename your "my project - copy" directory back to "my project". Then maybe try to understand some of the other answers here, and probably do another commit fairly soon.</p>
+
+<p>Git is a brilliant creation but absolutely no-one is able to just "pick it up on the fly": also people who try to explain it <strong>far too often</strong> assume prior knowledge of other VCS [Version Control Systems] and delve far too deep far too soon, and commit other crimes, like using interchangeable terms for "checking out" - in ways which sometimes appear almost calculated to confuse a beginner.  </p>
+
+<p>To save yourself much stress, learn from my scars. You have to pretty much have to read a book on Git - I'd recommend <a href="http://shop.oreilly.com/product/0636920022862.do" rel="nofollow noreferrer">"Version Control with Git"</a>. Do it sooner rather than later. If you do, bear in mind that much of the complexity of Git comes from branching and then remerging: you can skip those parts in any book. From your question there's <strong>no reason why people should be blinding you with science</strong>.  </p>
+
+<p>Especially if, for example, this is a desperate situation and you're a newbie with Git!</p>
+
+<p>PS: One other thought: It is (now) actually quite simple to keep the Git repo in a directory other than the one with the working files. This would mean you would not have to copy the entire Git repository using the above quick &amp; dirty solution. See the answer by Fryer using <code>--separate-git-dir</code> <a href="https://stackoverflow.com/questions/505467/can-i-store-the-git-folder-outside-the-files-i-want-tracked">here</a>. <strong>Be warned</strong>, though: If you have a "separate-directory" repository which you don't copy, and you do a hard reset, all versions subsequent to the reset commit will be lost forever, unless you have, as you absolutely should, regularly backed up your repository, preferably to the Cloud (e.g. <a href="https://en.wikipedia.org/wiki/Google_Drive" rel="nofollow noreferrer">Google Drive</a>) among other places.</p>
+
+<p>On this subject of "backing up to the Cloud", the next step is to open an account (free of course) with GitHub or (better in my view) <a href="https://gitlab.com" rel="nofollow noreferrer">GitLab</a>. You can then regularly do a <code>git push</code> command to make your Cloud repo up-to-date "properly". But again, talking about this may be too much too soon.</p>

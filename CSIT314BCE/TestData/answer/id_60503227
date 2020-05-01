@@ -1,0 +1,17 @@
+<p>The <code>var functionOne = function() {};</code> defines at run-time and the <code>function functionTwo() {}</code> defines at parse-time.</p>
+
+<pre><code>// Run-Time function declaration 
+functionOne(); // Calling functionOne function here will give an Error
+var functionOne = function(){ 
+  // Some code
+}; 
+
+// Parse-Time function declaration 
+functionTwo(); // Calling functionTwo function will not give an Error
+function functionTwo(){ 
+  // Some code
+};
+</code></pre>
+
+<p>The explaination between Tun-time vs Parse-time
+<a href="http://khaidoan.wikidot.com/javascript-difference-between-runtime-and-parse-time" rel="nofollow noreferrer">javascript run-time vs parse-time</a></p>

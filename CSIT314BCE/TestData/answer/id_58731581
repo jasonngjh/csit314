@@ -1,0 +1,9 @@
+<p><a href="https://www.json.org/" rel="nofollow noreferrer">JSON Spec</a> does not support comments <code>// or /* */</code> style.</p>
+
+<p>But some <code>JSON</code> parsing libraries and IDEs support them.
+like </p>
+
+<ol>
+<li><a href="https://json5.org/" rel="nofollow noreferrer">json5</a></li>
+<li><a href="https://code.visualstudio.com/docs/languages/json#_json-with-comments" rel="nofollow noreferrer">VS Code</a></li>
+</ol>

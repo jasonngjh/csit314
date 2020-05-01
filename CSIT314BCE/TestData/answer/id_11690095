@@ -1,0 +1,52 @@
+<h1>Standard "vanilla" JavaScript way to redirect a page</h1>
+
+<pre><code>window.location.href = 'newPage.html';
+</code></pre>
+
+<h2>Or more simply:  (since <code>window</code> is Global)</h2>
+
+<pre><code>location.href = 'newPage.html';
+</code></pre>
+
+<hr>
+
+<blockquote>
+  <p><strong>If you are here because you are <em>losing</em> HTTP_REFERER when redirecting, keep reading:</strong></p>
+  
+  <p>(Otherwise ignore this last part)</p>
+</blockquote>
+
+<hr>
+
+<p>The following section is for those using <code>HTTP_REFERER</code> as one of many security measures (although it isn't a great protective measure). If you're using <a href="http://en.wikipedia.org/wiki/Internet_Explorer_8" rel="noreferrer">Internet&nbsp;Explorer&nbsp;8</a> or lower, these variables get lost when using any form of JavaScript page redirection (location.href,  etc.).</p>
+
+<p>Below we are going to implement an alternative for <strong>IE8 &amp; lower</strong> so that we don't lose HTTP_REFERER. Otherwise, you can almost always simply use <code>window.location.href</code>.</p>
+
+<p>Testing against <code>HTTP_REFERER</code> (URL pasting, session, etc.) <em>can</em> help tell whether a request is legitimate.
+<em>(<strong>Note:</strong> there are also ways to work-around / spoof these referrers, as noted by droop's link in the comments)</em></p>
+
+<hr>
+
+<p>Simple cross-browser testing solution (fallback to window.location.href for Internet&nbsp;Explorer&nbsp;9+ and all other browsers)</p>
+
+<p><strong>Usage: <code>redirect('anotherpage.aspx');</code></strong></p>
+
+<pre><code>function redirect (url) {
+    var ua        = navigator.userAgent.toLowerCase(),
+        isIE      = ua.indexOf('msie') !== -1,
+        version   = parseInt(ua.substr(4, 2), 10);
+
+    // Internet Explorer 8 and lower
+    if (isIE &amp;&amp; version &lt; 9) {
+        var link = document.createElement('a');
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+    }
+
+    // All other browsers can use the standard window.location.href (they don't lose HTTP_REFERER like Internet Explorer 8 &amp; lower does)
+    else { 
+        window.location.href = url; 
+    }
+}
+</code></pre>

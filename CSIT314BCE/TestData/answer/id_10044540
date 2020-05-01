@@ -1,0 +1,11 @@
+<p>I wanted to undo the latest five commits in our shared repository. I looked up the revision id that I wanted to rollback to. Then I typed in the following.</p>
+
+<pre><code>prompt&gt; git reset --hard 5a7404742c85
+HEAD is now at 5a74047 Added one more page to catalogue
+prompt&gt; git push origin master --force
+Total 0 (delta 0), reused 0 (delta 0)
+remote: bb/acl: neoneye is allowed. accepted payload.
+To git@bitbucket.org:thecompany/prometheus.git
+ + 09a6480...5a74047 master -&gt; master (forced update)
+prompt&gt;
+</code></pre>

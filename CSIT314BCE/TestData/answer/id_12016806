@@ -1,0 +1,9 @@
+<p>Actually, <code>x</code> is post-decrementing and with that condition is being checked. It's not <code>--&gt;</code>, it's <code>(x--) &gt; 0</code></p>
+
+<p>Note: value of <code>x</code> is changed after the condition is checked, because it post-decrementing. Some similar cases can also occur, for example:</p>
+
+<pre><code>--&gt;    x--&gt;0
+++&gt;    x++&gt;0
+--&gt;=   x--&gt;=0
+++&gt;=   x++&gt;=0
+</code></pre>

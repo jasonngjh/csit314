@@ -1,0 +1,31 @@
+<p>One of the alternatives to Python's <a href="https://mail.python.org/pipermail/python-dev/2005-September/056846.html" rel="nofollow noreferrer">conditional expression</a></p>
+
+<pre><code>"yes" if boolean else "no"
+</code></pre>
+
+<p>is the following:</p>
+
+<pre><code>{True:"yes", False:"no"}[boolean]
+</code></pre>
+
+<p>which has the following nice extension:</p>
+
+<pre><code>{True:"yes", False:"no", None:"maybe"}[boolean_or_none]
+</code></pre>
+
+<p>The shortest alternative remains:</p>
+
+<pre><code>("no", "yes")[boolean]
+</code></pre>
+
+<p>but there is no alternative to</p>
+
+<pre><code>yes() if boolean else no()
+</code></pre>
+
+<p>if you want to avoid the evaluation of <code>yes()</code> <em>and</em> <code>no()</code>, because in</p>
+
+<pre><code>(no(), yes())[boolean]  # bad
+</code></pre>
+
+<p>both <code>no()</code> and <code>yes()</code> are evaluated.</p>

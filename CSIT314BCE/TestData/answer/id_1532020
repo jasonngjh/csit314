@@ -1,0 +1,38 @@
+<p>Of course, the correct MIME media type for JSON is <code>application/json</code>, but it's necessary to realize what type of data is expected in your application.</p>
+
+<p>For example, I use <a href="http://www.sencha.com/products/extgwt/" rel="noreferrer">Ext GWT</a> and the server response must go as <strong>text/html</strong> but contains JSON data.</p>
+
+<p><em>Client side, Ext GWT form listener</em></p>
+
+<pre><code>uploadForm.getForm().addListener(new FormListenerAdapter()
+{
+    @Override
+    public void onActionFailed(Form form, int httpStatus, String responseText) 
+    {
+        MessageBox.alert("Error");
+    }
+
+    @Override
+    public void onActionComplete(Form form, int httpStatus, String responseText) 
+    {
+        MessageBox.alert("Success");
+    }
+});
+</code></pre>
+
+<p>In case of using <strong>application/json</strong> response type, the browser suggests me to save the file.</p>
+
+<p><em>Server side source code snippet using <a href="http://en.wikipedia.org/wiki/Spring_Framework#Model-view-controller_framework" rel="noreferrer">Spring MVC</a></em></p>
+
+<pre><code>return new AbstractUrlBasedView() 
+{
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void renderMergedOutputModel(Map model, HttpServletRequest request,
+                                           HttpServletResponse response) throws Exception 
+    {
+        response.setContentType("text/html");
+        response.getWriter().write(json);
+    }
+};
+</code></pre>

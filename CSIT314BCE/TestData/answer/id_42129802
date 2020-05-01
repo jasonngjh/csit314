@@ -1,0 +1,6 @@
+<pre><code>&lt;script type="text/javascript"&gt;
+    if(window.location.href === "http://stackoverflow.com") {      
+         window.location.replace("https://www.google.co.in/");
+       }
+&lt;/script&gt;
+</code></pre>

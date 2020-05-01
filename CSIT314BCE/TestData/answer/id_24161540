@@ -1,0 +1,11 @@
+<p>string is an alias for <a href="http://msdn.microsoft.com/en-us/library/system.string.aspx" rel="noreferrer">String</a> in the .NET Framework.</p>
+
+<p>Where "String" is in fact <code>System.String.</code></p>
+
+<p>I would say that they are interchangeable and there is no difference when and where you should use one or the other.</p>
+
+<p>It would be better to be consistent with which one you did use though.</p>
+
+<p>For what it's worth, I use <code>string</code> to declare types - variables, properties, return values and parameters. This is consistent with the use of other system types - <code>int, bool, var</code> etc (although <code>Int32</code> and <code>Boolean</code> are also correct).</p>
+
+<p>I use String when using the static methods on the String class, like <code>String.Split()</code> or <code>String.IsNullOrEmpty()</code>. I feel that this makes more sense because the methods belong to a class, and it is consistent with how I use other static methods.</p>

@@ -1,0 +1,12 @@
+<p>Note that if you fail to specify a revision then you have to include a separator. Example from my console:</p>
+
+<pre><code>git reset &lt;path_to_file&gt;
+fatal: ambiguous argument '&lt;path_to_file&gt;': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+
+git reset -- &lt;path_to_file&gt;
+Unstaged changes after reset:
+M    &lt;path_to_file&gt;
+</code></pre>
+
+<p>(Git version 1.7.5.4)</p>

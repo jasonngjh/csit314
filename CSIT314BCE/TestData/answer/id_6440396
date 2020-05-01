@@ -1,0 +1,5 @@
+<p>I just encountering this for configuration files. I don't want to use <strong>XML</strong> (verbose, graphically, ugly, hard to read), or "ini" format (no hierarchy, no real standard, etc.) or Java "Properties" format (like .ini).</p>
+
+<p>JSON can do all they can do, but it is way less verbose and more human readable - and parsers are easy and ubiquitous in many languages. It's just a tree of data. But out-of-band comments are a necessity often to document "default" configurations and the like. Configurations are never to be "full documents", but trees of saved data that can be human readable when needed.</p>
+
+<p>I guess one could use <code>"#": "comment"</code>, for "valid" JSON.</p>

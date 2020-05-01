@@ -1,0 +1,18 @@
+<p><em>Note: First navigate to the directory and checkout the branch you want to clean.</em></p>
+
+<p><code>-i</code> interactive mode and it will tell you what will be removed and you can choose an action from the list.</p>
+
+<ol>
+<li><p>To clean <strong>files</strong> only [Folders will not be listed and will not be cleaned]: 
+<code>$ git clean -i</code></p></li>
+<li><p>To clean <strong>files and folders</strong>:
+<code>$ git clean -d -i</code></p></li>
+</ol>
+
+<p><code>-d</code> including directories.</p>
+
+<hr>
+
+<p>If you choose <code>c</code> from the list. The files/folders will be deleted that are not tracked and will also remove files/folders that you mess-up.*</p>
+
+<p>For instance: If you restructure the folder in your remote and pull the changes to your local computer. files/folders that are created by others initially will be in past folder and in the new one that you restructure.</p>

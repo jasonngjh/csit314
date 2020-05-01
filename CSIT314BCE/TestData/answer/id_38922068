@@ -1,0 +1,11 @@
+<p>This is the best practice for reverting changes:</p>
+
+<ul>
+<li><code>git commit</code> Commit your staged changes so they will be saved in the <strong><a href="https://git-scm.com/docs/git-reflog" rel="noreferrer">reflog</a></strong> ( see below )</li>
+<li><code>git fetch</code> Fetch the latest upstream changes</li>
+<li><code>git reset --hard origin/master</code> Hard reset to the origin master branch</li>
+</ul>
+
+<p>The <a href="https://git-scm.com/docs/git-reflog" rel="noreferrer">reflog</a> <em>records branches and other references being updated in the local repository</em>. Or simply put - the <strong>reflog</strong> is the <strong>history of your changes</strong>.</p>
+
+<p>So it's always a great practice to commit. Commits are appended to the reflog which ensures you will always have a way to retrieve the deleted code.</p>

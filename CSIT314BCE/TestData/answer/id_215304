@@ -1,0 +1,3 @@
+<p><code>String</code> stands for <code>System.String</code> and it is a .NET Framework type. <strong><code>string</code> is an alias</strong> in the C# language for  <code>System.String</code>. Both of them are compiled to <strong><code>System.String</code> in IL</strong> (Intermediate Language), so there is no difference. Choose what you like and use that. If you code in C#, I'd prefer <code>string</code> as it's a C# type alias and well-known by C# programmers.</p>
+
+<p>I can say the same about <strong>(<code>int</code>, <code>System.Int32</code>)</strong> etc..</p>

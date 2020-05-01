@@ -1,0 +1,26 @@
+<p><strong>Splice, filter and delete to remove an element from an array</strong></p>
+
+<p>Every array has its index, and it helps to delete a particular element with their index.</p>
+
+<p><strong><em>The splice() method</em></strong></p>
+
+<pre><code>array.splice(index, 1);    
+</code></pre>
+
+<p>The first parameter is <strong>index</strong> and the second is the number of elements you want to delete from that index.</p>
+
+<p>So for a single element, we use 1.</p>
+
+<p><strong><em>The delete method</em></strong></p>
+
+<pre><code>delete array[index]
+</code></pre>
+
+<p><strong><em>The filter() method</em></strong></p>
+
+<p>If you want to delete an element which is repeated in an array then filter the array:</p>
+
+<pre><code>removeAll = array.filter(e =&gt; e != elem);
+</code></pre>
+
+<p>Where <code>elem</code> is the element you want to remove from the array and <code>array</code> is your array name.</p>

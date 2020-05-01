@@ -1,0 +1,10 @@
+<p>First of All, both(string &amp; String)  are not same. 
+There is a difference:
+String is not a keyword and it can be used as Identifier whereas string is a keyword and cannot be used as Identifier.</p>
+
+<p>I am trying to explain with different example :
+First, when I put "string s;"  into Visual Studio and hover over it I get (without the color):<br>
+<a href="https://i.stack.imgur.com/wHzSk.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/wHzSk.jpg" alt="String Definition"></a></p>
+
+<p>That says that string is System.String, right? 
+The documentation is at <a href="https://msdn.microsoft.com/en-us/library/362314fe.aspx" rel="noreferrer">https://msdn.microsoft.com/en-us/library/362314fe.aspx</a>. The second sentence says "string is an alias for String in the .NET Framework.". </p>

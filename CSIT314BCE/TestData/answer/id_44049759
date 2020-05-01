@@ -1,0 +1,13 @@
+<p>First, you need to do:</p>
+
+<p><code>git fetch</code> # If you don't know about branch name</p>
+
+<pre><code>git fetch origin branch_name
+</code></pre>
+
+<p>Second, you can check out remote branch into your local by:</p>
+
+<pre><code>git checkout -b branch_name origin/branch_name
+</code></pre>
+
+<p><code>-b</code> will create new branch in specified name from your selected remote branch.</p>

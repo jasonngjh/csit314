@@ -1,0 +1,24 @@
+<p>Here is a time-delay redirection. You can set the delay time to whatever you want:</p>
+
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Your Document Title&lt;/title&gt;
+    &lt;script type="text/javascript"&gt;
+        function delayer(delay) {
+            onLoad = setTimeout('window.location.href = "http://www.google.com/"', delay);
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;script&gt;
+        delayer(8000)
+    &lt;/script&gt;
+    &lt;div&gt;You will be redirected in 8 seconds!&lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>

@@ -1,0 +1,25 @@
+<p><strong>Redirecting User using jQuery/JavaScript</strong></p>
+
+<p>By using the location object in jQuery or JavaScript we can redirect the user to another web page.</p>
+
+<p><strong>In jQuery</strong></p>
+
+<p>The code to redirect the user from one page to another is:</p>
+
+<pre><code>var url = 'http://www.example.com';
+$(location).attr('href', url);
+</code></pre>
+
+<p><strong>In JavaScript</strong></p>
+
+<p>The code to redirect the user from one page to another is:</p>
+
+<pre><code>var url = 'http://www.example.com';
+window.location.href = url;
+</code></pre>
+
+<p><strong>Or</strong></p>
+
+<pre><code>var url = 'http://www.example.com';
+window.location = url;
+</code></pre>

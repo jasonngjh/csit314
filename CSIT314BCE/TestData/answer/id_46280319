@@ -1,0 +1,24 @@
+<p>For anyone looking to replicate a method that will return a new array that has duplicate numbers or strings removed, this has been put together from existing answers:</p>
+
+<pre><code>function uniq(array) {
+  var len = array.length;
+  var dupFree = [];
+  var tempObj = {};
+
+  for (var i = 0; i &lt; len; i++) {
+    tempObj[array[i]] = 0;
+  }
+
+  console.log(tempObj);
+
+  for (var i in tempObj) {
+    var element = i;
+    if (i.match(/\d/)) {
+      element = Number(i);
+    }
+    dupFree.push(element);
+  }
+
+  return dupFree;
+}
+</code></pre>

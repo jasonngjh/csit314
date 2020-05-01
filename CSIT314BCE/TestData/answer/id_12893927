@@ -1,0 +1,23 @@
+<p>Another difference that is not mentioned in the other answers is that if you use the anonymous function</p>
+
+<pre><code>var functionOne = function() {
+    // Some code
+};
+</code></pre>
+
+<p>and use that as a constructor as in</p>
+
+<pre><code>var one = new functionOne();
+</code></pre>
+
+<p>then <code>one.constructor.name</code> will not be defined. <code>Function.name</code> is non-standard but is supported by Firefox, Chrome, other Webkit-derived browsers and IE 9+.</p>
+
+<p>With </p>
+
+<pre><code>function functionTwo() {
+    // Some code
+}
+two = new functionTwo();
+</code></pre>
+
+<p>it is possible to retrieve the name of the constructor as a string with <code>two.constructor.name</code>.</p>

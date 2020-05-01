@@ -1,0 +1,25 @@
+<p><strong>To delete <em>locally</em> - (normal)</strong></p>
+
+<pre><code>git branch -d my_branch
+</code></pre>
+
+<p>If your branch is in a rebasing/merging progress and that was not done properly, it means you will get an error, <code>Rebase/Merge in progress</code>, so in that case, you won't be able to delete your branch.</p>
+
+<p>So either you need to solve the rebasing/merging. Otherwise, you can do force <em>delete</em> by using,</p>
+
+<pre><code>git branch -D my_branch
+</code></pre>
+
+<p><strong>To delete in <em>remote</em>:</strong></p>
+
+<pre><code>git push --delete origin my_branch
+</code></pre>
+
+<p><strong>You can do the same using:</strong></p>
+
+<pre><code>git push origin :my_branch   # Easy to remember both will do the same.
+</code></pre>
+
+<p><strong>Graphical representation:</strong></p>
+
+<p><a href="https://i.stack.imgur.com/Y7NmS.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/Y7NmS.png" alt="Enter image description here"></a></p>

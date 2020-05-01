@@ -1,0 +1,90 @@
+<h1>Edited on 2016 October</h1>
+
+<ul>
+<li>Do it simple, intuitive and explicit (<a href="https://en.wikipedia.org/wiki/Occam%27s_razor" rel="noreferrer">Occam's razor</a>)</li>
+<li>Do it immutable (original array stay unchanged)</li>
+<li>Do it with standard JavaScript functions, if your browser doesn't support them - <strong>use polyfill</strong></li>
+</ul>
+
+<p>In this code example I use <strong>"array.filter(...)"</strong> function to remove unwanted items from an array. This function doesn't change the original array and creates a new one. If your browser doesn't support this function (e.g. Internet Explorer before version 9, or Firefox before version 1.5), consider using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter#Polyfill" rel="noreferrer"><strong>the filter polyfill from Mozilla</strong></a>.</p>
+
+<h1>Removing item (ECMA-262 Edition 5 code aka oldstyle JavaScript)</h1>
+
+<pre><code>var value = 3
+
+var arr = [1, 2, 3, 4, 5, 3]
+
+arr = arr.filter(function(item) {
+    return item !== value
+})
+
+console.log(arr)
+// [ 1, 2, 4, 5 ]
+</code></pre>
+
+<h1>Removing item (ECMAScript 6 code)</h1>
+
+<pre><code>let value = 3
+
+let arr = [1, 2, 3, 4, 5, 3]
+
+arr = arr.filter(item =&gt; item !== value)
+
+console.log(arr)
+// [ 1, 2, 4, 5 ]
+</code></pre>
+
+<p><strong>IMPORTANT</strong> ECMAScript&nbsp;6 "() => {}" arrow function syntax is not supported in Internet&nbsp;Explorer at all, Chrome before 45 version, Firefox before 22 version, and Safari before 10 version. To use ECMAScript&nbsp;6 syntax in old browsers you can use <a href="http://babeljs.io" rel="noreferrer">BabelJS</a>.</p>
+
+<hr>
+
+<h1>Removing multiple items (ECMAScript&nbsp;7 code)</h1>
+
+<p>An additional advantage of this method is that you can remove multiple items</p>
+
+<pre><code>let forDeletion = [2, 3, 5]
+
+let arr = [1, 2, 3, 4, 5, 3]
+
+arr = arr.filter(item =&gt; !forDeletion.includes(item))
+// !!! Read below about array.includes(...) support !!!
+
+console.log(arr)
+// [ 1, 4 ]
+</code></pre>
+
+<p><strong>IMPORTANT</strong> "array.includes(...)" function is not supported in Internet&nbsp;Explorer at all, Chrome before 47 version, Firefox before 43 version, Safari before 9 version, and Edge before 14 version so <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes#Polyfill" rel="noreferrer"><strong>here is polyfill from Mozilla</strong></a>.</p>
+
+<h1>Removing multiple items (in the future, maybe)</h1>
+
+<p>If the <a href="https://github.com/tc39/proposal-bind-operator" rel="noreferrer">"This-Binding Syntax"</a> proposal is ever accepted, you'll be able to do this:</p>
+
+<pre><code>// array-lib.js
+
+export function remove(...forDeletion) {
+    return this.filter(item =&gt; !forDeletion.includes(item))
+}
+
+// main.js
+
+import { remove } from './array-lib.js'
+
+let arr = [1, 2, 3, 4, 5, 3]
+
+// :: This-Binding Syntax Proposal
+// using "remove" function as "virtual method"
+// without extending Array.prototype
+arr = arr::remove(2, 3, 5)
+
+console.log(arr)
+// [ 1, 4 ]
+</code></pre>
+
+<p><a href="https://babeljs.io/repl/#?babili=false&amp;evaluate=true&amp;lineWrap=false&amp;presets=es2015%2Creact%2Cstage-0%2Cstage-2&amp;targets=&amp;browsers=chrome%20%3E%2050&amp;builtIns=false&amp;code=%20%20%20%20function%20remove(...forDeletion)%20%7B%0A%20%20%20%20%20%20%20%20return%20this.filter(item%20%3D%3E%20!forDeletion.includes(item))%0A%20%20%20%20%7D%0A%0A%20%20%20%20let%20arr%20%3D%20%5B1%2C%202%2C%203%2C%204%2C%205%2C%203%5D%0A%0A%20%20%20%20%2F%2F%20%3A%3A%20This-Binding%20Syntax%20Proposal%0A%20%20%20%20%2F%2F%20using%20remove%20function%20as%20%22virtual%20method%22%0A%20%20%20%20arr%20%3D%20arr%3A%3Aremove(2%2C%203%2C%205)%0A%0A%20%20%20%20console.log(arr)%0A%20%20%20%20%2F%2F%20%5B%201%2C%204%20%5D" rel="noreferrer"><strong>Try it yourself in BabelJS :)</strong></a></p>
+
+<p><strong>Reference</strong></p>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes" rel="noreferrer">Array.prototype.includes</a></li>
+<li><a href="https://vanslaars.io/post/create-pipe-function/" rel="noreferrer">Functional composition</a></li>
+</ul>

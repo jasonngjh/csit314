@@ -1,0 +1,9 @@
+<p>I wrote about this ages ago after having these same problems myself:</p>
+
+<p><a href="https://ao.gl/how-to-delete-revert-a-git-commit/" rel="nofollow noreferrer">https://ao.gl/how-to-delete-revert-a-git-commit/</a></p>
+
+<p>Basically you just need to do:</p>
+
+<p><code>git log</code>, get the first seven characters of the SHA, and then do a <code>git revert &lt;sha&gt;</code> followed by <code>git push --force</code>.</p>
+
+<p>You can also revert this by using the Git revert command as follows: <code>git revert &lt;sha&gt; -m -1</code> and then <code>git push</code>.</p>

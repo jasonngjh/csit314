@@ -1,0 +1,24 @@
+<h2><strong>JSON:</strong></h2>
+
+<p>Response is dynamically generated data, according to the query parameters passed in the URL.</p>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>{ "Name": "Foo", "Id": 1234, "Rank": 7 }
+</code></pre>
+
+<p><strong>Content-Type:</strong> <code>application/json</code></p>
+
+<hr>
+
+<h2><strong>JSON-P:</strong></h2>
+
+<p>JSON with padding.
+Response is JSON data, with a function call wrapped around it.</p>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>functionCall({"Name": "Foo", "Id": 1234, "Rank": 7});
+</code></pre>
+
+<p><strong>Content-Type:</strong> <code>application/javascript</code></p>

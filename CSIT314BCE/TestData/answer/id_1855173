@@ -1,0 +1,15 @@
+<p>Unfortunately, the</p>
+
+<pre><code>(falseValue, trueValue)[test]
+</code></pre>
+
+<p>solution doesn't have short-circuit behaviour; thus both <code>falseValue</code> and <code>trueValue</code> are evaluated regardless of the condition. This could be suboptimal or even buggy (i.e. both <code>trueValue</code> and <code>falseValue</code> could be methods and have side-effects).</p>
+
+<p>One solution to this would be</p>
+
+<pre><code>(lambda: falseValue, lambda: trueValue)[test]()
+</code></pre>
+
+<p>(execution delayed until the winner is known ;)), but it introduces inconsistency between callable and non-callable objects. In addition, it doesn't solve the case when using properties.</p>
+
+<p>And so the story goes - choosing between 3 mentioned solutions is a trade-off between having the short-circuit feature, using at least Зython 2.5 (IMHO not a problem anymore) and not being prone to "<code>trueValue</code>-evaluates-to-false" errors.</p>

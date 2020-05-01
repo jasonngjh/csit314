@@ -1,0 +1,9 @@
+<p>You can also do this using <code>git remote prune origin</code></p>
+
+<pre><code>$ git remote prune origin
+Pruning origin
+URL: git@example.com/yourrepo.git
+ * [pruned] origin/some-branchs
+</code></pre>
+
+<p>It prunes and deletes remote-tracking branches from a <code>git branch -r</code> listing.</p>

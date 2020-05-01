@@ -1,0 +1,27 @@
+<p>This is how a beginner wrapped one's head around Closures like a function is wrapped inside of a functions body also known as <strong>Closures</strong>.</p>
+
+<p>Definition from the book Speaking JavaScript "A closure is a function plus the connection to the scope in which the function was created" -<em>Dr.Axel Rauschmayer</em></p>
+
+<p>So what could that look like? Here is an example</p>
+
+<pre><code>function newCounter() {
+  var counter = 0;
+   return function increment() {
+    counter += 1;
+   }
+}
+
+var counter1 = newCounter();
+var counter2 = newCounter();
+
+counter1(); // Number of events: 1
+counter1(); // Number of events: 2
+counter2(); // Number of events: 1
+counter1(); // Number of events: 3
+</code></pre>
+
+<p><em>newCounter</em> closes over <em>increment</em>, <em>counter</em> can be referenced to and accessed by <em>increment</em>.</p>
+
+<p><em>counter1</em> and <em>counter2</em> will keep track of their own value.</p>
+
+<p>Simple but hopefully a clear perspective of what a closure is around all these great and advanced answers.</p>

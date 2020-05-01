@@ -1,0 +1,37 @@
+<p><strong>The yield keyword is going to replace return in a function definition to create a generator.</strong> </p>
+
+<pre><code>def create_generator():
+   for i in range(100):
+   yield i
+myGenerator = create_generator()
+print(myGenerator)
+# &lt;generator object create_generator at 0x102dd2480&gt;
+for i in myGenerator:
+   print(i) # prints 0-99
+</code></pre>
+
+<p>When the returned generator is first used—not in the assignment but the for loop—the function definition will execute until it reaches the yield statement. There, it will pause (see why it’s called yield) until used again. Then, it will pick up where it left off. Upon the final iteration of the generator, any code after the yield command will execute.</p>
+
+<pre><code>def create_generator():
+   print("Beginning of generator")
+   for i in range(3):
+      yield i
+   print("After yield")
+print("Before assignment")
+
+myGenerator = create_generator()
+
+print("After assignment")
+for i in myGenerator :
+   print(i) # prints 0-99
+"""
+Before assignment
+After assignment
+Beginning of generator
+0
+1
+2
+After yield
+</code></pre>
+
+<p>The yield keyword modifies a function’s behavior to produce a generator that’s paused at each yield command during iteration. The function isn’t executed except upon iteration, which leads to improved resource management, and subsequently, a better overall performance. Use generators (and yielded functions) for creating large data sets meant for single-use iteration.</p>

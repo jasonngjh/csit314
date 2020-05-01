@@ -1,0 +1,6 @@
+<p>The simplest way to undo the last commit is</p>
+
+<pre><code>git reset HEAD^
+</code></pre>
+
+<p>This will bring the project state before you have made the commit.</p>

@@ -1,0 +1,17 @@
+<p>Take profit of reduce method as follows:</p>
+
+<p>Case a) if you need to remove an element by index:</p>
+
+<pre><code>function remove(arr, index) {
+  return arr.reduce((prev, x, i) =&gt; prev.concat(i !== index ? [x] : []), []);
+}
+</code></pre>
+
+<p>case b) if you need to remove an element by the value of the element (int):</p>
+
+<pre><code>function remove(arr, value) {
+  return arr.reduce((prev, x, i) =&gt; prev.concat(x !== value ? [x] : []), []);
+}
+</code></pre>
+
+<p>So in this way we can return a new array (will be in a cool functional way - much better than using push or splice) with the element removed.</p>

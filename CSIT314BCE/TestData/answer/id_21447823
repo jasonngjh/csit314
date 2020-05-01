@@ -1,0 +1,4 @@
+<p>In <a href="http://en.wikipedia.org/wiki/CoffeeScript" rel="noreferrer">CoffeeScript</a>:</p>
+
+<pre><code>my_array.splice(idx, 1) for ele, idx in my_array when ele is this_value
+</code></pre>

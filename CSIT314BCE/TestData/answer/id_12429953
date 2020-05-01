@@ -1,0 +1,66 @@
+<p>Java always passes arguments <em>by value</em>, NOT by reference.</p>
+
+<hr>
+
+<p>Let me explain this through an <a href="https://stackoverflow.com/a/9404727/597657">example</a>:
+</p>
+
+<pre><code>public class Main {
+
+     public static void main(String[] args) {
+          Foo f = new Foo("f");
+          changeReference(f); // It won't change the reference!
+          modifyReference(f); // It will modify the object that the reference variable "f" refers to!
+     }
+
+     public static void changeReference(Foo a) {
+          Foo b = new Foo("b");
+          a = b;
+     }
+
+     public static void modifyReference(Foo c) {
+          c.setAttribute("c");
+     }
+
+}
+</code></pre>
+
+<p>I will explain this in steps:</p>
+
+<ol>
+<li><p>Declaring a reference named <code>f</code> of type <code>Foo</code> and assign it a new object of type <code>Foo</code> with an attribute <code>"f"</code>.</p>
+
+<pre><code>Foo f = new Foo("f");
+</code></pre>
+
+<p><img src="https://i.stack.imgur.com/arXpP.png" alt="enter image description here"></p></li>
+<li><p>From the method side, a reference of type <code>Foo</code> with a name <code>a</code> is declared and it's initially assigned <code>null</code>.</p>
+
+<pre><code>public static void changeReference(Foo a)
+</code></pre>
+
+<p><img src="https://i.stack.imgur.com/k2LBD.png" alt="enter image description here"></p></li>
+<li><p>As you call the method <code>changeReference</code>, the reference <code>a</code> will be assigned the object which is passed as an argument.</p>
+
+<pre><code>changeReference(f);
+</code></pre>
+
+<p><img src="https://i.stack.imgur.com/1Ez74.png" alt="enter image description here"></p></li>
+<li><p>Declaring a reference named <code>b</code> of type <code>Foo</code> and assign it a new object of type <code>Foo</code> with an attribute <code>"b"</code>.</p>
+
+<pre><code>Foo b = new Foo("b");
+</code></pre>
+
+<p><img src="https://i.stack.imgur.com/Krx4N.png" alt="enter image description here"></p></li>
+<li><p><code>a = b</code> makes a new assignment to the reference <code>a</code>, <strong>not</strong> <code>f</code>, of the object whose its attribute is <code>"b"</code>.</p>
+
+<p><img src="https://i.stack.imgur.com/rCluu.png" alt="enter image description here"></p></li>
+<li><p>As you call <code>modifyReference(Foo c)</code> method, a reference <code>c</code> is created and assigned the object with attribute <code>"f"</code>.</p>
+
+<p><img src="https://i.stack.imgur.com/PRZPg.png" alt="enter image description here"></p></li>
+<li><p><code>c.setAttribute("c");</code> will change the attribute of the object that reference <code>c</code> points to it, and it's same object that reference <code>f</code> points to it.</p>
+
+<p><img src="https://i.stack.imgur.com/H9Qsf.png" alt="enter image description here"></p></li>
+</ol>
+
+<p>I hope you understand now how passing objects as arguments works in Java :)</p>

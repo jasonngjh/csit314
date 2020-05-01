@@ -1,0 +1,3 @@
+<p>"use strict"; is the ECMA effort to make JavaScript a little bit more robust. It brings in JS an attempt to make it at least a little "strict" (other languages implement strict rules since the 90s). It actually "forces" JavaScript developers to follow some sort of coding best practices.
+Still, JavaScript is very fragile. There is no such thing as typed variables, typed methods, etc.
+I strongly recommend JavaScript developers to learn a more robust language such as Java or ActionScript3, and implement the same best practices in your JavaScript code, it will work better and be easier to debug.</p>

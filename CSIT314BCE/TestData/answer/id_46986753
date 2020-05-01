@@ -1,0 +1,19 @@
+<p><strong>For a specific file:</strong></p>
+
+<blockquote>
+  <ul>
+  <li>git reset my_file.txt</li>
+  <li>git checkout my_file.txt</li>
+  </ul>
+</blockquote>
+
+<p><strong>For all added files:</strong></p>
+
+<blockquote>
+  <ul>
+  <li>git reset .</li>
+  <li>git checkout .</li>
+  </ul>
+</blockquote>
+
+<p>Note: <strong>checkout</strong> changes the code in the files and moves to the last updated (committed) state. <strong>reset</strong> doesn't change the codes; it just resets the header.</p>

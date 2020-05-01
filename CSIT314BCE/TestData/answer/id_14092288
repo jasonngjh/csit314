@@ -1,0 +1,46 @@
+<p>I tried the same code with MATLAB 2011b with my MacBook Pro (Intel i7, 64 bit, 2.4 GHz) for the following MATLAB code:</p>
+
+<pre><code>% Processing time with Sorted data vs unsorted data
+%==========================================================================
+% Generate data
+arraySize = 32768
+sum = 0;
+% Generate random integer data from range 0 to 255
+data = randi(256, arraySize, 1);
+
+
+%Sort the data
+data1= sort(data); % data1= data  when no sorting done
+
+
+%Start a stopwatch timer to measure the execution time
+tic;
+
+for i=1:100000
+
+    for j=1:arraySize
+
+        if data1(j)&gt;=128
+            sum=sum + data1(j);
+        end
+    end
+end
+
+toc;
+
+ExeTimeWithSorting = toc - tic;
+</code></pre>
+
+<p>The results for the above MATLAB code are as follows:</p>
+
+<pre><code>  a: Elapsed time (without sorting) = 3479.880861 seconds.
+  b: Elapsed time (with sorting ) = 2377.873098 seconds.
+</code></pre>
+
+<p>The results of the C code as in @GManNickG I get:</p>
+
+<pre><code>  a: Elapsed time (without sorting) = 19.8761 sec.
+  b: Elapsed time (with sorting ) = 7.37778 sec.
+</code></pre>
+
+<p>Based on this, it looks MATLAB is almost <em>175 times</em> slower than the C implementation without sorting and <em>350 times</em> slower with sorting. In other words, the effect (of branch prediction) is <em>1.46x</em> for MATLAB implementation and <em>2.7x</em> for the C implementation.</p>

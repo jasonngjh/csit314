@@ -1,0 +1,33 @@
+<p><a href="http://blog.icefusion.co.uk/git-stash-can-delete-ignored-files-git-stash-u/" rel="noreferrer"><strong>Warning, doing this will permanently delete your files if you have any directory/* entries in your gitignore file.</strong></a></p>
+
+<p>Some answers seem to be terrible. Terrible in the sense of what happened to @Lauri by following David Avsajanishvili suggestion.</p>
+
+<p>Rather (git > v1.7.6):</p>
+
+<pre><code>git stash --include-untracked
+git pull
+</code></pre>
+
+<p>Later you can clean the stash history.</p>
+
+<p>Manually, one-by-one:</p>
+
+<pre><code>$ git stash list
+stash@{0}: WIP on &lt;branch&gt;: ...
+stash@{1}: WIP on &lt;branch&gt;: ...
+
+$ git stash drop stash@{0}
+$ git stash drop stash@{1}
+</code></pre>
+
+<p>Brutally, all-at-once:</p>
+
+<pre><code>$ git stash clear
+</code></pre>
+
+<p>Of course if you want to go back to what you stashed:</p>
+
+<pre><code>$ git stash list
+...
+$ git stash apply stash@{5}
+</code></pre>

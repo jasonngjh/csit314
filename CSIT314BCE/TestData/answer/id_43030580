@@ -1,0 +1,43 @@
+<p>Another solution, using <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" rel="noreferrer"><code>Array#reduce</code></a></strong>.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var myObject = {
+  "ircEvent": "PRIVMSG",
+  "method": "newURI",
+  "regex": "^http://.*"
+};
+
+myObject = Object.keys(myObject).reduce(function(obj, key) {
+  if (key != "regex") {           //key you want to remove
+    obj[key] = myObject[key];
+  }
+  return obj;
+}, {});
+
+console.log(myObject);</code></pre>
+</div>
+</div>
+</p>
+
+<p>However, it will <strong>mutate</strong> the original object. If you want to create a new object <strong>without</strong> the specified key, just assign the reduce function to a new variable, e.g.: </p>
+
+<p>(ES6)</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>const myObject = {
+  ircEvent: 'PRIVMSG',
+  method: 'newURI',
+  regex: '^http://.*',
+};
+
+const myNewObject = Object.keys(myObject).reduce((obj, key) =&gt; {
+  key !== 'regex' ? obj[key] = myObject[key] : null;
+  return obj;
+}, {});
+
+console.log(myNewObject);</code></pre>
+</div>
+</div>
+</p>

@@ -1,0 +1,18 @@
+<p>We can easily removed local untracked files from the current git working tree by using below git comments.</p>
+
+<pre><code>git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [&lt;commit&gt;]
+</code></pre>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>git reset --hard HEAD
+</code></pre>
+
+<p><strong>Links :</strong></p>
+
+<ol>
+<li><a href="https://git-scm.com/docs/git-reset" rel="noreferrer">https://git-scm.com/docs/git-reset</a></li>
+<li><a href="https://stackoverflow.com/questions/9529078/how-do-i-use-git-reset-hard-head-to-revert-to-a-previous-commit">How do I use &#39;git reset --hard HEAD&#39; to revert to a previous commit?</a></li>
+<li><a href="https://stackoverflow.com/questions/1628088/reset-local-repository-branch-to-be-just-like-remote-repository-head">Reset local repository branch to be just like remote repository HEAD</a></li>
+<li><a href="https://jwiegley.github.io/git-from-the-bottom-up/3-Reset/4-doing-a-hard-reset.html" rel="noreferrer">https://jwiegley.github.io/git-from-the-bottom-up/3-Reset/4-doing-a-hard-reset.html</a> </li>
+</ol>

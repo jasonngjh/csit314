@@ -1,0 +1,33 @@
+<p><a href="https://stackoverflow.com/a/336868/2730064">Greg's Answer</a> is good enough, but I still would like to add something to it that I learned just now watching <a href="https://en.wikipedia.org/wiki/Douglas_Crockford" rel="noreferrer">Douglas Crockford's</a> videos.</p>
+
+<p><strong>Function expression:</strong></p>
+
+<pre><code>var foo = function foo() {};
+</code></pre>
+
+<p><strong>Function statement:</strong></p>
+
+<pre><code>function foo() {};
+</code></pre>
+
+<p>The function statement is just a shorthand for <code>var</code> statement with a <code>function</code> value.</p>
+
+<p>So</p>
+
+<pre><code>function foo() {};
+</code></pre>
+
+<p>expands to</p>
+
+<pre><code>var foo = function foo() {};
+</code></pre>
+
+<p>Which expands further to:</p>
+
+<pre><code>var foo = undefined;
+foo = function foo() {};
+</code></pre>
+
+<p>And they are both hoisted to the top of the code.</p>
+
+<p><img src="https://i.stack.imgur.com/6TVZL.jpg" alt="Screenshot from video"></p>

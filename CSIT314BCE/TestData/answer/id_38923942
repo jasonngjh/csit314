@@ -1,0 +1,10 @@
+<p>I made a fairly efficient extension to the base JavaScript array:</p>
+
+<pre><code>Array.prototype.drop = function(k) {
+  var valueIndex = this.indexOf(k);
+  while(valueIndex &gt; -1) {
+    this.removeAt(valueIndex);
+    valueIndex = this.indexOf(k);
+  }
+};
+</code></pre>

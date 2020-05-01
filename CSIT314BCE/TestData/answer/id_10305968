@@ -1,0 +1,60 @@
+<p>How <strong><a href="http://web-profile.net/jquery/dev/jquery-element-visible-hidden/" rel="noreferrer">element visibility and jQuery works</a></strong>;</p>
+
+<p>An element could be hidden with <code>display:none</code>, <code>visibility:hidden</code> or <code>opacity:0</code>. The difference between those methods:</p>
+
+<ul>
+<li><code>display:none</code> hides the element, and it does not take up any space;</li>
+<li><code>visibility:hidden</code> hides the element, but it still takes up space in the layout;</li>
+<li><p><code>opacity:0</code> hides the element as "visibility:hidden", and it still takes up space in the layout; the only difference is that opacity lets one to make an element partly transparent;   </p>
+
+<pre><code>if ($('.target').is(':hidden')) {
+  $('.target').show();
+} else {
+  $('.target').hide();
+}
+if ($('.target').is(':visible')) {
+  $('.target').hide();
+} else {
+  $('.target').show();
+}
+
+if ($('.target-visibility').css('visibility') == 'hidden') {
+  $('.target-visibility').css({
+    visibility: "visible",
+    display: ""
+  });
+} else {
+  $('.target-visibility').css({
+    visibility: "hidden",
+    display: ""
+  });
+}
+
+if ($('.target-visibility').css('opacity') == "0") {
+  $('.target-visibility').css({
+    opacity: "1",
+    display: ""
+  });
+} else {
+  $('.target-visibility').css({
+    opacity: "0",
+    display: ""
+  });
+}
+</code></pre>
+
+<p><strong>Useful jQuery toggle methods:</strong>  </p>
+
+<pre><code>$('.click').click(function() {
+  $('.target').toggle();
+});
+
+$('.click').click(function() {
+  $('.target').slideToggle();
+});
+
+$('.click').click(function() {
+  $('.target').fadeToggle();
+});
+</code></pre></li>
+</ul>

@@ -1,0 +1,14 @@
+<p>You can use <a href="https://github.com/albfan/git-rebase-reword">git-rebase-reword</a></p>
+
+<p>It is designed to edit any commit (not just last) same way as <code>commit --amend</code></p>
+
+<pre><code>$ git rebase-reword &lt;commit-or-refname&gt;
+</code></pre>
+
+<p>It is named after the action on rebase interactive to amend a commit: "reword". See <a href="https://robots.thoughtbot.com/git-interactive-rebase-squash-amend-rewriting-history">this post</a> and <a href="http://git-scm.com/docs/git-rebase">man</a> -section interactive mode-</p>
+
+<p>Examples:</p>
+
+<pre><code>$ git rebase-reword b68f560
+$ git rebase-reword HEAD^
+</code></pre>

@@ -1,0 +1,82 @@
+<p>I tried to simplify the examples above, keeping only the essense of the problem.
+Let me present this as a story that is easy to remember and apply correctly.
+The story goes like this:
+You have a pet dog, Jimmy, whose tail is 12 inches long.
+You leave it with a vet for a few weeks while you are travelling abroad.</p>
+
+<p>The vet doesn't like the long tail of Jimmy, so he wants to cut it by half.
+But being a good vet, he knows that he has no right to mutilate other people's dogs.
+So he first makes a clone of the dog (with the <em>new</em> key word) and cuts the tail of the clone.
+When the dog finally returns to you, it has the original 12 inch tail in tact. Happy ending !</p>
+
+<p>The next time you travel, you take the dog, unwittingly, to a wicked vet. 
+He is also a hater of long tails, so he cuts it down to a miserable 2 inches. 
+But he does this to your dear Jimmy, not a clone of it.
+When you return, you are shocked to see Jimmy pathetically wagging a 2 inch stub.</p>
+
+<p>Moral of the story: When you pass on your pet, you are giving away whole and unfettered
+custody of the pet to the vet. He is free to play any kind of havoc with it.
+Passing by <em>value</em>, by <em>reference</em>, by <em>pointer</em> are all just technical wrangling. 
+Unless the vet clones it first, he ends up mutilating the original dog.</p>
+
+<pre><code>public class Doggie {
+
+    public static void main(String...args) {
+        System.out.println("At the owner's home:");
+        Dog d = new Dog(12);
+        d.wag();
+        goodVet(d);
+        System.out.println("With the owner again:)");
+        d.wag();
+        badVet(d);
+        System.out.println("With the owner again(:");
+        d.wag();
+    }
+
+    public static void goodVet (Dog dog) {
+        System.out.println("At the good vet:");
+        dog.wag();
+        dog = new Dog(12); // create a clone
+        dog.cutTail(6);    // cut the clone's tail
+        dog.wag();
+    }
+
+    public static void badVet (Dog dog) {
+        System.out.println("At the bad vet:");
+        dog.wag();
+        dog.cutTail(2);   // cut the original dog's tail
+        dog.wag();
+    }    
+}
+
+class Dog {
+
+    int tailLength;
+
+    public Dog(int originalLength) {
+        this.tailLength = originalLength;
+    }
+
+    public void cutTail (int newLength) {
+        this.tailLength = newLength;
+    }
+
+    public void wag()  {
+        System.out.println("Wagging my " +tailLength +" inch tail");
+    }
+}
+
+Output:
+At the owner's home:
+Wagging my 12 inch tail
+At the good vet:
+Wagging my 12 inch tail
+Wagging my 6 inch tail
+With the owner again:)
+Wagging my 12 inch tail
+At the bad vet:
+Wagging my 12 inch tail
+Wagging my 2 inch tail
+With the owner again(:
+Wagging my 2 inch tail
+</code></pre>

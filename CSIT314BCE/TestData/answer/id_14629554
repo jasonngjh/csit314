@@ -1,0 +1,11 @@
+<p>This command will unstash your changes:</p>
+
+<pre><code>git reset HEAD filename.txt
+</code></pre>
+
+<p>You can also use </p>
+
+<pre><code>git add -p 
+</code></pre>
+
+<p>to add parts of files.</p>

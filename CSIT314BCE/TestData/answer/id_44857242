@@ -1,0 +1,18 @@
+<p>The reason is the browser can <strong>not understand</strong> it and try to somehow translate it to what it can understand and in this case into a hexadecimal value!...</p>
+
+<p><code>chucknorris</code> starts with <code>c</code> which is recognised character in hexadecimal, also it's converting all unrecognised characters into <code>0</code>!</p>
+
+<p>So <code>chucknorris</code> in hexadecimal format becomes: <code>c00c00000000</code>, all other characters become <code>0</code> and <code>c</code> remains where they are...</p>
+
+<p>Now they get divided by 3 for <code>RGB</code>(red, green, blue)... <code>R: c00c, G: 0000, B:0000</code>...</p>
+
+<p>But we know valid hexadecimal for RGB is just 2 characters, means <code>R: c0, G: 00, B:00</code></p>
+
+<p>So the real result is:</p>
+
+<pre><code>bgcolor="#c00000";
+</code></pre>
+
+<p>I also added the steps in the image as a quick reference for you:</p>
+
+<p><a href="https://i.stack.imgur.com/sc8bX.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/sc8bX.jpg" alt="Why does HTML think “chucknorris” is a colour?"></a></p>

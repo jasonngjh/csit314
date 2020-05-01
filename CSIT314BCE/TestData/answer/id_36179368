@@ -1,0 +1,4 @@
+<pre><code>if($("h1").is(":hidden")){
+    // your code..
+}
+</code></pre>

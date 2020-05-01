@@ -1,0 +1,27 @@
+<p>It's about branch prediction. What is it?</p>
+
+<ul>
+<li><p>A branch predictor is one of the ancient performance improving techniques which still finds relevance into modern architectures. While the simple prediction techniques provide fast lookup and power efficiency they suffer from a high misprediction rate.</p></li>
+<li><p>On the other hand, complex branch predictions –either neural based or variants of two-level branch prediction –provide better prediction accuracy, but they consume more power and complexity increases exponentially.</p></li>
+<li><p>In addition to this, in complex prediction techniques the time taken to predict the branches is itself very high –ranging from 2 to 5 cycles –which is comparable to the execution time of actual branches.</p></li>
+<li><p>Branch prediction is essentially an optimization (minimization) problem where the emphasis is on to achieve lowest possible miss rate, low power consumption, and low complexity with minimum resources.</p></li>
+</ul>
+
+<p>There really are three different kinds of branches:</p>
+
+<p><strong>Forward conditional branches</strong> - based on a run-time condition, the PC (program counter) is changed to point to an address forward in the instruction stream.</p>
+
+<p><strong>Backward conditional branches</strong> - the PC is changed to point backward in the instruction stream. The branch is based on some condition, such as branching backwards to the beginning of a program loop when a test at the end of the loop states the loop should be executed again.</p>
+
+<p><strong>Unconditional branches</strong> - this includes jumps, procedure calls and returns that have no specific condition. For example, an unconditional jump instruction might be coded in assembly language as simply "jmp", and the instruction stream must immediately be directed to the target location pointed to by the jump instruction, whereas a conditional jump that might be coded as "jmpne" would redirect the instruction stream only if the result of a comparison of two values in a previous "compare" instructions shows the values to not be equal. (The segmented addressing scheme used by the x86 architecture adds extra complexity, since jumps can be either "near" (within a segment) or "far" (outside the segment). Each type has different effects on branch prediction algorithms.)</p>
+
+<p><strong>Static/dynamic Branch Prediction</strong>: Static branch prediction is used by the microprocessor the first time a conditional branch is encountered, and dynamic branch prediction is used for succeeding executions of the conditional branch code.</p>
+
+<p>References:</p>
+
+<ul>
+<li><p><em><a href="https://en.wikipedia.org/wiki/Branch_predictor" rel="noreferrer">Branch predictor</a></em></p></li>
+<li><p><em><a href="http://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/ex/profile/demo.htm" rel="noreferrer">A Demonstration of Self-Profiling</a></em></p></li>
+<li><p><em><a href="https://courses.cs.washington.edu/courses/csep548/06au/lectures/branchPred.pdf" rel="noreferrer">Branch Prediction Review</a></em></p></li>
+<li><p><em><a href="https://web.njit.edu/~rlopes/Mod5.3.pdf" rel="noreferrer">Branch Prediction</a></em></p></li>
+</ul>

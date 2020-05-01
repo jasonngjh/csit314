@@ -1,0 +1,28 @@
+<p><strong>Remove all extra folders and files in this repo + submodules</strong></p>
+
+<p>This gets you in same state as fresh clone.</p>
+
+<pre><code>git clean -ffdx
+</code></pre>
+
+<p><strong>Remove all extra folders and files in this repo but not its submodules</strong></p>
+
+<pre><code>git clean -fdx
+</code></pre>
+
+<p><strong>Remove extra folders but not files (ex. build or logs folder)</strong></p>
+
+<pre><code>git clean -fd
+</code></pre>
+
+<p><strong>Remove extra folders + ignored files (but not newly added files)</strong></p>
+
+<p>If file wasn't ignored and not yet checked-in then  it stays. Note the capital X.</p>
+
+<pre><code>git clean -fdX
+</code></pre>
+
+<p><strong>New interactive mode</strong></p>
+
+<pre><code>git clean
+</code></pre>

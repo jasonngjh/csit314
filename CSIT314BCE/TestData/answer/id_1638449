@@ -1,0 +1,4 @@
+<p><strong>WARNING:</strong> This answer has merely been provided as a possible solution; it is obviously <em>not</em> the best solution, as it requires jQuery. Instead, prefer the pure JavaScript solution.</p>
+
+<pre class="lang-js prettyprint-override"><code>$(location).attr('href', 'http://stackoverflow.com')
+</code></pre>

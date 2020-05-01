@@ -1,0 +1,8 @@
+<p>But if someone wants to redirect back to home page then he may use the following snippet.</p>
+
+<pre><code>window.location = window.location.host
+</code></pre>
+
+<p>It would be helpful if you have three different environments as development, staging, and production.</p>
+
+<p>You can explore this window or window.location object by just putting these words in Chrome Console or <a href="http://en.wikipedia.org/wiki/Firebug_%28software%29">Firebug</a>'s Console.</p>

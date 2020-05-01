@@ -1,0 +1,74 @@
+<p>Based on all the answers which were mainly correct and taking into account the best practices suggested (especially not using Array.prototype directly), I came up with the below code:</p>
+
+<pre><code>function arrayWithout(arr, values) {
+  var isArray = function(canBeArray) {
+    if (Array.isArray) {
+      return Array.isArray(canBeArray);
+    }
+    return Object.prototype.toString.call(canBeArray) === '[object Array]';
+  };
+
+  var excludedValues = (isArray(values)) ? values : [].slice.call(arguments, 1);
+  var arrCopy = arr.slice(0);
+
+  for (var i = arrCopy.length - 1; i &gt;= 0; i--) {
+    if (excludedValues.indexOf(arrCopy[i]) &gt; -1) {
+      arrCopy.splice(i, 1);
+    }
+  }
+
+  return arrCopy;
+}
+</code></pre>
+
+<p>Reviewing the above function, despite the fact that it works fine, I realised there could be some performance improvement. Also using ES6 instead of ES5 is a much better approach. To that end, this is the improved code:</p>
+
+<pre><code>const arrayWithoutFastest = (() =&gt; {
+  const isArray = canBeArray =&gt; ('isArray' in Array) 
+    ? Array.isArray(canBeArray) 
+    : Object.prototype.toString.call(canBeArray) === '[object Array]';
+
+  let mapIncludes = (map, key) =&gt; map.has(key);
+  let objectIncludes = (obj, key) =&gt; key in obj;
+  let includes;
+
+  function arrayWithoutFastest(arr, ...thisArgs) {
+    let withoutValues = isArray(thisArgs[0]) ? thisArgs[0] : thisArgs;
+
+    if (typeof Map !== 'undefined') {
+      withoutValues = withoutValues.reduce((map, value) =&gt; map.set(value, value), new Map());
+      includes = mapIncludes;
+    } else {
+      withoutValues = withoutValues.reduce((map, value) =&gt; { map[value] = value; return map; } , {}); 
+      includes = objectIncludes;
+    }
+
+    const arrCopy = [];
+    const length = arr.length;
+
+    for (let i = 0; i &lt; length; i++) {
+      // If value is not in exclude list
+      if (!includes(withoutValues, arr[i])) {
+        arrCopy.push(arr[i]);
+      }
+    }
+
+    return arrCopy;
+  }
+
+  return arrayWithoutFastest;  
+})();
+</code></pre>
+
+<p>How to use:</p>
+
+<pre><code>const arr = [1,2,3,4,5,"name", false];
+
+arrayWithoutFastest(arr, 1); // will return array [2,3,4,5,"name", false]
+arrayWithoutFastest(arr, 'name'); // will return [2,3,4,5, false]
+arrayWithoutFastest(arr, false); // will return [2,3,4,5]
+arrayWithoutFastest(arr,[1,2]); // will return [3,4,5,"name", false];
+arrayWithoutFastest(arr, {bar: "foo"}); // will return the same array (new copy)
+</code></pre>
+
+<p>I am currently writing a blog post in which I have benchmarked several solutions for Array without problem and compared the time it takes to run. I will update this answer with the link once I finish that post. Just to let you know, I have compared the above against lodash's without and in case the browser supports <code>Map</code>, it beats lodash! Notice that I am not using <code>Array.prototype.indexOf</code> or <code>Array.prototype.includes</code> as wrapping the exlcudeValues in a <code>Map</code> or <code>Object</code> makes querying faster!</p>

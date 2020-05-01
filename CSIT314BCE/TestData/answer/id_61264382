@@ -1,0 +1,21 @@
+<p><strong>For JSON:</strong></p>
+
+<pre><code>Content-Type: application/json
+</code></pre>
+
+<p><strong>For JSON-P:</strong></p>
+
+<pre><code>Content-Type: application/javascript
+</code></pre>
+
+<p><strong>other options are below::</strong></p>
+
+<p><code>application/x-javascript:</code> Experimental MIME type for JavaScript before <code>application/javascript</code> was made standard.</p>
+
+<p><code>text/javascript:</code> Now obsolete. You should use application/javascript when using javascript.</p>
+
+<p><code>text/x-javascript:</code> Experimental MIME type for the above situation.</p>
+
+<p><code>text/x-json:</code> Experimental MIME type for JSON before application/json got officially registered.</p>
+
+<p><strong>Note::</strong> There are lot more options of content types, please <a href="http://www.iana.org/assignments/media-types/media-types.xhtml" rel="nofollow noreferrer">click here</a> to see more options</p>

@@ -1,0 +1,120 @@
+<p>JSON doesn't allow comments, per se. The reasoning is utterly foolish, because you can use JSON <em>itself</em> to create comments, which obviates the reasoning entirely, <em>and</em> loads the parser data space for no good reason at all for <em>exactly</em> the same result and potential issues, such as they are: a JSON file with comments.</p>
+
+<blockquote>
+  <p><strong>If you try to put comments in (using <code>//</code> or <code>/* */</code> or <code>#</code> for instance), then some parsers will fail because this is strictly not
+  within the JSON specification. So you should <em>never</em> do that.</strong></p>
+</blockquote>
+
+<p>Here's a for instance, where my <a href="http://fyngyrz.com/?p=3389" rel="noreferrer">image manipulation system</a> has saved image notations and some basic formatted (comment) information relating to them (at the bottom):</p>
+
+<pre><code>{
+    "Notations": [
+        {
+            "anchorX": 333,
+            "anchorY": 265,
+            "areaMode": "Ellipse",
+            "extentX": 356,
+            "extentY": 294,
+            "opacity": 0.5,
+            "text": "Elliptical area on top",
+            "textX": 333,
+            "textY": 265,
+            "title": "Notation 1"
+        },
+        {
+            "anchorX": 87,
+            "anchorY": 385,
+            "areaMode": "Rectangle",
+            "extentX": 109,
+            "extentY": 412,
+            "opacity": 0.5,
+            "text": "Rect area\non bottom",
+            "textX": 98,
+            "textY": 385,
+            "title": "Notation 2"
+        },
+        {
+            "anchorX": 69,
+            "anchorY": 104,
+            "areaMode": "Polygon",
+            "extentX": 102,
+            "extentY": 136,
+            "opacity": 0.5,
+            "pointList": [
+                {
+                    "i": 0,
+                    "x": 83,
+                    "y": 104
+                },
+                {
+                    "i": 1,
+                    "x": 69,
+                    "y": 136
+                },
+                {
+                    "i": 2,
+                    "x": 102,
+                    "y": 132
+                },
+                {
+                    "i": 3,
+                    "x": 83,
+                    "y": 104
+                }
+            ],
+            "text": "Simple polygon",
+            "textX": 85,
+            "textY": 104,
+            "title": "Notation 3"
+        }
+    ],
+    "imageXW": 512,
+    "imageYW": 512,
+    "imageName": "lena_std.ato",
+    "tinyDocs": {
+        "c01": "JSON image notation data:",
+        "c02": "-------------------------",
+        "c03": "",
+        "c04": "This data contains image notations and related area",
+        "c05": "selection information that provides a means for an",
+        "c06": "image gallery to display notations with elliptical,",
+        "c07": "rectangular, polygonal or freehand area indications",
+        "c08": "over an image displayed to a gallery visitor.",
+        "c09": "",
+        "c10": "X and Y positions are all in image space. The image",
+        "c11": "resolution is given as imageXW and imageYW, which",
+        "c12": "you use to scale the notation areas to their proper",
+        "c13": "locations and sizes for your display of the image,",
+        "c14": "regardless of scale.",
+        "c15": "",
+        "c16": "For Ellipses, anchor is the  center of the ellipse,",
+        "c17": "and the extents are the X and Y radii respectively.",
+        "c18": "",
+        "c19": "For Rectangles, the anchor is the top left and the",
+        "c20": "extents are the bottom right.",
+        "c21": "",
+        "c22": "For Freehand and Polygon area modes, the pointList",
+        "c23": "contains a series of numbered XY points. If the area",
+        "c24": "is closed, the last point will be the same as the",
+        "c25": "first, so all you have to be concerned with is drawing",
+        "c26": "lines between the points in the list. Anchor and extent",
+        "c27": "are set to the top left and bottom right of the indicated",
+        "c28": "region, and can be used as a simplistic rectangular",
+        "c29": "detect for the mouse hover position over these types",
+        "c30": "of areas.",
+        "c31": "",
+        "c32": "The textx and texty positions provide basic positioning",
+        "c33": "information to help you locate the text information",
+        "c34": "in a reasonable location associated with the area",
+        "c35": "indication.",
+        "c36": "",
+        "c37": "Opacity is a value between 0 and 1, where .5 represents",
+        "c38": "a 50% opaque backdrop and 1.0 represents a fully opaque",
+        "c39": "backdrop. Recommendation is that regions be drawn",
+        "c40": "only if the user hovers the pointer over the image,",
+        "c41": "and that the text associated with the regions be drawn",
+        "c42": "only if the user hovers the pointer over the indicated",
+        "c43": "region."
+    }
+}
+</code></pre>

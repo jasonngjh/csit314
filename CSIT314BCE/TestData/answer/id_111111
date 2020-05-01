@@ -1,0 +1,232 @@
+<p>A closure is a pairing of:</p>
+
+<ol>
+<li>A function, and</li>
+<li>A reference to that function's outer scope (lexical environment)</li>
+</ol>
+
+<p>A lexical environment is part of every execution context (stack frame), and is a map between identifiers (ie. local variable names) and values.</p>
+
+<p>Every function in JavaScript maintains a reference to its outer lexical environment. This reference is used to configure the execution context created when a function is invoked. This reference enables code inside the function to "see" variables declared outside the function, regardless of when and where the function is called.</p>
+
+<p>If a function was called by a function, which in turn was called by another function, then a chain of references to outer lexical environments is created. This chain is called the scope chain.</p>
+
+<p>In the following code, <code>inner</code> forms a closure with the lexical environment of the execution context created when <code>foo</code> is invoked, <em>closing over</em> variable <code>secret</code>:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function foo() {
+  const secret = Math.trunc(Math.random()*100)
+  return function inner() {
+    console.log(`The secret number is ${secret}.`)
+  }
+}
+const f = foo() // `secret` is not directly accessible from outside `foo`
+f() // The only way to retrieve `secret`, is to invoke `f`</code></pre>
+</div>
+</div>
+</p>
+
+<p>In other words: in JavaScript, functions carry a reference to a private "box of state", to which only they (and any other functions declared within the same lexical environment) have access. This box of state is invisible to the caller of the function, delivering an excellent mechanism for data-hiding and encapsulation.</p>
+
+<p>And remember: functions in JavaScript can be passed around like variables (first-class functions), meaning these pairings of functionality and state can be passed around your program: similar to how you might pass an instance of a class around in C++.</p>
+
+<p>If JavaScript did not have closures, then more state would have to be passed between functions <em>explicitly</em>, making parameter lists longer and code noisier.</p>
+
+<p>So, if you want a function to always have access to a private piece of state, you can use a closure. </p>
+
+<p>...and frequently we <em>do</em> want to associate state with a function. For example, in Java or C++, when you add a private instance variable and a method to a class, you are associating state with functionality.</p>
+
+<p>In C and most other common languages, after a function returns, all the local variables are no longer accessible because the stack-frame is destroyed. In JavaScript, if you declare a function within another function, then the local variables of the outer function can remain accessible after returning from it. In this way, in the code above, <code>secret</code> remains available to the function object <code>inner</code>, <em>after</em> it has been returned from <code>foo</code>.</p>
+
+<h2>Uses of Closures</h2>
+
+<p>Closures are useful whenever you need private state associated with a function. This is a very common scenario - and remember: JavaScript did not have a class syntax until 2015, and it still does not have a private field syntax. Closures meet this need.</p>
+
+<h3>Private Instance Variables</h3>
+
+<p>In the following code, function <code>toString</code> closes over the details of the car.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function Car(manufacturer, model, year, color) {
+  return {
+    toString() {
+      return `${manufacturer} ${model} (${year}, ${color})`
+    }
+  }
+}
+const car = new Car('Aston Martin','V8 Vantage','2012','Quantum Silver')
+console.log(car.toString())</code></pre>
+</div>
+</div>
+</p>
+
+<h3>Functional Programming</h3>
+
+<p>In the following code, function <code>inner</code> closes over both <code>fn</code> and <code>args</code>.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function curry(fn) {
+  const args = []
+  return function inner(arg) {
+    if(args.length === fn.length) return fn(...args)
+    args.push(arg)
+    return inner
+  }
+}
+
+function add(a, b) {
+  return a + b
+}
+
+const curriedAdd = curry(add)
+console.log(curriedAdd(2)(3)()) // 5</code></pre>
+</div>
+</div>
+</p>
+
+<h3>Event-Oriented Programming</h3>
+
+<p>In the following code, function <code>onClick</code> closes over variable <code>BACKGROUND_COLOR</code>.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>const $ = document.querySelector.bind(document)
+const BACKGROUND_COLOR = 'rgba(200,200,242,1)'
+
+function onClick() {
+  $('body').style.background = BACKGROUND_COLOR
+}
+
+$('button').addEventListener('click', onClick)</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;button&gt;Set background color&lt;/button&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<h3>Modularization</h3>
+
+<p>In the following example, all the implementation details are hidden inside an immediately executed function expression. The functions <code>tick</code> and <code>toString</code> close over the private state and functions they need to complete their work. Closures have enabled us to modularise and encapsulate our code.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>let namespace = {};
+
+(function foo(n) {
+  let numbers = []
+  function format(n) {
+    return Math.trunc(n)
+  }
+  function tick() {
+    numbers.push(Math.random() * 100)
+  }
+  function toString() {
+    return numbers.map(format)
+  }
+  n.counter = {
+    tick,
+    toString
+  }
+}(namespace))
+
+const counter = namespace.counter
+counter.tick()
+counter.tick()
+console.log(counter.toString())</code></pre>
+</div>
+</div>
+</p>
+
+<h2>Examples</h2>
+
+<h3>Example 1</h3>
+
+<p>This example shows that the local variables are not copied in the closure: the closure maintains a reference to the original variables <em>themselves</em>. It is as though the stack-frame stays alive in memory even after the outer function exits.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function foo() {
+  let x = 42
+  let inner  = function() { console.log(x) }
+  x = x+1
+  return inner
+}
+var f = foo()
+f() // logs 43</code></pre>
+</div>
+</div>
+</p>
+
+<h3>Example 2</h3>
+
+<p>In the following code, three methods <code>log</code>, <code>increment</code> and <code>update</code> all close over the same lexical environment.</p>
+
+<p>And every time <code>createObject</code> is called, a new execution context (stack frame) is created and a completely new variable <code>x</code>, and a new set of functions (<code>log</code> etc.) are created, that close over this new variable.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function createObject() {
+  let x = 42;
+  return {
+    log() { console.log(x) },
+    increment() { x++ },
+    update(value) { x = value }
+  }
+}
+
+const o = createObject()
+o.increment()
+o.log() // 43
+o.update(5)
+o.log() // 5
+const p = createObject()
+p.log() // 42</code></pre>
+</div>
+</div>
+</p>
+
+<h3>Example 3</h3>
+
+<p>If you are using variables declared using <code>var</code>, be careful you understand which variable you are closing over. Variables declared using <code>var</code> are hoisted. This is much less of a problem in modern JavaScript due to the introduction of <code>let</code> and <code>const</code>.</p>
+
+<p>In the following code, each time around the loop, a new function <code>inner</code> is created, which closes over <code>i</code>. But because <code>var i</code> is hoisted outside the loop, all of these inner functions close over the same variable, meaning that the final value of <code>i</code> (3) is printed, three times.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function foo() {
+  var result = []
+  for (var i = 0; i &lt; 3; i++) {
+    result.push(function inner() { console.log(i) } )
+  }
+  return result
+}
+
+const result = foo()
+// The following will print `3`, three times...
+for (var i = 0; i &lt; 3; i++) {
+  result[i]() 
+}</code></pre>
+</div>
+</div>
+</p>
+
+<h2>Final points:</h2>
+
+<ul>
+<li>Whenever a function is declared in JavaScript a closure is created.</li>
+<li>Returning a <code>function</code> from inside another function is the classic example of a closure, because the state inside the outer function is implicitly available to the returned inner function, even after the outer function has completed execution.</li>
+<li>Whenever you use <code>eval()</code> inside a function, a closure is used. The text you <code>eval</code> can reference local variables of the function, and in non-strict mode you can even create new local variables by using <code>eval('var foo = …')</code>.</li>
+<li>When you use <code>new Function(…)</code> (the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" rel="noreferrer">Function constructor</a>) inside a function, it does not close over its lexical environment: it closes over the global context instead. The new function cannot reference the local variables of the outer function.</li>
+<li>A closure in JavaScript is like keeping a reference (<strong>NOT</strong> a copy) to the scope at the point of function declaration, which in turn keeps a reference to its outer scope, and so on, all the way to the global object at the top of the scope chain.</li>
+<li>A closure is created when a function is declared; this closure is used to configure the execution context when the function is invoked.</li>
+<li>A new set of local variables is created every time a function is called.</li>
+</ul>
+
+<h2>Links</h2>
+
+<ul>
+<li>Douglas Crockford's simulated <a href="http://www.crockford.com/javascript/private.html" rel="noreferrer">private attributes and private methods</a> for an object, using closures.</li>
+<li>A great explanation of how closures can <a href="https://www.codeproject.com/Articles/12231/Memory-Leakage-in-Internet-Explorer-revisited" rel="noreferrer">cause memory leaks in IE</a> if you are not careful.</li>
+</ul>

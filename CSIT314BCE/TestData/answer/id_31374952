@@ -1,0 +1,29 @@
+<p>I like Kyle Simpson's definition of a closure:  </p>
+
+<blockquote>
+  <p>Closure is when a function is able to remember and access its lexical
+  scope even when that function is executing outside its lexical scope.</p>
+</blockquote>
+
+<p>Lexical scope is when an inner scope can access its outer scope.</p>
+
+<p>Here is a modified example he provides in his book series 'You Don't Know JS: Scopes &amp; Closures'. </p>
+
+<pre><code>function foo() {
+  var a = 2;
+
+  function bar() {
+    console.log( a );
+  }
+  return bar;
+}
+
+function test() {
+  var bz = foo();
+  bz();
+}
+
+// prints 2. Here function bar referred by var bz is outside 
+// its lexical scope but it can still access it
+test(); 
+</code></pre>

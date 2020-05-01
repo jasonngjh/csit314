@@ -1,0 +1,11 @@
+<p><strong>OK,</strong> simply and in short words, they mean <strong>ordered</strong> and <strong>not ordered</strong>...!</p>
+
+<p><strong>Stack</strong>: In stack items, things get on the top of each-other, means gonna be faster and more efficient to be processed!... </p>
+
+<p>So there is always an index to point the specific item, also processing gonna be faster, there is relationship between the items as well!...</p>
+
+<p><strong>Heap</strong>: No order, processing gonna be slower and values are messed up together with no specific order or index... there are random and there is no relationship between them... so execution and usage time could be vary...</p>
+
+<p>I also create the image below to show how they may look like:</p>
+
+<p><a href="https://i.stack.imgur.com/9c2VH.png" rel="noreferrer"><img src="https://i.stack.imgur.com/9c2VH.png" alt="enter image description here"></a></p>

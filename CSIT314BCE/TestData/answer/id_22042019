@@ -1,0 +1,13 @@
+<p>Select your required commit, and check it by</p>
+
+<pre><code>git show HEAD
+git show HEAD~1
+git show HEAD~2 
+</code></pre>
+
+<p>till you get the required commit. To make the HEAD point to that, do</p>
+
+<pre><code>git reset --hard HEAD~1
+</code></pre>
+
+<p>or <code>git reset --hard HEAD~2</code> or whatever.</p>

@@ -1,0 +1,5 @@
+<p><img src="https://i.stack.imgur.com/aiQDJ.png" alt="enter image description here"></p>
+
+<p>This interactive graphical representation is very helpful in understanging git: <a href="http://ndpsoftware.com/git-cheatsheet.html">http://ndpsoftware.com/git-cheatsheet.html</a> </p>
+
+<p><code>git fetch</code> just "downloads" the changes from the remote to your local repository. <code>git pull</code> downloads the changes and merges them into your current branch. "In its default mode, <code>git pull</code> is shorthand for <code>git fetch</code> followed by <code>git merge FETCH_HEAD</code>."</p>

@@ -1,0 +1,9 @@
+<p>Just do</p>
+
+<pre><code>git fetch origin branchname
+git checkout -f origin/branchname // This will overwrite ONLY new included files
+git checkout branchname
+git merge origin/branchname
+</code></pre>
+
+<p>So you avoid all unwanted side effects, like deleting files or directories you wanted to keep, etc.</p>

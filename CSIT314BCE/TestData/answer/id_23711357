@@ -1,0 +1,22 @@
+<p>Closure is when a function is <strong>closed</strong> in a way that it was defined in a namespace which is immutable by the time the function is called.</p>
+
+<p>In JavaScript, it happens when you:</p>
+
+<ul>
+<li>Define one function inside the other function</li>
+<li>The inner function is called after the outer function returned</li>
+</ul>
+
+
+
+<pre><code>// 'name' is resolved in the namespace created for one invocation of bindMessage
+// the processor cannot enter this namespace by the time displayMessage is called
+function bindMessage(name, div) {
+
+    function displayMessage() {
+        alert('This is ' + name);
+    }
+
+    $(div).click(displayMessage);
+}
+</code></pre>

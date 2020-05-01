@@ -1,0 +1,20 @@
+<pre>
+git-pull - Fetch from and merge with another repository or a local branch
+SYNOPSIS
+
+git pull   …
+DESCRIPTION
+
+Runs git-fetch with the given parameters, and calls git-merge to merge the 
+retrieved head(s) into the current branch. With --rebase, calls git-rebase 
+instead of git-merge.
+
+Note that you can use . (current directory) as the &lt;repository> to pull 
+from the local repository — this is useful when merging local branches 
+into the current branch.
+
+Also note that options meant for git-pull itself and underlying git-merge 
+must be given before the options meant for git-fetch.
+</pre>
+
+<p>You would pull if you want the histories merged, you'd fetch if you just 'want the codez' as some person has been tagging some articles around here.</p>

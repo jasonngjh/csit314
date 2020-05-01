@@ -1,0 +1,16 @@
+<p>IMHO the pervasive, <em>implicit</em> localization in Java is its single largest design flaw. It may be intended for user interfaces, but frankly, who really uses Java for user interfaces today except for some IDEs where you can basically ignore localization because programmers aren't exactly the target audience for it. You can fix it (especially on Linux servers) by:</p>
+
+<ul>
+<li>export LC_ALL=C TZ=UTC</li>
+<li>set your system clock to UTC</li>
+<li>never use localized implementations unless absolutely necessary (ie for display only)</li>
+</ul>
+
+<p>To the <a href="https://www.jcp.org/" rel="noreferrer">Java Community Process</a> members I recommend:</p>
+
+<ul>
+<li>make localized methods not the default, but require the user to explicitly request localization.</li>
+<li>use UTF-8/UTC as the <em>FIXED</em> default instead because that's simply the default today. There is no reason to do something else, except if you want to produce threads like this.</li>
+</ul>
+
+<p>I mean, come on, aren't global static variables an anti-OO pattern? Nothing else is those pervasive defaults given by some rudimentary environment variables.......</p>

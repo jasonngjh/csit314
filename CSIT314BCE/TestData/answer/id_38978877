@@ -1,0 +1,6 @@
+<p>For me only following worked:</p>
+
+<pre><code>git clean -ffdx
+</code></pre>
+
+<p>In all other cases, I was getting message <em>"Skipping Directory"</em> for some subdirectories. </p>

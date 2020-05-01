@@ -1,0 +1,41 @@
+<p>This answer is a summary of this youtube video <a href="https://www.youtube.com/watch?v=FYrtnS3X_Lw" rel="noreferrer">Javascript Closures</a>. So full credits to that video.</p>
+
+<p><em>Closures are nothing but Stateful functions which maintain states of their private variables.</em> </p>
+
+<p>Normally when you make a call to a function as shown in the below figure. The variables are created on a stack ( running RAM memory) used and then disallocated.</p>
+
+<p><a href="https://i.stack.imgur.com/QVZg5.png" rel="noreferrer"><img src="https://i.stack.imgur.com/QVZg5.png" alt="enter image description here"></a></p>
+
+<p>But now there are situations where we want to maintain this state of the function thats where Javascript closures comes to use. A closure is a function inside function with a return call as shown in the below code.</p>
+
+<p><a href="https://i.stack.imgur.com/u8UIi.png" rel="noreferrer"><img src="https://i.stack.imgur.com/u8UIi.png" alt="enter image description here"></a></p>
+
+<p>So the closure code for the counter function above looks something as shown below.Its a function inside function with a return statement.</p>
+
+<pre><code>function Counter() {
+           var counter = 0;
+
+           var Increment = function () {
+               counter++;
+               alert(counter);
+           }
+           return {
+               Increment
+           }
+       }
+</code></pre>
+
+<p>So now if you make a call the counter will increment in other words the function call maintains states.</p>
+
+<pre><code>var x = Counter(); // get the reference of the closure
+x.Increment(); // Displays 1
+x.Increment(); // Display 2 ( Maintains the private variables)
+</code></pre>
+
+<p>But now the biggest question whats the use of such stateful function. Stateful functions are building blocks to implement OOP concept like abstraction ,encapsulation and creating self contained modules.</p>
+
+<p>So whatever you want encapsulated you can put it as private and things to be exposed to public should be put in return statement. Also these components are self contained isolated objects so they do not pollute global variables.</p>
+
+<p>A object which follows OOP principles is self contained , follows abstraction , follows encapsulation and so. With out closures in Javascript this is difficult to implement.</p>
+
+<p><a href="https://i.stack.imgur.com/tJ5Mm.png" rel="noreferrer"><img src="https://i.stack.imgur.com/tJ5Mm.png" alt="enter image description here"></a></p>

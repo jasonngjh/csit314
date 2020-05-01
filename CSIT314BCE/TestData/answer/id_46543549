@@ -1,0 +1,66 @@
+<p>All of the answers here are great; but only one of them (the most voted one) relates to <strong>how your code works</strong>. Others are relating to <em>generators</em> in general, and how they work.</p>
+
+<p>So I won't repeat what generators are or what yields do; I think these are covered by great existing answers. However, after spending few hours trying to understand a similar code to yours, I'll break it down how it works.</p>
+
+<p>Your code traverse a binary tree structure. Let's take this tree for example:</p>
+
+<pre><code>    5
+   / \
+  3   6
+ / \   \
+1   4   8
+</code></pre>
+
+<p>And another simpler implementation of a binary-search tree traversal:</p>
+
+<pre><code>class Node(object):
+..
+def __iter__(self):
+    if self.has_left_child():
+        for child in self.left:
+            yield child
+
+    yield self.val
+
+    if self.has_right_child():
+        for child in self.right:
+            yield child
+</code></pre>
+
+<p>The execution code is on the <code>Tree</code> object, which implements <code>__iter__</code> as this:</p>
+
+<pre><code>def __iter__(self):
+
+    class EmptyIter():
+        def next(self):
+            raise StopIteration
+
+    if self.root:
+        return self.root.__iter__()
+    return EmptyIter()
+</code></pre>
+
+<p>The <code>while candidates</code> statement can be replaced with <code>for element in tree</code>; Python translate this to</p>
+
+<pre><code>it = iter(TreeObj)  # returns iter(self.root) which calls self.root.__iter__()
+for element in it: 
+    .. process element .. 
+</code></pre>
+
+<p>Because <code>Node.__iter__</code> function is a generator, the code <strong>inside it</strong> is executed per iteration. So the execution would look like this:</p>
+
+<ol>
+<li>root element is first; check if it has left childs and <code>for</code> iterate them (let's call it it1 because its the first iterator object)</li>
+<li>it has a child so the <code>for</code> is executed. The <code>for child in self.left</code> creates a <strong>new iterator</strong> from <code>self.left</code>, which is a Node object itself (it2)</li>
+<li>Same logic as 2, and a new <code>iterator</code> is created (it3)</li>
+<li>Now we reached the left end of the tree. <code>it3</code> has no left childs so it continues and <code>yield self.value</code></li>
+<li>On the next call to <code>next(it3)</code> it raises <code>StopIteration</code> and exists since it has no right childs (it reaches to the end of the function without yield anything)</li>
+<li><code>it1</code> and <code>it2</code> are still active - they are not exhausted and calling <code>next(it2)</code> would yield values, not raise <code>StopIteration</code></li>
+<li>Now we are back to <code>it2</code> context, and call <code>next(it2)</code> which continues where it stopped: right after the <code>yield child</code> statement. Since it has no more left childs it continues and yields it's <code>self.val</code>.</li>
+</ol>
+
+<p>The catch here is that every iteration <strong>creates sub-iterators</strong> to traverse the tree, and holds the state of the current iterator. Once it reaches the end it traverse back the stack, and values are returned in the correct order (smallest yields value first).</p>
+
+<p>Your code example did something similar in a different technique: it populated a <strong>one-element list</strong> for every child, then on the next iteration it pops it and run the function code on the current object (hence the <code>self</code>).</p>
+
+<p>I hope this contributed a little to this legendary topic. I spent several good hours drawing this process to understand it.</p>

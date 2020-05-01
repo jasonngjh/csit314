@@ -1,0 +1,76 @@
+<p>An addition to the accepted answer, if your mistakenly-added file was huge, you'll probably notice that, even after removing it from the index with '<code>git reset</code>', it still seems to occupy space in the <code>.git</code> directory.</p>
+
+<p>This is nothing to be worried about; the file is indeed still in the repository, but only as a "loose object". It will not be copied to other repositories (via clone, push), and the space will be eventually reclaimed - though perhaps not very soon. If you are anxious, you can run:</p>
+
+<pre><code>git gc --prune=now
+</code></pre>
+
+<hr>
+
+<p><em>Update</em> (what follows is my attempt to clear some confusion that can arise from the most upvoted answers):</p>
+
+<p>So, which is the real <strong>undo</strong> of <code>git add</code>?</p>
+
+<p><code>git reset HEAD &lt;file&gt;</code> ?</p>
+
+<p>or</p>
+
+<p><code>git rm --cached &lt;file&gt;</code>?</p>
+
+<p>Strictly speaking, and if I'm not mistaken: <strong>none</strong>.</p>
+
+<p><code>git add</code> <strong>cannot be undone</strong> - safely, in general.</p>
+
+<p>Let's recall first what <code>git add &lt;file&gt;</code> actually does:</p>
+
+<ol>
+<li><p>If <code>&lt;file&gt;</code> was <strong>not previously tracked</strong>, <code>git add</code>  <strong>adds it to the cache</strong>, with its current content.</p></li>
+<li><p>If <code>&lt;file&gt;</code> was <strong>already tracked</strong>, <code>git add</code>  <strong>saves the current content</strong> (snapshot, version) to the cache. In Git, this action is still called <strong>add</strong>, (not mere <em>update</em> it), because two different versions (snapshots) of a file are regarded as two different items: hence, we are indeed adding a new item to the cache, to be eventually committed later.</p></li>
+</ol>
+
+<p>In light of this, the question is slightly ambiguous:</p>
+
+<blockquote>
+  <p>I mistakenly added files using the command...</p>
+</blockquote>
+
+<p>The OP's scenario seems to be the first one (untracked file),  we want the "undo" to remove the file (not just the current contents) from the tracked items. <strong>If</strong> this is the case, then it's ok to run  <code>git rm --cached &lt;file&gt;</code>.</p>
+
+<p>And we could also run <code>git reset HEAD &lt;file&gt;</code>. This is in general preferable, because it works in both scenarios: it also does the undo when we wrongly added a version of an already tracked item.</p>
+
+<p>But there are two caveats.</p>
+
+<p>First: There is (as pointed out in the answer) only one scenario in which <code>git reset HEAD</code> doesn't work, but <code>git rm --cached</code> does: a new repository (no commits). But, really, this a practically irrelevant case.</p>
+
+<p>Second: Be aware that <code>git reset HEAD</code>  can't magically recover the previously cached file contents, it just resynchronises it from the HEAD. If our misguided <code>git add</code> overwrote a previous staged uncommitted version, we can't recover it. That's why, strictly speaking, we cannot undo [*].</p>
+
+<p>Example:</p>
+
+<pre><code>$ git init
+$ echo "version 1" &gt; file.txt
+$ git add file.txt   # First add of file.txt
+$ git commit -m 'first commit'
+$ echo "version 2" &gt; file.txt
+$ git add  file.txt   # Stage (don't commit) "version 2" of file.txt
+$ git diff --cached file.txt
+-version 1
++version 2
+$ echo "version 3" &gt; file.txt
+$ git diff  file.txt
+-version 2
++version 3
+$ git add  file.txt    # Oops we didn't mean this
+$ git reset HEAD file.txt  # Undo?
+$ git diff --cached file.txt  # No dif, of course. stage == HEAD
+$ git diff file.txt   # We have irrevocably lost "version 2"
+-version 1
++version 3
+</code></pre>
+
+<p>Of course, this is not very critical if we just follow the usual lazy workflow of doing 'git add' only for adding new files (case 1), and we update new contents via the commit, <code>git commit -a</code> command.</p>
+
+<hr>
+
+<p><sup>
+* (Edit: the above is practically correct, but still there can be some slightly hackish/convoluted ways for recovering changes that were staged, but not committed and then overwritten - see the comments by Johannes Matokic and iolsmit)
+</sup></p>

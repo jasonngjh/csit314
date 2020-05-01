@@ -1,0 +1,14 @@
+<p>Add/remove files to get things the way you want:</p>
+
+<pre><code>git rm classdir
+git add sourcedir
+</code></pre>
+
+<p>Then amend the commit:</p>
+
+<pre><code>git commit --amend
+</code></pre>
+
+<p>The previous, erroneous commit will be edited to reflect the new index state - in other words, it'll be like you never made the mistake in the first place.</p>
+
+<p>Note that you should only do this if you haven't pushed yet. If you have pushed, then you'll just have to commit a fix normally.</p>

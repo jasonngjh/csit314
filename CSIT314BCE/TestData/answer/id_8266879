@@ -1,0 +1,24 @@
+<p>The <code>:visible</code> selector according to <a href="https://api.jquery.com/hidden-selector/" rel="noreferrer">the jQuery documentation</a>:</p>
+
+<blockquote>
+  <ul>
+  <li>They have a CSS <code>display</code> value of <code>none</code>.</li>
+  <li>They are form elements with <code>type="hidden"</code>.</li>
+  <li>Their width and height are explicitly set to 0.</li>
+  <li>An ancestor element is hidden, so the element is not shown on the page.</li>
+  </ul>
+  
+  <p>Elements with <code>visibility: hidden</code> or <code>opacity: 0</code> are considered to be visible, since they still consume space in the layout.</p>
+</blockquote>
+
+<p>This is useful in some cases and useless in others, because if you want to check if the element is visible (<code>display != none</code>), ignoring the parents visibility, you will find that doing <code>.css("display") == 'none'</code> is not only faster, but will also return the visibility check correctly.</p>
+
+<p>If you want to check visibility instead of display, you should use: <code>.css("visibility") == "hidden"</code>.</p>
+
+<p>Also take into consideration <a href="https://api.jquery.com/visible-selector/" rel="noreferrer">the additional jQuery notes</a>:</p>
+
+<blockquote>
+  <p>Because <code>:visible</code> is a jQuery extension and not part of the CSS specification, queries using <code>:visible</code> cannot take advantage of the performance boost provided by the native DOM <code>querySelectorAll()</code> method. To achieve the best performance when using <code>:visible</code> to select elements, first select the elements using a pure CSS selector, then use <code>.filter(":visible")</code>.</p>
+</blockquote>
+
+<p>Also, if you are concerned about performance, you should check <em><a href="http://www.learningjquery.com/2010/05/now-you-see-me-showhide-performance" rel="noreferrer">Now you see me… show/hide performance</a></em> (2010-05-04). And use other methods to show and hide elements.</p>

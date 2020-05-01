@@ -1,0 +1,3 @@
+<p>It's a matter of convention, really.  <code>string</code> just looks more like C/C++ style.  The general convention is to use whatever shortcuts your chosen language has provided (int/Int for <code>Int32</code>).  This goes for "object" and <code>decimal</code> as well.</p>
+
+<p>Theoretically this could help to port code into some future 64-bit standard in which "int" might mean <code>Int64</code>, but that's not the point, and I would expect any upgrade wizard to change any <code>int</code> references to <code>Int32</code> anyway just to be safe.</p>

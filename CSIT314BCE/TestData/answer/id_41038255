@@ -1,0 +1,26 @@
+<p>Yes, you can have comments. But I will not recommend whatever reason mentioned above.</p>
+
+<p>I did some investigation, and I found all JSON require methods use the <code>JSON.parse</code> method. So I came to a solution: We can override or do monkey patching around JSON.parse.</p>
+
+<blockquote>
+  <p>Note: tested on Node.js only ;-)</p>
+</blockquote>
+
+<pre><code>var oldParse = JSON.parse;
+JSON.parse = parse;
+function parse(json){
+    json = json.replace(/\/\*.+\*\//, function(comment){
+        console.log("comment:", comment);
+        return "";
+    });
+    return oldParse(json)
+}
+</code></pre>
+
+<p>JSON file:</p>
+
+<pre><code>{
+  "test": 1
+  /* Hello, babe */
+}
+</code></pre>

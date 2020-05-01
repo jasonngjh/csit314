@@ -1,0 +1,10 @@
+<p>If the remote branch name begins with special characteres you need to use single quotes around it in the checkout command, or else git won't know which branch you are talking about.</p>
+
+<p>For example, I tried to checkout a remote branch named as <code>#9773</code> but the command didn't work properly, as shown in the picture below:</p>
+
+<p><a href="https://i.stack.imgur.com/yK8Rb.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/yK8Rb.png" alt="enter image description here"></a></p>
+
+<p>For some reason I wondered if the sharp symbol (#) could have something to do with it, and then I tried surrounding the branch name with single quotes, like <code>'#9773'</code> rathen than just <code>#9773</code>, and fortunately it worked fine.</p>
+
+<pre><code>$ git checkout -b '#9773' origin/'#9773'
+</code></pre>

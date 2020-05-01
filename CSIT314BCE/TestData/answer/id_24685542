@@ -1,0 +1,19 @@
+<p><strong>Understand it in 2 Steps:</strong> </p>
+
+<p>You can't change the reference to the object itself but you can work with this passed parameter as a reference to the object.</p>
+
+<p>If you want to change the value behind the reference you will only declare a new variable on the stack with the same name 'd'. Look at the references with the sign <code>@</code> and you will find out that the reference has been changed.</p>
+
+<pre><code>public static void foo(Dog d) {
+  d.Name = "belly";
+  System.out.println(d); //Reference: Dog@1540e19d
+
+  d = new Dog("wuffwuff");
+  System.out.println(d); //Dog@677327b6
+}
+public static void main(String[] args) throws Exception{
+  Dog lisa = new Dog("Lisa");
+  foo(lisa);
+  System.out.println(lisa.Name); //belly
+}
+</code></pre>

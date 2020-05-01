@@ -1,0 +1,23 @@
+<p>DISCLAIMER: THIS IS SILLY</p>
+
+<p>There is actually a way to add comments, and stay within the spec (no additional parser needed). It will not result into human-readable comments without any sort of parsing though.</p>
+
+<p>You could abuse the following:</p>
+
+<blockquote>
+  <p>Insignificant whitespace is allowed before or after any token.
+  Whitespace is any sequence of one or more of the following code
+  points: character tabulation (U+0009), line feed (U+000A), carriage
+  return (U+000D), and space (U+0020).</p>
+</blockquote>
+
+<p>In a hacky way, you can abuse this to add a comment. For instance: start and end your comment with a tab. Encode the comment in base3 and use the other whitespace characters to represent them. For instance.</p>
+
+<pre><code>010212 010202 011000 011000 011010 001012 010122 010121 011021 010202 001012 011022 010212 011020 010202 010202
+</code></pre>
+
+<p>(<code>hello base three</code> in ASCII) But instead of 0 use space, for 1 use line feed and for 2 use carriage return.</p>
+
+<p>This will just leave you with a lot of unreadable whitespace (unless you make an IDE plugin to encode/decode it on the fly).</p>
+
+<p>I never even tried this, for obvious reasons and neither should you.</p>

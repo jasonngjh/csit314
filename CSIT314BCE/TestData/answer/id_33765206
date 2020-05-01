@@ -1,0 +1,53 @@
+<blockquote>
+  <h1>Does Python have a ternary conditional operator?</h1>
+</blockquote>
+
+<p>Yes. From the <a href="https://docs.python.org/reference/grammar.html" rel="noreferrer">grammar file</a>:</p>
+
+<pre><code>test: or_test ['if' or_test 'else' test] | lambdef
+</code></pre>
+
+<p>The part of interest is:</p>
+
+<pre><code>or_test ['if' or_test 'else' test]
+</code></pre>
+
+<p>So, a ternary conditional operation is of the form:</p>
+
+<pre><code>expression1 if expression2 else expression3
+</code></pre>
+
+<p><code>expression3</code> will be lazily evaluated (that is, evaluated only if <code>expression2</code> is false in a boolean context). And because of the recursive definition, you can chain them indefinitely (though it may considered bad style.)</p>
+
+<pre><code>expression1 if expression2 else expression3 if expression4 else expression5 # and so on
+</code></pre>
+
+<h3>A note on usage:</h3>
+
+<p>Note that every <code>if</code> must be followed with an <code>else</code>. People learning list comprehensions and generator expressions may find this to be a difficult lesson to learn - the following will not work, as Python expects a third expression for an else:</p>
+
+<pre><code>[expression1 if expression2 for element in iterable]
+#                          ^-- need an else here
+</code></pre>
+
+<p>which raises a <code>SyntaxError: invalid syntax</code>.
+So the above is either an incomplete piece of logic (perhaps the user expects a no-op in the false condition) or what may be intended is to use expression2 as a filter - notes that the following is legal Python:</p>
+
+<pre><code>[expression1 for element in iterable if expression2]
+</code></pre>
+
+<p><code>expression2</code> works as a filter for the list comprehension, and is <em>not</em> a ternary conditional operator.</p>
+
+<h3>Alternative syntax for a more narrow case:</h3>
+
+<p>You may find it somewhat painful to write the following:</p>
+
+<pre><code>expression1 if expression1 else expression2
+</code></pre>
+
+<p><code>expression1</code> will have to be evaluated twice with the above usage. It can limit redundancy if it is simply a local variable. However, a common and performant Pythonic idiom for this use-case is to use <code>or</code>'s shortcutting behavior:</p>
+
+<pre><code>expression1 or expression2
+</code></pre>
+
+<p>which is equivalent in semantics. Note that some style-guides may limit this usage on the grounds of clarity - it does pack a lot of meaning into very little syntax.</p>

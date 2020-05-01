@@ -1,0 +1,12 @@
+<p>Since the question refers to a single element, this code might be more suitable:</p>
+
+<pre><code>// Checks css for display:[none|block], ignores visibility:[true|false]
+$(element).is(":visible"); 
+
+// The same works with hidden
+$(element).is(":hidden"); 
+</code></pre>
+
+<p>Same as <a href="https://stackoverflow.com/questions/178325/how-do-you-test-if-something-is-hidden-in-jquery/178386#178386">twernt's suggestion</a>, but applied to a single element; and it <a href="https://stackoverflow.com/a/4685330/49942">matches the algorithm recommended in the jQuery FAQ</a></p>
+
+<p>We use jQuery is() to check the selected element with another element, selector or any jQuery object. This method traverses along the DOM elements to find a match, which satisfies the passed parameter. It will return true if there is a match otherwise returns false.</p>

@@ -1,0 +1,7 @@
+<p>An easier way would be to:</p>
+
+<pre><code>git checkout --theirs /path/to/file.extension
+git pull origin master
+</code></pre>
+
+<p>This will override your local file with the file on git</p>

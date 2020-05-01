@@ -1,0 +1,7 @@
+<p>Actually yes and no.</p>
+
+<p>Yes, you can if you have a parser that supports comments.
+and
+No, your JSON files will be valid in limited places.</p>
+
+<p>also, keep in mind that your comment may be removed by the formatter when the file is overwritten.</p>

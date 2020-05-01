@@ -1,0 +1,6 @@
+<p>I prefer this way:</p>
+
+<pre><code>git commit --amend -c &lt;commit ID&gt;
+</code></pre>
+
+<p>Otherwise, there will be a new commit with a new commit ID.</p>

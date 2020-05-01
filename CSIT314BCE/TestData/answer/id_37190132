@@ -1,0 +1,17 @@
+<p>A lot of the confusion surrounding this issue comes from the fact that Java has attempted to redefine what "Pass by value" and "Pass by reference" mean. It's important to understand that these are <a href="https://en.wikipedia.org/wiki/Jargon" rel="nofollow">Industry Terms</a>, and cannot be correctly understood outside of that context. They are meant to help you as you code and are valuable to understand, so let's first go over what they mean. </p>
+
+<p>A good description of both can be found <a href="http://cplus.about.com/od/glossar1/g/passbyrefdefn.htm" rel="nofollow">here</a>.</p>
+
+<p><strong>Pass By Value</strong> The value the function received is a copy of the object the caller is using. It is entirely unique to the function and anything you do to that object will only be seen within the function.</p>
+
+<p><strong>Pass By Reference</strong> The value the function received is a reference to the object the caller is using. Anything the function does to the object that value refers to will be seen by the caller and it will be working with those changes from that point on.</p>
+
+<p>As is clear from those definitions, the fact that the reference is passed by value is irrelevant. If we were to accept that definition, then these terms become meaningless and all languages everywhere are only Pass By Value.</p>
+
+<p>No matter how you pass the reference in, it can only ever be passed by value. That isn't the point. The point is that you passed a reference to your own object to the function, not a copy of it. The fact that you can throw away the reference you received is irrelevant. Again, if we accepted that definition, these terms become meaningless and everyone is always passing by value.</p>
+
+<p>And no, C++'s special "pass by reference" syntax is not the exclusive definition of pass by reference. It is purely a convenience syntax meant to make it so that you don't need to use pointer syntax after passing the pointer in. It is still passing a pointer, the compiler is just hiding that fact from you. It also still passes that pointer BY VALUE, the compiler is just hiding that from you.</p>
+
+<p>So, with this understanding, we can look at Java and see that it actually has both. All Java primitive types are always pass by value because you receive a copy of the caller's object and cannot modify their copy. All Java reference types are always pass by reference because you receive a reference to the caller's object and can directly modify their object. </p>
+
+<p>The fact that you cannot modify the caller's reference has nothing to do with pass by reference and is true in every language that supports pass by reference.</p>

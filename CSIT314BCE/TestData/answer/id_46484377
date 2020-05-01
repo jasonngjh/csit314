@@ -1,0 +1,44 @@
+<p>I have used <a href="https://lodash.com/docs/4.17.4#unset" rel="nofollow noreferrer">lodash "unset"</a> to make it happen for nested object also.. only this need to write small logic to get path of property key which expected by omit method.  </p>
+
+<ol>
+<li>Method which returns property path as array </li>
+</ol>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var a = {"bool":{"must":[{"range":{"price_index.final_price":{"gt":"450","lt":"500"}}},{"bool":{"should":[{"term":{"color_value.keyword":"Black"}}]}}]}};
+
+function getPathOfKey(object,key,currentPath, t){
+     var currentPath = currentPath || [];
+
+    for(var i in object){
+		if(i == key){
+        t = currentPath;
+      }
+      else if(typeof object[i] == "object"){
+        currentPath.push(i)
+       return getPathOfKey(object[i], key,currentPath)
+      }
+    }
+	t.push(key);
+    return t;
+}
+document.getElementById("output").innerHTML =JSON.stringify(getPathOfKey(a,"price_index.final_price"))</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;div id="output"&gt; 
+
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<ol>
+<li>Then just using <a href="https://lodash.com/docs/4.17.4#unset" rel="nofollow noreferrer">lodash unset</a> method remove property from object. </li>
+</ol>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var unset = require('lodash.unset');
+unset(a,getPathOfKey(a,"price_index.final_price"));</code></pre>
+</div>
+</div>
+</p>

@@ -1,0 +1,11 @@
+<p>The <strong>Content-Type</strong> header should be set to '<strong>application/json</strong>' when posting. Server listening for the request should include "<strong>Accept=application/json</strong>".
+In Spring MVC you can do it like this:</p>
+
+<pre><code>@RequestMapping(value="location", method = RequestMethod.POST, headers = "Accept=application/json")
+</code></pre>
+
+<p>Add headers to the response:</p>
+
+<pre><code>HttpHeaders headers = new HttpHeaders();
+headers.add("Content-Type", "application/json");
+</code></pre>

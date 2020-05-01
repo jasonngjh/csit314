@@ -1,0 +1,4 @@
+<p>Simple, run this in your command line:</p>
+
+<pre><code>git reset --soft HEAD~ 
+</code></pre>

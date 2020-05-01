@@ -1,0 +1,18 @@
+<p>Rebasing and dropping commits are the best when you want to keep the history clean
+useful when proposing patches to a public branch etc.</p>
+
+<p>If you have to drop the topmost commit then the following one-liner helps</p>
+
+<pre><code>git rebase --onto HEAD~1 HEAD
+</code></pre>
+
+<p>But if you want to drop 1 of many commits you did say</p>
+
+<p>a -> b -> c -> d -> master</p>
+
+<p>and you want to drop commit 'c'</p>
+
+<pre><code>git rebase --onto b c
+</code></pre>
+
+<p>This will make 'b' as the new base of 'd' eliminating 'c'</p>

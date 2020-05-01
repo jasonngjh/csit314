@@ -1,0 +1,10 @@
+<pre><code>function removeProperty(obj, prop) {
+    if(prop in obj){
+
+    Reflect.deleteProperty(obj, prop);
+    return true;
+   } else {
+    return false;
+  }
+}
+</code></pre>

@@ -1,0 +1,10 @@
+<p>I have an array of numbers, and I'm using the <code>.push()</code> method to add elements to it.</p>
+
+<p>Is there a simple way to remove a specific element from an array?</p>
+
+<p>The equivalent of something like -</p>
+
+<pre><code>array.remove(number);
+</code></pre>
+
+<p>I have to use <em>core</em> JavaScript - frameworks are not allowed.</p>

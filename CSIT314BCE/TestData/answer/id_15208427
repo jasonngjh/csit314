@@ -1,0 +1,55 @@
+<p>Okay, talking with a 6-year old child, I would possibly use following associations.</p>
+
+<blockquote>
+  <p>Imagine - you are playing with your little brothers and sisters in the entire house, and you are moving around with your toys and brought some of them into your older brother's room. After a while your brother returned from the school and went to his room, and he locked inside it, so now you could not access toys left there anymore in a direct way. But you could knock the door and ask your brother for that toys. This is called toy's <em>closure</em>; your brother made it up for you, and he is now into outer <em>scope</em>.</p>
+</blockquote>
+
+<p>Compare with a situation when a door was locked by draft and nobody inside (general function execution), and then some local fire occur and burn down the room (garbage collector:D), and then a new room was build and now you may leave another toys there (new function instance), but never get the same toys which were left in the first room instance.</p>
+
+<p>For an advanced child I would put something like the following. It is not perfect, but it makes you feel about what it is:</p>
+
+<pre><code>function playingInBrothersRoom (withToys) {
+  // We closure toys which we played in the brother's room. When he come back and lock the door
+  // your brother is supposed to be into the outer [[scope]] object now. Thanks god you could communicate with him.
+  var closureToys = withToys || [],
+      returnToy, countIt, toy; // Just another closure helpers, for brother's inner use.
+
+  var brotherGivesToyBack = function (toy) {
+    // New request. There is not yet closureToys on brother's hand yet. Give him a time.
+    returnToy = null;
+    if (toy &amp;&amp; closureToys.length &gt; 0) { // If we ask for a specific toy, the brother is going to search for it.
+
+      for ( countIt = closureToys.length; countIt; countIt--) {
+        if (closureToys[countIt - 1] == toy) {
+          returnToy = 'Take your ' + closureToys.splice(countIt - 1, 1) + ', little boy!';
+          break;
+        }
+      }
+      returnToy = returnToy || 'Hey, I could not find any ' + toy + ' here. Look for it in another room.';
+    }
+    else if (closureToys.length &gt; 0) { // Otherwise, just give back everything he has in the room.
+      returnToy = 'Behold! ' + closureToys.join(', ') + '.';
+      closureToys = [];
+    }
+    else {
+      returnToy = 'Hey, lil shrimp, I gave you everything!';
+    }
+    console.log(returnToy);
+  }
+  return brotherGivesToyBack;
+}
+// You are playing in the house, including the brother's room.
+var toys = ['teddybear', 'car', 'jumpingrope'],
+    askBrotherForClosuredToy = playingInBrothersRoom(toys);
+
+// The door is locked, and the brother came from the school. You could not cheat and take it out directly.
+console.log(askBrotherForClosuredToy.closureToys); // Undefined
+
+// But you could ask your brother politely, to give it back.
+askBrotherForClosuredToy('teddybear'); // Hooray, here it is, teddybear
+askBrotherForClosuredToy('ball'); // The brother would not be able to find it.
+askBrotherForClosuredToy(); // The brother gives you all the rest
+askBrotherForClosuredToy(); // Nothing left in there
+</code></pre>
+
+<p>As you can see, the toys left in the room are still accessible via the brother and no matter if the room is locked. Here is <a href="http://jsbin.com/ubakor/9/edit" rel="noreferrer">a jsbin</a> to play around with it.</p>

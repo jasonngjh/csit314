@@ -1,0 +1,11 @@
+<p>You can also use the following to delete the remote branch</p>
+
+<pre><code>git push --delete origin serverfix
+</code></pre>
+
+<p>Which does the same thing as</p>
+
+<pre><code>git push origin :serverfix
+</code></pre>
+
+<p>but it may be easier to remember.</p>

@@ -1,0 +1,16 @@
+<p>You should never mutate your array. As this is against the functional programming pattern. You can create a new array without referencing the array you want to change data of using the ECMAScript&nbsp;6 method <code>filter</code>;</p>
+
+<pre><code>var myArray = [1, 2, 3, 4, 5, 6];
+</code></pre>
+
+<p>Suppose you want to remove <code>5</code> from the array, you can simply do it like this:</p>
+
+<pre><code>myArray = myArray.filter(value =&gt; value !== 5);
+</code></pre>
+
+<p>This will give you a new array without the value you wanted to remove. So the result will be:</p>
+
+<pre><code> [1, 2, 3, 4, 6]; // 5 has been removed from this array
+</code></pre>
+
+<p>For further understanding you can read the MDN documentation on <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" rel="nofollow noreferrer">Array.filter</a>.</p>

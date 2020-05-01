@@ -1,0 +1,31 @@
+<p>In order to get rid of (all the changes in) last commit, last 2 commits and last n commits:</p>
+
+<pre><code>git reset --hard HEAD~1
+git reset --hard HEAD~2
+...
+git reset --hard HEAD~n
+</code></pre>
+
+<p>And, to get rid of anything after a specific commit:</p>
+
+<pre><code>git reset --hard &lt;commit sha&gt;
+</code></pre>
+
+<p>e.g., </p>
+
+<pre><code>git reset --hard 0d12345
+</code></pre>
+
+<blockquote>
+  <p>PS:<br>
+  1- Be careful, because of "hard" option, it deletes the local changes
+  in your repo as well and reverts to the previous mentioned commit. You
+  should run this if you are sure you messed up in your last commit(s)
+  and would like to go back in time. </p>
+  
+  <p>2- Usually 7 letters of "commit sha" is enough, but in bigger
+  projects, you may need up to 12 letters to guarantee be unique. You
+  also can mention the whole 40 letters sha.</p>
+  
+  <p>3- The above commands work in Github for Windows as well.</p>
+</blockquote>

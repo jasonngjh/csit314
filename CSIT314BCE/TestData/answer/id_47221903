@@ -1,0 +1,11 @@
+<p>A <strong>string</strong> is a <em>sequential collection of characters</em> that is used to represent text.</p>
+
+<p>A <strong>String object</strong> is a <em>sequential collection of System.Char objects</em> that represent a string; a System.Char object corresponds to a UTF-16 code unit.</p>
+
+<p>The value of the String object is the content of the sequential collection of System.Char objects, and that value is immutable (that is, it is read-only). </p>
+
+<p>For more information about the immutability of strings, see the Immutability and the StringBuilder class section in msdn. </p>
+
+<p>The maximum size of a String object in memory is 2GB, or about 1 billion characters.</p>
+
+<p>Note : answer is extracted from msdn help section. You can see the full content <a href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx" rel="noreferrer">here in msdn String Class</a> topic under Remarks section</p>

@@ -1,0 +1,9 @@
+<p>If you prefer to use pure JavaScript I realized that using of <code>document.location.href = "https://example.com"</code> or <code>window.location.href = "https://example.com"</code> causes compatibility issues in Firefox. Instead try to use:</p>
+
+<pre class="lang-js prettyprint-override"><code>location.href = "https://example.com";
+location.replace("http://example.com");
+</code></pre>
+
+
+
+<p>In my case has solved the problem. Good luck!</p>

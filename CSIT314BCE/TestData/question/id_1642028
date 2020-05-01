@@ -1,0 +1,21 @@
+<p>After reading <a href="http://groups.google.com/group/comp.lang.c++.moderated/msg/33f173780d58dd20" rel="noreferrer">Hidden Features and Dark Corners of C++/STL</a> on <code>comp.lang.c++.moderated</code>, I was completely surprised that the following snippet compiled and worked in both Visual Studio 2008 and G++ 4.4.</p>
+
+<p>Here's the code:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+int main()
+{
+    int x = 10;
+    while (x --&gt; 0) // x goes to 0
+    {
+        printf("%d ", x);
+    }
+}
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>9 8 7 6 5 4 3 2 1 0
+</code></pre>
+
+<p>I'd assume this is C, since it works in GCC as well. Where is this defined in the standard, and where has it come from?</p>

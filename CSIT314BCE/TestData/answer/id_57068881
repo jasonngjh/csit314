@@ -1,0 +1,5 @@
+<p><strong>Java passes parameters by value, There is no option of passing a reference in Java.</strong></p>
+
+<p>But at the complier binding level layer, It uses reference internally not exposed to the user.</p>
+
+<p>It is essential as it saves a lot of memory and improves speed.</p>

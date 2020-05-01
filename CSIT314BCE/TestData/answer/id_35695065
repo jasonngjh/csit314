@@ -1,0 +1,6 @@
+<p>Here is a <strong>much simpler</strong> way to go back to a previous commit (and have it in an uncommited state, to do with it whatever you like):</p>
+
+<pre><code>git reset HEAD~1
+</code></pre>
+
+<p>So, no need for commit ids and so on :)</p>

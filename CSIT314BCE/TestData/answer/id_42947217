@@ -1,0 +1,23 @@
+<p>A closure is simply when a function have access to its outside scope even after the scope's function has finished executing. 
+Example: </p>
+
+<pre><code>function multiplier(n) {
+    function multiply(x) {
+          return n*x;
+    }
+    return mutliply;
+}
+
+var 10xmultiplier = multiplier(10);
+var x = 10xmultiplier(5); // x= 50
+</code></pre>
+
+<p>we can see that even after multiplier has finished executing, the inner function multiply gets still access to the value of x which is 10 in this example.</p>
+
+<p>A very common use of closures is currying (the same example above) where we spice our function progressively with parameters instead of supplying all of the arguments at once.</p>
+
+<p>We can achieve this because Javascript (in addition to the prototypal OOP) allows as to program in a functional fashion where higher order functions can take other functions as arguments (fisrt class functions).
+<a href="https://www.google.ae/url?sa=t&amp;source=web&amp;rct=j&amp;url=https://en.m.wikipedia.org/wiki/Functional_programming&amp;ved=0ahUKEwjaqeyM5enSAhUF7BQKHYyCBCUQFggZMAA&amp;usg=AFQjCNHcEMds9EmEfJfjtHIvLZhAivGFFQ&amp;sig2=rXB-1kc0AEVYLNy4fhGSmw" rel="nofollow noreferrer">functional programming in wikipedia</a></p>
+
+<p>I highly recommend you to read this book by Kyle Simpson: <a href="https://github.com/getify/You-Dont-Know-JS" rel="nofollow noreferrer">2</a> one part of the book series is dedicated to closures and it is called scope and closures.
+<a href="https://github.com/getify/You-Dont-Know-JS" rel="nofollow noreferrer">you don't know js: free reading on github</a></p>

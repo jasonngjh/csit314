@@ -1,0 +1,6 @@
+<p>If you are using the Git GUI tool, there is a button named <em>Amend last commit</em>. Click on that button and then it will display your last commit files and message. Just edit that message, and you can commit it with a new commit message.</p>
+
+<p>Or use this command from a console/terminal:</p>
+
+<pre><code>git commit -a --amend -m "My new commit message"
+</code></pre>

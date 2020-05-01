@@ -1,0 +1,4 @@
+<p>Lower case <code>string</code> is an alias for <code>System.String</code>.
+They are the same in <code>C#</code>.</p>
+
+<p>There's a debate over whether you should use the System types (<code>System.Int32</code>, <code>System.String</code>, etc.) types or the <code>C# aliases</code> (<code>int</code>, <code>string</code>, etc). I personally believe you should use the <code>C# aliases</code>, but that's just my personal preference.</p>

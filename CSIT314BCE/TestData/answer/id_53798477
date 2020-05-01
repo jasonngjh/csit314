@@ -1,0 +1,14 @@
+<p>This entire thread assumes that adding comments is the only improvement that needs to be made to JSON. If someone doesn't want comments in JSON because it's to be used for serialization, just omit the comments. The same goes for whitespace. But why stop there? Why are quotation marks <strong>required</strong> in JSON? They add nothing useful.</p>
+
+<p>The only reason I can think of for JSON to be so rigid is if parsing is difficult. But it isn't. Almost any programmer can write a JSON parser, in either direction.</p>
+
+<p>I want JSON to be readable and efficient (brief), and useful for data transmission, configuration files, and lots more. Both of these requirements are satisfied by the following example:</p>
+
+<pre><code>{stringA: stringB, stringC: stringD, [stringE, stringF]}
+</code></pre>
+
+<p>Shorter than any existing JSON specification, but just as readable and more efficient.</p>
+
+<p>Need to include quotation marks, apostrophes, commas, or brackets in a property or value? Just enclose them in question marks or apostrophes (with backslash escape), just like in JavaScript.</p>
+
+<p>But please make quotation marks optional. Why? Because JSON cannot contain variable or function names (to avoid injection attacks), so quotation marks don't provide any disambiguation. We already know that all the data are strings. So, please, leave out the quotation marks already, unless they are really needed.</p>

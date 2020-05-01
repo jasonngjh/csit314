@@ -1,0 +1,132 @@
+<p>First I want to correct Greg: <code>function abc(){}</code> is scoped too &mdash; the name <code>abc</code> is defined in the scope where this definition is encountered. Example:</p>
+
+<pre><code>function xyz(){
+  function abc(){};
+  // abc is defined here...
+}
+// ...but not here
+</code></pre>
+
+<p>Secondly, it is possible to combine both styles:</p>
+
+<pre><code>var xyz = function abc(){};
+</code></pre>
+
+<p><code>xyz</code> is going to be defined as usual, <code>abc</code> is undefined in all browsers but Internet&nbsp;Explorer &mdash; do not rely on it being defined. But it will be defined inside its body:</p>
+
+<pre><code>var xyz = function abc(){
+  // xyz is visible here
+  // abc is visible here
+}
+// xyz is visible here
+// abc is undefined here
+</code></pre>
+
+<p>If you want to alias functions on all browsers, use this kind of declaration:</p>
+
+<pre><code>function abc(){};
+var xyz = abc;
+</code></pre>
+
+<p>In this case, both <code>xyz</code> and <code>abc</code> are aliases of the same object:</p>
+
+<pre><code>console.log(xyz === abc); // prints "true"
+</code></pre>
+
+<p>One compelling reason to use the combined style is the "name" attribute of function objects (<strong>not supported by Internet&nbsp;Explorer</strong>). Basically when you define a function like</p>
+
+<pre><code>function abc(){};
+console.log(abc.name); // prints "abc"
+</code></pre>
+
+<p>its name is automatically assigned. But when you define it like</p>
+
+<pre><code>var abc = function(){};
+console.log(abc.name); // prints ""
+</code></pre>
+
+<p>its name is empty &mdash; we created an anonymous function and assigned it to some variable.</p>
+
+<p>Another good reason to use the combined style is to use a short internal name to refer to itself, while providing a long non-conflicting name for external users:</p>
+
+<pre><code>// Assume really.long.external.scoped is {}
+really.long.external.scoped.name = function shortcut(n){
+  // Let it call itself recursively:
+  shortcut(n - 1);
+  // ...
+  // Let it pass itself as a callback:
+  someFunction(shortcut);
+  // ...
+}
+</code></pre>
+
+<p>In the example above we can do the same with an external name, but it'll be too unwieldy (and slower).</p>
+
+<p><em>(Another way to refer to itself is to use <code>arguments.callee</code>, which is still relatively long, and not supported in the strict mode.)</em></p>
+
+<p>Deep down, JavaScript treats both statements differently. This is a function declaration:</p>
+
+<pre><code>function abc(){}
+</code></pre>
+
+<p><code>abc</code> here is defined everywhere in the current scope:</p>
+
+<pre><code>// We can call it here
+abc(); // Works
+
+// Yet, it is defined down there.
+function abc(){}
+
+// We can call it again
+abc(); // Works
+</code></pre>
+
+<p>Also, it hoisted through a <code>return</code> statement:</p>
+
+<pre><code>// We can call it here
+abc(); // Works
+return;
+function abc(){}
+</code></pre>
+
+<p>This is a function expression:</p>
+
+<pre><code>var xyz = function(){};
+</code></pre>
+
+<p><code>xyz</code> here is defined from the point of assignment:</p>
+
+<pre><code>// We can't call it here
+xyz(); // UNDEFINED!!!
+
+// Now it is defined
+xyz = function(){}
+
+// We can call it here
+xyz(); // works
+</code></pre>
+
+<p>Function declaration vs. function expression is the real reason why there is a difference demonstrated by Greg.</p>
+
+<p>Fun fact:</p>
+
+<pre><code>var xyz = function abc(){};
+console.log(xyz.name); // Prints "abc"
+</code></pre>
+
+<p>Personally, I prefer the "function expression" declaration because this way I can control the visibility. When I define the function like</p>
+
+<pre><code>var abc = function(){};
+</code></pre>
+
+<p>I know that I defined the function locally. When I define the function like</p>
+
+<pre><code>abc = function(){};
+</code></pre>
+
+<p>I know that I defined it globally providing that I didn't define <code>abc</code> anywhere in the chain of scopes. This style of definition is resilient even when used inside <code>eval()</code>. While the definition</p>
+
+<pre><code>function abc(){};
+</code></pre>
+
+<p>depends on the context and may leave you guessing where it is actually defined, especially in the case of <code>eval()</code> &mdash; the answer is: It depends on the browser.</p>

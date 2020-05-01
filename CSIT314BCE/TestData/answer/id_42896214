@@ -1,0 +1,15 @@
+<p>There are too many methods to check for hidden elements. This is the best choice (I just recommended you):</p>
+
+<blockquote>
+  <p>Using jQuery, make an element, "display:none", in CSS for hidden.</p>
+</blockquote>
+
+<p>The point is:</p>
+
+<pre><code>$('element:visible')
+</code></pre>
+
+<p>And an example for use:</p>
+
+<pre><code>$('element:visible').show();
+</code></pre>

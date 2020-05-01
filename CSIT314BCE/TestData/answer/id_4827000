@@ -1,0 +1,47 @@
+<p>I'd just like to add this to lfousts answer, from Ritchers book:</p>
+
+<blockquote>
+  <p>The C# language specification states, “As a matter of style, use of the keyword is favored over
+  use of the complete system type name.” I disagree with the language specification; I prefer
+  to use the FCL type names and completely avoid the primitive type names. In fact, I wish that
+  compilers didn’t even offer the primitive type names and forced developers to use the FCL
+  type names instead. Here are my reasons:</p>
+  
+  <ul>
+  <li><p>I’ve seen a number of developers confused, not knowing whether to use <strong>string</strong>
+  or <strong>String</strong> in their code. Because in C# <strong>string</strong> (a keyword) maps exactly to
+  <strong>System.String</strong> (an FCL type), there is no difference and either can be used. Similarly,
+  I’ve heard some developers say that <strong>int</strong> represents a 32-bit integer when the application
+  is running on a 32-bit OS and that it represents a 64-bit integer when the application
+  is running on a 64-bit OS. This statement is absolutely false: in C#, an <strong>int</strong> always maps
+  to <strong>System.Int32</strong>, and therefore it represents a 32-bit integer regardless of the OS the
+  code is running on. If programmers would use <strong>Int32</strong> in their code, then this potential
+  confusion is also eliminated.</p></li>
+  <li><p>In C#, <strong>long</strong> maps to <strong>System.Int64</strong>, but in a different programming language, <strong>long</strong>
+  could map to an <strong>Int16</strong> or <strong>Int32</strong>. In fact, C++/CLI does treat <strong>long</strong> as an <strong>Int32</strong>.
+  Someone reading source code in one language could easily misinterpret the code’s
+  intention if he or she were used to programming in a different programming language.
+  In fact, most languages won’t even treat <strong>long</strong> as a keyword and won’t compile code
+  that uses it.</p></li>
+  <li><p>The FCL has many methods that have type names as part of their method names. For
+  example, the <strong>BinaryReader</strong> type offers methods such as <strong>ReadBoolean</strong>, <strong>ReadInt32</strong>,
+  <strong>ReadSingle</strong>, and so on, and the <strong>System.Convert</strong> type offers methods such as
+  <strong>ToBoolean</strong>, <strong>ToInt32</strong>, <strong>ToSingle</strong>, and so on. Although it’s legal to write the following
+  code, the line with <strong>float</strong> feels very unnatural to me, and it’s not obvious that the line is
+  correct:</p>
+
+<pre><code>BinaryReader br = new BinaryReader(...);
+float val = br.ReadSingle(); // OK, but feels unnatural
+Single val = br.ReadSingle(); // OK and feels good
+</code></pre></li>
+  <li><p>Many programmers that use C# exclusively tend to forget that other programming
+  languages can be used against the CLR, and because of this, C#-isms creep into the
+  class library code. For example, Microsoft’s FCL is almost exclusively written in C# and
+  developers on the FCL team have now introduced methods into the library such as
+  <strong>Array</strong>’s <strong>GetLongLength</strong>, which returns an <strong>Int64</strong> value that is a <strong>long</strong> in C# but not
+  in other languages (like C++/CLI). Another example is <strong>System.Linq.Enumerable</strong>’s
+  <strong>LongCount</strong> method.</p></li>
+  </ul>
+</blockquote>
+
+<p>I didn't get his opinion before I read the complete paragraph.  </p>

@@ -1,0 +1,13 @@
+<p>This is very easy to implement. You can use:</p>
+
+<pre><code>window.location.href = "http://www.example.com/";
+</code></pre>
+
+<p>This will remember the history of the previous page. So one can go back by clicking on the browser's back button.</p>
+
+<p>Or:</p>
+
+<pre><code>window.location.replace("http://www.example.com/");
+</code></pre>
+
+<p>This method does not remember the history of the previous page. The back button becomes disabled in this case.</p>

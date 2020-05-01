@@ -1,0 +1,14 @@
+<p>There are three main ways to do this,</p>
+
+<pre><code>window.location.href='blaah.com';
+window.location.assign('blaah.com');
+</code></pre>
+
+<p>and...</p>
+
+<pre><code>window.location.replace('blaah.com');
+</code></pre>
+
+<p>The last one is best, for a traditional redirect, because it will not save the page you went to before being redirected in your search history. However, if you just want to open a tab with JavaScript, you can use any of the above.<a href="http://basicuse.net/tips/pl/scripting_languages/javascript/how_to_make_a_page_redirect_in_javascript" rel="noreferrer">1</a></p>
+
+<p>EDIT: The <code>window</code> prefix is optional.</p>

@@ -1,0 +1,18 @@
+<p>In terms of code maintenance cost, named functions are more preferable:</p>
+
+<ul>
+<li>Independent from the place where they are declared (but still limited by scope).</li>
+<li>More resistant to mistakes like conditional initialization (you are still able to override if wanted to).</li>
+<li>The code becomes more readable by allocating local functions separately of scope functionality. Usually in the scope the functionality goes first, followed by declarations of local functions.</li>
+<li>In a debugger you will clearly see the function name on the call stack instead of an "anonymous/evaluated" function.</li>
+</ul>
+
+<p>I suspect more PROS for named functions are follow. And what is listed as an advantage of named functions is a disadvantage for anonymous ones.</p>
+
+<p>Historically, anonymous functions appeared from the inability of JavaScript as a language to list members with named functions:</p>
+
+<pre><code>{
+    member:function() { /* How do I make "this.member" a named function? */
+    }
+}
+</code></pre>

@@ -1,0 +1,10 @@
+<p>
+I prefer the capitalized <code>.NET</code> types (rather than the aliases) for formatting reasons. The <code>.NET</code> types are colored the same as other object types (the value types are proper objects, after all).</p>
+
+<p>Conditional and control keywords (like <code>if</code>, <code>switch</code>, and <code>return</code>) are lowercase and colored dark blue (by default). And I would rather not have the disagreement in use and format.</p>
+
+<p>Consider:</p>
+
+<pre class="lang-c# prettyprint-override"><code>String someString; 
+string anotherString; 
+</code></pre>

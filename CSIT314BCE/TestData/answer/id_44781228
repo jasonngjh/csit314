@@ -1,0 +1,27 @@
+<h3>Steps for deleting a branch:</h3>
+
+<p>For deleting the <strong>remote branch:</strong></p>
+
+<pre><code>git push origin --delete &lt;your_branch&gt;
+</code></pre>
+
+<p>For deleting the <strong>local branch</strong>, you have <strong>three ways</strong>:</p>
+
+<pre><code>1: git branch -D &lt;branch_name&gt;
+
+2: git branch --delete --force &lt;branch_name&gt;  # Same as -D
+
+3: git branch --delete  &lt;branch_name&gt;         # Error on unmerge
+</code></pre>
+
+<p><strong>Explain:</strong> OK, just explain what's going on here!</p>
+
+<p>Simply do <code>git push origin --delete</code> to <strong>delete your remote branch <em>only</em></strong>, add the name of the branch at the end and this will delete and <strong>push it to remote</strong> at the same time...</p>
+
+<p>Also, <code>git branch -D</code>, which simply delete the local branch <strong><em>only</em></strong>!...</p>
+
+<p><code>-D</code> stands for <code>--delete --force</code> which will delete the branch even it's not merged (force delete), but you can also use <code>-d</code> which stands for <code>--delete</code> which throw an error respective of the branch merge status...</p>
+
+<p>I also create the <strong>image below</strong> to show the steps:</p>
+
+<p><a href="https://i.stack.imgur.com/AKWYx.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/AKWYx.jpg" alt="Delete a remote and local branch in git"></a></p>

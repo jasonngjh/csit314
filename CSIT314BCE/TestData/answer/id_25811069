@@ -1,0 +1,27 @@
+<p>There are two main scenarios</p>
+
+<p><strong>You haven't pushed the commit yet</strong></p>
+
+<p>If the problem was extra files you commited (and you don't want those on repository), you can remove them using <code>git rm</code> and then commiting with <code>--amend</code></p>
+
+<pre><code>git rm &lt;pathToFile&gt;
+</code></pre>
+
+<p>You can also remove entire directories with <code>-r</code>, or even combine with other <a href="http://en.wikipedia.org/wiki/Bash_%28Unix_shell%29">Bash</a> commands</p>
+
+<pre><code>git rm -r &lt;pathToDirectory&gt;
+git rm $(find -name '*.class')
+</code></pre>
+
+<p>After removing the files, you can commit, with <strong>--amend</strong> option</p>
+
+<pre><code>git commit --amend -C HEAD # the -C option is to use the same commit message
+</code></pre>
+
+<p>This will rewrite your recent local commit removing the extra files, so, these files will never be sent on push and also will be removed from your local .git repository by GC.</p>
+
+<p><strong>You already pushed the commit</strong></p>
+
+<p>You can apply the same solution of the other scenario and then doing <code>git push</code> with the <code>-f</code> option, but it is <strong>not recommended</strong> since it overwrites the remote history with a divergent change (it can mess your repository).</p>
+
+<p>Instead, you have to do the commit without <code>--amend</code> (remember this about -amend`: That option rewrites the history on the last commit).</p>

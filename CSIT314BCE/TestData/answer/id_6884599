@@ -1,0 +1,5 @@
+<p>When incrementing time you should convert back to UTC and then add or subtract. Use the local time only for display.</p>
+
+<p>This way you will be able to walk through any periods where hours or minutes happen twice.</p>
+
+<p>If you converted to UTC, add each second, and convert to local time for display. You would go through 11:54:08 p.m. <a href="http://en.wikipedia.org/wiki/Local_mean_time" rel="noreferrer">LMT</a> - 11:59:59 p.m. LMT and then 11:54:08 p.m. <a href="http://en.wikipedia.org/wiki/Central_Time_Zone_%28North_America%29" rel="noreferrer">CST</a> - 11:59:59 p.m. CST.</p>

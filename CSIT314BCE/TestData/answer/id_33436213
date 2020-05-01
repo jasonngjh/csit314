@@ -1,0 +1,13 @@
+<p><a href="http://www.git-tower.com/learn/git/ebook/command-line/remote-repositories/deleting-branches">Deleting Branches</a></p>
+
+<blockquote>
+  <p>Let's assume our work on branch "contact-form" is done and we've already integrated it into "master". Since we don't need it anymore, we can delete it (locally):</p>
+
+<pre><code>$ git branch -d contact-form
+</code></pre>
+</blockquote>
+
+<p>And for deleting the remote branch:</p>
+
+<pre><code>git push origin --delete contact-form
+</code></pre>

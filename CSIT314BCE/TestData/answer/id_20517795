@@ -1,0 +1,11 @@
+<p>When you run Python interactively the local <code>__name__</code> variable is assigned a value of <code>__main__</code>. Likewise, when you execute a Python module from the command line, rather than importing it into another module, its <code>__name__</code> attribute is assigned a value of <code>__main__</code>, rather than the actual name of the module. In this way, modules can look at their own <code>__name__</code> value to determine for themselves how they are being used, whether as support for another program or as the main application executed from the command line. Thus, the following idiom is quite common in Python modules:</p>
+
+<pre><code>if __name__ == '__main__':
+    # Do something appropriate here, like calling a
+    # main() function defined elsewhere in this module.
+    main()
+else:
+    # Do nothing. This module has been imported by another
+    # module that wants to make use of the functions,
+    # classes and other useful bits it has defined.
+</code></pre>

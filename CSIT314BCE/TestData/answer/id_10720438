@@ -1,0 +1,10 @@
+<p>One can simply use the <code>hidden</code> or <code>visible</code> attribute, like:</p>
+
+<pre><code>$('element:hidden')
+$('element:visible')
+</code></pre>
+
+<p>Or you can simplify the same with <em>is</em> as follows.</p>
+
+<pre><code>$(element).is(":visible")
+</code></pre>

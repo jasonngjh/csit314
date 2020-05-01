@@ -1,0 +1,12 @@
+<p>Consider:</p>
+
+<pre><code>print __name__
+</code></pre>
+
+<p>The output for the above is <code>__main__</code>.</p>
+
+<pre><code>if __name__ == "__main__":
+  print "direct method"
+</code></pre>
+
+<p>The above statement is true and prints <em>"direct method"</em>. Suppose if they imported this class in another class it doesn't print <em>"direct method"</em> because, while importing, it will set <code>__name__ equal to "first model name"</code>.</p>

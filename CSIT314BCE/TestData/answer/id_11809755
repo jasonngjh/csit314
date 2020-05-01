@@ -1,0 +1,36 @@
+<p><a href="https://stackoverflow.com/users/26394/eugene-lazutkin">@EugeneLazutkin</a> gives an example where he <a href="https://stackoverflow.com/a/338053/">names an assigned function to be able to use <code>shortcut()</code></a> as an internal reference to itself. <a href="http://ejohn.org/" rel="nofollow noreferrer">John Resig</a> gives another example - <em>copying a recursive function assigned to another object</em> in his <a href="http://ejohn.org/apps/learn/" rel="nofollow noreferrer">Learning Advanced Javascript</a> tutorial. While assigning functions to properties isn't strictly the question here, I recommend actively trying the tutorial out - run the code by clicking the button in the upper right corner, and double click the code to edit to your liking.</p>
+
+<p>Examples from the tutorial: recursive calls in <code>yell()</code>:</p>
+
+<p><a href="http://ejohn.org/apps/learn/#13" rel="nofollow noreferrer">Tests fail when the original ninja object is removed.</a> (page 13)</p>
+
+<pre><code>var ninja = { 
+  yell: function(n){ 
+    return n &gt; 0 ? ninja.yell(n-1) + "a" : "hiy"; 
+  } 
+}; 
+assert( ninja.yell(4) == "hiyaaaa", "A single object isn't too bad, either." ); 
+
+var samurai = { yell: ninja.yell }; 
+var ninja = null; 
+
+try { 
+  samurai.yell(4); 
+} catch(e){ 
+  assert( false, "Uh, this isn't good! Where'd ninja.yell go?" ); 
+}
+</code></pre>
+
+<p><a href="http://ejohn.org/apps/learn/#14" rel="nofollow noreferrer">If you name the function that will be called recursively, the tests will pass.</a> (page 14)</p>
+
+<pre><code>var ninja = { 
+  yell: function yell(n){ 
+    return n &gt; 0 ? yell(n-1) + "a" : "hiy"; 
+  } 
+}; 
+assert( ninja.yell(4) == "hiyaaaa", "Works as we would expect it to!" ); 
+
+var samurai = { yell: ninja.yell }; 
+var ninja = {}; 
+assert( samurai.yell(4) == "hiyaaaa", "The method correctly calls itself." );
+</code></pre>

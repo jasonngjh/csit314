@@ -1,0 +1,19 @@
+<p>Try resetting to the desired commit -</p>
+
+<p><code>git reset &lt;COMMIT_ID&gt;</code></p>
+
+<p>(to check COMMIT_ID use <code>git log</code>)</p>
+
+<p>This will reset all changed files to un-added state.</p>
+
+<p>Now you can <code>checkout</code> all un-added files by </p>
+
+<p><code>git checkout .</code></p>
+
+<p>Check <code>git log</code> to verify your changes.</p>
+
+<p><strong>UPDATE</strong></p>
+
+<p>If you have <strong>one and only</strong> commit in your repo, try</p>
+
+<p><code>git update-ref -d HEAD</code></p>

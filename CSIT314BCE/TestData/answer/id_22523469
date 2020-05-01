@@ -1,0 +1,14 @@
+<p>These four commands work for me.</p>
+
+<pre><code>git reset --hard HEAD
+git checkout origin/master
+git branch -D master
+git checkout -b master
+</code></pre>
+
+<p>To check/pull after executing these commands</p>
+
+<pre><code>git pull origin master
+</code></pre>
+
+<p>I tried a lot but finally got success with these commands.</p>

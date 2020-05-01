@@ -1,0 +1,14 @@
+<p>From WikiAnwser.</p>
+
+<h3>Stack</h3>
+
+<p>When a function or a method calls another function which in turns calls another function, etc., the execution of all those functions remains suspended until the very last function returns its value.</p>
+
+<p>This chain of suspended function calls is the stack, because elements in the stack (function calls) depend on each other.</p>
+
+<p>The stack is important to consider in exception handling and thread executions.</p>
+
+<h3>Heap</h3>
+
+<p>The heap is simply the memory used by programs to store variables.
+Element of the heap (variables) have no dependencies with each other and can always be accessed randomly at any time.</p>

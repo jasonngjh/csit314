@@ -1,0 +1,6 @@
+<p>In this case, you probably want to create a local <code>test</code> branch which is tracking the remote <code>test</code> branch:</p>
+
+<pre><code>$ git branch test origin/test
+</code></pre>
+
+<p>In earlier versions of <code>git</code>, you needed an explicit <code>--track</code> option, but that is the default now when you are branching off a remote branch.</p>

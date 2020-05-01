@@ -1,0 +1,12 @@
+<p>You can use simple preprocessing via regular expressions. For instance, the following function will decode commented JSON in PHP:</p>
+
+<pre><code>function json_decode_commented ($data, $objectsAsArrays = false, $maxDepth = 512, $opts = 0) {
+  $data = preg_replace('~
+    (" (?:[^"\\\\] | \\\\\\\\ | \\\\")*+ ") | \# [^\v]*+ | // [^\v]*+ | /\* .*? \*/
+  ~xs', '$1', $data);
+
+  return json_decode($data, $objectsAsArrays, $maxDepth, $opts);
+}
+</code></pre>
+
+<p>It supports all PHP-style comments: /*, #, //. String literals are preserved as is.</p>

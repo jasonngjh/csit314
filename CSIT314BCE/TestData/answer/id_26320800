@@ -1,0 +1,441 @@
+<p>In light of the "named functions show up in stack traces" argument, modern JavaScript engines are actually quite capable of representing anonymous functions.</p>
+
+<p>As of this writing, V8, SpiderMonkey, Chakra and Nitro always refer to named functions by their names. They almost always refer to an anonymous function by its identifier if it has one.</p>
+
+<p>SpiderMonkey can figure out the name of an anonymous function returned from another function. The rest can't.</p>
+
+<p>If you really, really wanted your iterator and success callbacks to show up in the trace, you could name those too...</p>
+
+<pre><code>[].forEach(function iterator() {});
+</code></pre>
+
+<p>But for the most part it's not worth stressing over.</p>
+
+<h2>Harness (<a href="http://jsfiddle.net/us9dg6y8/">Fiddle</a>)</h2>
+
+<pre><code>'use strict';
+
+var a = function () {
+    throw new Error();
+},
+    b = function b() {
+        throw new Error();
+    },
+    c = function d() {
+        throw new Error();
+    },
+    e = {
+        f: a,
+        g: b,
+        h: c,
+        i: function () {
+            throw new Error();
+        },
+        j: function j() {
+            throw new Error();
+        },
+        k: function l() {
+            throw new Error();
+        }
+    },
+    m = (function () {
+        return function () {
+            throw new Error();
+        };
+    }()),
+    n = (function () {
+        return function n() {
+            throw new Error();
+        };
+    }()),
+    o = (function () {
+        return function p() {
+            throw new Error();
+        };
+    }());
+
+console.log([a, b, c].concat(Object.keys(e).reduce(function (values, key) {
+    return values.concat(e[key]);
+}, [])).concat([m, n, o]).reduce(function (logs, func) {
+
+    try {
+        func();
+    } catch (error) {
+        return logs.concat('func.name: ' + func.name + '\n' +
+                           'Trace:\n' +
+                           error.stack);
+        // Need to manually log the error object in Nitro.
+    }
+
+}, []).join('\n\n'));
+</code></pre>
+
+<h2>V8</h2>
+
+<pre><code>func.name: 
+Trace:
+Error
+    at a (http://localhost:8000/test.js:4:11)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: b
+Trace:
+Error
+    at b (http://localhost:8000/test.js:7:15)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: d
+Trace:
+Error
+    at d (http://localhost:8000/test.js:10:15)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: 
+Trace:
+Error
+    at a (http://localhost:8000/test.js:4:11)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: b
+Trace:
+Error
+    at b (http://localhost:8000/test.js:7:15)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: d
+Trace:
+Error
+    at d (http://localhost:8000/test.js:10:15)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: 
+Trace:
+Error
+    at e.i (http://localhost:8000/test.js:17:19)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: j
+Trace:
+Error
+    at j (http://localhost:8000/test.js:20:19)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: l
+Trace:
+Error
+    at l (http://localhost:8000/test.js:23:19)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: 
+Trace:
+Error
+    at http://localhost:8000/test.js:28:19
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: n
+Trace:
+Error
+    at n (http://localhost:8000/test.js:33:19)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27
+
+func.name: p
+Trace:
+Error
+    at p (http://localhost:8000/test.js:38:19)
+    at http://localhost:8000/test.js:47:9
+    at Array.reduce (native)
+    at http://localhost:8000/test.js:44:27 test.js:42
+</code></pre>
+
+<h2>SpiderMonkey</h2>
+
+<pre><code>func.name: 
+Trace:
+a@http://localhost:8000/test.js:4:5
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: b
+Trace:
+b@http://localhost:8000/test.js:7:9
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: d
+Trace:
+d@http://localhost:8000/test.js:10:9
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: 
+Trace:
+a@http://localhost:8000/test.js:4:5
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: b
+Trace:
+b@http://localhost:8000/test.js:7:9
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: d
+Trace:
+d@http://localhost:8000/test.js:10:9
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: 
+Trace:
+e.i@http://localhost:8000/test.js:17:13
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: j
+Trace:
+j@http://localhost:8000/test.js:20:13
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: l
+Trace:
+l@http://localhost:8000/test.js:23:13
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: 
+Trace:
+m&lt;/&lt;@http://localhost:8000/test.js:28:13
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: n
+Trace:
+n@http://localhost:8000/test.js:33:13
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+
+
+func.name: p
+Trace:
+p@http://localhost:8000/test.js:38:13
+@http://localhost:8000/test.js:47:9
+@http://localhost:8000/test.js:54:1
+</code></pre>
+
+<h2>Chakra</h2>
+
+<pre><code>func.name: undefined
+Trace:
+Error
+   at a (http://localhost:8000/test.js:4:5)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at b (http://localhost:8000/test.js:7:9)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at d (http://localhost:8000/test.js:10:9)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at a (http://localhost:8000/test.js:4:5)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at b (http://localhost:8000/test.js:7:9)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at d (http://localhost:8000/test.js:10:9)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at e.i (http://localhost:8000/test.js:17:13)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at j (http://localhost:8000/test.js:20:13)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at l (http://localhost:8000/test.js:23:13)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at Anonymous function (http://localhost:8000/test.js:28:13)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at n (http://localhost:8000/test.js:33:13)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+
+
+func.name: undefined
+Trace:
+Error
+   at p (http://localhost:8000/test.js:38:13)
+   at Anonymous function (http://localhost:8000/test.js:47:9)
+   at Global code (http://localhost:8000/test.js:42:1)
+</code></pre>
+
+<h2>Nitro</h2>
+
+<pre><code>func.name: 
+Trace:
+a@http://localhost:8000/test.js:4:22
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: b
+Trace:
+b@http://localhost:8000/test.js:7:26
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: d
+Trace:
+d@http://localhost:8000/test.js:10:26
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: 
+Trace:
+a@http://localhost:8000/test.js:4:22
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: b
+Trace:
+b@http://localhost:8000/test.js:7:26
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: d
+Trace:
+d@http://localhost:8000/test.js:10:26
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: 
+Trace:
+i@http://localhost:8000/test.js:17:30
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: j
+Trace:
+j@http://localhost:8000/test.js:20:30
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: l
+Trace:
+l@http://localhost:8000/test.js:23:30
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: 
+Trace:
+http://localhost:8000/test.js:28:30
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: n
+Trace:
+n@http://localhost:8000/test.js:33:30
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+
+func.name: p
+Trace:
+p@http://localhost:8000/test.js:38:30
+http://localhost:8000/test.js:47:13
+reduce@[native code]
+global code@http://localhost:8000/test.js:44:33
+</code></pre>

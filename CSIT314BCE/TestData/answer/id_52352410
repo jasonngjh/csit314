@@ -1,0 +1,21 @@
+<p>What i do each time i need to undo a commit/commits are:</p>
+
+<ol>
+<li><code>git reset HEAD~&lt;n&gt;</code>  // the number of last commits i need to undo</li>
+<li><p><code>git status</code> // optional. All files are now in red (unstaged).</p></li>
+<li><p>Now, i can add &amp; commit just the files that i need:</p>
+
+<ul>
+<li><code>git add &lt;file names&gt; &amp; git commit -m "message" -m "details"</code></li>
+</ul></li>
+<li>Optional: I can rollback the changes of the rest files, if i need, to their previous condition, with checkout:  
+
+<ul>
+<li><code>git checkout &lt;filename&gt;</code></li>
+</ul></li>
+<li>if i had already pushed it to remote origin, previously:
+
+<ul>
+<li><code>git push origin &lt;branch name&gt; -f</code> // use -f to force the push.</li>
+</ul></li>
+</ol>

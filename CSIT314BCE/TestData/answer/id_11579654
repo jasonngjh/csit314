@@ -1,0 +1,4 @@
+<p>This may work:</p>
+
+<pre><code>expect($("#message_div").css("display")).toBe("none");
+</code></pre>

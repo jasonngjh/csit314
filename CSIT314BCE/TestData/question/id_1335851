@@ -1,0 +1,11 @@
+<p>Recently, I ran some of my JavaScript code through Crockford's <a href="http://www.jslint.com/" rel="noreferrer">JSLint</a>, and it gave the following error:</p>
+
+<blockquote>
+  <p>Problem at line 1 character 1: Missing "use strict" statement.</p>
+</blockquote>
+
+<p>Doing some searching, I realized that some people add <code>"use strict";</code> into their JavaScript code. Once I added the statement, the error stopped appearing. Unfortunately, Google did not reveal much of the history behind this string statement. Certainly it must have something to do with how the JavaScript is interpreted by the browser, but I have no idea what the effect would be.</p>
+
+<p>So what is <code>"use strict";</code> all about, what does it imply, and is it still relevant?</p>
+
+<p>Do any of the current browsers respond to the <code>"use strict";</code> string or is it for future use?</p>

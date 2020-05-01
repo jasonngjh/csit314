@@ -1,0 +1,21 @@
+<p>I just want to clarify that, in jQuery,</p>
+
+<blockquote>
+  <p>Elements can be considered hidden for several reasons:</p>
+  
+  <ul>
+  <li>They have a CSS display value of none.</li>
+  <li>They are form elements with type="hidden".</li>
+  <li>Their width and height are explicitly set to 0.</li>
+  <li>An ancestor element is hidden, so the element is not shown on the page.</li>
+  </ul>
+  
+  <p>Elements with visibility: hidden or opacity: 0 are considered to be visible, since they still consume space in the layout. During animations that hide an element, the element is considered to be visible until the end of the animation.</p>
+  
+  <p>Source: <a href="https://api.jquery.com/hidden-selector/" rel="noreferrer">:hidden Selector | jQuery API Documentation</a></p>
+</blockquote>
+
+<pre><code>if($('.element').is(':hidden')) {
+  // Do something
+}
+</code></pre>

@@ -1,0 +1,23 @@
+<p>Just undo the last commit: </p>
+
+<pre><code>git reset --soft HEAD~
+</code></pre>
+
+<p>Or undo the time before last time commit: </p>
+
+<pre><code>git reset --soft HEAD~2
+</code></pre>
+
+<p>Or undo any previous commit: </p>
+
+<pre><code>git reset --soft &lt;commitID&gt;
+</code></pre>
+
+<p>(you can get the commitID using <code>git reflog</code>)</p>
+
+<p>When you undo a previous commit, remember to clean the workplace with</p>
+
+<pre><code>git clean
+</code></pre>
+
+<p>More details can be found in the docs: <a href="http://git-scm.com/docs/git-reset">git-reset</a></p>

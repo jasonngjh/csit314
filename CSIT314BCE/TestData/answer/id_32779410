@@ -1,0 +1,15 @@
+<p>One must keep in mind the nature of git. You have remotes and your local branches ( not necessarily the same ) . In comparison to other source control systems this can be a bit perplexing. </p>
+
+<p>Usually when you checkout a remote a local copy is created that tracks the remote. </p>
+
+<p>git fetch will work with the remote branch and update your information. </p>
+
+<p>It is actually the case if other SWEs are working one the same branch, and rarely the case in small one dev - one branch - one project scenarios.</p>
+
+<p>Your work on the local branch is still intact. In order to bring the changes to your local branch you have to merge/rebase the changes from the remote branch.</p>
+
+<p>git pull does exactly these two steps ( i.e. --rebase to rebase instead of merge )</p>
+
+<p>If your local history and the remote history have conflicts the you will be forced to do the merge during a git push to publish your changes.</p>
+
+<p>Thus it really depends on the nature of your work environment and experience what to use.</p>

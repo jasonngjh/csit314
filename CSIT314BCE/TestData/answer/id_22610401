@@ -1,0 +1,11 @@
+<p>You can try</p>
+
+<pre><code>git fetch remote
+git checkout --track -b local_branch_name origin/branch_name
+</code></pre>
+
+<p>or</p>
+
+<pre><code>git fetch
+git checkout -b local_branch_name origin/branch_name
+</code></pre>

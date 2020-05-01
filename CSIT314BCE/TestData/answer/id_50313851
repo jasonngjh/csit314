@@ -1,0 +1,125 @@
+<p>Define a method named remove() on array objects using the prototyping feature of JavaScript.</p>
+
+<blockquote>
+  <p>Use <strong>splice()</strong> method to fulfill your requirement.</p>
+</blockquote>
+
+<p>Please have a look at the below code.</p>
+
+<pre><code>Array.prototype.remove = function(item) {
+    // 'index' will have -1 if 'item' does not exist,
+    // else it will have the index of the first item found in the array
+    var index = this.indexOf(item);
+
+    if (index &gt; -1) {
+        // The splice() method is used to add/remove items(s) in the array
+        this.splice(index, 1);
+    }
+    return index;
+}
+
+var arr = [ 11, 22, 67, 45, 61, 89, 34, 12, 7, 8, 3, -1, -4];
+
+// Printing array
+// [ 11, 22, 67, 45, 61, 89, 34, 12, 7, 8, 3, -1, -4];
+console.log(arr)
+
+// Removing 67 (getting its index, i.e. 2)
+console.log("Removing 67")
+var index = arr.remove(67)
+
+if (index &gt; 0){
+    console.log("Item 67 found at ", index)
+} else {
+    console.log("Item 67 does not exist in array")
+}
+
+// Printing updated array
+// [ 11, 22, 45, 61, 89, 34, 12, 7, 8, 3, -1, -4];
+console.log(arr)
+
+// ............... Output ................................
+// [ 11, 22, 67, 45, 61, 89, 34, 12, 7, 8, 3, -1, -4 ]
+// Removing 67
+// Item 67 found at  2
+// [ 11, 22, 45, 61, 89, 34, 12, 7, 8, 3, -1, -4 ]
+</code></pre>
+
+<blockquote>
+  <p><strong>Note:</strong> The below is the full example code executed on the <strong>Node.js REPL</strong> which describes the use of push(), pop(), shift(), unshift(), and splice() methods.</p>
+</blockquote>
+
+<pre><code>&gt; // Defining an array
+undefined
+&gt; var arr = [12, 45, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34];
+undefined
+&gt; // Getting length of array
+undefined
+&gt; arr.length;
+16
+&gt; // Adding 1 more item at the end i.e. pushing an item
+undefined
+&gt; arr.push(55);
+17
+&gt; arr
+[ 12, 45, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34, 55 ]
+&gt; // Popping item from array (i.e. from end)
+undefined
+&gt; arr.pop()
+55
+&gt; arr
+[ 12, 45, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt; // Remove item from beginning
+undefined
+&gt; arr.shift()
+12
+&gt; arr
+[ 45, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt; // Add item(s) at beginning
+undefined
+&gt; arr.unshift(67); // Add 67 at beginning of the array and return number of items in updated/new array
+16
+&gt; arr
+[ 67, 45, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt; arr.unshift(11, 22); // Adding 2 more items at the beginning of array
+18
+&gt; arr
+[ 11, 22, 67, 45, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt;
+&gt; // Define a method on array (temporarily) to remove an item and return the index of removed item; if it is found else return -1
+undefined
+&gt; Array.prototype.remove = function(item) {
+... var index = this.indexOf(item);
+... if (index &gt; -1) {
+..... this.splice(index, 1); // splice() method is used to add/remove items in array
+..... }
+... return index;
+... }
+[Function]
+&gt;
+&gt; arr
+[ 11, 22, 67, 45, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt;
+&gt; arr.remove(45);    // Remove 45 (you will get the index of removed item)
+3
+&gt; arr
+[ 11, 22, 67, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt;
+&gt; arr.remove(22)    // Remove 22
+1
+&gt; arr
+[ 11, 67, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt; arr.remove(67)    // Remove 67
+1
+&gt; arr
+[ 11, 67, 89, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt;
+&gt; arr.remove(89)    // Remove 89
+2
+&gt; arr
+[ 11, 67, 34, 12, 7, 8, 3, -1, -4, -11, 0, 56, 12, 34 ]
+&gt;
+&gt; arr.remove(100);  // 100 doesn't exist, remove() will return -1
+-1
+&gt;
+</code></pre>

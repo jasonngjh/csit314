@@ -1,0 +1,17 @@
+<blockquote>
+  <p><strong>Caution!</strong> This command can cause losing commit history, if user put the wrong commit mistakenly. Always have en extra backup of your git some
+  where else just in case if you do mistakes, than you are a bit safer.
+  :)</p>
+</blockquote>
+
+<p>I have had a similar issue and wanted to revert back to an earlier commit. In my case I was not interested to keep the newer commit, hence I used <code>Hard</code>.</p>
+
+<p>This is how I did it:</p>
+
+<pre><code>git reset --hard CommitId &amp;&amp; git clean -f
+</code></pre>
+
+<p>This will revert on the local repository, and here after using <code>git push -f</code> will update the remote repository.</p>
+
+<pre><code>git push -f
+</code></pre>

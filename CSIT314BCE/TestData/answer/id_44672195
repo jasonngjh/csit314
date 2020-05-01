@@ -1,0 +1,10 @@
+<p>Just reset it doing the command below using <code>git</code>:</p>
+
+<pre><code>git reset --soft HEAD~1
+</code></pre>
+
+<p><strong>Explain:</strong> what <code>git reset</code> does, it's basically <code>reset</code> to any commit you'd like to go back to, then if you combine it with <code>--soft</code> key, it will go back, but keep the  changes in your file(s), so you get back to the stage which the file was just added, <code>HEAD</code> is the head of the branch and if you combine with <code>~1</code> (in this case you also use <code>HEAD^</code>), it will go back only one commit which what you want...</p>
+
+<p>I create the steps in the image below in more details for you, including all steps that may happens in real situations and committing the code:</p>
+
+<p><a href="https://i.stack.imgur.com/7zrzb.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/7zrzb.jpg" alt="How to undo the last commits in Git?"></a></p>

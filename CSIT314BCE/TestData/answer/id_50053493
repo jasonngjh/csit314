@@ -1,0 +1,12 @@
+<p>Your question did not indicate if order or distinct values are a requirement.</p>
+
+<p>If you don't care about order, and will not have the same value in the container more than once, use a Set.  It will be way faster, and more succinct.  </p>
+
+<pre><code>var aSet = new Set();
+
+aSet.add(1);
+aSet.add(2);
+aSet.add(3);
+
+aSet.delete(2);
+</code></pre>

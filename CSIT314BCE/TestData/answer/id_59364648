@@ -1,0 +1,4 @@
+<p>Just set your remote </p>
+
+<pre><code>git remote set-url origin https://youruser:yourpass@github.com/youraccount/something.git
+</code></pre>

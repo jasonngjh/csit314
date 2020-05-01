@@ -1,0 +1,8 @@
+<p>Here are three steps: A command that you can call inside your terminal and change branch name.</p>
+
+<pre><code>git branch -m old_branch new_branch         # Rename branch locally
+git push origin :old_branch                 # Delete the old branch
+git push --set-upstream origin new_branch   # Push the new branch, set local branch to track the new remote
+</code></pre>
+
+<p>If you need more: step-by-step, <em><a href="http://www.w3docs.com/snippets/git/how-to-rename-git-local-and-remote-branches.html" rel="noreferrer">How To Change Git Branch Name</a></em> is a good article about that.</p>

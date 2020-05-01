@@ -1,0 +1,11 @@
+<p>For a six-year-old ...</p>
+
+<p>Do you know what objects are?</p>
+
+<p>Objects are things that have properties and do stuff.</p>
+
+<p>One of the most important things about closures is that they let you make objects in JavaScript. Objects in JavaScript are just functions and closures that lets JavaScript store the value of the property for the object once it has been created.</p>
+
+<p>Objects are very useful and keep everything nice and organised. Different objects can do different jobs and working together objects can do complicated things.</p>
+
+<p>It's lucky that JavaScript has closures for making objects, otherwise everything would become a messy nightmare.</p>

@@ -1,0 +1,24 @@
+<h1>if <strong>name</strong> == '<strong>main</strong>':</h1>
+
+<p>We see if <code>__name__ == '__main__':</code> quite often.</p>
+
+<p>It checks if a module is being imported or not.</p>
+
+<p>In other words, the code within the <code>if</code> block will be executed only when the code runs directly. Here <code>directly</code> means <code>not imported</code>.</p>
+
+<p>Let's see what it does using a simple code that prints the name of the module:</p>
+
+<pre><code># test.py
+def test():
+   print('test module name=%s' %(__name__))
+
+if __name__ == '__main__':
+   print('call test()')
+   test()
+</code></pre>
+
+<p>If we run the code directly via <code>python test.py</code>, the module name is <code>__main__</code>:</p>
+
+<pre><code>call test()
+test module name=__main__
+</code></pre>

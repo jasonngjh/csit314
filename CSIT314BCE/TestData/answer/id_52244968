@@ -1,0 +1,20 @@
+<p>In Python <code>generators</code> (a special type of <code>iterators</code>) are used to generate series of values and <code>yield</code> keyword is just like the <code>return</code> keyword of generator functions. </p>
+
+<p><strong>The other fascinating thing <code>yield</code> keyword  does is saving the <code>state</code> of a generator function</strong>. </p>
+
+<p>So, we can set a <code>number</code> to a different value each time the <code>generator</code> yields. </p>
+
+<p>Here's an instance:</p>
+
+<pre><code>def getPrimes(number):
+    while True:
+        if isPrime(number):
+            number = yield number     # a miracle occurs here
+        number += 1
+
+def printSuccessivePrimes(iterations, base=10):
+    primeGenerator = getPrimes(base)
+    primeGenerator.send(None)
+    for power in range(iterations):
+        print(primeGenerator.send(base ** power))
+</code></pre>

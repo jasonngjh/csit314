@@ -1,0 +1,14 @@
+<p>I was stuck in a situation seeing <code>error: pathspec 'desired-branch' did not match any file(s) known to git.</code> for all of the suggestions above. I'm on git version 1.8.3.1.  </p>
+
+<p>So this <strong>worked for me</strong>:  </p>
+
+<pre><code>git fetch origin desired-branch
+git checkout -b desired-branch FETCH_HEAD
+</code></pre>
+
+<p>The explanation behind is that I've noticed that when fetching the remote branch, it was fetched to FETCH_HEAD:</p>
+
+<pre><code>$ git fetch origin desired-branch
+From github.com:MYTEAM/my-repo
+    * branch            desired-branch -&gt; FETCH_HEAD
+</code></pre>

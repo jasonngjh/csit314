@@ -1,0 +1,51 @@
+<h2>Easy answer for beginner</h2>
+
+<p>If you pass a complex Object (like a dog as apparently it is the common example) it is the same as passing the reference.
+If you pass a field of a complex Object (like the name of the dog only) it is the same as passing the value (changing it won't change the dog/parent of the field).</p>
+
+<p>Note that Object that are not "complex" (not like our dog) like Integer or String are passed by value.
+So even if they are Object with everything you can do on them they cannot be modified inside a method... Yes, this is ****ed up and does not make any sense...</p>
+
+<p>Example (not a Dog) :</p>
+
+<pre><code>public class HelloWorld {
+    private Integer i;
+    private String s;
+    private Boolean b;
+
+    public static void main(String[] args) {
+        HelloWorld h = new HelloWorld();
+
+        h.s = "Bill";
+        h.ModMe(h.s);
+        h.i = 2;
+        h.ModMe(h.i);
+        h.b = true;
+        h.ModMe(h.b);
+        System.out.println(h.s + " " + h.i + " " + h.b);
+
+        h.ModMe(h);
+        System.out.println(h.s + " " + h.i + " " + h.b);
+
+        String test = "TEST";
+        h.ModMe(test);
+        System.out.println(test);
+    }
+
+    public void ModMe(Object o) {
+        if (o instanceof HelloWorld) {
+            ((HelloWorld) o).i = (int) Math.pow(((HelloWorld) o).i, 2);
+            ((HelloWorld) o).b = !((HelloWorld) o).b;
+            ((HelloWorld) o).s = ((HelloWorld) o).s.concat(" modded successfully");
+        } else if (o instanceof Integer) {
+            o = (Integer) o + (Integer) o;
+        } else if (o instanceof String) {
+            o = ((String) o).concat(" is modified.");
+        } else if (o instanceof Boolean) {
+            o = !(Boolean) o;
+        }
+    }
+}
+</code></pre>
+
+<p>If you run that the object h will be modified if you use the whole object as the argument but not the fields s i or b if you only use them as argument. if you debug that you will notice that for the fields the id of the object will change as soon as you run the line where the value is changed. So it will do the same as "new Integer" "new String" and "new Boolean" automatically.</p>

@@ -1,0 +1,78 @@
+<p><code>yield</code> yields something. It's like somebody asks you to make 5 cupcakes. If you are done with at least one cupcake, you can give it to them to eat while you make other cakes.</p>
+
+<pre><code>In [4]: def make_cake(numbers):
+   ...:     for i in range(numbers):
+   ...:         yield 'Cake {}'.format(i)
+   ...:
+
+In [5]: factory = make_cake(5)
+</code></pre>
+
+<p>Here <code>factory</code> is called a generator, which makes you cakes. If you call <code>make_function</code>, you get a generator instead of running that function. It is because when <code>yield</code> keyword is present in a function, it becomes a generator.</p>
+
+<pre><code>In [7]: next(factory)
+Out[7]: 'Cake 0'
+
+In [8]: next(factory)
+Out[8]: 'Cake 1'
+
+In [9]: next(factory)
+Out[9]: 'Cake 2'
+
+In [10]: next(factory)
+Out[10]: 'Cake 3'
+
+In [11]: next(factory)
+Out[11]: 'Cake 4'
+</code></pre>
+
+<p>They consumed all the cakes, but they ask for one again.</p>
+
+<pre><code>In [12]: next(factory)
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+&lt;ipython-input-12-0f5c45da9774&gt; in &lt;module&gt;
+----&gt; 1 next(factory)
+
+StopIteration:
+</code></pre>
+
+<p>and they are being told to stop asking more. So once you consumed a generator you are done with it. You need to call <code>make_cake</code> again if you want more cakes. It is like placing another order for cupcakes.</p>
+
+<pre><code>In [13]: factory = make_cake(3)
+
+In [14]: for cake in factory:
+    ...:     print(cake)
+    ...:
+Cake 0
+Cake 1
+Cake 2
+</code></pre>
+
+<p>You can also use for loop with a generator like the one above.</p>
+
+<p>One more example: Lets say you want a random password whenever you ask for it.</p>
+
+<pre><code>In [22]: import random
+
+In [23]: import string
+
+In [24]: def random_password_generator():
+    ...:     while True:
+    ...:         yield ''.join([random.choice(string.ascii_letters) for _ in range(8)])
+    ...:
+
+In [25]: rpg = random_password_generator()
+
+In [26]: for i in range(3):
+    ...:     print(next(rpg))
+    ...:
+FXpUBhhH
+DdUDHoHn
+dvtebEqG
+
+In [27]: next(rpg)
+Out[27]: 'mJbYRMNo'
+</code></pre>
+
+<p>Here <code>rpg</code> is a generator, which can generate an infinite number of random passwords. So we can also say that generators are useful when we don't know the length of the sequence, unlike list which has a finite number of elements.</p>

@@ -1,0 +1,20 @@
+<p>The browser is trying to convert <code>chucknorris</code> into hex colour code, because it's not a valid value. </p>
+
+<ol>
+<li>In <code>chucknorris</code>, everything except <strong><code>c</code></strong> is not a valid hex value.</li>
+<li>So it gets converted to <strong><code>c00c00000000</code></strong>. </li>
+<li>Which becomes <strong>#c00000</strong>, a shade of red.</li>
+</ol>
+
+<p>This seems to be an issue primarily with <strong>Internet&nbsp;Explorer</strong> and <strong>Opera</strong> (12) as both Chrome (31) and Firefox (26) just ignore this.</p>
+
+<p><em>P.S. The numbers in brackets are the browser versions I tested on.</em></p>
+
+<p>.</p>
+
+<p>On a lighter note</p>
+
+<blockquote>
+  <p>Chuck Norris doesn't conform to web standards. Web standards conform
+  to him. #BADA55</p>
+</blockquote>

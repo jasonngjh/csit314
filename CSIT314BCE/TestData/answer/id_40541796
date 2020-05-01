@@ -1,0 +1,21 @@
+<p>JavaScript “strict” mode was introduced in ECMAScript 5.</p>
+
+<pre><code>(function() {
+  "use strict";
+  your code...
+})();
+</code></pre>
+
+<p>Writing <code>"use strict";</code> at the very top of your JS file turns on strict
+syntax checking. It does the following tasks for us:</p>
+
+<ol>
+<li><p>shows an error if you try to assign to an undeclared variable</p></li>
+<li><p>stops you from overwriting key JS system libraries</p></li>
+<li><p>forbids some unsafe or error-prone language features</p></li>
+</ol>
+
+<p><code>use strict</code> also works inside of individual functions. It is always a better practice to include <code>use strict</code> in your code.</p>
+
+<p>Browser compatibility issue: 
+The "use" directives are meant to be backwards-compatible. Browsers that do not support them will just see a string literal that isn't referenced further. So, they will pass over it and move on.</p>

@@ -1,0 +1,56 @@
+<h2>PT 1: Of Realty Listings</h2>
+
+<p>There is a blue, 120sq-ft "Tiny House" currently parked at 1234 Main St with a nicely manicured lawn &amp; flower bed out front. </p>
+
+<p>A Realtor with a local firm is hired and told to keep a listing for that house. </p>
+
+<p>Let's call that Realtor "Bob." Hi Bob.</p>
+
+<p>Bob keeps his Listing, which he calls <code>tinyHouseAt1234Main</code>, up to date with a webcam that allows him to note any changes to the actual house in real time. He also keeps a tally of how many people have asked about the listing. 
+Bob's integer <code>viewTally</code> for the house is at 42 today.</p>
+
+<p>Whenever someone wants info about the blue Tiny House at 1234 Main St, they ask Bob. </p>
+
+<p>Bob looks up his Listing <code>tinyHouseAt1234Main</code> and tells them all about it - the color, the nice lawn, the loft bed and the composting toilet, etc. Then he adds their inquiry to his <code>viewTally</code>. He doesn't tell them the real, physical address though, because Bob's firm specializes in Tiny Houses that could be moved at any time. The tally is now 43. </p>
+
+<p>At another firm, Realtors might explicitly say their listing "points" to the house at 1234 Main St, denoting this with a little <code>*</code> next to it, because they mainly deal with houses that rarely ever move (though presumably there are reasons for doing so). Bob's firm doesn't bother doing this.</p>
+
+<p>Now, of course Bob doesn't physically go and put the <em>actual</em> house on a truck to show it to clients directly - that would be impractical and a ridiculous waste of resources. Passing a full copy of his tally sheet is one thing, but passing around the whole house all the time is costly and ridiculous.  </p>
+
+<p>(Aside: Bob's firm also doesn't 3D print new &amp; unique copies of a listed house every single time someone asks about it. That's what the upstart, similarly named web-based firm &amp; its spinoffs do - that's expensive and slower, and people often get the 2 firms confused, but they're quite popular anyway). </p>
+
+<p>At some other, older firms closer to the Sea, a realtor like Bob might not even exist to manage the Listings. Clients might instead consult the Rolodex "Annie" (<code>&amp;</code> for short) for the direct address of the house. Instead of reading off the referenced house details from the listing like Bob does, clients instead get the house address from Annie (<code>&amp;</code>), and go directly to 1234 Main St, sometimes w/no idea what they might find there. </p>
+
+<p>One day, Bob's firm begins offering a new automated service that needs the listing for a house the client is interested in. </p>
+
+<p>Well, the person with that info is Bob, so the client has Bob call up the service and send it a copy of the listing. </p>
+
+<p><code>jobKillingAutomatedListingService(Listing tinyHouseAt1234Main, int viewTally)</code> Bob sends along ... </p>
+
+<p>The service, on its end, calls this Listing <code>houseToLookAt</code>, but really what it receives is an exact copy of Bob's listing, with the exact same VALUEs in it, that refer to the house at 1234 Main St. </p>
+
+<p>This new service also has its own internal tally of how many people have viewed the listing. The service accepts Bob's tally out of professional courtesy, but it doesn't really care and overwrites it entirely with its own local copy anyway. It's tally for today is 1, while Bob's is still 43. </p>
+
+<p>The realty firms call this "pass-by-value" since Bob's passing the current value of his <code>viewTally</code> and his Listing <code>tinyHouseAt1234Main</code>. He's not actually passing along the entire physical house, because that's impractical. Nor is he passing the real physical address like Annie(<code>&amp;</code>) would do. </p>
+
+<p>But he IS passing a copy of <em>the value OF</em> the reference he has to the house. Seems like a silly pedantic difference in some ways, but that's how his firm works ... 
+..............</p>
+
+<h2>PT II: Where things get confusing and dangerous ...</h2>
+
+<p>The new automated service, not being all functional and math-oriented like some other trendy financial &amp; scientific firms, can have unforeseen side effects... </p>
+
+<p>Once given a Listing object it allows clients to <em>actually</em> repaint the REAL house at 1234 Main St, using a remote drone robot fleet! It allows clients to control a robot bulldozer to ACTUALLY dig up the flower bed! This is madness!!! </p>
+
+<p>The service also lets clients completely redirect <code>houseToLookAt</code> to some other house at another address, without involving Bob or his listing. All of a sudden they could be looking at 4321 Elm St. instead, which has no connection whatsoever to Bob's listing (thankfully they can't do anymore damage). </p>
+
+<p>Bob watches all this on his realtime webcam.
+Resigned to the drudgery of his sole job responsibility, he tells clients about the new ugly paint job &amp; sudden lack of curb appeal. His Listing <em>is</em> still for 1234 Main St., after all. The new service's <code>houseToLookAt</code> couldn't change that. Bob reports the details of his <code>tinyHouseAt1234Main</code> accurately and dutifully as always, until he gets fired or the house is destroyed entirely by The Nothing. </p>
+
+<p>Really the only thing the service CAN'T do with its <code>houseToLookAt</code> copy of the Bob's original listing is change the address from 1234 Main St. to some other address, or to a void of nothingness, or to some random type of object like a Platypus. Bob's Listing still always points to 1234 Main St, for whatever it's still worth. He passes its current value around like always.</p>
+
+<p>This bizarre side-effect of passing a listing to the new automated service is confusing for people who ask about how it works. Really, what's the difference between the ability to remotely control robots that alter the state of the house at 1234 Main, vs. <em>actually</em> physically going there and wreaking havoc because Annie gave you the address?? </p>
+
+<p>Seems like kind of a nitpicky semantic argument if what you generally care about is the <em>state</em> of the house in the listing being copied and passed around, right? </p>
+
+<p>I mean, if you were in the business of actually picking up houses and physically moving them to other addresses (not like mobile or Tiny Homes where that's sort of an expected function of the platform), or you were accessing, renaming, and shuffling entire neighborhoods like some sort of low-level God-playing madman, THEN maybe you'd care more about passing around those specific address references instead of just copies of the the latest value of the house details ... </p>

@@ -1,0 +1,14 @@
+<p>you can use the <code>delete</code> operator as of below.</p>
+
+<pre><code> var multiverse = {
+        earth1: "Silver Age",
+        earth2: "Golden Age"
+    };
+
+delete multiverse.earth2;//will return true if it finds 
+
+// Outputs: { earth1: "Silver Age" }
+console.log(multiverse);
+</code></pre>
+
+<p>The delete operator also has a <code>return value.</code> If it succeeds in deleting a property, it will return true. If it fails to delete a property because the property is unwritable it will <code>return false</code>, or if in strict mode it will throw an error.</p>

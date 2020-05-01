@@ -1,0 +1,9 @@
+<p>To remove the untracked files you should first use command to view the files that will be affected by cleaning </p>
+
+<pre><code>git clean -fdn
+</code></pre>
+
+<p>This will show you the list of files that will be deleted. Now to actually delete those files use this command:</p>
+
+<pre><code>git clean -fd
+</code></pre>

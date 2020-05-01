@@ -1,0 +1,31 @@
+<p>The simplest explanation for the <code>__name__</code> variable (imho) is the following:</p>
+
+<p>Create the following files.</p>
+
+<pre><code># a.py
+import b
+</code></pre>
+
+<p>and</p>
+
+<pre><code># b.py
+print "Hello World from %s!" % __name__
+
+if __name__ == '__main__':
+    print "Hello World again from %s!" % __name__
+</code></pre>
+
+<p>Running them will get you this output:</p>
+
+<pre><code>$ python a.py
+Hello World from b!
+</code></pre>
+
+<p>As you can see, when a module is imported, Python sets <code>globals()['__name__']</code> in this module to the module's name. Also, upon import all the code in the module is being run. As the <code>if</code> statement evaluates to <code>False</code> this part is not executed.</p>
+
+<pre><code>$ python b.py
+Hello World from __main__!
+Hello World again from __main__!
+</code></pre>
+
+<p>As you can see, when a file is executed, Python sets <code>globals()['__name__']</code> in this file to <code>"__main__"</code>. This time, the <code>if</code> statement evaluates to <code>True</code> and is being run.</p>

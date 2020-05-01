@@ -1,0 +1,23 @@
+<p>Here is site: <a href="http://ohshitgit.com/" rel="noreferrer"><code>Oh shit, git!</code></a>.</p>
+
+<p>Here are many recipes how to undo things in Git. Some of them:</p>
+
+<blockquote>
+  <p>Oh shit, I need to change the message on my last commit!</p>
+</blockquote>
+
+<pre><code>git commit --amend
+# follow prompts to change the commit message
+</code></pre>
+
+<blockquote>
+  <p>Oh shit, I accidentally committed something to master that should have been on a brand new branch!</p>
+</blockquote>
+
+<pre><code># Create a new branch from the current state of master
+git branch some-new-branch-name
+# Remove the commit from the master branch
+git reset HEAD~ --hard
+git checkout some-new-branch-name
+# Your commit lives in this branch now :)
+</code></pre>

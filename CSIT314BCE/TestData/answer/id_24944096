@@ -1,0 +1,21 @@
+<p>There is another <code>yield</code> use and meaning (since Python 3.3):</p>
+
+<pre><code>yield from &lt;expr&gt;
+</code></pre>
+
+<p>From <em><a href="http://www.python.org/dev/peps/pep-0380/" rel="noreferrer">PEP 380 -- Syntax for Delegating to a Subgenerator</a></em>:</p>
+
+<blockquote>
+  <p>A syntax is proposed for a generator to delegate part of its operations to another generator. This allows a section of code containing 'yield' to be factored out and placed in another generator. Additionally, the subgenerator is allowed to return with a value, and the value is made available to the delegating generator.</p>
+  
+  <p>The new syntax also opens up some opportunities for optimisation when one generator re-yields values produced by another.</p>
+</blockquote>
+
+<p>Moreover <a href="https://www.python.org/dev/peps/pep-0492/" rel="noreferrer">this</a> will introduce (since Python 3.5):</p>
+
+<pre><code>async def new_coroutine(data):
+   ...
+   await blocking_action()
+</code></pre>
+
+<p>to avoid coroutines being confused with a regular generator (today <code>yield</code> is used in both).</p>

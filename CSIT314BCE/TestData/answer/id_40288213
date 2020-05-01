@@ -1,0 +1,21 @@
+<p>Why all the complication?</p>
+
+<p>The simple answer to the original question is just :</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+int main()
+{
+    int x = 10;
+    while (x &gt; 0) 
+    {
+        printf("%d ", x);
+        x = x-1;
+    }
+}
+</code></pre>
+
+<p>Does the same thing. Not saying you should do it like this, but it does the same thing and would have answered the question in one post.</p>
+
+<p>The <code>x--</code> is just shorthand for the above, and <code>&gt;</code> is just a normal greater-than <code>operator</code>. No big mystery!</p>
+
+<p>There's too much people making simple things complicated nowadays  ;)</p>

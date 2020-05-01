@@ -1,0 +1,10 @@
+<p>You need to check both... Display as well as visibility:</p>
+
+<pre><code>if ($(this).css("display") == "none" || $(this).css("visibility") == "hidden") {
+    // The element is not visible
+} else {
+    // The element is visible
+}
+</code></pre>
+
+<p>If we check for <code>$(this).is(":visible")</code>, jQuery checks for both the things automatically.</p>

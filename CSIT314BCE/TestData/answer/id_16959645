@@ -1,0 +1,34 @@
+<p>OK, 6-year-old closures fan. Do you want to hear the simplest example of closure?</p>
+
+<p>Let's imagine the next situation: a driver is sitting in a car. That car is inside a plane. Plane is in the airport. The ability of driver to access things outside his car, but inside the plane, even if that plane leaves an airport, is a closure. That's it. When you turn 27, look at the <a href="https://stackoverflow.com/a/111200/1393791">more detailed explanation</a> or at the example below.</p>
+
+<p>Here is how I can convert my plane story into the code.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var plane = function(defaultAirport) {
+
+  var lastAirportLeft = defaultAirport;
+
+  var car = {
+    driver: {
+      startAccessPlaneInfo: function() {
+        setInterval(function() {
+          console.log("Last airport was " + lastAirportLeft);
+        }, 2000);
+      }
+    }
+  };
+  car.driver.startAccessPlaneInfo();
+
+  return {
+    leaveTheAirport: function(airPortName) {
+      lastAirportLeft = airPortName;
+    }
+  }
+}("Boryspil International Airport");
+
+plane.leaveTheAirport("John F. Kennedy");</code></pre>
+</div>
+</div>
+</p>

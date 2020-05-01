@@ -1,0 +1,11 @@
+<p><strong>Git Fetch</strong></p>
+
+<p>You download changes to your local branch from origin through fetch. Fetch asks the remote repo for all commits that others have made but you don't have on your local repo. Fetch downloads these commits and adds them to the local repository.</p>
+
+<p><strong>Git Merge</strong></p>
+
+<p>You can apply changes downloaded through fetch using the merge command. Merge will take the commits retrieved from fetch and try to add them to your local branch. The merge will keep the commit history of your local changes so that when you share your branch with push, Git will know how others can merge your changes.</p>
+
+<p><strong>Git Pull</strong></p>
+
+<p>Fetch and merge run together often enough that a command that combines the two, pull, was created. Pull does a fetch and then a merge to add the downloaded commits into your local branch.</p>

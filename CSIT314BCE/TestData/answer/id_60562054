@@ -1,0 +1,33 @@
+<p><strong>First yield program</strong> </p>
+
+<pre><code>def countdown_gen(x):
+      count = x
+      while count &gt; 0:
+           yield count
+           count -= 1
+
+g = countdown_gen(5)
+
+for item in g:
+     print(item)
+</code></pre>
+
+<p><strong>Output</strong></p>
+
+<pre><code>5
+4
+3
+2
+1
+</code></pre>
+
+<p><strong>Understand flow</strong> </p>
+
+<p><a href="https://i.stack.imgur.com/pis87.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/pis87.png" alt="enter image description here"></a></p>
+
+<p><strong>Note</strong></p>
+
+<ol>
+<li>Return a generator obj Suspend a functon execution and save its</li>
+<li>status, function can be executed again.</li>
+</ol>

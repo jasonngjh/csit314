@@ -1,0 +1,17 @@
+<p>A more modern, <a href="https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_-_ECMAScript_2015">ECMAScript 2015</a> (formerly known as Harmony or ES&nbsp;6) approach. Given:</p>
+
+<pre><code>const items = [1, 2, 3, 4];
+const index = 2;
+</code></pre>
+
+<p>Then:</p>
+
+<pre><code>items.filter((x, i) =&gt; i !== index);
+</code></pre>
+
+<p>Yielding: </p>
+
+<pre><code>[1, 2, 4]
+</code></pre>
+
+<p>You can use <a href="https://babeljs.io/">Babel</a> and a <a href="http://cdn.polyfill.io/v2/docs/">polyfill service</a> to ensure this is well supported across browsers.</p>

@@ -1,0 +1,30 @@
+<p>You can extend the array object to define a custom delete function as follows:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>let numbers = [1,2,4,4,5,3,45,9];
+
+numbers.delete = function(value){
+    var indexOfTarget = this.indexOf(value)
+
+    if(indexOfTarget !== -1)
+    {
+        console.log("array before delete " + this)
+        this.splice(indexOfTarget, 1)
+        console.log("array after delete " + this)
+    }
+    else{
+        console.error("element " + value + " not found")
+    }
+}
+numbers.delete(888)
+// Expected output:
+// element 888 not found
+numbers.delete(1)
+
+// Expected output;
+// array before delete 1,2,4,4,5,3,45,9
+// array after delete 2,4,4,5,3,45,9</code></pre>
+</div>
+</div>
+</p>

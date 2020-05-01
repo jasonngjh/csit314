@@ -1,0 +1,10 @@
+<p>For specifying the interesting JSON result, you add "application/json" in your request header like below:</p>
+
+<p>"Accept:application/json" is a desired response format.</p>
+
+<p>"Content-Type:application/json" specifies the content format of your request, but sometimes you specify both <code>application/json</code> and <code>application/xml</code>, but the quality of these might be different. Which server will send back the different response formats, look at the example:</p>
+
+<pre><code>Accept:application/json;q=0.4,application/xml;q=8
+</code></pre>
+
+<p>This will return XML, because XML has higher quality.</p>

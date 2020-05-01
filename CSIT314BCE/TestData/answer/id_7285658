@@ -1,0 +1,44 @@
+<p>Taking the question seriously, we should find out what a typical 6-year-old is capable of cognitively, though admittedly, one who is interested in JavaScript is not so typical.  </p>
+
+<p>On  <a href="http://www.howkidsdevelop.com/5-7years.html" rel="noreferrer">Childhood Development: 5 to 7 Years </a> it says:</p>
+
+<blockquote>
+  <p>Your child will be able to follow two-step directions. For example, if you say to your child, "Go to the kitchen and get me a trash bag" they will be able to remember that direction.</p>
+</blockquote>
+
+<p>We can use this example to explain closures, as follows:</p>
+
+<blockquote>
+  <p>The kitchen is a closure that has a local variable, called <code>trashBags</code>.  There is a function inside the kitchen called <code>getTrashBag</code> that gets one trash bag and returns it.</p>
+</blockquote>
+
+<p>We can code this in JavaScript like this:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function makeKitchen() {
+  var trashBags = ['A', 'B', 'C']; // only 3 at first
+
+  return {
+    getTrashBag: function() {
+      return trashBags.pop();
+    }
+  };
+}
+
+var kitchen = makeKitchen();
+
+console.log(kitchen.getTrashBag()); // returns trash bag C
+console.log(kitchen.getTrashBag()); // returns trash bag B
+console.log(kitchen.getTrashBag()); // returns trash bag A</code></pre>
+</div>
+</div>
+</p>
+
+<p>Further points that explain why closures are interesting:</p>
+
+<ul>
+<li>Each time <code>makeKitchen()</code> is called, a new closure is created with its own separate <code>trashBags</code>.</li>
+<li>The <code>trashBags</code> variable is local to the inside of each kitchen and is not accessible outside, but the inner function on the <code>getTrashBag</code> property does have access to it.  </li>
+<li>Every function call creates a closure, but there would be no need to keep the closure around unless an inner function, which has access to the inside of the closure, can be called from outside the closure.  Returning the object with the <code>getTrashBag</code> function does that here.</li>
+</ul>

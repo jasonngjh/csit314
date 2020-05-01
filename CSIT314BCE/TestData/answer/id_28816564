@@ -1,0 +1,105 @@
+<p>Perhaps a little beyond all but the most precocious of six-year-olds, but a few examples that helped make the concept of closure in JavaScript click for me.</p>
+
+<p>A closure is a function that has access to another function's scope (its variables and functions). The easiest way to create a closure is with a function within a function; the reason being that in JavaScript a function always has access to its containing function’s scope.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function outerFunction() {
+    var outerVar = "monkey";
+    
+    function innerFunction() {
+        alert(outerVar);
+    }
+    
+    innerFunction();
+}
+
+outerFunction();</code></pre>
+</div>
+</div>
+</p>
+
+<p>ALERT: monkey</p>
+
+<p>In the above example, outerFunction is called which in turn calls innerFunction. Note how outerVar is available to innerFunction, evidenced by its correctly alerting the value of outerVar.</p>
+
+<p>Now consider the following:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function outerFunction() {
+    var outerVar = "monkey";
+    
+    function innerFunction() {
+        return outerVar;
+    }
+    
+    return innerFunction;
+}
+
+var referenceToInnerFunction = outerFunction();
+alert(referenceToInnerFunction());</code></pre>
+</div>
+</div>
+</p>
+
+<p>ALERT: monkey</p>
+
+<p>referenceToInnerFunction is set to outerFunction(), which simply returns a reference to innerFunction. When referenceToInnerFunction is called, it returns outerVar. Again, as above, this demonstrates that innerFunction has access to outerVar, a variable of outerFunction. Furthermore, it is interesting to note that it retains this access even after outerFunction has finished executing.</p>
+
+<p>And here is where things get really interesting. If we were to get rid of outerFunction, say set it to null, you might think that referenceToInnerFunction would loose its access to the value of outerVar. But this is not the case. </p>
+
+<p><div class="snippet" data-lang="js" data-hide="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function outerFunction() {
+    var outerVar = "monkey";
+    
+    function innerFunction() {
+        return outerVar;
+    }
+    
+    return innerFunction;
+}
+
+var referenceToInnerFunction = outerFunction();
+alert(referenceToInnerFunction());
+
+outerFunction = null;
+alert(referenceToInnerFunction());</code></pre>
+</div>
+</div>
+</p>
+
+<p>ALERT: monkey
+ALERT: monkey</p>
+
+<p>But how is this so? How can referenceToInnerFunction still know the value of outerVar now that outerFunction has been set to null?</p>
+
+<p>The reason that referenceToInnerFunction can still access the value of outerVar is because when the closure was first created by placing innerFunction inside of outerFunction, innerFunction added a reference to outerFunction’s scope (its variables and functions) to its scope chain. What this means is that innerFunction has a pointer or reference to all of outerFunction’s variables, including outerVar. So even when outerFunction has finished executing, or even if it is deleted or set to null, the variables in its scope, like outerVar, stick around in memory because of the outstanding reference to them on the part of the innerFunction that has been returned to referenceToInnerFunction. To truly release outerVar and the rest of outerFunction’s variables from memory you would have to get rid of this outstanding reference to them, say by setting referenceToInnerFunction to null as well.</p>
+
+<p>//////////</p>
+
+<p>Two other things about closures to note. First, the closure will always have access to the last values of its containing function.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function outerFunction() {
+    var outerVar = "monkey";
+    
+    function innerFunction() {
+        alert(outerVar);
+    }
+    
+    outerVar = "gorilla";
+
+    innerFunction();
+}
+
+outerFunction();</code></pre>
+</div>
+</div>
+</p>
+
+<p>ALERT: gorilla</p>
+
+<p>Second, when a closure is created, it retains a reference to all of its enclosing function’s variables and functions; it doesn’t get to pick and choose. And but so, closures should be used sparingly, or at least carefully, as they can be memory intensive; a lot of variables can be kept in memory long after a containing function has finished executing.</p>

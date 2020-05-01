@@ -1,0 +1,26 @@
+<p>I came across this problem in my current project as I have quite a bit of JSON that requires some commenting to keep things easy to remember.</p>
+
+<p>I've used this simple python function to replace comments &amp; use <code>json.loads</code> to convert it into a <code>dict</code>:</p>
+
+<pre><code>import json, re
+
+def parse_json(data_string):
+  result = []
+  for line in data_string.split("\n"):
+    line = line.strip()
+    if len(line) &lt; 1 or line[0:2] == "//":
+      continue
+    if line[-1] not in "\,\"\'":
+      line = re.sub("\/\/.*?$", "", line)
+    result.append(line)
+  return json.loads("\n".join(result))
+
+print(parse_json("""
+{
+  // This is a comment
+  "name": "value" // so is this
+  // "name": "value"
+  // the above line gets removed
+}
+"""))
+</code></pre>

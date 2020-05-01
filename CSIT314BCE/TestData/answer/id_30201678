@@ -1,0 +1,205 @@
+<p>Let me try to explain my understanding with the help of four examples. Java is pass-by-value, and not pass-by-reference</p>
+
+<p>/**</p>
+
+<p>Pass By Value</p>
+
+<p>In Java, all parameters are passed by value, i.e. assigning a method argument is not visible to the caller.</p>
+
+<p>*/</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code>public class PassByValueString {
+    public static void main(String[] args) {
+        new PassByValueString().caller();
+    }
+
+    public void caller() {
+        String value = "Nikhil";
+        boolean valueflag = false;
+        String output = method(value, valueflag);
+        /*
+         * 'output' is insignificant in this example. we are more interested in
+         * 'value' and 'valueflag'
+         */
+        System.out.println("output : " + output);
+        System.out.println("value : " + value);
+        System.out.println("valueflag : " + valueflag);
+
+    }
+
+    public String method(String value, boolean valueflag) {
+        value = "Anand";
+        valueflag = true;
+        return "output";
+    }
+}
+</code></pre>
+
+<p><strong>Result</strong></p>
+
+<pre><code>output : output
+value : Nikhil
+valueflag : false
+</code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<p>/**
+ * 
+ * Pass By Value
+ *
+ */</p>
+
+<pre><code>public class PassByValueNewString {
+    public static void main(String[] args) {
+        new PassByValueNewString().caller();
+    }
+
+    public void caller() {
+        String value = new String("Nikhil");
+        boolean valueflag = false;
+        String output = method(value, valueflag);
+        /*
+         * 'output' is insignificant in this example. we are more interested in
+         * 'value' and 'valueflag'
+         */
+        System.out.println("output : " + output);
+        System.out.println("value : " + value);
+        System.out.println("valueflag : " + valueflag);
+
+    }
+
+    public String method(String value, boolean valueflag) {
+        value = "Anand";
+        valueflag = true;
+        return "output";
+    }
+}
+</code></pre>
+
+<p><strong>Result</strong></p>
+
+<pre><code>output : output
+value : Nikhil
+valueflag : false
+</code></pre>
+
+<p><strong>Example 3:</strong></p>
+
+<p>/**
+  This 'Pass By Value has a feeling of 'Pass By Reference'</p>
+
+<p>Some people say primitive types and 'String' are 'pass by value'
+  and objects are 'pass by reference'.</p>
+
+<p>But from this example, we can understand that it is infact pass by value only,
+  keeping in mind that here we are passing the reference as the value.
+  ie: reference is passed by value.
+  That's why are able to change and still it holds true after the local scope.
+  But we cannot change the actual reference outside the original scope.
+  what that means is demonstrated by next example of PassByValueObjectCase2.</p>
+
+<p>*/</p>
+
+<pre><code>public class PassByValueObjectCase1 {
+
+    private class Student {
+        int id;
+        String name;
+        public Student() {
+        }
+        public Student(int id, String name) {
+            super();
+            this.id = id;
+            this.name = name;
+        }
+        public int getId() {
+            return id;
+        }
+        public void setId(int id) {
+            this.id = id;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        @Override
+        public String toString() {
+            return "Student [id=" + id + ", name=" + name + "]";
+        }
+    }
+
+    public static void main(String[] args) {
+        new PassByValueObjectCase1().caller();
+    }
+
+    public void caller() {
+        Student student = new Student(10, "Nikhil");
+        String output = method(student);
+        /*
+         * 'output' is insignificant in this example. we are more interested in
+         * 'student'
+         */
+        System.out.println("output : " + output);
+        System.out.println("student : " + student);
+    }
+
+    public String method(Student student) {
+        student.setName("Anand");
+        return "output";
+    }
+}
+</code></pre>
+
+<p><strong>Result</strong></p>
+
+<pre><code>output : output
+student : Student [id=10, name=Anand]
+</code></pre>
+
+<p><strong>Example 4:</strong></p>
+
+<p>/**</p>
+
+<p>In addition to what was mentioned in Example3 (PassByValueObjectCase1.java),  we cannot change the actual reference outside the original scope."</p>
+
+<p>Note: I am not pasting the code for <code>private class Student</code>. The class definition for <code>Student</code> is same as Example3.</p>
+
+<p>*/</p>
+
+<pre><code>public class PassByValueObjectCase2 {
+
+    public static void main(String[] args) {
+        new PassByValueObjectCase2().caller();
+    }
+
+    public void caller() {
+        // student has the actual reference to a Student object created
+        // can we change this actual reference outside the local scope? Let's see
+        Student student = new Student(10, "Nikhil");
+        String output = method(student);
+        /*
+         * 'output' is insignificant in this example. we are more interested in
+         * 'student'
+         */
+        System.out.println("output : " + output);
+        System.out.println("student : " + student); // Will it print Nikhil or Anand?
+    }
+
+    public String method(Student student) {
+        student = new Student(20, "Anand");
+        return "output";
+    }
+
+}
+</code></pre>
+
+<p><strong>Result</strong></p>
+
+<pre><code>output : output
+student : Student [id=10, name=Nikhil]
+</code></pre>

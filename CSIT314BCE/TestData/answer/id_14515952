@@ -1,0 +1,22 @@
+<p><strong><a href="https://freakyjolly.com/demo/check-if-visible-or-hidden-jquery.html" rel="noreferrer">Demo Link</a></strong> </p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>$('#clickme').click(function() {
+  $('#book').toggle('slow', function() {
+    // Animation complete.
+    alert($('#book').is(":visible")); //&lt;--- TRUE if Visible False if Hidden
+  });
+});</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;div id="clickme"&gt;
+  Click here
+&lt;/div&gt;
+&lt;img id="book" src="https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png" alt="" width="300"/&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p><strong>Source:</strong> </p>
+
+<p><a href="http://bloggerplugnplay.blogspot.in/2013/01/how-to-see-if-element-is-hidden-or.html" rel="noreferrer">Blogger Plug n Play - jQuery Tools and Widgets: How to See if Element is hidden or Visible Using jQuery</a></p>

@@ -1,0 +1,13 @@
+<p>Everybody comment in such complicated manner. </p>
+
+<p>If you want to remove the last commit from your branch simplest way to do it is: </p>
+
+<pre><code>git reset --hard HEAD~1
+</code></pre>
+
+<p>Now to actually push that change to get rid of your last commit you have to </p>
+
+<pre><code>git push --force
+</code></pre>
+
+<p>And that's it. This will remove your last commit</p>

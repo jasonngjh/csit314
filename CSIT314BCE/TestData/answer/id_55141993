@@ -1,0 +1,11 @@
+<p>As many already said you can use either "delete"(javascript property) or "unset"(using lodash).</p>
+
+<p>You can also use lodash property "pick" to pick only necessary object properties.It will help when you get to delete multiple properties from the object.</p>
+
+<p>Usage as below:</p>
+
+<pre><code>var _   = require("lodash");
+var obj = {"a":1, "b":2, "c":3};
+obj = _.pick(obj,["a","b"]);    
+//Now obj contains only 2 props {"a":1, "b":2}
+</code></pre>

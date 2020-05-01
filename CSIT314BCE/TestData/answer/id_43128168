@@ -1,0 +1,13 @@
+<p>Reference: <a href="http://www.coding-issues.com/2017/03/how-to-undo-or-revert-last-commits-in-git.html" rel="noreferrer">How to undo last commit in Git?</a></p>
+
+<p>If you have Git Extensions installed you can easily undo/revert any commit (you can download git extensions from <a href="https://gitextensions.github.io/" rel="noreferrer">here</a>).</p>
+
+<p>Open Git Extensions, right click on the commit you want to revert then select "Revert commit". </p>
+
+<p><a href="https://i.stack.imgur.com/j2fK1.png" rel="noreferrer"><img src="https://i.stack.imgur.com/j2fK1.png" alt="Git Extensions screen shot"></a></p>
+
+<p>A popup will be opened (see the screenshot below)</p>
+
+<p><a href="https://i.stack.imgur.com/Skufo.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/Skufo.jpg" alt="Revert commit popup"></a></p>
+
+<p>Select "Automatically create a commit" if you want to directly commit the reverted changes or if you want to manually commit the reverted changes keep the box un-selected and click on "Revert this commit" button.</p>

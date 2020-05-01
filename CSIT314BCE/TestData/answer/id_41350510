@@ -1,0 +1,4 @@
+<p>Use this command:</p>
+
+<pre><code>git checkout -b old-state number_commit
+</code></pre>

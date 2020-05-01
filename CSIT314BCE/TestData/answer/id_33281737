@@ -1,0 +1,10 @@
+<p>There is also interactive mode:</p>
+
+<pre><code>git add -i
+</code></pre>
+
+<p>Choose option 3 to un add files. In my case I often want to add more than one file, and with interactive mode you can use numbers like this to add files. This will take all but 4: 1, 2, 3, and 5</p>
+
+<p>To choose a sequence, just type 1-5 to take all from 1 to 5.</p>
+
+<p><a href="https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging" rel="nofollow noreferrer">Git staging files</a></p>

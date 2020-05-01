@@ -1,0 +1,9 @@
+<blockquote>
+  <h2><strong>Clean out git repository and all submodules recursively</strong></h2>
+  
+  <p>The following command will clean out
+  the current git repository and all its submodules recursively:</p>
+
+<pre><code>(git clean -d -x -f &amp;&amp; git submodule foreach --recursive git clean -d -x -f)
+</code></pre>
+</blockquote>

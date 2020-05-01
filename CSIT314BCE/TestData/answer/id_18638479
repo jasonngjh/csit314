@@ -1,0 +1,6 @@
+<p>After all the changes, when you push all these commands, you might have to use:</p>
+
+<pre><code>git push -f ...
+</code></pre>
+
+<p>And not only <code>git push</code>.</p>

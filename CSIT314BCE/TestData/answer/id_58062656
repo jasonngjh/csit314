@@ -1,0 +1,65 @@
+<p><code>(x --&gt; 0)</code> means <code>(x-- &gt; 0)</code></p>
+
+<ol>
+<li>you can use <code>(x --&gt;)</code><br>
+<code>output -: 9 8 7 6 5 4 3 2 1 0</code>
+
+
+<blockquote>
+  <p></li>
+  <li>you can use <code>(-- x &gt; 0)</code>  It's mean <code>(--x &gt; 0)</code><br>
+  <code>output -: 9 8 7 6 5 4 3 2 1</code></p>
+</blockquote>
+
+<blockquote>
+  <p></p>
+</blockquote></li>
+<li>you can use  </li>
+</ol>
+
+<pre><code>(--\
+    \
+     x &gt; 0)
+</code></pre>
+
+<p><code>output -:  9 8 7 6 5 4 3 2 1</code></p>
+
+<ol start="4">
+<li>you can use</li>
+</ol>
+
+<pre><code>(\
+  \
+   x --&gt; 0)
+</code></pre>
+
+<p><code>output -: 9 8 7 6 5 4 3 2 1 0</code></p>
+
+<ol start="5">
+<li>you can use</li>
+</ol>
+
+<pre><code>(\
+  \
+   x --&gt; 0
+          \
+           \
+            )
+</code></pre>
+
+<p><code>output -: 9 8 7 6 5 4 3 2 1 0</code></p>
+
+<ol start="6">
+<li>you can use also</li>
+</ol>
+
+<pre><code>(
+ x 
+  --&gt; 
+      0
+       )
+</code></pre>
+
+<p><code>output -: 9 8 7 6 5 4 3 2 1 0</code></p>
+
+<p>likewise, You can try lot of methods to execute this command successfully</p>

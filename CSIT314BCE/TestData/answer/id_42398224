@@ -1,0 +1,9 @@
+<p>I added the following aliases to my <code>.gitconfig</code> file.  This allows me to delete branches with or without specifying the branch name.  Branch name is defaulted to the current branch if no argument is passed in.</p>
+
+<pre><code>[alias]
+    branch-name = rev-parse --abbrev-ref HEAD     
+
+    rm-remote-branch = !"f() { branch=${1-$(git branch-name)}; git push origin :$branch; }; f"
+    rm-local-branch = !"f() { branch=${1-$(git branch-name)}; git checkout master; git branch -d $branch; }; f"
+    rm-branch-fully = !"f() { branch=${1-$(git branch-name)}; git rm-local-branch $branch; git rm-remote-branch $branch; }; f"
+</code></pre>

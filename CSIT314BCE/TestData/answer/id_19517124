@@ -1,0 +1,17 @@
+<p>The best option for me and probably others is the Git reset option:</p>
+
+<pre><code>git reset --hard &lt;commidId&gt; &amp;&amp; git clean -f
+</code></pre>
+
+<p>This has been the best option for me! It is simple, fast and effective!</p>
+
+<hr>
+
+<blockquote>
+  <p>** Note:** As mentioned in comments don't do this if you're sharing your branch with other people who have copies of the old commits</p>
+</blockquote>
+
+<p>Also from the comments, if you wanted a less 'ballzy' method you could use </p>
+
+<pre><code>git clean -i
+</code></pre>

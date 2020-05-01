@@ -1,0 +1,19 @@
+<p>Both are the same.The difference is how you use it.
+Convention is,</p>
+
+<p><strong>s</strong>tring is for variables </p>
+
+<p><strong>S</strong>tring is for calling other String class methods</p>
+
+<p>Like:</p>
+
+<pre><code>string fName = "John";
+string lName = "Smith";
+
+string fullName = String.Concat(fName,lName);
+
+if (String.IsNullOrEmpty(fName))
+{
+  Console.WriteLine("Enter first name");
+}
+</code></pre>

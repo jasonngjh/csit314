@@ -1,0 +1,23 @@
+<p>I was trying to use the Material2 branch on the Angular2-Webpack-Starter and had a heck of a time. This was the only way I could download and use that branch.</p>
+
+<pre><code>git clone --depth 1 https://github.com/angularclass/angular2-webpack-starter.git
+
+cd angular2-webpack-starter/
+
+git checkout -b material2
+</code></pre>
+
+<p>Open the project folder and delete all non-hidden files and folders. Leave all the hidden ones.</p>
+
+<pre><code>git add .
+
+git commit -m "pokemon go"
+
+git reset --hard
+
+git pull origin material2
+</code></pre>
+
+<p>(When the editor pops up, hit ':wq', and then press <kbd>Enter</kbd>)</p>
+
+<p>Now you are ready.</p>

@@ -1,0 +1,14 @@
+<p>“<code>application/json</code>” is the correct JSON content type.</p>
+
+<pre><code>def ajaxFindSystems = {
+  def result = Systems.list()
+  render(contentType:'application/json') {
+    results {
+      result.each{sys-&gt;
+        system(id:sys.id, name:sys.name)
+      }
+    }
+    resultset (rows:result.size())
+  }
+}
+</code></pre>

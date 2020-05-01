@@ -1,0 +1,9 @@
+<p>The reason for</p>
+
+<pre><code>if __name__ == "__main__":
+    main()
+</code></pre>
+
+<p>is primarily to avoid the <a href="https://docs.python.org/2/library/threading.html#importing-in-threaded-code" rel="noreferrer">import lock</a> problems that would arise from <a href="https://stackoverflow.com/questions/46326059/">having code directly imported</a>. You want <code>main()</code> to run if your file was directly invoked (that's the <code>__name__ == "__main__"</code> case), but if your code was imported then the importer has to enter your code from the true main module to avoid import lock problems.</p>
+
+<p>A side-effect is that you automatically sign on to a methodology that supports multiple entry points. You can run your program using <code>main()</code> as the entry point, <em>but you don't have to</em>. While <code>setup.py</code> expects <code>main()</code>, other tools use alternate entry points. For example, to run your file as a <code>gunicorn</code> process, you define an <code>app()</code> function instead of a <code>main()</code>. Just as with <code>setup.py</code>, <code>gunicorn</code> imports your code so you don't want it do do anything while it's being imported (because of the import lock issue).</p>

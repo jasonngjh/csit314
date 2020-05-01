@@ -1,0 +1,11 @@
+<p>You can use the </p>
+
+<pre><code>$( "div:visible" ).click(function() {
+  $( this ).css( "background", "yellow" );
+});
+$( "button" ).click(function() {
+  $( "div:hidden" ).show( "fast" );
+});
+</code></pre>
+
+<p>API Documentation: <a href="https://api.jquery.com/visible-selector/" rel="noreferrer">https://api.jquery.com/visible-selector/</a></p>

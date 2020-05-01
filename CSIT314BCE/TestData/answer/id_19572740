@@ -1,0 +1,4 @@
+<pre><code>git branch -D &lt;name-of-branch&gt;
+git branch -D -r origin/&lt;name-of-branch&gt;
+git push origin :&lt;name-of-branch&gt;
+</code></pre>

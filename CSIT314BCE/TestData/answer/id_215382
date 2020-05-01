@@ -1,0 +1,5 @@
+<p>Both are same. But from coding guidelines perspective it's better to use <code>string</code> instead of <code>String</code>. This is what generally developers use. e.g. instead of using <code>Int32</code> we use <code>int</code> as <code>int</code> is alias to <code>Int32</code></p>
+
+<p>FYI
+“The keyword string is simply an alias for the predefined class <code>System.String</code>.” - C# Language Specification 4.2.3
+<a href="http://msdn2.microsoft.com/En-US/library/aa691153.aspx" rel="noreferrer">http://msdn2.microsoft.com/En-US/library/aa691153.aspx</a></p>

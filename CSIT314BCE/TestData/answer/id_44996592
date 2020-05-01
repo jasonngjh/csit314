@@ -1,0 +1,10 @@
+<p>Very simple:</p>
+
+<pre><code>var myObject = {
+    "ircEvent": "PRIVMSG",
+    "method": "newURI",
+    "regex": "^http://.*"
+};
+
+delete myObject.regex;
+</code></pre>

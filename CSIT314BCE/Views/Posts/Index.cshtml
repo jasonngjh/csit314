@@ -4,95 +4,61 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Learning Platform</h2>
+@Styles.Render("~/Content/Style.css")
 
-<p>
-    <div class="col-md-2">@Html.ActionLink("Ask a question", "Ask", "Posts", null, new { @class = "btn btn-primary" })</div>
-</p>
-<table class="table">
+
+<table style="width:100%">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Student.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AcceptedAnswerId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ParentId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VoteCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AnswerCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeletionDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClosedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Body)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OwnerUsername)
-        </th>
-        <th></th>
+        <td><h2>Learning Platform</h2></td>
+        <td style="text-align:right">@Html.ActionLink("Ask a question", "Ask", "Posts", null, new { @class = "btn btn-primary" })</td>
     </tr>
+</table>
+<p>         </p>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Student.FullName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.AcceptedAnswerId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ParentId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.VoteCount)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.AnswerCount)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.CreationDate)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DeletionDate)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ClosedDate)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Body)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.OwnerUsername)
-    </td>
-    <td>
-        @if (User.IsInRole("Moderator"))
-        {
-            @Html.ActionLink("Edit", "Edit", new { id = item.PostId })
-            <br />
-            @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
-        }
-        <br />
-        @Html.ActionLink("Details", "Details", new { id = item.PostId })
-    </td>
-    </tr>
-}
+<br />
+<br />
+<table style="width:100%">
 
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="width: 100px">
+                <div id="vote">
+                    @Html.DisplayFor(modelItem => item.VoteCount)<br />
+                    vote(s)
+                </div>
+                <div id="answer">
+                    @Html.DisplayFor(modelItem => item.AnswerCount)<br />
+                    answer(s)
+                </div>
+            </td>
+            <td id="post" style="width: 850px">
+                <div id="questionDetail">
+                    @Html.ActionLink(item.Title, "Details","Posts", new { id = item.PostId }, new { style = "text-decoration:none;color:black;" })
+                </div>
+            </td>
+            <td>
+                <div id="askedBy">
+                    asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
+                    on @Html.DisplayFor(modelItem => item.CreationDate)
+                </div>
+
+                <div id="modOption">
+                    Edit
+                    <br />
+                    Delete
+                </div>
+
+                @if (User.IsInRole("Moderator"))
+                {
+                    <div id="modOption">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.PostId })
+                        <br />
+                        @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
+                    </div>
+                }
+            </td>
+        </tr>
+    }
 </table>

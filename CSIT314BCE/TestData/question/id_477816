@@ -1,0 +1,14 @@
+<p>I've been messing around with <a href="http://en.wikipedia.org/wiki/JSON" rel="noreferrer">JSON</a> for some time, just pushing it out as text and it hasn't hurt anybody (that I know of), but I'd like to start doing things properly.</p>
+
+<p>I have seen <em>so</em> many purported "standards" for the JSON content type:</p>
+
+<pre><code>application/json
+application/x-javascript
+text/javascript
+text/x-javascript
+text/x-json
+</code></pre>
+
+<p>But which one is correct, or best? I gather that there are security and browser support issues varying between them.</p>
+
+<p>I know there's a similar question, <em><a href="https://stackoverflow.com/questions/404470/what-mime-type-if-json-is-being-returned-by-a-rest-api">What MIME type if JSON is being returned by a REST API?</a></em>, but I'd like a slightly more targeted answer.</p>

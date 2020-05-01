@@ -1,0 +1,8 @@
+<p><code>ebdiv</code> should be set to <code>style="display:none;"</code>. It works for both show and hide:</p>
+
+<pre><code>$(document).ready(function(){
+    $("#eb").click(function(){
+        $("#ebdiv").toggle();
+    });    
+});
+</code></pre>

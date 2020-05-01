@@ -1,0 +1,26 @@
+<p>Delete an element from last</p>
+
+<pre><code>arrName.pop();
+</code></pre>
+
+<p>Delete an element from first</p>
+
+<pre><code>arrName.shift();
+</code></pre>
+
+<p>Delete from the middle</p>
+
+<pre><code>arrName.splice(starting index, number of element you wnt to delete);
+
+Example: arrName.splice(1, 1);
+</code></pre>
+
+<p>Delete one element from last</p>
+
+<pre><code>arrName.splice(-1);
+</code></pre>
+
+<p>Delete by using an array index number</p>
+
+<pre><code> delete arrName[1];
+</code></pre>

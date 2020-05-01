@@ -1,0 +1,17 @@
+<p>Simply run <code>git checkout</code> with the name of the remote branch. Git will <a href="https://git-scm.com/book/id/v2/Git-Branching-Remote-Branches#_tracking_branches" rel="nofollow noreferrer">automatically create</a> a local branch that tracks the remote one:</p>
+
+<pre><code>git fetch
+git checkout test
+</code></pre>
+
+<p>However, if that branch name is found in more than one remote, this won't work as Git doesn't know which to use. In that case you can use either:</p>
+
+<pre><code>git checkout --track origin/test
+</code></pre>
+
+<p>or</p>
+
+<pre><code>git checkout -b test origin/test
+</code></pre>
+
+<p>In <a href="https://github.com/git/git/blob/master/Documentation/RelNotes/2.19.0.txt" rel="nofollow noreferrer">2.19</a>, Git learned the <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-checkoutdefaultRemote" rel="nofollow noreferrer"><code>checkout.defaultRemote</code></a> configuration, which specifies a remote to default to when resolving such an ambiguity.</p>

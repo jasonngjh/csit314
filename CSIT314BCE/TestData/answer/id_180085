@@ -1,0 +1,26 @@
+<p>If the commit you want to fix isn’t the most recent one:</p>
+
+<ol>
+<li><p><code>git rebase --interactive $parent_of_flawed_commit</code></p>
+
+<p>If you want to fix several flawed commits, pass the parent of the oldest one of them.</p></li>
+<li><p>An editor will come up, with a list of all commits since the one you gave.</p>
+
+<ol>
+<li>Change <code>pick</code> to <code>reword</code> (or on old versions of Git, to <code>edit</code>) in front of any commits you want to fix.</li>
+<li>Once you save, Git will replay the listed commits. <br /> <br /></li>
+</ol></li>
+<li><p>For each commit you want to <em>reword</em>, Git will drop you back into your editor. For each commit you want to <em>edit</em>, Git drops you into the shell. If you’re in the shell:</p>
+
+<ol>
+<li>Change the commit in any way you like.</li>
+<li><code>git commit --amend</code></li>
+<li><code>git rebase --continue</code></li>
+</ol></li>
+</ol>
+
+<p>Most of this sequence will be explained to you by the output of the various commands as you go. It’s very easy; you don’t need to memorise it – just remember that <code>git rebase --interactive</code> lets you correct commits no matter how long ago they were.</p>
+
+<hr>
+
+<p>Note that you will not want to change commits that you have already pushed. Or maybe you do, but in that case you will have to take great care to communicate with everyone who may have pulled your commits and done work on top of them. <em><a href="https://stackoverflow.com/questions/4084868/how-do-i-recover-resynchronise-after-someone-pushes-a-rebase-or-a-reset-to-a-pub">How do I recover/resynchronise after someone pushes a rebase or a reset to a published branch?</a></em></p>

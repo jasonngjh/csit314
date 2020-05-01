@@ -1,0 +1,37 @@
+<p>A simple Graphical Representation for Beginners,</p>
+
+<p><a href="https://i.stack.imgur.com/fEvk2.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/fEvk2.jpg" alt="enter image description here"></a></p>
+
+<p>here,</p>
+
+<pre><code>git pull  
+</code></pre>
+
+<p>will fetch code from repository and rebase with your local... in git pull there is possibility of new commits getting created.</p>
+
+<p>but in , </p>
+
+<p>git fetch </p>
+
+<p>will fetch code from repository and we need to rebase it manually by using <code>git rebase</code></p>
+
+<p>eg: i am going to fetch from server master and rebase it in my local master.</p>
+
+<p>1) git pull ( rebase will done automatically):</p>
+
+<pre><code>git pull origin master
+</code></pre>
+
+<p>here <strong>origin</strong> is your remote repo <strong>master</strong> is your branch</p>
+
+<p>2) git fetch (need to rebase manually):</p>
+
+<pre><code>git fetch origin master
+</code></pre>
+
+<p>it will fetch server changes from origin. and it will be in your local until you rebase it on your own. we need to fix conflicts manually by checking codes.</p>
+
+<pre><code>git rebase origin/master
+</code></pre>
+
+<p>this will rebase code into local. before that ensure you're in right branch.</p>

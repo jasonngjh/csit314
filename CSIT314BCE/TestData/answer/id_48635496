@@ -1,0 +1,16 @@
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="true">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>const myObject = {
+        "ircEvent": "PRIVMSG",
+        "method": "newURI",
+        "regex": "^http://.*"
+    };
+
+const { regex, ...other } = myObject;
+
+console.log(myObject)
+console.log(regex)
+console.log(other)</code></pre>
+</div>
+</div>
+</p>

@@ -1,0 +1,5 @@
+<p>If nothing else works, to simply remove all the changes listed by the "git status" command one can use the following combo:</p>
+
+<p><code>git add -A &amp;&amp; git commit -m temp &amp;&amp; git reset --hard HEAD^</code></p>
+
+<p>This will first stage all of your changes then create a temporary commit and then discard it.</p>

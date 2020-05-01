@@ -1,0 +1,7 @@
+<p>You can redirect the page by using the below methods:</p>
+
+<ol>
+<li><p>By using a meta tag in the head - <code>&lt;meta http-equiv="refresh" content="0;url=http://your-page-url.com" /&gt;</code>. Note that <code>content="0;</code>... is used for after how many seconds you need to redirect the page</p></li>
+<li><p>By using JavaScript: <code>window.location.href = "http://your-page-url.com";</code></p></li>
+<li><p>By using jQuery: <code>$(location).attr('href', 'http://yourPage.com/');</code></p></li>
+</ol>

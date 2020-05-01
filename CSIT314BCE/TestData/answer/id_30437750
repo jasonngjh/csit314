@@ -1,0 +1,15 @@
+<p>Probably as mentioned by others, this will be a case mismatch in branch naming.</p>
+
+<p>If you have such a situation, I can guess that you're on Windows which will also lead you to:</p>
+
+<pre><code>$ git branch -m CaseSensitive casesensitive
+fatal: A branch named 'casesensitive' already exists.
+</code></pre>
+
+<p>Then you have to do an intermediate step:</p>
+
+<pre><code>$ git branch -m temporary
+$ git branch -m casesensitive
+</code></pre>
+
+<p>Nothing more.</p>

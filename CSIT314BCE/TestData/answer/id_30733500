@@ -1,0 +1,5 @@
+<p>Here is <a href="http://blog.osteele.com/2008/05/my-git-workflow/" rel="noreferrer">Oliver Steele's image of how all it all fits together</a>:</p>
+
+<p><img src="https://i.stack.imgur.com/XwVzT.png" alt="enter image description here"></p>
+
+<p>If there is sufficient interest, I suppose I could update the image to add <code>git clone</code> and <code>git merge</code>... </p>

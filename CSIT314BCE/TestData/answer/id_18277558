@@ -1,0 +1,13 @@
+<p>A closure is basically creating two things :
+- a function
+- a private scope that only that function can access</p>
+
+<p>It is like putting some coating around a function.</p>
+
+<p>So to a 6-years-old, it could be explained by giving an analogy. Let's say I build a robot. That robot can do many things. Among those things, I programmed it to count the number of birds he sees in the sky. Each time he has seen 25 birds, he should tell me how many birds he has seen since the beginning.</p>
+
+<p>I don't know how many birds he has seen unless he has told me. Only he knows. That's the private scope. That's basically the robot's memory. Let's say I gave him 4&nbsp;GB.</p>
+
+<p>Telling me how many birds he has seen is the returned function. I also created that.</p>
+
+<p>That analogy is a bit sucky, but someone could improve it I guess.</p>

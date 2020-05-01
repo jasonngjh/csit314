@@ -1,0 +1,8 @@
+<p>If you want a new array with the deleted positions removed, you can always delete the specific element and filter out the array. It might need an extension of the <a href="http://www.tutorialspoint.com/javascript/array_filter.htm" rel="noreferrer">array object</a> for browsers that don't implement the filter method, but in the long term it's easier since all you do is this:</p>
+
+<pre><code>var my_array = [1, 2, 3, 4, 5, 6];
+delete my_array[4];
+console.log(my_array.filter(function(a){return typeof a !== 'undefined';}));
+</code></pre>
+
+<p>It should display <code>[1, 2, 3, 4, 6]</code>.</p>

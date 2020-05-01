@@ -1,0 +1,69 @@
+<p>Every function in JavaScript maintains a link to its outer lexical environment. A lexical environment is a map of all the names (eg. variables, parameters) within a scope, with their values.</p>
+
+<p>So, whenever you see the <code>function</code> keyword, code inside that function has access to variables declared outside the function.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function foo(x) {
+  var tmp = 3;
+
+  function bar(y) {
+    console.log(x + y + (++tmp)); // will log 16
+  }
+
+  bar(10);
+}
+
+foo(2);</code></pre>
+</div>
+</div>
+</p>
+
+<p>This will log <code>16</code> because function <code>bar</code> closes over the parameter <code>x</code> and the variable <code>tmp</code>, both of which exist in the lexical environment of outer function <code>foo</code>.</p>
+
+<p>Function <code>bar</code>, together with its link with the lexical environment of function <code>foo</code> is a closure. </p>
+
+<p>A function doesn't have to <em>return</em> in order to create a closure. Simply by virtue of its declaration, every function closes over its enclosing lexical environment, forming a closure.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function foo(x) {
+  var tmp = 3;
+
+  return function (y) {
+    console.log(x + y + (++tmp)); // will also log 16
+  }
+}
+
+var bar = foo(2);
+bar(10); // 16
+bar(10); // 17</code></pre>
+</div>
+</div>
+</p>
+
+<p>The above function will also log 16, because the code inside <code>bar</code> can still refer to argument <code>x</code> and variable <code>tmp</code>, even though they are no longer directly in scope.</p>
+
+<p>However, since <code>tmp</code> is still hanging around inside <code>bar</code>'s closure, it is available to be incremented. It will be incremented each time you call <code>bar</code>.</p>
+
+<p>The simplest example of a closure is this:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var a = 10;
+
+function test() {
+  console.log(a); // will output 10
+  console.log(b); // will output 6
+}
+var b = 6;
+test();</code></pre>
+</div>
+</div>
+</p>
+
+<p>When a JavaScript function is invoked, a new execution context <code>ec</code> is created. Together with the function arguments and the target object, this execution context also receives a link to the lexical environment of the calling execution context, meaning the variables declared in the outer lexical environment (in the above example, both <code>a</code> and <code>b</code>) are available from <code>ec</code>.</p>
+
+<p>Every function creates a closure because every function has a link to its outer lexical environment. </p>
+
+<p>Note that variables <em>themselves</em> are visible from within a closure, <em>not</em> copies.</p>

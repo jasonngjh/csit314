@@ -1,0 +1,11 @@
+<p>First run: </p>
+
+<pre><code>git reflog
+</code></pre>
+
+<p>It will show you all the possible actions you have performed on your repository, for example, commit, merge, pull, etc.</p>
+
+<p>Then do:</p>
+
+<pre><code>git reset --hard ActionIdFromRefLog
+</code></pre>

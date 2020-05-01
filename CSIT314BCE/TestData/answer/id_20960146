@@ -1,0 +1,32 @@
+<p>If you just want to edit the latest commit, use:</p>
+
+<pre><code>git commit --amend
+</code></pre>
+
+<p>or</p>
+
+<pre class="lang-bash prettyprint-override"><code>git commit --amend -m 'one line message'
+</code></pre>
+
+<p>But if you want to edit several commits in a row, you should use rebasing instead:</p>
+
+<pre><code>git rebase -i &lt;hash of one commit before the wrong commit&gt;
+</code></pre>
+
+<p><img src="https://i.stack.imgur.com/jRTRr.png" alt="Git rebase editing"></p>
+
+<p>In a file, like the one above, write <code>edit/e</code> or one of the other options, and hit save and exit.</p>
+
+<p>Now you'll be at the first wrong commit. Make changes in the files, and they'll be automatically staged for you. Type</p>
+
+<pre><code>git commit --amend
+</code></pre>
+
+<p>Save and exit that and type</p>
+
+<pre><code>git rebase --continue
+</code></pre>
+
+<p>to move to next selection until finished with all your selections.</p>
+
+<p>Note that these things change all your SHA hashes after that particular commit.</p>

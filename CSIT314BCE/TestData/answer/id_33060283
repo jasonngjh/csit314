@@ -1,0 +1,7 @@
+<p>To completely clean a coder's directory up from some accidental changes, we used:</p>
+
+<pre><code>git add -A .
+git reset --hard HEAD
+</code></pre>
+
+<p>Just <code>git reset --hard HEAD</code> will get rid of modifications, but it won't get rid of "new" files. In their case they'd accidentally dragged an important folder somewhere random, and all those files were being treated as new by Git, so a <code>reset --hard</code> didn't fix it. By running the <code>git add -A .</code> beforehand, it explicitly tracked them all with git, to be wiped out by the reset.</p>

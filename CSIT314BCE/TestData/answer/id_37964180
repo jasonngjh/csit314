@@ -1,0 +1,9 @@
+<p>Yet another TL;DR</p>
+
+<p><strong>Iterator on list</strong>: <code>next()</code> returns the next element of the list</p>
+
+<p><strong>Iterator generator</strong>: <code>next()</code> will compute the next element on the fly (execute code)</p>
+
+<p>You can see the yield/generator as a way to manually run the <strong>control flow</strong> from outside (like continue loop one step), by calling <code>next</code>, however complex the flow.</p>
+
+<p><strong>Note</strong>: The generator is <strong>NOT</strong> a normal function. It remembers the previous state like local variables (stack). See other answers or articles for detailed explanation. The generator can only be <strong>iterated on once</strong>. You could do without <code>yield</code>, but it would not be as nice, so it can be considered 'very nice' language sugar.</p>

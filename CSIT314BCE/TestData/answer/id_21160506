@@ -1,0 +1,24 @@
+<p>I'm pretty new to JavaScript and needed this functionality. I merely wrote this:</p>
+
+<pre><code>function removeFromArray(array, item, index) {
+  while((index = array.indexOf(item)) &gt; -1) {
+    array.splice(index, 1);
+  }
+}
+</code></pre>
+
+<p>Then when I want to use it:</p>
+
+<pre><code>//Set-up some dummy data
+var dummyObj = {name:"meow"};
+var dummyArray = [dummyObj, "item1", "item1", "item2"];
+
+//Remove the dummy data
+removeFromArray(dummyArray, dummyObj);
+removeFromArray(dummyArray, "item2");
+</code></pre>
+
+<p>Output - As expected.
+["item1", "item1"]</p>
+
+<p>You may have different needs than I, so you can easily modify it to suit them. I hope this helps someone.</p>

@@ -1,0 +1,30 @@
+<p><strong><em>About performance:</em></strong></p>
+
+<p>New versions of <code>V8</code> introduced several under-the-hood optimizations and so did <code>SpiderMonkey</code>.</p>
+
+<p>There is almost no difference now between expression and declaration. <br>Function expression <a href="https://jsperf.com/fdeclaration-vs-fexpression" rel="noreferrer">appears to be faster</a> now.</p>
+
+<p><strong><em>Chrome 62.0.3202</em></strong>
+<a href="https://i.stack.imgur.com/lW91X.png" rel="noreferrer"><img src="https://i.stack.imgur.com/lW91X.png" alt="Chrome test"></a></p>
+
+<p><strong><em>FireFox 55</em></strong>
+<a href="https://i.stack.imgur.com/po3gG.png" rel="noreferrer"><img src="https://i.stack.imgur.com/po3gG.png" alt="Firefox test"></a></p>
+
+<p><strong><em>Chrome Canary 63.0.3225</em></strong>
+<a href="https://i.stack.imgur.com/lcPvN.png" rel="noreferrer"><img src="https://i.stack.imgur.com/lcPvN.png" alt="Chrome Canary test"></a></p>
+
+<p><br></p>
+
+<blockquote>
+  <p><code>Anonymous</code> function expressions <a href="https://jsperf.com/named-vs-anonymous-expressions" rel="noreferrer">appear to have better performance</a>
+  against <code>Named</code> function expression.</p>
+</blockquote>
+
+<p><br></p>
+
+<p><strong><em>Firefox</em></strong>
+<a href="https://i.stack.imgur.com/npaAl.png" rel="noreferrer"><img src="https://i.stack.imgur.com/npaAl.png" alt="Firefox named_anonymous"></a>
+<strong><em>Chrome Canary</em></strong>
+<a href="https://i.stack.imgur.com/6YkeY.png" rel="noreferrer"><img src="https://i.stack.imgur.com/6YkeY.png" alt="Chrome canary named_anonymous"></a>
+<strong><em>Chrome</em></strong>
+<a href="https://i.stack.imgur.com/x9H8J.png" rel="noreferrer"><img src="https://i.stack.imgur.com/x9H8J.png" alt="Chrome named_anonymous"></a></p>

@@ -1,0 +1,30 @@
+<p>TL;DR: Minimal example:</p>
+
+<pre><code>package foobar;
+import java.util.ArrayList;
+
+public class FooBar {
+
+  public static void main(String[] args) {
+    ArrayList&lt;Integer&gt; list1 = new ArrayList&lt;&gt;(); // An object.
+    list1.add(1);
+
+    ArrayList&lt;Integer&gt; list2 = new ArrayList&lt;&gt;(); // Another object.
+    list2.add(2);
+
+    int x = 42; // A primitive (same with Integer).
+
+    sideEffects(list1, list2, x);
+
+    System.out.println(list1); // Output: [1]     (unchanged)
+    System.out.println(list2); // Output: [2, 3]  (changed !)
+    System.out.println(x);     // Output: 42      (not changed)
+  }
+
+  private static void sideEffects(ArrayList&lt;Integer&gt; list1, ArrayList&lt;Integer&gt; list2, int x) {
+    list1 = list2;
+    list1.add(3);
+    x = 21;
+  }
+}
+</code></pre>

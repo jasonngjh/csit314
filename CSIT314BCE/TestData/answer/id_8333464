@@ -1,0 +1,59 @@
+<p>It's a holdover from the Netscape days:</p>
+
+<blockquote>
+  <p>Missing digits are treated as 0[...]. An incorrect digit is simply interpreted as 0. For example the values #F0F0F0, F0F0F0, F0F0F, #FxFxFx and FxFxFx are all the same.</p>
+</blockquote>
+
+<p>It is from the blog post <em><a href="http://scrappy-do.blogspot.com/2004/08/little-rant-about-microsoft-internet.html">A little rant about Microsoft Internet Explorer's color parsing</a></em> which covers it in great detail, including varying lengths of color values, etc.</p>
+
+<p>If we apply the rules in turn from the blog post, we get the following:</p>
+
+<ol>
+<li><p>Replace all nonvalid hexadecimal characters with 0's</p>
+
+<pre><code>chucknorris becomes c00c0000000
+</code></pre></li>
+<li><p>Pad out to the next total number of characters divisible by 3 (11 -> 12)</p>
+
+<pre><code>c00c 0000 0000
+</code></pre></li>
+<li><p>Split into three equal groups, with each component representing the corresponding colour component of an RGB colour:</p>
+
+<pre><code>RGB (c00c, 0000, 0000)
+</code></pre></li>
+<li><p>Truncate each of the arguments from the right down to two characters</p></li>
+</ol>
+
+<p>Which gives the following result:</p>
+
+<pre><code>RGB (c0, 00, 00) = #C00000 or RGB(192, 0, 0)
+</code></pre>
+
+<p>Here's an example demonstrating the <code>bgcolor</code> attribute in action, to produce this "amazing" colour swatch:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false">
+<div class="snippet-code">
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td bgcolor="chucknorris" cellpadding="8" width="100" align="center"&gt;chuck norris&lt;/td&gt;
+    &lt;td bgcolor="mrt"         cellpadding="8" width="100" align="center" style="color:#ffffff"&gt;Mr T&lt;/td&gt;
+    &lt;td bgcolor="ninjaturtle" cellpadding="8" width="100" align="center" style="color:#ffffff"&gt;ninjaturtle&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td bgcolor="sick"  cellpadding="8" width="100" align="center"&gt;sick&lt;/td&gt;
+    &lt;td bgcolor="crap"  cellpadding="8" width="100" align="center"&gt;crap&lt;/td&gt;
+    &lt;td bgcolor="grass" cellpadding="8" width="100" align="center"&gt;grass&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>This also answers the other part of the question; why does <code>bgcolor="chucknorr"</code> produce a yellow colour? Well, if we apply the rules, the string is:</p>
+
+<pre><code>c00c00000 =&gt; c00 c00 000 =&gt; c0 c0 00 [RGB(192, 192, 0)]
+</code></pre>
+
+<p>Which gives a light yellow gold colour. As the string starts off as 9 characters, we keep the second C this time around hence it ends up in the final colour value.</p>
+
+<p>I originally encountered this when someone pointed out you could do <code>color="crap"</code> and, well, it comes out brown.</p>

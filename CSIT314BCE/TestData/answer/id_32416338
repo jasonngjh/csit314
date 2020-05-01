@@ -1,0 +1,9 @@
+<p>I know of a much easier and less painful method:</p>
+
+<pre><code>$ git branch -m [branch_to_force_pull] tmp
+$ git fetch
+$ git checkout [branch_to_force_pull]
+$ git branch -D tmp
+</code></pre>
+
+<p>That's it!</p>

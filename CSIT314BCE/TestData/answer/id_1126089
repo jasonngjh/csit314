@@ -1,0 +1,6 @@
+<p>It looks like the best way is to first do:</p>
+
+<pre><code>git clean
+</code></pre>
+
+<p>To delete all untracked files and then continue with the usual <code>git pull</code>...</p>

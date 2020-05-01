@@ -1,0 +1,130 @@
+<blockquote>
+  <p>A closure is a function having access to the parent scope, even after the parent function has closed.</p>
+</blockquote>
+
+<p>So basically a closure is a function of another function. We can say like a child function.</p>
+
+<blockquote>
+  <p>A closure is an inner function that has access to the outer
+  (enclosing) function’s variables—scope chain. The closure has three
+  scope chains: it has access to its own scope (variables defined
+  between its curly brackets), it has access to the outer function’s
+  variables, and it has access to the global variables.</p>
+  
+  <p>The inner function has access not only to the outer function’s
+  variables but also to the outer function’s parameters. Note that the
+  inner function cannot call the outer function’s arguments object,
+  however, even though it can call the outer function’s parameters
+  directly.</p>
+  
+  <p>You create a closure by adding a function inside another function.</p>
+</blockquote>
+
+<p>Also, it's very useful method which is used in many famous frameworks including <code>Angular</code>, <code>Node.js</code> and <code>jQuery</code>:</p>
+
+<blockquote>
+  <p>Closures are used extensively in Node.js; they are workhorses in
+  Node.js’ asynchronous, non-blocking architecture. Closures are also
+  frequently used in jQuery and just about every piece of JavaScript
+  code you read.</p>
+</blockquote>
+
+<p>But how the closures look like in a real-life coding?
+Look at this simple sample code:</p>
+
+<pre><code>function showName(firstName, lastName) {
+      var nameIntro = "Your name is ";
+      // this inner function has access to the outer function's variables, including the parameter
+      function makeFullName() {
+          return nameIntro + firstName + " " + lastName;
+      }
+      return makeFullName();
+  }
+
+  console.log(showName("Michael", "Jackson")); // Your name is Michael Jackson
+</code></pre>
+
+<p>Also, this is classic closure way in jQuery which every javascript and jQuery developers used it a lot:</p>
+
+<pre><code>$(function() {
+    var selections = [];
+    $(".niners").click(function() { // this closure has access to the selections variable
+        selections.push(this.prop("name")); // update the selections variable in the outer function's scope
+    });
+});
+</code></pre>
+
+<p>But why we use closures? when we use it in an actual programming?
+what are the practical use of closures? the below is a good explanation and example by MDN:</p>
+
+<p><strong>Practical closures</strong></p>
+
+<blockquote>
+  <p>Closures are useful because they let you associate some data (the
+  lexical environment) with a function that operates on that data. This
+  has obvious parallels to object oriented programming, where objects
+  allow us to associate some data (the object's properties) with one or
+  more methods.</p>
+  
+  <p>Consequently, you can use a closure anywhere that you might normally
+  use an object with only a single method.</p>
+  
+  <p>Situations where you might want to do this are particularly common on
+  the web. Much of the code we write in front-end JavaScript is
+  event-based — we define some behavior, then attach it to an event that
+  is triggered by the user (such as a click or a keypress). Our code is
+  generally attached as a callback: a single function which is executed
+  in response to the event.</p>
+  
+  <p>For instance, suppose we wish to add some buttons to a page that
+  adjust the text size. One way of doing this is to specify the
+  font-size of the body element in pixels, then set the size of the
+  other elements on the page (such as headers) using the relative em
+  unit:</p>
+</blockquote>
+
+<p>Read the code below and run the code to see how closure help us here to easily make separate functions for each sections:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>//javascript
+function makeSizer(size) {
+  return function() {
+    document.body.style.fontSize = size + 'px';
+  };
+}
+
+var size12 = makeSizer(12);
+var size14 = makeSizer(14);
+var size16 = makeSizer(16);
+
+document.getElementById('size-12').onclick = size12;
+document.getElementById('size-14').onclick = size14;
+document.getElementById('size-16').onclick = size16;</code></pre>
+<pre class="snippet-code-css lang-css prettyprint-override"><code>/*css*/
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.2em;
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;!--html&gt;&lt;!--&gt;
+&lt;p&gt;Some paragraph text&lt;/p&gt;
+&lt;h1&gt;some heading 1 text&lt;/h1&gt;
+&lt;h2&gt;some heading 2 text&lt;/h2&gt;
+
+&lt;a href="#" id="size-12"&gt;12&lt;/a&gt;
+&lt;a href="#" id="size-14"&gt;14&lt;/a&gt;
+&lt;a href="#" id="size-16"&gt;16&lt;/a&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>For further study about closures, I recommend you to visit this page by MDN:
+<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Closures" rel="noreferrer">https://developer.mozilla.org/en/docs/Web/JavaScript/Closures</a></p>

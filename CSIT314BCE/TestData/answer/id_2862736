@@ -1,0 +1,1 @@
+<p>Just type <code>git reset</code> it will revert back and it is like you never typed <code>git add .</code> since your last commit. Make sure you have committed before. </p>

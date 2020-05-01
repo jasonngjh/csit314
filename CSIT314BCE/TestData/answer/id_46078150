@@ -1,0 +1,4 @@
+<p>I use the following command:</p>
+
+<pre><code>git checkout --track origin/other_remote_branch
+</code></pre>

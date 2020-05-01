@@ -1,0 +1,13 @@
+<p>Use <code>git clean -f -d</code> to make sure that <strong>directories</strong> are also removed.</p>
+
+<pre><code>-n, -dry-run
+</code></pre>
+
+<p>Don’t actually remove anything, just show what would be done.</p>
+
+<pre><code>-d
+</code></pre>
+
+<p>Remove untracked directories in addition to untracked files. If an untracked directory is managed by a different Git repository, it is not removed by default. Use -f option twice if you really want to remove such a directory.</p>
+
+<p>You can then check if your files are really gone with <code>git status</code>.</p>

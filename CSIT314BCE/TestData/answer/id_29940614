@@ -1,0 +1,35 @@
+<p><a href="http://www.w3schools.com/js/js_strict.asp" rel="noreferrer">Quoting from w3schools</a>:</p>
+
+<blockquote>
+  <h2><strong>The "use strict" Directive</strong></h2>
+  
+  <p>The "use strict" directive is new in JavaScript 1.8.5 (ECMAScript
+  version 5).</p>
+  
+  <p>It is not a statement, but a literal expression, ignored by earlier
+  versions of JavaScript.</p>
+  
+  <p>The purpose of "use strict" is to indicate that the code should be
+  executed in "strict mode".</p>
+  
+  <p>With strict mode, you can not, for example, use undeclared variables.</p>
+  
+  <h2>Why Strict Mode?</h2>
+  
+  <p>Strict mode makes it easier to write "secure" JavaScript.</p>
+  
+  <p>Strict mode changes previously accepted "bad syntax" into real errors.</p>
+  
+  <p>As an example, in normal JavaScript, mistyping a variable name creates
+  a new global variable. In strict mode, this will throw an error,
+  making it impossible to accidentally create a global variable.</p>
+  
+  <p>In normal JavaScript, a developer will not receive any error feedback
+  assigning values to non-writable properties.</p>
+  
+  <p>In strict mode, any assignment to a non-writable property, a
+  getter-only property, a non-existing property, a non-existing
+  variable, or a non-existing object, will throw an error.</p>
+</blockquote>
+
+<p>Please refer to <a href="http://www.w3schools.com/js/js_strict.asp" rel="noreferrer">http://www.w3schools.com/js/js_strict.asp</a> to know more</p>

@@ -1,0 +1,32 @@
+<p>A closure is a function that has access to information from the environment it was defined in.</p>
+
+<p>For some, the information is the <em>value</em> in the environment at the time of creation.  For others, the information is the variables in the environment at the time of creation.</p>
+
+<p>If the lexical environment that the closure refers to belongs to a function that has exited, then (in the case of a closure referring to the variables in the environment) those lexical variables will continue to exist for reference by the closure.</p>
+
+<p>A closure can be thought of a special case of global variables -- with a private copy created just for the function.</p>
+
+<p>Or it can be thought of as a method where the environment is a specific instance of an object whose properties are the variables in the environment.</p>
+
+<p>The former (closure as environment) similar to the latter where the environment copy is a context variable passed to each function in the former, and the instance variables form a context variable in the latter.</p>
+
+<p>So a closure is a way to call a function without having to specify the context explicitly as a parameter or as the object in a method invocation.</p>
+
+<pre><code>var closure = createclosure(varForClosure);
+closure(param1);  // closure has access to whatever createclosure gave it access to,
+                  // including the parameter storing varForClosure.
+</code></pre>
+
+<p>vs</p>
+
+<pre><code>var contextvar = varForClosure; // use a struct for storing more than one..
+contextclosure(contextvar, param1);
+</code></pre>
+
+<p>vs</p>
+
+<pre><code>var contextobj = new contextclass(varForClosure);
+contextobj-&gt;objclosure(param1);
+</code></pre>
+
+<p>For maintainable code, I recommend the object oriented way.  However for a quick and easy set of tasks (for example creating a callback), a closure can become natural and more clear, especially in the context of lamda or anonymous functions.</p>

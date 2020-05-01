@@ -1,0 +1,7 @@
+<p>Try this:</p>
+
+<pre><code>git reset --hard HEAD
+git pull
+</code></pre>
+
+<p>It should do what you want.</p>

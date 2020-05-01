@@ -1,0 +1,1 @@
+<p>I can't believe that nobody mentioned Barbara Liskov yet. When she designed CLU in 1974, she ran into this same terminology problem, and she invented the term <em>call by sharing</em> (also known as <em>call by object-sharing</em> and <em>call by object</em>) for this specific case of "call by value where the value is a reference".</p>

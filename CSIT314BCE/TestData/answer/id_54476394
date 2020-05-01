@@ -1,0 +1,61 @@
+<p>The hoisting behavior between function declarations and expressions is important, but there is another difference between the two:</p>
+
+<h2>functions within conditional statements</h2>
+
+<p>A general practice recommended by the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function#Conditionally_created_functions" rel="nofollow noreferrer">MDN</a> is to use function expressions instead of declarations inside <code>if</code> statements. From the example in the link, function declarations inside <code>if</code> statements will behave the same across Chrome and Firefox but <strong>not</strong> on Safari.</p>
+
+<p><em>Disclaimer: macOS can't run Microsoft Edge, so I can't validate.</em></p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>// function declaration example
+
+var hoisted = "foo" in this;
+
+console.log(`'foo' name ${hoisted ? "is" : "is not"} hoisted. typeof foo is ${typeof foo}`);
+
+if (false) {
+  function foo() {
+    return 1;
+  }
+}
+
+// In Chrome: 
+// 'foo' name is hoisted. typeof foo is undefined
+
+// In Firefox:
+// 'foo' name is hoisted. typeof foo is undefined
+
+// In Safari:
+// 'foo' name is hoisted. typeof foo is function</code></pre>
+</div>
+</div>
+</p>
+
+<p>Transforming <code>foo</code> into a function expression will yield consistent results across all three web browsers.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>// function expression example
+
+var hoisted = "foo" in this;
+
+console.log(`'foo' name ${hoisted ? "is" : "is not"} hoisted. typeof foo is ${typeof foo}`);
+
+if (false) {
+  var foo = function() {
+    return 1;
+  }
+}
+
+// In Chrome: 
+// 'foo' name is hoisted. typeof foo is undefined
+
+// In Firefox:
+// 'foo' name is hoisted. typeof foo is undefined
+
+// In Safari:
+// 'foo' name is hoisted. typeof foo is undefined</code></pre>
+</div>
+</div>
+</p>

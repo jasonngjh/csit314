@@ -1,0 +1,32 @@
+<p>On ARM, there is no branch needed, because every instruction has a 4-bit condition field, which tests (at zero cost) any of <a href="https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/condition-codes-1-condition-flags-and-codes" rel="noreferrer">16 different different conditions</a> that may arise in the Processor Status Register, and if the condition on an instruction is false, the instruction is skipped. This eliminates the need for short branches, and there would be no branch prediction hit for this algorithm. <b>Therefore, the sorted version of this algorithm would run slower than the unsorted version on ARM, because of the extra overhead of sorting.</b></p>
+
+<p>The inner loop for this algorithm would look something like the following in ARM assembly language:</p>
+
+<pre class="lang-js prettyprint-override"><code>MOV R0, #0     // R0 = sum = 0
+MOV R1, #0     // R1 = c = 0
+ADR R2, data   // R2 = addr of data array (put this instruction outside outer loop)
+.inner_loop    // Inner loop branch label
+    LDRB R3, [R2, R1]     // R3 = data[c]
+    CMP R3, #128          // compare R3 to 128
+    ADDGE R0, R0, R3      // if R3 &gt;= 128, then sum += data[c] -- no branch needed!
+    ADD R1, R1, #1        // c++
+    CMP R1, #arraySize    // compare c to arraySize
+    BLT inner_loop        // Branch to inner_loop if c &lt; arraySize
+</code></pre>
+
+<p><strong><em>But this is actually part of a bigger picture:</em></strong></p>
+
+<p><code>CMP</code> opcodes always update the status bits in the Processor Status Register (PSR), because that is their purpose, but most other instructions do not touch the PSR unless you add an optional <code>S</code> suffix to the instruction, specifying that the PSR should be updated based on the result of the instruction. <strong>Just like the 4-bit condition suffix, being able to execute instructions without affecting the PSR is a mechanism that reduces the need for branches on ARM, and also facilitates out of order dispatch at the hardware level</strong>, because after performing some operation X that updates the status bits, subsequently (or in parallel) you can do a bunch of other work that explicitly should not affect the status bits, then you can test the state of the status bits set earlier by X.</p>
+
+<p>The condition testing field and the optional "set status bit" field can be combined, for example:</p>
+
+<ul>
+<li><code>ADD R1, R2, R3</code> performs <code>R1 = R2 + R3</code> without updating any status bits.</li>
+<li><code>ADDGE R1, R2, R3</code> performs the same operation only if a previous instruction that affected the status bits resulted in a Greater than or Equal condition.</li>
+<li><code>ADDS R1, R2, R3</code> performs the addition and then updates the <code>N</code>, <code>Z</code>, <code>C</code> and <code>V</code> flags in the Processor Status Register based on whether the result was Negative, Zero, Carried (for unsigned addition), or oVerflowed (for signed addition).</li>
+<li><code>ADDSGE R1, R2, R3</code> performs the addition only if the <code>GE</code> test is true, and then subsequently updates the status bits based on the result of the addition.</li>
+</ul>
+
+<p>Most processor architectures do not have this ability to specify whether or not the status bits should be updated for a given operation, which can necessitate writing additional code to save and later restore status bits, or may require additional branches, or may limit the processor's out of order execution efficiency: one of the side effects of most CPU instruction set architectures forcibly updating status bits after most instructions is that it is much harder to tease apart which instructions can be run in parallel without interfering with each other. Updating status bits has side effects, therefore has a linearizing effect on code. <strong>ARM's ability to mix and match branch-free condition testing on any instruction with the option to either update or not update the status bits after any instruction is extremely powerful, for both assembly language programmers and compilers, and produces very efficient code.</strong></p>
+
+<p>If you have ever wondered why ARM has been so phenomenally successful, the brilliant effectiveness and interplay of these two mechanisms are a big part of the story, because they are one of the greatest sources of the ARM architecture's efficiency. The brilliance of the original designers of the ARM ISA back in 1983, Steve Furber and Roger (now Sophie) Wilson, cannot be overstated.</p>

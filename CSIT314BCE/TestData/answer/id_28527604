@@ -1,0 +1,13 @@
+<p>This is simple: Just run the following command:</p>
+
+<p>To delete a Git branch both locally and remotely, first delete the local branch using this command:</p>
+
+<pre><code>git branch -d example
+</code></pre>
+
+<p>(Here <code>example</code> is the branch name.)</p>
+
+<p>And after that, delete the remote branch using this command:</p>
+
+<pre><code>git push origin :example
+</code></pre>

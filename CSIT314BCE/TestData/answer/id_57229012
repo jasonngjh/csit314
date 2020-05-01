@@ -1,0 +1,113 @@
+<pre><code>public class Test {
+
+    static class Dog {
+        String name;
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((name == null) ? 0 : name.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Dog other = (Dog) obj;
+            if (name == null) {
+                if (other.name != null)
+                    return false;
+            } else if (!name.equals(other.name))
+                return false;
+            return true;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String nb) {
+            this.name = nb;
+        }
+
+        Dog(String sd) {
+            this.name = sd;
+        }
+    }
+    /**
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
+        Dog aDog = new Dog("Max");
+
+        // we pass the object to foo
+        foo(aDog);
+        Dog oldDog = aDog;
+
+        System.out.println(" 1: " + aDog.getName().equals("Max")); // false
+        System.out.println(" 2 " + aDog.getName().equals("huahua")); // false
+        System.out.println(" 3 " + aDog.getName().equals("moron")); // true
+        System.out.println(" 4 " + " " + (aDog == oldDog)); // true
+
+        // part2
+        Dog aDog1 = new Dog("Max");
+
+        foo(aDog1, 5);
+        Dog oldDog1 = aDog;
+
+        System.out.println(" 5 : " + aDog1.getName().equals("huahua")); // true
+        System.out.println(" part2 : " + (aDog1 == oldDog1)); // false
+
+        Dog oldDog2 = foo(aDog1, 5, 6);
+        System.out.println(" 6 " + (aDog1 == oldDog2)); // true
+        System.out.println(" 7 " + (aDog1 == oldDog)); // false
+        System.out.println(" 8 " + (aDog == oldDog2)); // false
+    }
+
+    /**
+     * 
+     * @param d
+     */
+    public static void foo(Dog d) {
+        System.out.println(d.getName().equals("Max")); // true
+
+        d.setName("moron");
+
+        d = new Dog("huahua");
+        System.out.println(" -:-  " + d.getName().equals("huahua")); // true
+    }
+
+    /**
+     * 
+     * @param d
+     * @param a
+     */
+    public static void foo(Dog d, int a) {
+        d.getName().equals("Max"); // true
+
+        d.setName("huahua");
+    }
+
+    /**
+     * 
+     * @param d
+     * @param a
+     * @param b
+     * @return
+     */
+    public static Dog foo(Dog d, int a, int b) {
+        d.getName().equals("Max"); // true
+        d.setName("huahua");
+        return d;
+    }
+}
+</code></pre>
+
+<p>The sample code to demonstrate the impact of changes to the  object at different functions . </p>

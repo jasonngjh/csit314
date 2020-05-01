@@ -1,0 +1,11 @@
+<p>Another approach is:</p>
+
+<pre><code>git push --prune origin
+</code></pre>
+
+<p><strong><em>WARNING:</em></strong> <em>This will delete all remote branches that do not exist locally.</em> Or more comprehensively,</p>
+
+<pre><code>git push --mirror
+</code></pre>
+
+<p>will effectively make the remote repository look like the local copy of the repository (local heads, remotes and tags are mirrored on remote).</p>

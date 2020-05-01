@@ -1,0 +1,3 @@
+<p>You don't need <strong>import</strong> namespace (using <code>System</code>;) to use <code>string</code> because it is a global alias of <code>System.String</code>.</p>
+
+<p>To know more about aliases you can check this <a href="https://www.codeproject.com/Articles/11856/C-Aliases" rel="noreferrer">link</a>.</p>

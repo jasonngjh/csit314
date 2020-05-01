@@ -1,0 +1,14 @@
+<p>You can use lodash <a href="https://lodash.com/docs#pull" rel="noreferrer">_.pull</a> (mutate array), <a href="https://lodash.com/docs#pullAt" rel="noreferrer">_.pullAt</a> (mutate array) or <a href="https://lodash.com/docs#without" rel="noreferrer">_.without</a> (does't mutate array), </p>
+
+<pre><code>var array1 = ['a', 'b', 'c', 'd']
+_.pull(array1, 'c')
+console.log(array1) // ['a', 'b', 'd']
+
+var array2 = ['e', 'f', 'g', 'h']
+_.pullAt(array2, 0)
+console.log(array2) // ['f', 'g', 'h']
+
+var array3 = ['i', 'j', 'k', 'l']
+var newArray = _.without(array3, 'i') // ['j', 'k', 'l']
+console.log(array3) // ['i', 'j', 'k', 'l']
+</code></pre>

@@ -1,0 +1,10 @@
+<p>Removing the value with index and splice!</p>
+
+<pre><code>function removeArrValue(arr,value) {
+    var index = arr.indexOf(value);
+    if (index &gt; -1) {
+        arr.splice(index, 1);
+    }
+    return arr;
+}
+</code></pre>

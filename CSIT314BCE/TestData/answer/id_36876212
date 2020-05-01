@@ -1,0 +1,12 @@
+<p><strong>VISUAL STUDIO USERS (2015, etc.)</strong></p>
+
+<p>If you cannot synchronise in Visual Studio as you are not allowed to push to a branch like "development" then as much as I tried, in Visual Studio NEITHER the <strong>REVERT</strong> NOR the <strong>RESET</strong> (hard or soft) would work.</p>
+
+<p>Per the answer with TONS OF VOTES:</p>
+
+<p>Use this at the command prompt of root of your project to nuke anything that will attempt to get pushed:</p>
+
+<pre><code>git reset --hard HEAD~1
+</code></pre>
+
+<p>Backup or zip your files just in case you don't wish to lose any work, etc...</p>

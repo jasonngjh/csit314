@@ -1,0 +1,19 @@
+<h2>One does not simply redirect using jQuery</h2>
+
+<p>jQuery is not necessary, and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/replace" rel="noreferrer"><strong><code>window.location.replace(...)</code></strong></a> will best simulate an HTTP redirect.  </p>
+
+<p><code>window.location.replace(...)</code> is better than using <code>window.location.href</code>, because <code>replace()</code> does not keep the originating page in the session history, meaning the user won't get stuck in a never-ending back-button fiasco.</p>
+
+<p>If you want to simulate someone clicking on a link, use
+ <strong><code>location.href</code></strong></p>
+
+<p>If you want to simulate an HTTP redirect, use <strong><code>location.replace</code></strong></p>
+
+<p><strong>For example:</strong></p>
+
+<pre><code>// similar behavior as an HTTP redirect
+window.location.replace("http://stackoverflow.com");
+
+// similar behavior as clicking on a link
+window.location.href = "http://stackoverflow.com";
+</code></pre>

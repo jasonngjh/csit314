@@ -1,0 +1,1 @@
+<p>Java copies the reference by value. So if you change it to something else (e.g, using <code>new</code>) the reference does not change outside the method. For native types, it is always pass by value.</p>

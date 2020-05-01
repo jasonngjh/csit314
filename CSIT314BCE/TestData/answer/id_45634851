@@ -1,0 +1,13 @@
+<p>You can start tracking all remote branches with the following Bash script:</p>
+
+<pre><code>#!/bin/bash
+git fetch --all
+for branch in `git branch -r --format="%(refname:short)" | sed 's/origin\///'`
+  do git branch -f --track "$branch" "origin/$branch"
+done
+</code></pre>
+
+<p>Here is also a single-line version:</p>
+
+<pre><code>git fetch --all; for branch in `git branch -r --format="%(refname:short)" | sed 's/origin\///'`; do git branch --track "$branch" "origin/$branch" ; done ;
+</code></pre>

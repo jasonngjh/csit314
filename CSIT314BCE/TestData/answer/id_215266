@@ -1,0 +1,3 @@
+<p><code>string</code> is just an alias for <code>System.String</code>. The compiler will treat them identically.</p>
+
+<p>The only practical difference is the syntax highlighting as you mention, and that you have to write <code>using System</code> if you use <code>String</code>.</p>

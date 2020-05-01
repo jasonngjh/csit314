@@ -1,0 +1,67 @@
+<p>A function declaration and a function expression assigned to a variable behave the same once the binding is established.</p>
+
+<p>There is a difference however at <em>how</em> and <em>when</em> the function object is actually associated with its variable. This difference is due to the mechanism called <em>variable hoisting</em> in JavaScript.</p>
+
+<p>Basically, all function declarations and variable declarations are hoisted to the top of the <em>function</em> in which the declaration occurs (this is why we say that JavaScript has <em>function scope</em>).</p>
+
+<ul>
+<li><p>When a function declaration is hoisted, the function body "follows"
+so when the function body is evaluated, the variable will immediately
+be bound to a function object.</p></li>
+<li><p>When a variable declaration is hoisted, the initialization does <em>not</em>
+follow, but is "left behind". The variable is initialized to
+<code>undefined</code> at the start of the function body, and will be <em>assigned</em>
+a value at its original location in the code. (Actually, it will be assigned a value at <em>every</em> location where a declaration of a variable with the same name occurs.)</p></li>
+</ul>
+
+<p>The order of hoisting is also important: function declarations take precedence over variable declarations with the same name, and the last function declaration takes precedence over previous function declarations with the same name.</p>
+
+<p>Some examples...</p>
+
+<pre><code>var foo = 1;
+function bar() {
+  if (!foo) {
+    var foo = 10 }
+  return foo; }
+bar() // 10
+</code></pre>
+
+<p>Variable <code>foo</code> is hoisted to the top of the function, initialized to <code>undefined</code>, so that <code>!foo</code> is <code>true</code>, so <code>foo</code> is assigned <code>10</code>. The <code>foo</code> outside of <code>bar</code>'s scope plays no role and is untouched. </p>
+
+<pre><code>function f() {
+  return a; 
+  function a() {return 1}; 
+  var a = 4;
+  function a() {return 2}}
+f()() // 2
+
+function f() {
+  return a;
+  var a = 4;
+  function a() {return 1};
+  function a() {return 2}}
+f()() // 2
+</code></pre>
+
+<p>Function declarations take precedence over variable declarations, and the last function declaration "sticks".</p>
+
+<pre><code>function f() {
+  var a = 4;
+  function a() {return 1}; 
+  function a() {return 2}; 
+  return a; }
+f() // 4
+</code></pre>
+
+<p>In this example <code>a</code> is initialized with the function object resulting from evaluating the second function declaration, and then is assigned <code>4</code>.</p>
+
+<pre><code>var a = 1;
+function b() {
+  a = 10;
+  return;
+  function a() {}}
+b();
+a // 1
+</code></pre>
+
+<p>Here the function declaration is hoisted first, declaring and initializing variable <code>a</code>. Next, this variable is assigned <code>10</code>. In other words: the assignment does not assign to outer variable <code>a</code>.</p>

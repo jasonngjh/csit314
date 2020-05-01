@@ -1,0 +1,64 @@
+<h2>Given the following function</h2>
+
+<pre><code>function person(name, age){
+
+    var name = name;
+    var age = age;
+
+    function introduce(){
+        alert("My name is "+name+", and I'm "+age);
+    }
+
+    return introduce;
+}
+
+var a = person("Jack",12);
+var b = person("Matt",14);
+</code></pre>
+
+<p>Everytime the function <code>person</code> is called a new closure is created. While variables <code>a</code> and <code>b</code> have the same <code>introduce</code> function, it is linked to different closures. And that closure will still exist even after the function <code>person</code> finishes execution.</p>
+
+<p><img src="https://i.stack.imgur.com/LDEhE.png" alt="Enter image description here"></p>
+
+<pre><code>a(); //My name is Jack, and I'm 12
+b(); //My name is Matt, and I'm 14
+</code></pre>
+
+<p>An abstract closures could be represented to something like this:</p>
+
+<pre><code>closure a = {
+    name: "Jack",
+    age: 12,
+    call: function introduce(){
+        alert("My name is "+name+", and I'm "+age);
+    }
+}
+
+closure b = {
+    name: "Matt",
+    age: 14,
+    call: function introduce(){
+        alert("My name is "+name+", and I'm "+age);
+    }
+}
+</code></pre>
+
+<hr>
+
+<p>Assuming you know how a <code>class</code> in another language work, I will make an analogy.</p>
+
+<p>Think like</p>
+
+<ul>
+<li>JavaScript <code>function</code> as a <code>constructor</code></li>
+<li><code>local variables</code> as <code>instance properties</code></li>
+<li>these <code>properties</code> are private</li>
+<li><code>inner functions</code> as <code>instance methods</code></li>
+</ul>
+
+<p>Everytime a <code>function</code> is called</p>
+
+<ul>
+<li>A new <code>object</code> containing all local variables will be created.</li>
+<li>Methods of this object have access to <code>"properties"</code> of that instance object.</li>
+</ul>

@@ -1,0 +1,3 @@
+<p><code>git fetch</code> pulls down the code from the remote server to your tracking branches in your local repository.  If your remote is named <code>origin</code> (the default) then these branches will be within <code>origin/</code>, for example <code>origin/master</code>, <code>origin/mybranch-123</code>, etc.  These are not your current branches, they are <em>local</em> copies of those branches from the server.</p>
+
+<p><code>git pull</code> does a <code>git fetch</code> but then <strong>also</strong> merges the code from the tracking branch into your current local version of that branch.  If you're not ready for that changes yet, just <code>git fetch</code> first.</p>

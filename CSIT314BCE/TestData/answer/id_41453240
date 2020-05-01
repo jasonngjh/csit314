@@ -1,0 +1,17 @@
+<p>To complement the rest of the answers, the MIME type for JSON linked data (JSON-LD) <a href="https://www.w3.org/TR/json-ld-syntax/#iana-considerations" rel="noreferrer">according to W3C</a> is:</p>
+
+<blockquote>
+  <p><code>application/ld+json</code></p>
+  
+  <p><strong>Type name:</strong> application</p>
+  
+  <p><strong>Subtype name:</strong> ld+json</p>
+</blockquote>
+
+<p>Additionally, from the same source:</p>
+
+<blockquote>
+  <p><strong>File extension(s)</strong>:</p>
+  
+  <p><code>.jsonld</code></p>
+</blockquote>

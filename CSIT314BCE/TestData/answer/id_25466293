@@ -1,0 +1,8 @@
+<p>But what if the element's CSS is like the following?</p>
+
+<pre><code>.element{
+    position: absolute;left:-9999;    
+}
+</code></pre>
+
+<p>So <a href="https://stackoverflow.com/questions/8897289">this answer to Stack Overflow question <em>How to check if an element is off-screen</em></a> should also be considered.</p>

@@ -1,0 +1,51 @@
+<p>Using <strong>delete</strong> method is the best way to do that, as per MDN description, the delete operator removes a property from an object. So you can simply write:</p>
+
+<pre><code>delete myObject.regex;
+// OR
+delete myObject['regex'];
+</code></pre>
+
+<blockquote>
+  <p>The delete operator removes a given property from an object. On
+  successful deletion, it will return true, else false will be returned.
+  However, it is important to consider the following scenarios:</p>
+  
+  <ul>
+  <li><p>If the property which you are trying to delete does not exist, delete
+  will not have any effect and will return true</p></li>
+  <li><p>If a property with the same name exists on the object's prototype
+  chain, then, after deletion, the object will use the property from the
+  prototype chain (in other words, delete only has an effect on own
+  properties).</p></li>
+  <li><p>Any property declared with var cannot be deleted from the global scope
+  or from a function's scope.</p></li>
+  <li><p>As such, delete cannot delete any functions in the global scope (whether this is part from a function definition or a function  (expression). </p></li>
+  <li><p>Functions which are part of an object (apart from the<br>
+  global scope) can be deleted with delete.</p></li>
+  <li><p>Any property declared with let or const cannot be deleted from the scope  within which they were defined. Non-configurable properties cannot be removed. This includes properties of built-in objects like Math, Array, Object and properties that are created as non-configurable with methods like Object.defineProperty().</p></li>
+  </ul>
+</blockquote>
+
+<p>The following snippet gives another simple example:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var Employee = {
+      age: 28,
+      name: 'Alireza',
+      designation: 'developer'
+    }
+    
+    console.log(delete Employee.name);   // returns true
+    console.log(delete Employee.age);    // returns true
+    
+    // When trying to delete a property that does 
+    // not exist, true is returned 
+    console.log(delete Employee.salary); // returns true</code></pre>
+</div>
+</div>
+</p>
+
+<p>For more info about and seeing more example, visit the link below:</p>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete" rel="noreferrer">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete</a></p>

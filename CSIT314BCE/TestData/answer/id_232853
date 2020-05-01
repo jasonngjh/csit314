@@ -1,0 +1,17 @@
+<p>There's one extra thing to mention: a function that yields doesn't actually have to terminate. I've written code like this:</p>
+
+<pre><code>def fib():
+    last, cur = 0, 1
+    while True: 
+        yield cur
+        last, cur = cur, last + cur
+</code></pre>
+
+<p>Then I can use it in other code like this:</p>
+
+<pre><code>for f in fib():
+    if some_condition: break
+    coolfuncs(f);
+</code></pre>
+
+<p>It really helps simplify some problems, and makes some things easier to work with. </p>

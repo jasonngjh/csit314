@@ -1,0 +1,66 @@
+<p><code>"use strict"</code> makes JavaScript code to run in <em>strict mode</em>, which basically means everything needs to be defined before use. The main reason for using strict mode is to avoid accidental global uses of undefined methods.</p>
+
+<p>Also in strict mode, things run faster, some warnings or silent warnings throw fatal errors, it's better to always use it to make a neater code.</p>
+
+<p><code>"use strict"</code> is widely needed to be used in ECMA5, <strong>in ECMA6 it's part of JavaScript by default</strong>, so it doesn't need to be added if you're using ES6.</p>
+
+<p>Look at these statements and examples from MDN:</p>
+
+<blockquote>
+  <p><strong>The "use strict" Directive</strong><br> The "use strict" directive is new in
+  JavaScript 1.8.5 (ECMAScript version 5). It is not a statement, but a
+  literal expression, ignored by earlier versions of JavaScript. The
+  purpose of "use strict" is to indicate that the code should be
+  executed in "strict mode". With strict mode, you can not, for example,
+  use undeclared variables.</p>
+  
+  <p><strong>Examples of using "use strict":</strong><br>
+  Strict mode for functions: Likewise, to invoke strict mode for a
+  function, put the exact statement "use strict"; (or 'use strict';) in
+  the function's body before any other statements.</p>
+</blockquote>
+
+<p><strong>1) strict mode in functions</strong> </p>
+
+<pre><code> function strict() {
+     // Function-level strict mode syntax
+     'use strict';
+     function nested() { return 'And so am I!'; }
+     return "Hi!  I'm a strict mode function!  " + nested();
+ }
+ function notStrict() { return "I'm not strict."; }
+
+ console.log(strict(), notStrict());
+</code></pre>
+
+<p><strong>2) whole-script strict mode</strong> </p>
+
+<pre><code>'use strict';
+var v = "Hi! I'm a strict mode script!";
+console.log(v);
+</code></pre>
+
+<p><strong>3) Assignment to a non-writable global</strong></p>
+
+<pre><code>'use strict';
+
+// Assignment to a non-writable global
+var undefined = 5; // throws a TypeError
+var Infinity = 5; // throws a TypeError
+
+// Assignment to a non-writable property
+var obj1 = {};
+Object.defineProperty(obj1, 'x', { value: 42, writable: false });
+obj1.x = 9; // throws a TypeError
+
+// Assignment to a getter-only property
+var obj2 = { get x() { return 17; } };
+obj2.x = 5; // throws a TypeError
+
+// Assignment to a new property on a non-extensible object.
+var fixed = {};
+Object.preventExtensions(fixed);
+fixed.newProp = 'ohai'; // throws a TypeError
+</code></pre>
+
+<p>You can <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode" rel="noreferrer">read more on MDN</a>.</p>

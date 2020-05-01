@@ -1,0 +1,5 @@
+<p>There is no difference between the two.  You can use either of them in your code.</p>
+
+<p><code>System.String</code> is a class (reference type) defined the <code>mscorlib</code> in the namespace <code>System</code>. In other words, <code>System.String</code> is a type in the <code>CLR</code>.</p>
+
+<p><code>string</code> is a keyword in <code>C#</code></p>

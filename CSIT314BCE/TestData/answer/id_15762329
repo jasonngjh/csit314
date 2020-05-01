@@ -1,0 +1,18 @@
+<p>Check out this code. It works in every <strong>major browser</strong>.</p>
+
+<pre><code>remove_item = function (arr, value) {
+    var b = '';
+    for (b in arr) {
+        if (arr[b] === value) {
+            arr.splice(b, 1);
+            break;
+        }
+    }
+    return arr;
+}
+</code></pre>
+
+<p>Call this function </p>
+
+<pre><code>remove_item(array,value);
+</code></pre>

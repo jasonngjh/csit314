@@ -1,0 +1,76 @@
+﻿body {
+}
+
+#vote {
+    border: 1px solid #007aff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background-color: #007aff;
+    transition: 0.3s;
+    color: white;
+}
+
+    #vote:hover {
+        background-color: transparent;
+        color: black;
+    }
+
+#post {
+    padding: 10px;
+    text-align: left;
+    border-radius: 10px;
+    margin: 10px;
+    vertical-align: top;
+}
+
+#answer {
+    border: 1px solid #53d769;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #53d769;
+    transition: 0.3s;
+    color: white;
+}
+
+    #answer:hover {
+        background-color: transparent;
+        color: black;
+    }
+
+#modOption {
+    border: 1px solid #fc3158;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #fc3158;
+    color: white;
+}
+
+#askedBy {
+    border: 1px solid #8e8e93;
+    padding: 10px;
+    text-align: left;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background-color: #8e8e93;
+    color: white;
+}
+
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+#questionDetail {
+    font-size: 20px;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+    #questionDetail:hover {
+        opacity: 1;
+    }

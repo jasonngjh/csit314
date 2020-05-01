@@ -1,0 +1,20 @@
+<p>Closures are hard to explain because they are used to make some behaviour work that everybody intuitively expects to work anyway. I find the best way to explain them (and the way that <em>I</em> learned what they do) is to imagine the situation without them:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>    var bind = function(x) {
+        return function(y) { return x + y; };
+    }
+    
+    var plus5 = bind(5);
+    console.log(plus5(3));</code></pre>
+</div>
+</div>
+</p>
+
+<p>What would happen here if JavaScript <em>didn't</em> know closures? Just replace the call in the last line by its method body (which is basically what function calls do) and you get:</p>
+
+<pre><code>console.log(x + 3);
+</code></pre>
+
+<p>Now, where's the definition of <code>x</code>? We didn't define it in the current scope. The only solution is to let <code>plus5</code> <em>carry</em> its scope (or rather, its parent's scope) around. This way, <code>x</code> is well-defined and it is bound to the value 5.</p>

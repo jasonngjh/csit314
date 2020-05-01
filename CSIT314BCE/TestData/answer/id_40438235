@@ -1,0 +1,33 @@
+<p>As <code>hide()</code>, <code>show()</code> and <code>toggle()</code> attaches inline css (display:none or display:block) to element.
+Similarly, we can easily use the ternary operator to check whether the element is hidden or visible by checking display CSS.</p>
+
+<p><strong>UPDATE:</strong></p>
+
+<ul>
+<li>You also need to check if element CSS set to visibility: "visible" or visibility: "hidden"</li>
+<li>The element will be also visible if display property set to inline-block, block, flex.</li>
+</ul>
+
+<p>So we can check for the property of an element that makes it invisible. So they are <code>display: none</code> and <code>visibility: "hidden";</code></p>
+
+<p>We can create an object for checking property responsible for hiding element:</p>
+
+<pre><code>var hiddenCssProps = {
+display: "none",
+visibility: "hidden"
+}
+</code></pre>
+
+<p>We can check by looping through each key value in object matching if element property for key matches with hidden property value.</p>
+
+<pre><code>var isHidden = false;
+for(key in hiddenCssProps) {
+  if($('#element').css(key) == hiddenCssProps[key]) {
+     isHidden = true;
+   }
+}
+</code></pre>
+
+<p>If you want to check property like element height: 0 or width: 0 or more, you can extend this object and add more property to it and can check.</p>
+
+<p>Thank you @Krzysztof Przygoda for reminding me other display properties.</p>

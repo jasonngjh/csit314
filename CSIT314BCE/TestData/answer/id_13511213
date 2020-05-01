@@ -1,0 +1,7 @@
+<p>Instead of merging with <code>git pull</code>, try this:  </p>
+
+<p><code>git fetch --all</code></p>
+
+<p>followed by:</p>
+
+<p><code>git reset --hard origin/master</code>.</p>

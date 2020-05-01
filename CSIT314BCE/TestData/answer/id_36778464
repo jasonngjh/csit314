@@ -1,0 +1,17 @@
+<p>Commands</p>
+
+<pre><code>git fetch --all
+git checkout -b &lt;ur_new_local_branch_name&gt; origin/&lt;Remote_Branch_Name&gt;
+</code></pre>
+
+<p>are equal to</p>
+
+<pre><code> git fetch --all
+</code></pre>
+
+<p>and then</p>
+
+<pre><code> git checkout -b fixes_for_dev origin/development
+</code></pre>
+
+<p>Both will create a <code>latest fixes_for_dev</code> from <code>development</code></p>

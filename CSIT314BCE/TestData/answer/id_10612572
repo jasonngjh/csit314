@@ -1,0 +1,10 @@
+<p>Instead of converting each date, you can use the following code: </p>
+
+<pre><code>long difference = (sDt4.getTime() - sDt3.getTime()) / 1000;
+System.out.println(difference);
+</code></pre>
+
+<p>And then see that the result is:</p>
+
+<pre><code>1
+</code></pre>

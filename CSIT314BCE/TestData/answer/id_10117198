@@ -1,0 +1,1 @@
+<p>The right content type for JSON is <code>application/json</code> UNLESS you're using <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>, also known as JSON with Padding, which is actually JavaScript and so the right content type would be <code>application/javascript</code>.</p>

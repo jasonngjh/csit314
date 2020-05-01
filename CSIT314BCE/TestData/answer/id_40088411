@@ -1,0 +1,12 @@
+<p>Use Strict is used to show common and repeated errors so that it is handled differently , and changes the way java script runs , such changes are :</p>
+
+<ul>
+<li><p>Prevents accidental globals</p></li>
+<li><p>No duplicates</p></li>
+<li><p>Eliminates with</p></li>
+<li><p>Eliminates this coercion</p></li>
+<li><p>Safer eval()</p></li>
+<li><p>Errors for immutables</p></li>
+</ul>
+
+<p>you can also read this <a href="https://www.nczonline.net/blog/2012/03/13/its-time-to-start-using-javascript-strict-mode/" rel="noreferrer">article</a> for the details </p>

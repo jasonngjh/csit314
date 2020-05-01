@@ -1,0 +1,16 @@
+<p>Remove element at index i, without mutating the original array:</p>
+
+<pre><code>/**
+* removeElement
+* @param {Array} array
+* @param {Number} index
+*/
+function removeElement(array, index) {
+   return Array.from(array).splice(index, 1);
+}
+
+// Another way is
+function removeElement(array, index) {
+   return array.slice(0).splice(index, 1);
+}
+</code></pre>

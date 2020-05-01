@@ -1,0 +1,27 @@
+<p>There once was a caveman </p>
+
+<pre><code>function caveman {
+</code></pre>
+
+<p>who had a very special rock,</p>
+
+<pre><code>var rock = "diamond";
+</code></pre>
+
+<p>You could not get the rock yourself because it was in the caveman's private cave. Only the caveman knew how to find and get the rock.</p>
+
+<pre><code>return {
+    getRock: function() {
+        return rock;
+    }
+};
+}
+</code></pre>
+
+<p>Luckily, he was a friendly caveman, and if you were willing to wait for his return, he would gladly get it for you.</p>
+
+<pre><code>var friend = caveman();
+var rock = friend.getRock();
+</code></pre>
+
+<p>Pretty smart caveman.</p>

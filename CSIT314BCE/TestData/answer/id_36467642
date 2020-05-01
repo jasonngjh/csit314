@@ -1,0 +1,18 @@
+<p>You can simply delete any property of an object using the <code>delete</code> keyword.</p>
+
+<p>For example:</p>
+
+<pre><code>var obj = {key1:"val1",key2:"val2",key3:"val3"}
+</code></pre>
+
+<p>To remove any property, say <code>key1</code>, use the <code>delete</code> keyword like this:</p>
+
+<pre><code>delete obj.key1
+</code></pre>
+
+<p>Or you can also use array-like notation:</p>
+
+<pre><code>delete obj[key1]
+</code></pre>
+
+<p>Ref: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete" rel="noreferrer">MDN</a>.</p>

@@ -1,0 +1,13 @@
+<p>Java passes parameters by VALUE, and by value <strong>ONLY</strong>.</p>
+
+<p><strong>To cut long story short:</strong></p>
+
+<blockquote>
+  <p>For those coming from C#: <strong>THERE IS NO "out" parameter.</strong></p>
+  
+  <p>For those coming from PASCAL: <strong>THERE IS NO "var" parameter</strong>.</p>
+</blockquote>
+
+<p>It means you can't change the reference from the object itself, but you can always change the object's properties.</p>
+
+<p>A workaround is to use <code>StringBuilder</code> parameter instead <code>String</code>. And you can always use arrays!</p>

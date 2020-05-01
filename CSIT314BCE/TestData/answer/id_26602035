@@ -1,0 +1,27 @@
+<p>Here is a simple real-time scenario. Just read it through, and you will understand how we have used closure here (see how seat number is changing).</p>
+
+<p>All other examples explained previously are also very good to understand the concept.</p>
+
+<pre><code>function movieBooking(movieName) {
+    var bookedSeatCount = 0;
+    return function(name) {
+        ++bookedSeatCount ;
+        alert( name + " - " + movieName + ", Seat - " + bookedSeatCount )
+    };
+};
+
+var MI1 = movieBooking("Mission Impossible 1 ");
+var MI2 = movieBooking("Mission Impossible 2 ");
+
+MI1("Mayur");
+// alert
+// Mayur - Mission Impossible 1, Seat - 1
+
+MI1("Raju");
+// alert
+// Raju - Mission Impossible 1, Seat - 2
+
+MI2("Priyanka");
+// alert
+// Raja - Mission Impossible 2, Seat - 1
+</code></pre>

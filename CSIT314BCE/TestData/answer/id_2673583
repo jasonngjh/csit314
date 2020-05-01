@@ -1,0 +1,28 @@
+<h2><a href="https://stackoverflow.com/questions/1700514/how-do-you-explain-closure-to-a-5-year-old/1700627#1700627">Can you explain closures to a 5-year-old?*</a></h2>
+
+<p>I still think <a href="http://code.google.com/apis/ajax/playground/?exp=maps#closure_simple" rel="noreferrer">Google's explanation</a> works very well and is concise:</p>
+
+<pre><code>/*
+*    When a function is defined in another function and it
+*    has access to the outer function's context even after
+*    the outer function returns.
+*
+* An important concept to learn in JavaScript.
+*/
+
+function outerFunction(someNum) {
+    var someString = 'Hey!';
+    var content = document.getElementById('content');
+    function innerFunction() {
+        content.innerHTML = someNum + ': ' + someString;
+        content = null; // Internet Explorer memory leak for DOM reference
+    }
+    innerFunction();
+}
+
+outerFunction(1);​
+</code></pre>
+
+<p><img src="https://i.stack.imgur.com/N0mn0.png" alt="Proof that this example creates a closure even if the inner function doesn&#39;t return"></p>
+
+<p><sub>*A C# question</sub></p>

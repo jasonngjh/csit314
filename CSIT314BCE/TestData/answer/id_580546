@@ -1,0 +1,15 @@
+<p><code>string</code> is a reserved word, but <code>String</code> is just a class name. 
+This means that <code>string</code> cannot be used as a variable name by itself.</p>
+
+<p>If for some reason you wanted a variable called <em>string</em>, you'd see only the first of these compiles:</p>
+
+<pre><code>StringBuilder String = new StringBuilder();  // compiles
+StringBuilder string = new StringBuilder();  // doesn't compile 
+</code></pre>
+
+<p>If you really want a variable name called <em>string</em> you can use <code>@</code> as a prefix:</p>
+
+<pre><code>StringBuilder @string = new StringBuilder();
+</code></pre>
+
+<p>Another critical difference: Stack Overflow highlights them differently. </p>

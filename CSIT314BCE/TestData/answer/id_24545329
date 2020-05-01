@@ -1,0 +1,11 @@
+<p>I just found "<a href="https://www.npmjs.org/package/grunt-strip-json-comments" rel="noreferrer">grunt-strip-json-comments</a>".</p>
+
+<blockquote>
+  <p>“Strip comments from JSON. It lets you use comments in your JSON files!”</p>
+</blockquote>
+
+<pre><code>{
+    // Rainbows
+    "unicorn": /* ❤ */ "cake"
+}
+</code></pre>

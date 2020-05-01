@@ -1,0 +1,17 @@
+<p>Use the jQuery function:</p>
+
+<pre><code>$.extend({
+  redirectPost: function(location, args) {
+    var form = '';
+    $.each(args, function(key, value) {
+      form += '&lt;input type="hidden" name="' + key + '" value="' + value + '"&gt;';
+    });
+    $('&lt;form action="' + location + '" method="POST"&gt;' + form + '&lt;/form&gt;').appendTo($(document.body)).submit();
+  }
+});
+</code></pre>
+
+<p>In your code you use it like this:</p>
+
+<pre><code>$.redirectPost("addPhotos.php", {pimreference:  $("#pimreference").val(), tag: $("#tag").val()});
+</code></pre>

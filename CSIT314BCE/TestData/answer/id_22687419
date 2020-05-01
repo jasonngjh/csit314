@@ -1,0 +1,12 @@
+<p>Strict mode makes several changes to normal JavaScript semantics:</p>
+
+<ul>
+<li><p>eliminates some JavaScript silent errors by changing them
+to throw errors.</p></li>
+<li><p>fixes mistakes that make it difficult for JavaScript
+engines to perform optimizations.</p></li>
+<li><p>prohibits some syntax likely to be defined in future
+versions of ECMAScript.</p></li>
+</ul>
+
+<p>for more information vistit <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">Strict Mode- Javascript</a></p>

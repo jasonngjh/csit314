@@ -1,0 +1,25 @@
+<p>If people are worried about using <code>use strict</code> it might be worth checking out this article: </p>
+
+<p><a href="http://novogeek-archive.azurewebsites.net/post/ECMAScript-5-Strict-mode-support-in-browsers-What-does-this-mean" rel="noreferrer">ECMAScript 5 'Strict mode' support in browsers. What does this mean?</a><br>
+  <em>NovoGeek.com - Krishna's weblog</em></p>
+
+<p>It talks about browser support, but more importantly how to deal with it safely:</p>
+
+<pre><code>function isStrictMode(){
+    return !this;
+} 
+/*
+   returns false, since 'this' refers to global object and 
+   '!this' becomes false
+*/
+
+function isStrictMode(){   
+    "use strict";
+    return !this;
+} 
+/* 
+   returns true, since in strict mode the keyword 'this'
+   does not refer to global object, unlike traditional JS. 
+   So here, 'this' is 'undefined' and '!this' becomes true.
+*/
+</code></pre>

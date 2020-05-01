@@ -1,0 +1,35 @@
+<p>This can be done using a shell script, I use this scrtipt that lists what will be removed, then lets me confirm the operation.</p>
+
+<p>This is useful since I sometimes have patches or other files I'd like to check on before wiping everything away.</p>
+
+<pre class="lang-sh prettyprint-override"><code>#!/bin/bash
+readarray -t -d '' FILES &lt; &lt;(git ls-files -z --other --directory)
+if [ "$FILES" = "" ]; then
+    echo  "Nothing to clean!"
+    exit 0
+fi
+echo -e "Dirty files:\n"
+printf '  %s\n' "${FILES[@]}"
+DO_REMOVE=0
+while true; do
+    echo ""
+    read -p "Remove ${#FILES[@]} files? [y/n]: " choice
+    case "$choice" in
+        y|Y )
+            DO_REMOVE=1
+            break ;;
+        n|N )
+            echo "Exiting!"
+            break ;;
+        * ) echo "Invalid input, expected [Y/y/N/n]"
+            continue ;;
+    esac
+done
+
+if [ "$DO_REMOVE" -eq 1 ];then
+    echo "Removing!"
+    for f in "${FILES[@]}"; do
+        rm -rfv -- "$f"
+    done
+fi
+</code></pre>

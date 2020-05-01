@@ -1,0 +1,39 @@
+<p><strong>Update:</strong> This method is recommended only if you cannot use ECMAScript 2015 (formerly known as ES6). If you can use it, other answers here provide much neater implementations.</p>
+
+<hr>
+
+<p><a href="https://gist.github.com/zykadelic/5069236" rel="noreferrer">This gist here</a> will solve your problem, and also deletes all occurrences of the argument instead of just 1 (or a specified value).</p>
+
+<pre><code>Array.prototype.destroy = function(obj){
+    // Return null if no objects were found and removed
+    var destroyed = null;
+
+    for(var i = 0; i &lt; this.length; i++){
+
+        // Use while-loop to find adjacent equal objects
+        while(this[i] === obj){
+
+            // Remove this[i] and store it within destroyed
+            destroyed = this.splice(i, 1)[0];
+        }
+    }
+
+    return destroyed;
+}
+</code></pre>
+
+<p>Usage:</p>
+
+<pre><code>var x = [1, 2, 3, 3, true, false, undefined, false];
+
+x.destroy(3);         // =&gt; 3
+x.destroy(false);     // =&gt; false
+x;                    // =&gt; [1, 2, true, undefined]
+
+x.destroy(true);      // =&gt; true
+x.destroy(undefined); // =&gt; undefined
+x;                    // =&gt; [1, 2]
+
+x.destroy(3);         // =&gt; null
+x;                    // =&gt; [1, 2]
+</code></pre>

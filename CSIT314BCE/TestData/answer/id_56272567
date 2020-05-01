@@ -1,0 +1,3 @@
+<p>You can use <code>git revert &lt;commit-id&gt;</code>.</p>
+
+<p>And for getting the commit ID, just use <code>git log</code>.</p>

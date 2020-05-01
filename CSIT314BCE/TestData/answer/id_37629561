@@ -1,0 +1,20 @@
+<p>To be honest, in practice usually there is not difference between <strong>System.String</strong> and <strong>string</strong>.</p>
+
+<p>All types in C# are objects and all derives from <strong>System.Object</strong> class. One difference is that string is a C# keyword and <strong>String</strong> you can use as variable name. <strong>System.String</strong> is conventional .NET name of this type and string is convenient C# name. Here is simple program which presents difference between <strong>System.String</strong> and string.</p>
+
+<pre><code>string a = new string(new char[] { 'x', 'y', 'z' });
+string b = new String(new char[] { 'x', 'y', 'z' });
+String c = new string(new char[] { 'x', 'y', 'z' });
+String d = new String(new char[] { 'x', 'y', 'z' });
+MessageBox.Show((a.GetType() == typeof(String) &amp;&amp; a.GetType() == typeof(string)).ToString()); // shows true
+MessageBox.Show((b.GetType() == typeof(String) &amp;&amp; b.GetType() == typeof(string)).ToString()); // shows true
+MessageBox.Show((c.GetType() == typeof(String) &amp;&amp; c.GetType() == typeof(string)).ToString()); // shows true
+MessageBox.Show((d.GetType() == typeof(String) &amp;&amp; d.GetType() == typeof(string)).ToString()); // shows true
+</code></pre>
+
+<p>@JonSkeet in my compiler</p>
+
+<pre><code>public enum Foo : UInt32 { }
+</code></pre>
+
+<p>is working. I've Visual Studio 2015 Community.</p>

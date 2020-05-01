@@ -1,0 +1,8 @@
+<p>So many long answers. Let me give a simple one:</p>
+
+<ul>
+<li>Java always passes everything by value</li>
+<li>that means also references are passed by value</li>
+</ul>
+
+<p>In short, you can not modify value of any parameter passed, but you can call methods or change attributes of an object reference passed.</p>

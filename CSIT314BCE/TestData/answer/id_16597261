@@ -1,0 +1,18 @@
+<p>An answer for a six-year-old (assuming he knows what a function is and what a variable is, and what data is):</p>
+
+<p>Functions can return data. One kind of data you can return from a function is another function. When that new function gets returned, all the variables and arguments used in the function that created it don't go away. Instead, that parent function "closes." In other words, nothing can look inside of it and see the variables it used except for the function it returned. That new function has a special ability to look back inside the function that created it and see the data inside of it.</p>
+
+<pre><code>function the_closure() {
+  var x = 4;
+  return function () {
+    return x; // Here, we look back inside the_closure for the value of x
+  }
+}
+
+var myFn = the_closure();
+myFn(); //=&gt; 4
+</code></pre>
+
+<p>Another really simple way to explain it is in terms of scope:</p>
+
+<p>Any time you create a smaller scope inside of a larger scope, the smaller scope will always be able to see what is in the larger scope.</p>

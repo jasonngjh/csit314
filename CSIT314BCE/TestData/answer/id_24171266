@@ -1,0 +1,57 @@
+<p><strong>What is a stack?</strong></p>
+
+<p>A stack is a pile of objects, typically one that is neatly arranged.</p>
+
+<p><a href="https://i.stack.imgur.com/GTa97.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/GTa97.jpg" alt="Enter image description here"></a></p>
+
+<blockquote>
+  <blockquote>
+    <p>Stacks in computing architectures are regions of memory where data is added or removed in a last-in-first-out manner. <br/>
+    In a multi-threaded application, each thread will have its own stack.</p>
+  </blockquote>
+</blockquote>
+
+<p><strong>What is a heap?</strong></p>
+
+<p>A heap is an untidy collection of things piled up haphazardly.</p>
+
+<p><a href="https://i.stack.imgur.com/rz43z.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/rz43z.jpg" alt="Enter image description here"></a></p>
+
+<blockquote>
+  <blockquote>
+    <p>In computing architectures the heap is an area of dynamically-allocated memory that is managed automatically by the operating system or the memory manager library. <br/>
+    Memory on the heap is allocated, deallocated, and resized regularly during program execution, and this can lead to a problem called fragmentation. <br/>
+    Fragmentation occurs when memory objects are allocated with small spaces in between that are too small to hold additional memory objects. <br/>
+    The net result is a percentage of the heap space that is not usable for further memory allocations.</p>
+  </blockquote>
+</blockquote>
+
+<p><strong>Both together</strong></p>
+
+<blockquote>
+  <blockquote>
+    <p>In a multi-threaded application, each thread will have its own stack. But, all the different threads will share the heap. <br/>
+    Because the different threads share the heap in a multi-threaded application, this also means that there has to be some coordination between the threads so that they don’t try to access and manipulate the same piece(s) of memory in the heap at the same time.</p>
+  </blockquote>
+</blockquote>
+
+<p><strong>Which is faster – the stack or the heap? And why?</strong></p>
+
+<blockquote>
+  <blockquote>
+    <p>The stack is much faster than the heap. <br/>
+    This is because of the way that memory is allocated on the stack. <br/>
+    Allocating memory on the stack is as simple as moving the stack pointer up.</p>
+  </blockquote>
+</blockquote>
+
+<p>For people new to programming, it’s probably a good idea to use the stack since it’s easier. <br/>
+Because the stack is small, you would want to use it when you know exactly how much memory you will need for your data, or if you know the size of your data is very small. <br/>
+It’s better to use the heap when you know that you will need a lot of memory for your data, or you just are not sure how much memory you will need (like with a dynamic array).</p>
+
+<h3>Java Memory Model</h3>
+
+<p><a href="https://i.stack.imgur.com/yZK6t.png" rel="noreferrer"><img src="https://i.stack.imgur.com/yZK6t.png" alt="Enter image description here"></a></p>
+
+<p>The stack is the area of memory where local variables (including method parameters) are stored. When it comes to object variables, these are merely references (pointers) to the actual objects on the heap.<br>
+Every time an object is instantiated, a chunk of heap memory is set aside to hold the data (state) of that object. Since objects can contain other objects, some of this data can in fact hold references to those nested objects.</p>

@@ -1,0 +1,9 @@
+<p>I use the following in my <a href="http://en.wikipedia.org/wiki/Bash_%28Unix_shell%29" rel="noreferrer">Bash</a> settings:</p>
+
+<pre><code>alias git-shoot="git push origin --delete"
+</code></pre>
+
+<p>Then you can call:</p>
+
+<pre><code>git-shoot branchname
+</code></pre>

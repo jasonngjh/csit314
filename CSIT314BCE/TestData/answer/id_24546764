@@ -1,0 +1,86 @@
+<p>I thought I'd contribute this answer to add more details from the Specifications.</p>
+
+<p>First, <a href="https://stackoverflow.com/questions/373419/whats-the-difference-between-passing-by-reference-vs-passing-by-value">What&#39;s the difference between passing by reference vs. passing by value?</a></p>
+
+<blockquote>
+  <p>Passing by reference means the called functions' parameter will be the
+  same as the callers' passed argument (not the value, but the identity
+  - the variable itself). </p>
+  
+  <p>Pass by value means the called functions' parameter will be a copy of
+  the callers' passed argument.</p>
+</blockquote>
+
+<p>Or from wikipedia, <a href="http://en.wikipedia.org/wiki/Call_by_reference#Call_by_reference" rel="noreferrer">on the subject of pass-by-reference</a></p>
+
+<blockquote>
+  <p>In call-by-reference evaluation (also referred to as
+  pass-by-reference), a function receives an implicit reference to a
+  variable used as argument, rather than a copy of its value. This
+  typically means that the function can modify (i.e. assign to) the
+  variable used as argument—something that will be seen by its caller.</p>
+</blockquote>
+
+<p>And <a href="http://en.wikipedia.org/wiki/Call_by_value#Call_by_value" rel="noreferrer">on the subject of pass-by-value</a></p>
+
+<blockquote>
+  <p>In call-by-value, the argument expression is evaluated, and the
+  resulting value is bound to the corresponding variable in the function [...]. 
+  If the function or procedure is able to assign values to its
+  parameters, only its local copy is assigned [...].</p>
+</blockquote>
+
+<p>Second, we need to know what Java uses in its method invocations. The <a href="http://docs.oracle.com/javase/specs/jls/se8/html/jls-8.html#jls-8.4.1" rel="noreferrer">Java Language Specification</a> states</p>
+
+<blockquote>
+  <p>When the method or constructor is invoked (§15.12), <strong>the values of the
+  actual argument expressions initialize newly created parameter
+  variables</strong>, each of the declared type, before execution of the body of
+  the method or constructor.</p>
+</blockquote>
+
+<p>So it assigns (or binds) the value of the argument to the corresponding parameter variable. </p>
+
+<p><strong>What is the value of the argument?</strong></p>
+
+<p>Let's consider reference types, the <a href="http://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.4" rel="noreferrer">Java Virtual Machine Specification</a> states</p>
+
+<blockquote>
+  <p>There are three kinds of <strong>reference types</strong>: class types, array types,
+  and interface types. <strong>Their values are references to dynamically
+  created class instances, arrays, or class instances or arrays that
+  implement interfaces, respectively.</strong></p>
+</blockquote>
+
+<p>The <a href="http://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.3.1" rel="noreferrer">Java Language Specification</a> also states</p>
+
+<blockquote>
+  <p><strong>The reference values (often just references) are pointers to these objects</strong>, and a special null reference, which refers to no object.</p>
+</blockquote>
+
+<p>The value of an argument (of some reference type) is a pointer to an object. Note that a variable, an invocation of a method with a reference type return type, and an instance creation expression (<code>new ...</code>) all resolve to a reference type value.</p>
+
+<p>So</p>
+
+<pre><code>public void method (String param) {}
+...
+String var = new String("ref");
+method(var);
+method(var.toString());
+method(new String("ref"));
+</code></pre>
+
+<p>all bind the value of a reference to a <code>String</code> instance to the method's newly created parameter, <code>param</code>. This is exactly what the definition of pass-by-value describes. As such, <strong>Java is pass-by-value</strong>.</p>
+
+<p><strong>The fact that you can follow the reference to invoke a method or access a field of the referenced object is completely irrelevant to the conversation.</strong> The definition of pass-by-reference was</p>
+
+<blockquote>
+  <p>This typically means that the function can modify (i.e. assign to) the
+  variable used as argument—something that will be seen by its caller.</p>
+</blockquote>
+
+<p>In Java, modifying the variable means reassigning it. In Java, if you reassigned the variable within the method, it would go unnoticed to the caller. <strong>Modifying the object referenced by the variable is a different concept entirely.</strong> </p>
+
+<hr>
+
+<p>Primitive values are also defined in the Java Virtual Machine Specification, <a href="http://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3" rel="noreferrer">here</a>. The value of the type is the corresponding integral or floating point value, encoded appropriately (8, 16, 32, 64, etc. bits).</p>

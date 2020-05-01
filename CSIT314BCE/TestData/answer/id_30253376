@@ -1,0 +1,44 @@
+<p>I would like to offer a somewhat more founded answer complementing the other answers. I was hoping to edit the most popular answer, but failed. I tried to make it as comprehensive and complete as I could.</p>
+
+<p>You can refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">MDN documentation</a> for more information.</p>
+
+<p><code>"use strict"</code> a directive introduced in ECMAScript 5.</p>
+
+<p>Directives are similar to statements, yet different.</p>
+
+<ul>
+<li><code>use strict</code> does not contain key words: The directive is a simple expression statement, which consists of a special string literal (in single or double quotes). JavaScript engines, that do not implement ECMAScript 5, merely see an expression statement without side effects. It is expected that future versions of ECMAScript standards introduce <code>use</code> as a real key word; the quotes would thereby become obsolete.</li>
+<li><code>use strict</code> can be used only at the beginning of a script or of a function, i.e. it must precede every other (real) statement. It does not have to be the first instruction in a script of function: it can be preceded by other statement expressions that consist of string literals ( and JavaScript implementations can treat them as implementation specific directives). String literals statements, which follow a first real statement (in a script or function) are simple expression statements. Interpreters must not interpret them as directives and they have no effect.</li>
+</ul>
+
+<p>The <code>use strict</code> directive indicates that the following code (in a script or a function) is strict code.
+The code in the highest level of a script (code that is not in a function) is considered strict code when the script contains a <code>use strict</code> directive.
+The content of a function is considered strict code when the function itself is defined in a strict code or when the function contains a <code>use strict</code> directive.
+Code that is passed to an <code>eval()</code> method is considered strict code when <code>eval()</code> was called from a strict code or contains the <code>use strict</code> directive itself.</p>
+
+<p>The strict mode of ECMAScript 5 is a restricted subset of the JavaScript language, which eliminates relevant deficits of the language and features more stringent error checking and higher security. The following lists the differences between strict mode and normal mode (of which the first three are particularly important):</p>
+
+<ul>
+<li>You cannot use the <code>with</code>-statement in strict mode.</li>
+<li>In strict mode all variables have to be declared: if you assign a value to an identifier that has not been declared as variable, function, function parameter, catch-clause parameter or property of the global <code>Object</code>, then you will get a <code>ReferenceError</code>. In normal mode the identifier is implicitly declared as a global variable (as a property of the global <code>Object</code>)</li>
+<li>In strict mode the keyword <code>this</code> has the value <code>undefined</code> in functions that were invoked as functions (not as methods). (In normal mode <code>this</code> always points to the global <code>Object</code>). This difference can be used to test if an implementation supports the strict mode:</li>
+</ul>
+
+<blockquote>
+<pre><code>var hasStrictMode = (function() { "use strict"; return this===undefined }());
+</code></pre>
+</blockquote>
+
+<ul>
+<li><p>Also when a function is invoked with <code>call()</code> or <code>apply</code> in strict mode, then <code>this</code> is exactly the value of the first argument of the <code>call()</code>or <code>apply()</code> invocation. (In normal mode <code>null</code> and <code>undefined</code> are replaced by the global <code>Object</code> and values, which are not objects, are cast into objects.)</p></li>
+<li><p>In strict mode you will get a <code>TypeError</code>, when you try to assign to readonly properties or to define new properties for a non extensible object. (In normal mode both simply fail without error message.)</p></li>
+<li>In strict mode, when passing code to <code>eval()</code>, you cannot declare or define variables or functions in the scope of the caller (as you can do it in normal mode). Instead, a new scope is created for <code>eval()</code> and the variables and functions are within that scope. That scope is destroyed after <code>eval()</code> finishes execution.</li>
+<li>In strict mode the arguments-object of a function contains a static copy of the values, which are passed to that function. In normal mode the arguments-object has a somewhat "magical" behaviour: The elements of the array and the named function parameters reference both the same value.</li>
+<li>In strict mode you will get a <code>SyntaxError</code> when the <code>delete</code> operator is followed by a non qualified identifier (a variable, function or function parameter). In normal mode the <code>delete</code> expression would do nothing and is evaluated to <code>false</code>.</li>
+<li>In strict mode you will get a <code>TypeError</code> when you try to delete a non configurable property. (In normal mode the attempt simply fails and the <code>delete</code> expression is evaluated to <code>false</code>).</li>
+<li>In strict mode it is considered a syntactical error when you try to define several properties with the same name for an object literal. (In normal mode there is no error.)</li>
+<li>In strict mode it is considered a syntactical error when a function declaration has multiple parameters with the same name. (In normal mode there is no error.)</li>
+<li>In strict mode octal literals are not allowed (these are literals that start with <code>0x</code>. (In normal mode some implementations do allow octal literals.)</li>
+<li>In strict mode the identifiers <code>eval</code> and <code>arguments</code> are treated like keywords. You cannot change their value, cannot assign a value to them, and you cannot use them as names for variables, functions, function parameters or identifiers of a catch block.</li>
+<li>In strict mode are more restrictions on the possibilities to examine the call stack. <code>arguments.caller</code> and <code>arguments.callee</code> cause a <code>TypeError</code> in a function in strict mode. Furthermore, some caller- and arguments properties of functions in strict mode cause a <code>TypeError</code> when you try to read them.</li>
+</ul>

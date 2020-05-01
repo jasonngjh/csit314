@@ -1,0 +1,115 @@
+<p>The <a href="https://www.w3.org/TR/html5/infrastructure.html#rules-for-parsing-a-legacy-color-value" rel="noreferrer">rules for parsing colors on legacy attributes</a> involves additional steps than those mentioned in existing answers. The truncate component to 2 digits part is described as:</p>
+
+<ol>
+<li>Discard all characters except the last 8</li>
+<li>Discard leading zeros one by one <strong>as long as all components have a leading zero</strong></li>
+<li>Discard all characters except the first 2</li>
+</ol>
+
+<p>Some examples:</p>
+
+<pre class="lang-none prettyprint-override"><code>oooFoooFoooF
+000F 000F 000F                &lt;- replace, pad and chunk
+0F 0F 0F                      &lt;- leading zeros truncated
+0F 0F 0F                      &lt;- truncated to 2 characters from right
+
+oooFooFFoFFF
+000F 00FF 0FFF                &lt;- replace, pad and chunk
+00F 0FF FFF                   &lt;- leading zeros truncated
+00 0F FF                      &lt;- truncated to 2 characters from right
+
+ABCooooooABCooooooABCoooooo
+ABC000000 ABC000000 ABC000000 &lt;- replace, pad and chunk
+BC000000 BC000000 BC000000    &lt;- truncated to 8 characters from left
+BC BC BC                      &lt;- truncated to 2 characters from right
+
+AoCooooooAoCooooooAoCoooooo
+A0C000000 A0C000000 A0C000000 &lt;- replace, pad and chunk
+0C000000 0C000000 0C000000    &lt;- truncated to 8 characters from left
+C000000 C000000 C000000       &lt;- leading zeros truncated
+C0 C0 C0                      &lt;- truncated to 2 characters from right
+</code></pre>
+
+<p>Below is a partial implementation of the algorithm. It does not handle errors or cases where the user enters a valid color.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="true" data-console="false" data-babel="false">
+<div class="snippet-code snippet-currently-hidden">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function parseColor(input) {
+  // todo: return error if input is ""
+  input = input.trim();
+  // todo: return error if input is "transparent"
+  // todo: return corresponding #rrggbb if input is a named color
+  // todo: return #rrggbb if input matches #rgb
+  // todo: replace unicode code points greater than U+FFFF with 00
+  if (input.length &gt; 128) {
+    input = input.slice(0, 128);
+  }
+  if (input.charAt(0) === "#") {
+    input = input.slice(1);
+  }
+  input = input.replace(/[^0-9A-Fa-f]/g, "0");
+  while (input.length === 0 || input.length % 3 &gt; 0) {
+    input += "0";
+  }
+  var r = input.slice(0, input.length / 3);
+  var g = input.slice(input.length / 3, input.length * 2 / 3);
+  var b = input.slice(input.length * 2 / 3);
+  if (r.length &gt; 8) {
+    r = r.slice(-8);
+    g = g.slice(-8);
+    b = b.slice(-8);
+  }
+  while (r.length &gt; 2 &amp;&amp; r.charAt(0) === "0" &amp;&amp; g.charAt(0) === "0" &amp;&amp; b.charAt(0) === "0") {
+    r = r.slice(1);
+    g = g.slice(1);
+    b = b.slice(1);
+  }
+  if (r.length &gt; 2) {
+    r = r.slice(0, 2);
+    g = g.slice(0, 2);
+    b = b.slice(0, 2);
+  }
+  return "#" + r.padStart(2, "0") + g.padStart(2, "0") + b.padStart(2, "0");
+}
+
+$(function() {
+  $("#input").on("change", function() {
+    var input = $(this).val();
+    var color = parseColor(input);
+    var $cells = $("#result tbody td");
+    $cells.eq(0).attr("bgcolor", input);
+    $cells.eq(1).attr("bgcolor", color);
+
+    var color1 = $cells.eq(0).css("background-color");
+    var color2 = $cells.eq(1).css("background-color");
+    $cells.eq(2).empty().append("bgcolor: " + input, "&lt;br&gt;", "getComputedStyle: " + color1);
+    $cells.eq(3).empty().append("bgcolor: " + color, "&lt;br&gt;", "getComputedStyle: " + color2);
+  });
+});</code></pre>
+<pre class="snippet-code-css lang-css prettyprint-override"><code>body { font: medium monospace; }
+input { width: 20em; }
+table { table-layout: fixed; width: 100%; }</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;input id="input" placeholder="Enter color e.g. chucknorris"&gt;&lt;/p&gt;
+&lt;table id="result"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Left Color&lt;/th&gt;
+      &lt;th&gt;Right Color&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+      &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+      &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+</div>
+</div>
+</p>

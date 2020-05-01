@@ -1,0 +1,16 @@
+<p>An easy example to understand what it is: <code>yield</code></p>
+
+<pre><code>def f123():
+    for _ in range(4):
+        yield 1
+        yield 2
+
+
+for i in f123():
+    print (i)
+</code></pre>
+
+<p>The output is: </p>
+
+<pre><code>1 2 1 2 1 2 1 2
+</code></pre>

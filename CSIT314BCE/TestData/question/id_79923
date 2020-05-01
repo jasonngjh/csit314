@@ -1,0 +1,9 @@
+<p>Programming language books explain that value types are created on the <strong>stack</strong>, and reference types are created on the <strong>heap</strong>, without explaining what these two things are. I haven't read a clear explanation of this.  I understand what <em>a stack</em> is. But, </p>
+
+<ul>
+<li>Where and what are they (physically in a real computer's memory)?</li>
+<li>To what extent are they controlled by the OS or language run-time?</li>
+<li>What is their scope?</li>
+<li>What determines the size of each of them?</li>
+<li>What makes one faster? </li>
+</ul>

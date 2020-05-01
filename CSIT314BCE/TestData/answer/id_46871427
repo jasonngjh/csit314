@@ -1,0 +1,22 @@
+<h3>Java is strictly passed by value</h3>
+
+<p>When I say <strong><em>pass by value</em></strong> it means whenever caller has invoked the callee the arguments(ie: the data to be passed to the other function) <strong>is copied</strong> and placed in the formal parameters (callee's local variables for receiving the input). Java makes data communications from one function to other function only in a pass by value environment.</p>
+
+<p>An important point would be to know that even C language is strictly passed by value only:<br>
+<em>ie:</em> Data is copied from caller to the callee and more ever the operation performed by the callee are on the same memory location and 
+what we pass them is the address of that location that we obtain from (&amp;) operator and the identifier used in the formal parameters are declared to be a pointer variable (*) using which we can get inside the memory location for accessing the data in it.</p>
+
+<p>Hence here the formal parameter is nothing but mere aliases for that location. And any modifications done on that location is visible where ever that scope of the variable (that identifies that location) is alive.</p>
+
+<p>In Java, there is no concept of pointers (<em>ie:</em> there is nothing called a pointer variable), although we can think of reference variable as a pointer technically in java we call it as a handle. The reason why we call the pointer to an address as a handle in java is  because a pointer variable is capable of performing not just single dereferencing but multiple dereferencing 
+for example: <code>int *p;</code> in P means p points to an integer
+and <code>int **p;</code> in C means p is pointer to a pointer to an integer
+we dont have this facility in Java, so its absolutely correct and technically legitimate to say it as an handle, also there are rules for pointer arithmetic in C. Which allows performing arithmetic operation on pointers with constraints on it. </p>
+
+<p>In C we call such mechanism of passing address and receiving them with pointer variables as <em>pass by reference</em> since we are passing their addresses and receiving them as pointer variable in formal parameter but at the compiler level that address is copied into pointer variable (since data here is address even then its data ) hence we can be 100% sure that C is Strictly passed by value (as we are passing data only)</p>
+
+<p>(and if we pass the data directly in C we call that as pass by value.)</p>
+
+<p>In java when we do the same we do it with the handles; since they are not called pointer variables like in (as discussed above) even though we are passing the references we cannot say its pass by reference since we are not collecting that with a pointer variable in Java.</p>
+
+<p>Hence Java <strong>strictly use pass by value mechanism</strong> </p>

@@ -1,0 +1,3 @@
+<p>If you use a browser released in the last year or so then it most likely supports JavaScript Strict mode. Only older browsers around before ECMAScript 5 became the current standard don't support it. </p>
+
+<p>The quotes around the command make sure that the code will still work in older browsers as well (although the things that generate a syntax error in strict mode will generally just cause the script to malfunction in some hard to detect way in those older browsers).</p>

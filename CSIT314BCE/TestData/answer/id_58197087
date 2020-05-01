@@ -1,0 +1,37 @@
+<p>Most of the answers here give a solution using -</p>
+
+<ol>
+<li>indexOf and splice</li>
+<li>delete</li>
+<li>filter</li>
+<li>regular <code>for loop</code></li>
+</ol>
+
+<p>Although all the solutions should work with these methods, I thought we could <em>use string manipulation</em>.</p>
+
+<p>Points to note about this solution -</p>
+
+<ol>
+<li>It will leave holes in the data (they could be removed with an extra filter)</li>
+<li>This solution <strong>works for not just primitive search values, but also objects</strong>.</li>
+</ol>
+
+<p>The trick is to -</p>
+
+<ol>
+<li><code>stringify</code> input data set and the search value</li>
+<li>replace the search value in the input data set with an empty string</li>
+<li>return <code>split</code> data on delimiter <code>,</code>.</li>
+</ol>
+
+<pre class="lang-js prettyprint-override"><code>    remove = (input, value) =&gt; {
+        const stringVal = JSON.stringify(value);
+        const result = JSON.stringify(input)
+
+        return result.replace(stringVal, "").split(",");
+    }
+</code></pre>
+
+<p>A JSFiddle with tests for objects and numbers is created here - <a href="https://jsfiddle.net/4t7zhkce/33/" rel="nofollow noreferrer">https://jsfiddle.net/4t7zhkce/33/</a></p>
+
+<p>Check the <code>remove</code> method in the fiddle.</p>

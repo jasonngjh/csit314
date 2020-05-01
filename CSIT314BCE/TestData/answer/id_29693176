@@ -1,0 +1,31 @@
+<p>I believe in shorter explanations, so see the below image.</p>
+
+<p><img src="https://i.stack.imgur.com/qbv6M.jpg" alt="Enter image description here"></p>
+
+<p><code>function f1()</code> ..>  Light Red Box</p>
+
+<p><code>function f2()</code> ..>  Red Small Box</p>
+
+<p>Here we have two functions, <code>f1()</code> and <code>f2()</code>. f2() is inner to f1().
+f1() has a variable, <code>var x = 10</code>.</p>
+
+<p>When invoking the function <code>f1()</code>, <code>f2()</code> can access the value of <code>var x = 10</code>.</p>
+
+<p>Here is the code:</p>
+
+<pre><code>function f1() {
+    var x=10;
+
+    function f2() {
+        console.log(x)
+    }
+
+    return f2
+
+}
+f1()
+</code></pre>
+
+<p><code>f1()</code> invoking here:</p>
+
+<p><img src="https://i.stack.imgur.com/zg4UT.jpg" alt="Enter image description here"></p>

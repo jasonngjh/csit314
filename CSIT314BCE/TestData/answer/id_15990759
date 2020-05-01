@@ -1,0 +1,48 @@
+<p><strong>Briefly</strong></p>
+
+<p><code>git fetch</code> is similar to <code>pull</code> but doesn't merge. i.e. it fetches remote updates (<code>refs</code> and <code>objects</code>) but your local stays the same (i.e. <code>origin/master</code> gets updated but <code>master</code> stays the same) .</p>
+
+<p><code>git pull</code> pulls down from a remote and instantly merges.</p>
+
+<p><strong>More</strong></p>
+
+<p><code>git clone</code> clones a repo.</p>
+
+<p><code>git rebase</code> saves stuff from your current branch that isn't in the upstream branch to a temporary area. Your branch is now the same as before you started your changes. So, <code>git pull -rebase</code> will pull down the remote changes, rewind your local branch, replay your changes over the top of your current branch one by one until you're up-to-date.</p>
+
+<p>Also, <code>git branch -a</code> will show you exactly what’s going on with all your branches - local and remote.</p>
+
+<p>This blog post was useful:</p>
+
+<p><a href="http://blog.mikepearce.net/2010/05/18/the-difference-between-git-pull-git-fetch-and-git-clone-and-git-rebase/" rel="noreferrer">The difference between git pull, git fetch and git clone (and git rebase) - Mike Pearce</a></p>
+
+<p>and covers <code>git pull</code>, <code>git fetch</code>, <code>git clone</code> and <code>git rebase</code>.</p>
+
+<p>====</p>
+
+<p>UPDATE</p>
+
+<p>I thought I'd update this to show how you'd actually use this in practice. </p>
+
+<ol>
+<li><p>Update your local repo from the remote (but don't merge):</p>
+
+<pre><code>git fetch 
+</code></pre></li>
+<li><p>After downloading the updates, let's see the differences:</p>
+
+<pre><code>git diff master origin/master 
+</code></pre></li>
+<li><p>If you're happy with those updates, then merge:</p>
+
+<pre><code>git pull
+</code></pre></li>
+</ol>
+
+<p>Notes:</p>
+
+<p>On step 2: For more on diffs between local and remotes, see: <a href="https://stackoverflow.com/questions/1800783/compare-local-git-branch-with-remote-branch">How to compare a local git branch with its remote branch?</a></p>
+
+<p>On step 3: It's probably more accurate (e.g. on a fast changing repo) to do a <code>git rebase origin</code> here. See <a href="https://stackoverflow.com/questions/292357/what-is-the-difference-between-git-pull-and-git-fetch#comment16374948_5376768">@Justin Ohms comment</a> in another answer.</p>
+
+<p>See also: <a href="http://longair.net/blog/2009/04/16/git-fetch-and-merge/" rel="noreferrer">http://longair.net/blog/2009/04/16/git-fetch-and-merge/</a> </p>

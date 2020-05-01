@@ -1,0 +1,24 @@
+<p>Old question, modern answer. Using object destructuring, an <a href="https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_-_ECMAScript_2015">ECMAScript&nbsp;6</a> feature, it's as simple as:</p>
+
+<pre><code>const { a, ...rest } = { a: 1, b: 2, c: 3 };
+</code></pre>
+
+<p>Or with the questions sample:</p>
+
+<pre><code>const myObject = {"ircEvent": "PRIVMSG", "method": "newURI", "regex": "^http://.*"};
+const { regex, ...newObject } = myObject;
+console.log(newObject);
+</code></pre>
+
+<p><a href="https://babeljs.io/repl/#?babili=false&amp;evaluate=true&amp;lineWrap=true&amp;presets=es2015%2Cstage-0&amp;experimental=true&amp;loose=true&amp;spec=false&amp;code=const%20myObject%20%3D%20%7B%22ircEvent%22%3A%20%22PRIVMSG%22%2C%20%22method%22%3A%20%22newURI%22%2C%20%22regex%22%3A%20%22%5Ehttp%3A%2F%2F.*%22%7D%3B%0Aconst%20%7B%20regex%2C%20...newObject%20%7D%20%3D%20myObject%3B%0Aconsole.log(newObject)%3B">You can see it in action in the Babel try-out editor.</a></p>
+
+<hr>
+
+<p><strong>Edit:</strong></p>
+
+<p>To reassign to the same variable, use a <code>let</code>:</p>
+
+<pre><code>let myObject = {"ircEvent": "PRIVMSG", "method": "newURI", "regex": "^http://.*"};
+({ regex, ...myObject } = myObject);
+console.log(myObject);
+</code></pre>

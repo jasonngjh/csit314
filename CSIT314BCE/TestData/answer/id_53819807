@@ -1,0 +1,29 @@
+<p>The first one is an <strong>Anonymous Function Expression</strong>, while the second one is a <strong>Function Declaration</strong>. Anonymous functions simply have no name. The main difference between an anonymous function expression and a function statement is the function name.</p>
+
+<h1>Named Functions Vs. Anonymous Functions</h1>
+
+<p>The anonymous function is quick and easy to type, and many libraries and tools tend to encourage this idiomatic style of code. However, anonymous functions have some <strong>drawbacks</strong>:</p>
+
+<ul>
+<li><p><strong>Readability:</strong> anonymous functions omit a name which could cause less readable code.</p></li>
+<li><p><strong>Debugging:</strong> anonymous functions have no useful name in stack traces, which can make debugging more difficult.</p></li>
+<li><p><strong>Self-Reference:</strong> what if the function needs to refer to itself, for recursion for example.</p></li>
+</ul>
+
+<p><strong>Naming Function Expression:</strong></p>
+
+<p>Providing a name for your function expression quite effectively addresses all these drawbacks, and has no tangible downsides. The best practice is to always name your function expressions:</p>
+
+<pre><code>setTimeout(function timeHandler() { // &lt;-- look, a name here!
+  console.log("I've waited 1 second");
+}, 1000);
+</code></pre>
+
+<p><strong>Naming IIFEs (Immediate Invoked Function Expression)</strong>: </p>
+
+<pre><code>(function IIFE(str) { // &lt;-- look, always name IIFEs!
+  console.log(str); // "Hello!"
+})('Hello!');
+</code></pre>
+
+<p>For functions assigned to a variable, naming the function, in this case, is not very common and may cause confusion, in this case, the arrow function may be a better choice.</p>

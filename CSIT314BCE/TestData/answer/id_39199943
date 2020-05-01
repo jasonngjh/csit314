@@ -1,0 +1,13 @@
+<p>You can use:</p>
+
+<pre><code>window.location.replace("http://www.example.com/");
+</code></pre>
+
+<p>The <code>replace()</code> method does not save the originating page in the session history, so the user can't go back using the back button and again get redirected. NOTE: The browser back button will be deactivated in this case.</p>
+
+<p>However, if you want an effect the same as clicking on a link you should go for:</p>
+
+<pre><code>window.location.href = "http://www.example.com/";
+</code></pre>
+
+<p>In this case, the browser back button will be active.</p>

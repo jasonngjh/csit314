@@ -1,0 +1,3 @@
+<p>There are other libraries that are JSON compatible, which support comments.</p>
+
+<p>One notable example is the <a href="https://github.com/hashicorp/hcl" rel="nofollow noreferrer">"Hashcorp Language" (HCL)"</a>. It is written by the same people who made Vagrant, packer, consul, and vault.</p>

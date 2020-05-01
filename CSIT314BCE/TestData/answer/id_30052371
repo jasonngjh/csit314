@@ -1,0 +1,55 @@
+<p>An operator for a conditional expression in Python was added in 2006 as part of <a href="https://www.python.org/dev/peps/pep-0308/" rel="noreferrer">Python Enhancement Proposal 308</a>. Its form differ from common <code>?:</code> operator and it's:</p>
+
+<pre><code>&lt;expression1&gt; if &lt;condition&gt; else &lt;expression2&gt;
+</code></pre>
+
+<p>which is equivalent to:</p>
+
+<pre><code>if &lt;condition&gt;: &lt;expression1&gt; else: &lt;expression2&gt;
+</code></pre>
+
+<p>Here is an example:</p>
+
+<pre><code>result = x if a &gt; b else y
+</code></pre>
+
+<p>Another syntax which can be used (compatible with versions before 2.5):</p>
+
+<pre><code>result = (lambda:y, lambda:x)[a &gt; b]()
+</code></pre>
+
+<p>where operands are <a href="https://en.wikipedia.org/wiki/Lazy_evaluation" rel="noreferrer">lazily evaluated</a>.</p>
+
+<p>Another way is by indexing a tuple (which isn't consistent with the conditional operator of most other languages):</p>
+
+<pre><code>result = (y, x)[a &gt; b]
+</code></pre>
+
+<p>or explicitly constructed dictionary:</p>
+
+<pre><code>result = {True: x, False: y}[a &gt; b]
+</code></pre>
+
+<p>Another (less reliable), but simpler method is to use <code>and</code> and <code>or</code> operators:</p>
+
+<pre><code>result = (a &gt; b) and x or y
+</code></pre>
+
+<p>however this won't work if <code>x</code> would be <code>False</code>.</p>
+
+<p>A possible workaround is to make <code>x</code> and <code>y</code> lists or tuples as in the following:</p>
+
+<pre><code>result = ((a &gt; b) and [x] or [y])[0]
+</code></pre>
+
+<p>or:</p>
+
+<pre><code>result = ((a &gt; b) and (x,) or (y,))[0]
+</code></pre>
+
+<p>If you're working with dictionaries, instead of using a ternary conditional, you can take advantage of <a href="https://docs.python.org/3/library/stdtypes.html#dict.get" rel="noreferrer"><code>get(key, default)</code></a>, for example:</p>
+
+<pre><code>shell = os.environ.get('SHELL', "/bin/sh")
+</code></pre>
+
+<p><sup>Source: <a href="https://en.wikipedia.org/wiki/%3F:#Python" rel="noreferrer">?: in Python at Wikipedia</a></sup></p>

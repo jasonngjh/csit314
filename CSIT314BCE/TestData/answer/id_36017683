@@ -1,0 +1,24 @@
+<p>MDN explains it best I think:</p>
+
+<blockquote>
+  <p>Closures are functions that refer to independent (free) variables. In other words, the function defined in the closure 'remembers' the environment in which it was created.</p>
+</blockquote>
+
+<p>A closure always has an outer function and an inner function. The inner function is where all the work happens, and the outer function is just the environment that preserves the scope where the inner function was created. In this way, the inner function of a closure 'remembers' the environment/scope in which it was created. The most classic example is a counter function:</p>
+
+<pre><code>var closure = function() {
+  var count = 0;
+  return function() {
+    count++;
+    console.log(count);
+  };
+};
+
+var counter = closure();
+
+counter() // returns 1
+counter() // returns 2
+counter() // returns 3
+</code></pre>
+
+<p>In the above code, <code>count</code> is preserved by the outer function (environment function), so that every time you call <code>counter()</code>, the inner function (work function) can increment it.</p>

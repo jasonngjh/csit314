@@ -1,0 +1,53 @@
+<h2><strong>Ternary Operator in different programming Languages</strong></h2>
+
+<p>Here I just try to show some important difference in <code>ternary operator</code> between a couple of programming languages.</p>
+
+<blockquote>
+  <p><em>Ternary Operator in Javascript</em></p>
+</blockquote>
+
+<pre><code>var a = true ? 1 : 0;
+# 1
+var b = false ? 1 : 0;
+# 0
+</code></pre>
+
+<blockquote>
+  <p><em>Ternary Operator in Ruby</em></p>
+</blockquote>
+
+<pre><code>a = true ? 1 : 0
+# 1
+b = false ? 1 : 0
+# 0
+</code></pre>
+
+<blockquote>
+  <p><em>Ternary operator in Scala</em></p>
+</blockquote>
+
+<pre><code>val a = true ? 1 | 0
+# 1
+val b = false ? 1 | 0
+# 0
+</code></pre>
+
+<blockquote>
+  <p><em>Ternary operator in R programming</em></p>
+</blockquote>
+
+<pre><code>a &lt;- if (TRUE) 1 else 0
+# 1
+b &lt;- if (FALSE) 1 else 0
+# 0
+</code></pre>
+
+<blockquote>
+  <p><em>Ternary operator in Python</em></p>
+</blockquote>
+
+<pre><code>a = 1 if True else 0
+# 1
+b = 1 if False else 0
+# 0
+</code></pre>

@@ -1,0 +1,17 @@
+<pre class="lang-sh prettyprint-override"><code>$ git reset --soft HEAD~1
+
+$ git status
+
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged &lt;file&gt;..." to unstage)
+        new file:   file1
+
+$ git log --oneline --graph
+
+ * 90f8bb1 (HEAD -&gt; master) Second commit
+ * 7083e29 Initial repository commit
+</code></pre>

@@ -1,0 +1,5 @@
+<p>All of the previous answers are talking about <code>git branch -m</code>. Of course, it's easy to operate, but for me, it may be a little hard to remember another Git command. So I tried to get the work done by the command I was familiar with. Yeah, you may guessed it.</p>
+
+<p>I use <code>git branch -b &lt;new_branch_name&gt;</code>. And if you don't want to save the old branch now you can execute <code>git branch -D &lt;old_branch_name&gt;</code> to remove it.</p>
+
+<p>I know it may be a little tedious, but it's easier to understand and remember. I hope it‘s helpful for you.</p>

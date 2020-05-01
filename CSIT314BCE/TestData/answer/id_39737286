@@ -1,0 +1,7 @@
+<pre><code>git reflog
+</code></pre>
+
+<p>Choose the number of the HEAD(s) of git reflog, where you want revert to and do (for this example I choose the 12):</p>
+
+<pre><code>git reset HEAD@{12} --hard
+</code></pre>

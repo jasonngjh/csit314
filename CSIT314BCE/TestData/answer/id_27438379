@@ -1,0 +1,14 @@
+<p>You can do this by the following two commands:</p>
+
+<pre><code>git reset --hard [previous Commit SHA id here]
+git push origin [branch Name] -f
+</code></pre>
+
+<p>It will remove your previous Git commit.</p>
+
+<p>If you want to keep your changes, you can also use:</p>
+
+<pre><code>git reset --soft [previous Commit SHA id here]
+</code></pre>
+
+<p>Then it will save your changes.</p>

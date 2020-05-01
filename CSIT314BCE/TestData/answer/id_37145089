@@ -1,0 +1,15 @@
+<p>Assuming you're talking about master and on that respective branch (that said, this could be any working branch you're concerned with):</p>
+
+<pre><code># Reset local master branch to November 3rd commit ID
+git reset --hard 0d1d7fc32e5a947fbd92ee598033d85bfc445a50
+
+# Reset remote master branch to November 3rd commit ID
+git push -f origin 0d1d7fc32e5a947fbd92ee598033d85bfc445a50:master
+</code></pre>
+
+<p>I found the answer from in a blog post (now no longer exists)</p>
+
+<p>Note that this is Resetting and Forcing the change to the remote, so that if others on your team have already git pulled, you will cause problems for them. You are destroying the change history, which is an important reason why people use git in the first place.</p>
+
+<p>Better to use revert (see other answers) than reset. 
+If you're a one man team then it probably doesn't matter.</p>

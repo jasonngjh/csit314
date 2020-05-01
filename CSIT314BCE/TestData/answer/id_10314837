@@ -1,0 +1,27 @@
+<p>For Python 2.5 and newer there is a specific syntax:</p>
+
+<pre><code>[on_true] if [cond] else [on_false]
+</code></pre>
+
+<p>In older Pythons a ternary operator is not implemented but it's possible to simulate it.</p>
+
+<pre><code>cond and on_true or on_false
+</code></pre>
+
+<p>Though, there is a potential problem, which if <code>cond</code> evaluates to <code>True</code> and <code>on_true</code> evaluates to <code>False</code> then <code>on_false</code> is returned instead of <code>on_true</code>. If you want this behavior the method is OK, otherwise use this:</p>
+
+<pre><code>{True: on_true, False: on_false}[cond is True] # is True, not == True
+</code></pre>
+
+<p>which can be wrapped by:</p>
+
+<pre><code>def q(cond, on_true, on_false)
+    return {True: on_true, False: on_false}[cond is True]
+</code></pre>
+
+<p>and used this way:</p>
+
+<pre><code>q(cond, on_true, on_false)
+</code></pre>
+
+<p>It is compatible with all Python versions.</p>

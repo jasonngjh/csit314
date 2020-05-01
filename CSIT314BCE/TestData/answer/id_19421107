@@ -1,0 +1,79 @@
+<p><strong>Java is always pass by value, not pass by reference</strong> </p>
+
+<p>First of all, we need to understand what pass by value and pass by reference are. </p>
+
+<p><strong>Pass by value means that you are making a copy in memory of the actual parameter's value that is passed in. This is a copy of the contents of the actual parameter</strong>.</p>
+
+<p><strong>Pass by reference (also called pass by address) means that a copy of the address of the actual parameter is stored</strong>.</p>
+
+<p>Sometimes Java can give the illusion of pass by reference. Let's see how it works by using the example below:</p>
+
+<pre><code>public class PassByValue {
+    public static void main(String[] args) {
+        Test t = new Test();
+        t.name = "initialvalue";
+        new PassByValue().changeValue(t);
+        System.out.println(t.name);
+    }
+
+    public void changeValue(Test f) {
+        f.name = "changevalue";
+    }
+}
+
+class Test {
+    String name;
+}
+</code></pre>
+
+<p>The output of this program is: </p>
+
+<blockquote>
+<pre><code>changevalue
+</code></pre>
+</blockquote>
+
+<p>Let's understand step by step:</p>
+
+<pre><code>Test t = new Test();
+</code></pre>
+
+<p>As we all know it will create an object in the heap and return the reference value back to t. For example, suppose the value of t is <code>0x100234</code> (we don't know the actual JVM internal value, this is just an example) .</p>
+
+<p><img src="https://i.stack.imgur.com/AVrhI.png" alt="first illustration"></p>
+
+<pre><code>new PassByValue().changeValue(t);
+</code></pre>
+
+<p>When passing reference t to the function it will not directly pass the actual reference value of object test,  but it will create a copy of t and then pass it to the function. Since it is <strong>passing by value</strong>, it passes a copy of the variable rather than the actual reference of it. Since we said the value of t was <code>0x100234</code>, both t and f will have the same value and hence they will point to the same object.</p>
+
+<p><img src="https://i.stack.imgur.com/WwdPh.png" alt="second illustration"></p>
+
+<p>If you change anything in the function using reference f it will modify the existing contents of the object. That is why we got the output <code>changevalue</code>,   which is updated in the function.</p>
+
+<p>To understand this more clearly, consider the following example:</p>
+
+<pre><code>public class PassByValue {
+    public static void main(String[] args) {
+        Test t = new Test();
+        t.name = "initialvalue";
+        new PassByValue().changeRefence(t);
+        System.out.println(t.name);
+    }
+
+    public void changeRefence(Test f) {
+        f = null;
+    }
+}
+
+class Test {
+    String name;
+}
+</code></pre>
+
+<p>Will this throw a <code>NullPointerException</code>? No, because it only passes a copy of the reference. 
+In the case of passing by reference, it could have thrown a <code>NullPointerException</code>, as seen below:</p>
+
+<p><img src="https://i.stack.imgur.com/jH6KP.png" alt="third illustration"></p>
+
+<p>Hopefully this will help.</p>

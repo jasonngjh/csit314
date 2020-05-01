@@ -1,0 +1,6 @@
+<p>To remove new files from the staging area (and only in case of a new file), as suggested above:</p>
+
+<pre><code>git rm --cached FILE
+</code></pre>
+
+<p>Use rm --cached only for new files accidentally added.</p>

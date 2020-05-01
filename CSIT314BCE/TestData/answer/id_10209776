@@ -1,0 +1,55 @@
+<p>Use <code>git add -i</code> to remove just-added files from your upcoming commit.  Example:</p>
+
+<p>Adding the file you didn't want:</p>
+
+<pre><code>$ git add foo
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file&gt;..." to unstage)
+#
+#       new file:   foo
+#
+# Untracked files:
+#   (use "git add &lt;file&gt;..." to include in what will be committed)
+# [...]#
+</code></pre>
+
+<p>Going into interactive add to undo your add (the commands typed at git here are "r" (revert), "1" (first entry in the list revert shows), 'return' to drop out of revert mode, and "q" (quit):</p>
+
+<pre><code>$ git add -i
+           staged     unstaged path
+  1:        +1/-0      nothing foo
+
+*** Commands ***
+  1: [s]tatus     2: [u]pdate     3: [r]evert     4: [a]dd untracked
+  5: [p]atch      6: [d]iff       7: [q]uit       8: [h]elp
+What now&gt; r
+           staged     unstaged path
+  1:        +1/-0      nothing [f]oo
+Revert&gt;&gt; 1
+           staged     unstaged path
+* 1:        +1/-0      nothing [f]oo
+Revert&gt;&gt; 
+note: foo is untracked now.
+reverted one path
+
+*** Commands ***
+  1: [s]tatus     2: [u]pdate     3: [r]evert     4: [a]dd untracked
+  5: [p]atch      6: [d]iff       7: [q]uit       8: [h]elp
+What now&gt; q
+Bye.
+$
+</code></pre>
+
+<p>That's it!  Here's your proof, showing that "foo" is back on the untracked list:</p>
+
+<pre><code>$ git status
+# On branch master
+# Untracked files:
+#   (use "git add &lt;file&gt;..." to include in what will be committed)
+# [...]
+#       foo
+nothing added to commit but untracked files present (use "git add" to track)
+$
+</code></pre>

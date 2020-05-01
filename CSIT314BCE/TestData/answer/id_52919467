@@ -1,0 +1,11 @@
+<p>YES, python have a ternary operator, here is the syntax and an example code to demonstrate the same :)</p>
+
+<pre><code>#[On true] if [expression] else[On false]
+# if the expression evaluates to true then it will pass On true otherwise On false
+
+
+a= input("Enter the First Number ")
+b= input("Enter the Second Number ")
+
+print("A is Bigger") if a&gt;b else print("B is Bigger")
+</code></pre>

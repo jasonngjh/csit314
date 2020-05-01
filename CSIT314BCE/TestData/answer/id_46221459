@@ -1,0 +1,13 @@
+<p>Using lodash</p>
+
+<pre><code>import omit from 'lodash/omit';
+
+const prevObject = {test: false, test2: true};
+// Removes test2 key from previous object
+const nextObject = omit(prevObject, 'test2');
+</code></pre>
+
+<p>Using Ramda</p>
+
+<pre><code>R.omit(['a', 'd'], {a: 1, b: 2, c: 3, d: 4}); //=&gt; {b: 2, c: 3}
+</code></pre>

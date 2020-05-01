@@ -1,0 +1,8 @@
+<p>If you would use those functions to create objects, you would get:</p>
+
+<pre><code>var objectOne = new functionOne();
+console.log(objectOne.__proto__); // prints "Object {}" because constructor is an anonymous function
+
+var objectTwo = new functionTwo();
+console.log(objectTwo.__proto__); // prints "functionTwo {}" because constructor is a named function
+</code></pre>

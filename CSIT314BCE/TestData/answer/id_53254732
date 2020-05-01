@@ -1,0 +1,9 @@
+<p>Get last commit ID by using this command (in the log one on the top it is the latest one):</p>
+
+<pre><code>git log
+</code></pre>
+
+<p>Get the commit id (GUID) and run this command:</p>
+
+<pre><code>git revert &lt;commit_id&gt;
+</code></pre>

@@ -1,0 +1,15 @@
+<p>To know what will be deleted before actually deleting:</p>
+
+<p><code>git clean -d -n</code></p>
+
+<p>It will output something like:</p>
+
+<p><strong>Would remove sample.txt</strong></p>
+
+<p>To delete everything listed in the output of the previous command:</p>
+
+<p><code>git clean -d -f</code></p>
+
+<p>It will output something like:</p>
+
+<p><strong>Removing sample.txt</strong></p>

@@ -1,0 +1,148 @@
+<p>There are already great answers that cover this. I wanted to make a small contribution by sharing a <strong>very simple example</strong> (which will compile) contrasting the behaviors between Pass-by-reference in c++ and Pass-by-value in Java.</p>
+
+<p>A few points:</p>
+
+<ol>
+<li>The term "reference" is a overloaded with two separate meanings. In Java it simply means a pointer, but in the context of "Pass-by-reference" it means a handle to the original variable which was passed in.</li>
+<li><strong>Java is Pass-by-value</strong>. Java is a descendent of C (among other languages). Before C, several (but not all) earlier languages like FORTRAN and COBOL supported PBR, but C did not. PBR allowed these other languages to make changes to the passed variables inside sub-routines. In order to accomplish the same thing (i.e. change the values of variables inside functions), C programmers passed pointers to variables into functions. Languages inspired by C, such as Java, borrowed this idea and continue to pass pointer to methods as C did, except that Java calls its pointers References. Again, this is a different use of the word "Reference" than in "Pass-By-Reference".</li>
+<li><strong>C++ allows Pass-by-reference</strong> by declaring a reference parameter using the "&amp;" character (which happens to be the same character used to indicate "the address of a variable" in both C and C++). For example, if we pass in a pointer by reference, the parameter and the argument are not just pointing to the same object. Rather, they are the same variable. If one gets set to a different address or to null, so does the other.</li>
+<li>In the C++ example below I'm passing a <strong>pointer</strong> to a null terminated string <strong>by reference</strong>. And in the Java example below I'm passing a Java reference to a String (again, the same as a pointer to a String) by value. Notice the output in the comments.</li>
+</ol>
+
+<p>C++ pass by reference example:</p>
+
+<pre><code>using namespace std;
+#include &lt;iostream&gt;
+
+void change (char *&amp;str){   // the '&amp;' makes this a reference parameter
+    str = NULL;
+}
+
+int main()
+{
+    char *str = "not Null";
+    change(str);
+    cout&lt;&lt;"str is " &lt;&lt; str;      // ==&gt;str is &lt;null&gt;
+}
+</code></pre>
+
+<p>Java pass "a Java reference" by value example</p>
+
+<pre><code>public class ValueDemo{
+
+    public void change (String str){
+        str = null;
+    }
+
+     public static void main(String []args){
+        ValueDemo vd = new ValueDemo();
+        String str = "not null";
+        vd.change(str);
+        System.out.println("str is " + str);    // ==&gt; str is not null!!
+                                                // Note that if "str" was
+                                                // passed-by-reference, it
+                                                // WOULD BE NULL after the
+                                                // call to change().
+     }
+}
+</code></pre>
+
+<p><strong>EDIT</strong></p>
+
+<p>Several people have written comments which seem to indicate that either they are not looking at my examples or they don't get the c++ example. Not sure where the disconnect is, but guessing the c++ example is not clear. I'm posting the same example in pascal because I think pass-by-reference looks cleaner in pascal, but I could be wrong. I might just be confusing people more; I hope not.</p>
+
+<p>In pascal, parameters passed-by-reference are called "var parameters". In the procedure setToNil below, please note the keyword 'var' which precedes the parameter 'ptr'. When a pointer is passed to this procedure, it will be passed <strong>by reference</strong>. Note the behavior: when this procedure sets ptr to nil (that's pascal speak for NULL), it will set the argument to nil--you can't do that in Java.</p>
+
+<pre><code>program passByRefDemo;
+type 
+   iptr = ^integer;
+var
+   ptr: iptr;
+
+   procedure setToNil(var ptr : iptr);
+   begin
+       ptr := nil;
+   end;
+
+begin
+   new(ptr);
+   ptr^ := 10;
+   setToNil(ptr);
+   if (ptr = nil) then
+       writeln('ptr seems to be nil');     { ptr should be nil, so this line will run. }
+end.
+</code></pre>
+
+<p><strong>EDIT 2</strong></p>
+
+<p>Some excerpts from <strong>"THE Java Programming Language"</strong> by Ken Arnold, <strong>James Gosling (the guy who invented Java)</strong>, and David Holmes, chapter 2, section 2.6.5</p>
+
+<blockquote>
+  <p><strong>All parameters to methods are passed "by value"</strong>. In other words,
+  values of parameter variables in a method are copies of the invoker
+  specified as arguments.</p>
+</blockquote>
+
+<p>He goes on to make the same point regarding objects . . . </p>
+
+<blockquote>
+  <p>You should note that when the parameter is an object reference, it is
+  the object reference-not the object itself-that is <strong>passed "by value"</strong>.</p>
+</blockquote>
+
+<p>And towards the end of the same section he makes a broader statement about java being only pass by value and never pass by reference.</p>
+
+<blockquote>
+  <p>The Java programming language <strong>does not pass objects by reference; it</strong>
+  <strong>passes object references by value</strong>. Because two copies of the same
+  reference refer to the same actual object, changes made through one
+  reference variable are visible through the other. There is exactly one
+  parameter passing mode-<strong>pass by value</strong>-and that helps keep things
+  simple.</p>
+</blockquote>
+
+<p>This section of the book has a great explanation of parameter passing in Java and of the distinction between pass-by-reference and pass-by-value and it's by the creator of Java. I would encourage anyone to read it, especially if you're still not convinced.</p>
+
+<p>I think the difference between the two models is very subtle and unless you've done programming where you actually used pass-by-reference, it's easy to miss where two models differ.</p>
+
+<p>I hope this settles the debate, but probably won't.</p>
+
+<p><strong>EDIT 3</strong></p>
+
+<p>I might be a little obsessed with this post. Probably because I feel that the makers of Java inadvertently spread misinformation. If instead of using the word "reference" for pointers they had used something else, say 
+dingleberry, there would've been no problem. You could say, "Java passes dingleberries by value and not by reference", and nobody would be confused.</p>
+
+<p>That's the reason only Java developers have issue with this. They look at the word "reference" and think they know exactly what that means, so they don't even bother to consider the opposing argument.</p>
+
+<p>Anyway, I noticed a comment in an older post, which made a balloon analogy which I really liked. So much so that I decided to glue together some clip-art to make a set of cartoons to illustrate the point.</p>
+
+<p><strong>Passing a reference by value</strong>--Changes to the reference are not reflected in the caller's scope, but the changes to the object are. This is because the reference is copied, but the both the original and the copy refer to the same object.
+<a href="https://i.stack.imgur.com/RvkqU.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/RvkqU.png" alt="Passing Object references By Value"></a></p>
+
+<p><strong>Pass by reference</strong>--There is no copy of the reference. Single reference is shared by both the caller and the function being called. Any changes to the reference or the Object's data are reflected in the caller's scope.
+<a href="https://i.stack.imgur.com/SHXkC.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/SHXkC.png" alt="Pass by reference"></a></p>
+
+<p><strong>EDIT 4</strong></p>
+
+<p>I have seen posts on this topic which describe the low level implementation of parameter passing in Java, which I think is great and very helpful because it makes an abstract idea concrete. However, to me the question is more about <strong>the behavior described in the language specification</strong> than about the technical implementation of the behavior. This is an exerpt from the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-8.html#jls-8.4.1" rel="nofollow noreferrer">Java Language Specification, section 8.4.1</a> :</p>
+
+<blockquote>
+  <p>When the method or constructor is invoked (§15.12), <strong>the values of the
+  actual argument expressions initialize newly created parameter
+  variables, each of the declared type, before execution of the body of
+  the method or constructor.</strong> The Identifier that appears in the
+  DeclaratorId may be used as a simple name in the body of the method or
+  constructor to refer to the formal parameter.</p>
+</blockquote>
+
+<p>Which means, java creates a copy of the passed parameters before executing a method. Like most people who studied compilers in college, I used <a href="https://rads.stackoverflow.com/amzn/click/com/0201100886" rel="nofollow noreferrer" rel="nofollow noreferrer">"The Dragon Book"</a> which is <strong>THE</strong> compilers book. It has a good description of "Call-by-value" and "Call-by-Reference" in Chapter 1. The Call-by-value description matches up with Java Specs exactly.</p>
+
+<p>Back when I studied compilers-in the 90's, I used the first edition of the book from 1986 which pre-dated Java by about 9 or 10 years. However, I just ran across a copy of the <a href="https://rads.stackoverflow.com/amzn/click/com/B009TGD06W" rel="nofollow noreferrer" rel="nofollow noreferrer">2nd Eddition</a> from 2007 <strong>which actually mentions Java!</strong> Section 1.6.6 labeled "Parameter Passing Mechanisms" describes parameter passing pretty nicely. Here is an excerpt under the heading "Call-by-value" which mentions Java:</p>
+
+<blockquote>
+  <p>In call-by-value, the actual parameter is evaluated (if it is an
+  expression) or copied (if it is a variable). The value is placed in
+  the location belonging to the corresponding formal parameter of the
+  called procedure. <strong>This method is used in C and Java, and is a common
+  option in C++ , as well as in most other languages.</strong></p>
+</blockquote>

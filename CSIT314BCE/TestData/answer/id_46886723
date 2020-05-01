@@ -1,0 +1,16 @@
+<p>Consider creating a new object without the <code>"regex"</code> property because the original object could always be referenced by other parts of your program. Thus you should avoid manipulating it.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>const myObject = {
+    "ircEvent": "PRIVMSG",
+    "method": "newURI",
+    "regex": "^http://.*"
+};
+
+const { regex, ...newMyObject } = myObject;
+
+console.log(newMyObject);</code></pre>
+</div>
+</div>
+</p>

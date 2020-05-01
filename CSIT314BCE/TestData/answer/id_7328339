@@ -1,0 +1,7 @@
+<p>Not everything works for content type <code>application/json</code>.</p>
+
+<p>If you are using <a href="http://en.wikipedia.org/wiki/Ext_JS" rel="noreferrer">Ext&nbsp;JS</a> form submit to upload file, be aware that the server response is parsed by the browser to create the document for the <code>&lt;iframe&gt;</code>.</p>
+
+<p>If the server is using JSON to send the return object, then the <code>Content-Type</code> header must be set to <code>text/html</code> in order to tell the browser to insert the text unchanged into the document body.</p>
+
+<p>See <a href="http://dev.sencha.com/deploy/ext-3.4.0/docs/" rel="noreferrer">the Ext JS 3.4.0 API documentation</a>.</p>

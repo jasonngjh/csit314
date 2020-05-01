@@ -1,0 +1,1 @@
+<p>If you're calling ASP.NET Web Services from the client-side you have to use <code>application/json</code> for it to work. I believe this is the same for the <a href="http://en.wikipedia.org/wiki/JQuery" rel="noreferrer">jQuery</a> and <a href="http://en.wikipedia.org/wiki/Ext_%28JavaScript_library%29" rel="noreferrer">Ext</a> frameworks. </p>

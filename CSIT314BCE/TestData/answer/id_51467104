@@ -1,0 +1,1 @@
+<p>string is a shortcut for <code>System.String</code>. The only difference is that you don´t need to reference to <code>System.String</code> namespace. So would be better using string than String. </p>

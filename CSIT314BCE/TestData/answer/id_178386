@@ -1,0 +1,11 @@
+<p>You can use the <a href="http://docs.jquery.com/Selectors/hidden" rel="noreferrer"><code>hidden</code></a> selector:</p>
+
+<pre><code>// Matches all elements that are hidden
+$('element:hidden')
+</code></pre>
+
+<p>And the <a href="http://docs.jquery.com/Selectors/visible" rel="noreferrer"><code>visible</code></a> selector:</p>
+
+<pre><code>// Matches all elements that are visible
+$('element:visible')
+</code></pre>

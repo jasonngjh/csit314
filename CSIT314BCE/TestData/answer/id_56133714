@@ -1,0 +1,9 @@
+<p>declare a string variable with string but use the String class when accessing one of its static members:</p>
+
+<pre><code>String.Format()
+</code></pre>
+
+<p>Variable </p>
+
+<pre><code>string name = "";
+</code></pre>

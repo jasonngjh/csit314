@@ -1,0 +1,12 @@
+<pre><code>git fetch --all
+</code></pre>
+
+<p>then if you are on the master branch</p>
+
+<pre><code>git reset --hard origin/master
+</code></pre>
+
+<p>else</p>
+
+<pre><code>git reset --hard origin/master&lt;branch_name&gt;
+</code></pre>

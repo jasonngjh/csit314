@@ -1,0 +1,27 @@
+<p><strong>Resetting Staged Changes and Commits</strong></p>
+
+<p>The <code>git reset</code> command lets you change the HEAD- the latest commit your working tree points to - of your repository. It modifies either the staging area or the staging area and working tree.</p>
+
+<p>Git's ability to craft commits exactly like you want means that you sometimes need to undo changes to the changes you staged with <code>git add</code>. You can do that by calling <code>git reset HEAD &lt;file to change&gt;</code>.</p>
+
+<p>You have two options to get rid of changes completely. <code>git checkout HEAD &lt;file(s) or path(s)&gt;</code> is a quick way to undo changes to your staging area and working tree. Be careful with this command, however, because it removes all changes to your working tree.</p>
+
+<p>Git doesn't know about those changes since they've never been committed. There's no way to get those changes back once you run this command.</p>
+
+<p>Another command at your disposal is <code>git reset --hard</code>. It is equally destructive to your working tree - any uncommitted changes or staged changes are lost after running it. Running <code>git reset -hard</code> HEAD does the same thing as <code>git checkout HEAD</code>. It just doesn't require a file or path to work.</p>
+
+<p>You can use <code>--soft</code> with <code>git reset</code>. It resets the repository to the commit you specify and stages all of those changes. Any changes you have already staged are not affected, nor are the changes in your working tree.</p>
+
+<p>Finally, you can use <code>--mixed</code>  to reset the working tree without staging any changes. This also unstages any changes that are staged.</p>
+
+<p><strong>Reverting Commits</strong></p>
+
+<p>Sometimes we make mistakes. A commit that wasn't supposed to be shared gets pushed to a public repository, a commit has a bug that can't be fixed and needs to be undone, or maybe you just don't need that code any longer.</p>
+
+<p>These cases all call for <code>git revert</code>. The <code>git revert</code> command does just what you might expect. It reverts a single commit by applying a reverse commit to the history.</p>
+
+<p>Sometimes you need to revert several commits to completely undo a change. You can use <code>-no-commit</code>, or you can use <code>-n</code> to tell Git to perform the revert, but stop short of committing the change.</p>
+
+<p>This lets you combine all the revert commits into one commit, which is useful if you need to revert a feature that spans several commits. Make sure that you revert commits in reverse order-the newest commit first. </p>
+
+<p>Otherwise, you might confuse Git by trying to revert code that doesn't exist yet.</p>

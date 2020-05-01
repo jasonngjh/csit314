@@ -1,0 +1,18 @@
+<h2>Functions containing no free variables are called pure functions.</h2>
+
+<h2>Functions containing one or more free variables are called closures.</h2>
+
+<pre><code>var pure = function pure(x){
+  return x 
+  // only own environment is used
+}
+
+var foo = "bar"
+
+var closure = function closure(){
+  return foo
+  // foo is free variable from the outer environment
+}
+</code></pre>
+
+<p><sup>src: <a href="https://leanpub.com/javascriptallongesix/read#leanpub-auto-if-functions-without-free-variables-are-pure-are-closures-impure">https://leanpub.com/javascriptallongesix/read#leanpub-auto-if-functions-without-free-variables-are-pure-are-closures-impure</a></sup></p>

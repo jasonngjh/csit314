@@ -1,0 +1,12 @@
+<p>I have created a thread devoted to these kind of questions for <em>any</em> programming languages <a href="https://stackoverflow.com/questions/2027/pass-by-reference-or-pass-by-value">here</a>.</p>
+
+<p><a href="https://stackoverflow.com/questions/2027/pass-by-reference-or-pass-by-value#2028">Java is also mentioned</a>. Here is the short summary:</p>
+
+<ul>
+<li>Java passes it parameters by value</li>
+<li>"by value" is the only way in java to pass a parameter to a method</li>
+<li>using methods from the object given as parameter will alter the
+object as the references point to
+the original objects. (if that
+method itself alters some values)</li>
+</ul>

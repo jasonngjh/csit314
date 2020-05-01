@@ -1,0 +1,6 @@
+<p>Try this, hard reset to previous commit where those files were not added, then:</p>
+
+<pre><code>git reset --hard &lt;commit_hash&gt;
+</code></pre>
+
+<p>Make sure you have a backup of your changes just in case, as it's a hard reset, which means they'll be lost (unless you stashed earlier)</p>

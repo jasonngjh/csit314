@@ -1,0 +1,12 @@
+<p>Java has only pass by value. A very simple example to validate this.</p>
+
+<pre><code>public void test() {
+    MyClass obj = null;
+    init(obj);
+    //After calling init method, obj still points to null
+    //this is because obj is passed as value and not as reference.
+}
+private void init(MyClass objVar) {
+    objVar = new MyClass();
+}
+</code></pre>

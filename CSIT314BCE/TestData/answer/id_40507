@@ -1,0 +1,14 @@
+<p>Basically, reassigning Object parameters doesn't affect the argument, e.g.,</p>
+
+<pre><code>private void foo(Object bar) {
+    bar = null;
+}
+
+public static void main(String[] args) {
+    String baz = "Hah!";
+    foo(baz);
+    System.out.println(baz);
+}
+</code></pre>
+
+<p>will print out <code>"Hah!"</code> instead of <code>null</code>. The reason this works is because <code>bar</code> is a copy of the value of <code>baz</code>, which is just a reference to <code>"Hah!"</code>. If it were the actual reference itself, then <code>foo</code> would have redefined <code>baz</code> to <code>null</code>.</p>

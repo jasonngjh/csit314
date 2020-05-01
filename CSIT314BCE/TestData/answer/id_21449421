@@ -1,0 +1,21 @@
+<p><strong>Stack</strong></p>
+
+<ul>
+<li>Very fast access</li>
+<li>Don't have to explicitly de-allocate variables</li>
+<li>Space is managed efficiently by CPU, memory will not become fragmented</li>
+<li>Local variables only</li>
+<li>Limit on stack size (OS-dependent)</li>
+<li>Variables cannot be resized</li>
+</ul>
+
+<p><strong>Heap</strong></p>
+
+<ul>
+<li>Variables can be accessed globally</li>
+<li>No limit on memory size</li>
+<li>(Relatively) slower access</li>
+<li>No guaranteed efficient use of space, memory may become fragmented over time as blocks of memory are allocated, then freed</li>
+<li>You must manage memory (you're in charge of allocating and freeing variables)</li>
+<li>Variables can be resized using realloc()</li>
+</ul>

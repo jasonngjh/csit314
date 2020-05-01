@@ -1,0 +1,6 @@
+<p>I tried the above solution, but it didn't work. Try this, it works:</p>
+
+<pre><code>git fetch origin 'remote_branch':'local_branch_name'
+</code></pre>
+
+<p>This will fetch the remote branch and create a new local branch (if not exists already) with name <code>local_branch_name</code> and track the remote one in it.</p>

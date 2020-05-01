@@ -1,0 +1,99 @@
+<h2>Performance</h2>
+
+<p>Today (2019-12-09) I conduct performance tests on macOS v10.13.6 (High Sierra) for chosen solutions. I show <code>delete</code> (A), but I not use it in comparison with other methods, because it left empty space in the array.</p>
+
+<p>The conclusions</p>
+
+<ul>
+<li>the fastest solution is <code>array.splice</code> (C) (except Safari for small arrays where it has the second time)</li>
+<li>for big arrays, <code>array.slice+splice</code> (H) is the fastest immutable solution for Firefox and Safari; <code>Array.from</code> (B) is fastest in Chrome</li>
+<li>mutable solutions are usually 1.5x-6x faster than immutable</li>
+<li>for small tables on Safari, surprisingly the mutable solution (C) is slower than the immutable solution (G)</li>
+</ul>
+
+<h2>Details</h2>
+
+<p>In tests I remove middle element from the array in different ways. The <strong>A, C</strong> solutions are in-place. The <strong>B, D, E, F, G, H</strong> solutions are immutable.</p>
+
+<p><strong>Results for array with 10 elements</strong></p>
+
+<p><a href="https://i.stack.imgur.com/foNhq.png" rel="noreferrer"><img src="https://i.stack.imgur.com/foNhq.png" alt="Enter image description here"></a></p>
+
+<p>In Chrome the <code>array.splice</code> (C) is the fastest in-place solution. The <code>array.filter</code> (D) is the fastest immutable solution. The slowest is <code>array.slice</code> (F). You can perform the test on your machine <a href="https://jsperf.com/small-array-remove-element" rel="noreferrer">here</a>.</p>
+
+<p><strong>Results for array with 1.000.000 elements</strong></p>
+
+<p><a href="https://i.stack.imgur.com/7zCJt.png" rel="noreferrer"><img src="https://i.stack.imgur.com/7zCJt.png" alt="Enter image description here"></a></p>
+
+<p>In Chrome the <code>array.splice</code> (C) is the fastest in-place solution (the <code>delete</code> (C) is similar fast - but it left an empty slot in the array (so it does not perform a 'full remove')). The <code>array.slice-splice</code> (H) is the fastest immutable solution. The slowest is <code>array.filter</code> (D and E). You can perform the test on your machine <a href="https://jsperf.com/big-array-remove-element" rel="noreferrer">here</a>.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="true" data-console="true" data-babel="false">
+<div class="snippet-code snippet-currently-hidden">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+var log = (letter,array) =&gt; console.log(letter, array.join `,`);
+
+function A(array) {
+  var index = array.indexOf(5);
+  delete array[index];
+  log('A', array);
+}
+
+function B(array) {
+  var index = array.indexOf(5);
+  var arr = Array.from(array);
+  arr.splice(index, 1)
+  log('B', arr);
+}
+
+function C(array) {
+  var index = array.indexOf(5);
+  array.splice(index, 1);
+  log('C', array);
+}
+
+function D(array) {
+  var arr = array.filter(item =&gt; item !== 5)
+  log('D', arr);
+}
+
+function E(array) {
+  var index = array.indexOf(5);
+  var arr = array.filter((item, i) =&gt; i !== index)
+  log('E', arr);
+}
+
+function F(array) {
+  var index = array.indexOf(5);
+  var arr = array.slice(0, index).concat(array.slice(index + 1))
+  log('F', arr);
+}
+
+function G(array) {
+  var index = array.indexOf(5);
+  var arr = [...array.slice(0, index), ...array.slice(index + 1)]
+  log('G', arr);
+}
+
+function H(array) {
+  var index = array.indexOf(5);
+  var arr = array.slice(0);
+  arr.splice(index, 1);
+  log('H', arr);
+}
+
+A([...a]);
+B([...a]);
+C([...a]);
+D([...a]);
+E([...a]);
+F([...a]);
+G([...a]);
+H([...a]);</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>This snippet only presents code used in performance tests - it does not perform tests itself.</code></pre>
+</div>
+</div>
+</p>
+
+<p>Comparison for browsers: Chrome v78.0.0, Safari v13.0.4, and Firefox v71.0.0</p>
+
+<p><a href="https://i.stack.imgur.com/Ct9DN.png" rel="noreferrer"><img src="https://i.stack.imgur.com/Ct9DN.png" alt="Enter image description here"></a></p>

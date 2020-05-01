@@ -1,0 +1,20 @@
+<h2>Remove one value, using loose comparison, without mutating the original array, ES6</h2>
+
+<pre><code>/**
+ * Removes one instance of `value` from `array`, without mutating the original array. Uses loose comparison.
+ *
+ * @param {Array} array Array to remove value from
+ * @param {*} value Value to remove
+ * @returns {Array} Array with `value` removed
+ */
+export function arrayRemove(array, value) {
+    for(let i=0; i&lt;array.length; ++i) {
+        if(array[i] == value) {
+            let copy = [...array];
+            copy.splice(i, 1);
+            return copy;
+        }
+    }
+    return array;
+}
+</code></pre>

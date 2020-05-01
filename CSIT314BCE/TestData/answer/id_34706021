@@ -1,0 +1,25 @@
+<p>Remove last occurrence or all occurrences, or first occurrence?  </p>
+
+<pre><code>var array = [2, 5, 9, 5];
+
+// Remove last occurrence (or all occurrences)
+for (var i = array.length; i--;) {
+  if (array[i] === 5) {
+     array.splice(i, 1);
+     break; // Remove this line to remove all occurrences
+  }
+}
+</code></pre>
+
+<p>or</p>
+
+<pre><code>var array = [2, 5, 9, 5];
+
+// Remove first occurrence
+for (var i = 0; array.length; i++) {
+  if (array[i] === 5) {
+     array.splice(i, 1);
+     break; // Do not remove this line
+  }
+}
+</code></pre>

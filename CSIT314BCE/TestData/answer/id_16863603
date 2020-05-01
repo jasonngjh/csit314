@@ -1,0 +1,7 @@
+<p>"Use Strict"; is an insurance that programmer will not use the loose or the bad properties of JavaScript. It is a guide, just like a ruler will help you make straight lines. "Use Strict" will help you do "Straight coding".</p>
+
+<p>Those that prefer not to use rulers to do their lines straight usually end up in those pages asking for others to debug their code.</p>
+
+<p>Believe me. The overhead is negligible compared to poorly designed code. <a href="http://www.yuiblog.com/blog/2010/12/14/strict-mode-is-coming-to-town/" rel="noreferrer">Doug Crockford, who has been a senior JavaScript developer for several years, has a very interesting post here</a>. Personally, I like to return to his site all the time to make sure I don't forget my good practice.</p>
+
+<p><strong>Modern JavaScript practice should always evoke the "Use Strict"; pragma.</strong> The only reason that the ECMA Group has made the "Strict" mode optional <em>is to permit less experienced coders access to JavaScript and give then time to adapt to the new and safer coding practices.</em></p>

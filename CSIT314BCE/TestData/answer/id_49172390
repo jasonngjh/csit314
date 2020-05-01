@@ -1,0 +1,33 @@
+<p>I prefer defining function as variable:</p>
+
+<pre><code>let first = function(x){
+   return x[0];
+}
+</code></pre>
+
+<p>Instead of:</p>
+
+<pre><code>function first(){
+    ....
+}
+</code></pre>
+
+<p>Because i can use expressions and decorators when defining the function. For example:</p>
+
+<pre><code>let safe = function(f){
+  try {f()...}
+}
+let last = safe(function(x){return x[0]}).
+</code></pre>
+
+<p>Also with ES6 its much shorter:</p>
+
+<pre><code> let last = x =&gt; x[0]
+ ...........
+ function last(x){
+     return x[0];
+ }
+......
+
+let last = safe(x =&gt; x[0]);
+</code></pre>

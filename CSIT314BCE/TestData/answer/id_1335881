@@ -1,0 +1,42 @@
+<p>This article about Javascript Strict Mode might interest you: <a href="http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/" rel="noreferrer">John Resig - ECMAScript 5 Strict Mode, JSON, and More</a></p>
+
+<p>To quote some interesting parts:</p>
+
+<blockquote>
+  <p>Strict Mode is a new feature in ECMAScript 5 that allows you to place a program, or a function, in a "strict" operating context. This strict context prevents certain actions from being taken and throws more exceptions.</p>
+</blockquote>
+
+<p>And:</p>
+
+<blockquote>
+  <p>Strict mode helps out in a couple ways:</p>
+  
+  <ul>
+  <li>It catches some common coding bloopers, throwing exceptions.</li>
+  <li>It prevents, or throws errors, when relatively "unsafe" actions are taken (such as gaining access to the global object).</li>
+  <li>It disables features that are confusing or poorly thought out.</li>
+  </ul>
+</blockquote>
+
+<p>Also note you can apply "strict mode" to the whole file... Or you can use it only for a specific function <em>(still quoting from John Resig's article)</em>:</p>
+
+<blockquote>
+<pre><code>// Non-strict code...
+
+(function(){
+  "use strict";
+
+  // Define your library strictly...
+})();
+
+// Non-strict code... 
+</code></pre>
+</blockquote>
+
+<p>Which might be helpful if you have to mix old and new code ;-)</p>
+
+<p>So, I suppose it's a bit like the <code>"use strict"</code> you can use in Perl <em>(hence the name?)</em>: it helps you make fewer errors, by detecting more things that could lead to breakages.</p>
+
+<p>Strict mode is now <a href="http://caniuse.com/#use-strict" rel="noreferrer">supported by all major browsers</a>. </p>
+
+<p>Inside <a href="https://caniuse.com/#feat=es6-module" rel="noreferrer">native ECMAScript modules</a> (with <code>import</code> and <code>export</code> statements) and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" rel="noreferrer">ES6 classes</a>, strict mode is always enabled and cannot be disabled.</p>

@@ -1,0 +1,46 @@
+<p>Many programming languages derived from <code>C</code> usually have the following syntax of ternary conditional operator:</p>
+
+<pre><code>&lt;condition&gt; ? &lt;expression1&gt; : &lt;expression2&gt;
+</code></pre>
+
+<blockquote>
+  <p>At first, the <code>Python</code> <strong>B</strong>enevolent <strong>D</strong>ictator <strong>F</strong>or <strong>L</strong>ife (I mean Guido van Rossum, of course) rejected it (as non-Pythonic style), since it's quite hard to understand for people not used to <code>C</code> language. Also, the colon sign <strong><code>:</code></strong> already has many uses in <code>Python</code>. After <strong>PEP 308</strong> was approved, <code>Python</code> finally received its own shortcut conditional expression (what we use now):</p>
+</blockquote>
+
+<pre><code>&lt;expression1&gt; if &lt;condition&gt; else &lt;expression2&gt;
+</code></pre>
+
+<p>So, firstly it evaluates the condition. If it returns <code>True</code>, <strong>expression1</strong> will be evaluated to give the result, otherwise <strong>expression2</strong> will be evaluated. Due to <strong><em>Lazy Evaluation</em></strong> mechanics – only one expression will be executed.</p>
+
+<p>Here are some examples (conditions will be evaluated from left to right):</p>
+
+<pre><code>pressure = 10
+print('High' if pressure &lt; 20 else 'Critical')
+
+# Result is 'High'
+</code></pre>
+
+<p>Ternary operators can be chained in series:     </p>
+
+<pre><code>pressure = 5
+print('Normal' if pressure &lt; 10 else 'High' if pressure &lt; 20 else 'Critical')
+
+# Result is 'Normal'
+</code></pre>
+
+<p>The following one is the same as previous one:</p>
+
+<pre><code>pressure = 5
+
+if pressure &lt; 20:
+    if pressure &lt; 10:
+        print('Normal')
+    else:
+        print('High')
+else:
+    print('Critical')
+
+# Result is 'Normal'
+</code></pre>
+
+<p>Hope this helps.</p>

@@ -1,0 +1,9 @@
+<p>A few corrections to some posts.</p>
+
+<p>C does NOT support pass by reference. It is ALWAYS pass by value. C++ does support pass by reference, but is not the default and is quite dangerous.</p>
+
+<p>It doesn't matter what the value is in Java: primitive or address(roughly) of object, it is ALWAYS passed by value.</p>
+
+<p>If a Java object "behaves" like it is being passed by reference, that is a property of mutability and has absolutely nothing to do with passing mechanisms.</p>
+
+<p>I am not sure why this is so confusing, perhaps because so many Java "programmers" are not formally trained, and thus do not understand what is really going on in memory?</p>

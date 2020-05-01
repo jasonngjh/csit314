@@ -1,0 +1,59 @@
+<h2>jQuery code to redirect a page or URL</h2>
+
+<blockquote>
+  <p><strong>First Way</strong></p>
+</blockquote>
+
+<p>Here is the jQuery code for redirecting a page. Since, I have put this code on the $(document).ready() function, it will execute as soon as the page is loaded.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="false" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var url = "http://stackoverflow.com";
+$(location).attr('href',url);</code></pre>
+</div>
+</div>
+</p>
+
+<p>You can even pass a URL directly to the <strong>attr()</strong> method, instead of using a variable.</p>
+
+<blockquote>
+  <p><strong>Second Way</strong></p>
+</blockquote>
+
+<pre><code> window.location.href="http://stackoverflow.com";
+</code></pre>
+
+<p>You can also code like this (both are same internally):</p>
+
+<pre><code>window.location="http://stackoverflow.com";
+</code></pre>
+
+<p>If you are curious about the difference between window.location and <code>window.location.href</code>, then you can see that the latter one is setting <code>href</code> property explicitly, while the former one does it implicitly. Since <code>window.location</code> returns an object, which by default sets its <code>.href</code> property.</p>
+
+<blockquote>
+  <p><strong>Third Way</strong></p>
+</blockquote>
+
+<p>There is another way to redirect a page using JavaScript, the <code>replace()</code> method of <code>window.location</code> object. You can pass a new URL to the <code>replace()</code> method, and it will simulate an HTTP redirect. By the way, remember that <code>window.location.replace()</code> method doesn't put the originating page in the session history, which may affect behavior of the back button. Sometime, it's what you want, so use it carefully.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="false" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>// Doesn't put originating page in history
+window.location.replace("http://stackoverflow.com");</code></pre>
+</div>
+</div>
+</p>
+
+<blockquote>
+  <p><strong>Fourth Way</strong></p>
+</blockquote>
+
+<p>like <strong>attr()</strong> method (after jQuery 1.6 introduce) </p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var url = "http://stackoverflow.com";
+$(location).prop('href', url);</code></pre>
+</div>
+</div>
+</p>

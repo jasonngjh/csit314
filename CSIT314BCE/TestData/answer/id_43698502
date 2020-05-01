@@ -1,0 +1,28 @@
+<p><strong>yield</strong> is similar to return. The difference is: </p>
+
+<p><strong>yield</strong> makes a function iterable (in the following example <code>primes(n = 1)</code> function becomes iterable).<br>
+What it essentially means is the next time the function is called, it will continue from where it left (which is after the line of <code>yield expression</code>).</p>
+
+<pre><code>def isprime(n):
+    if n == 1:
+        return False
+    for x in range(2, n):
+        if n % x == 0:
+            return False
+    else:
+        return True
+
+def primes(n = 1):
+   while(True):
+       if isprime(n): yield n
+       n += 1 
+
+for n in primes():
+    if n &gt; 100: break
+    print(n)
+</code></pre>
+
+<p>In the above example if <code>isprime(n)</code> is true it will return the prime number. In the next iteration it will continue from the next line </p>
+
+<pre><code>n += 1  
+</code></pre>

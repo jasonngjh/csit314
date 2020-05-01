@@ -1,0 +1,25 @@
+<p><code>x</code> can go to zero even faster in the opposite direction:</p>
+
+<pre><code>int x = 10;
+
+while( 0 &lt;---- x )
+{
+   printf("%d ", x);
+}
+</code></pre>
+
+<p><code>8 6 4 2</code></p>
+
+<p>You can control speed with an arrow!</p>
+
+<pre><code>int x = 100;
+
+while( 0 &lt;-------------------- x )
+{
+   printf("%d ", x);
+}
+</code></pre>
+
+<p><code>90 80 70 60 50 40 30 20 10</code></p>
+
+<p>;)</p>

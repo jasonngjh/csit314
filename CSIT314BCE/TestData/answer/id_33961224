@@ -1,0 +1,43 @@
+<p>Closure can be private and public variables or functions.</p>
+
+<pre><code>var ClusureDemo = function() {
+    //privare variables
+    var localVa1, localVa2;
+
+    //private functions
+    var setVaOne = function(newVa) {
+        localVa1 = newVa;
+    },
+    setVaTwo = function(newVa) {
+        localVa2 = newVa;
+    },
+    getVaOne = function() {
+        return localVa1;
+    },
+    getVaTwo = function() {
+        return localVa2;
+    };
+
+    return {
+        //public variables and functions
+        outVaOne : localVa1,
+        outVaTwo : localVa2,
+        setVaOne : setVaOne,
+        setVaTwo : setVaTwo,
+        getVaOne : getVaOne,
+        getVaTwo : getVaTwo
+    };
+};
+
+//Test Demo
+var app = new ClusureDemo();
+app.outVaOne = 'Hello Variable One';
+app.outVaTwo = 'Hello Variable Two';
+app.setVaOne(app.outVaOne);
+app.setVaTwo(app.outVaTwo);
+
+alert(app.getVaOne());
+alert(app.getVaTwo());
+</code></pre>
+
+<p><a href="http://jsfiddle.net/paoim/8o2ejzdq/" rel="nofollow">Demo</a></p>

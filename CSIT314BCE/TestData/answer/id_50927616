@@ -1,0 +1,5 @@
+<p>If this .py file are imported by other .py files, the code under "the if statement" will not be executed.</p>
+
+<p>If this .py are run by <code>python this_py.py</code> under shell, or double clicked in Windows. the code under "the if statement" will be executed.</p>
+
+<p>It is usually written for testing.</p>

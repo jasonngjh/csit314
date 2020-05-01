@@ -1,0 +1,13 @@
+<p>I also had similar issues, and the following seems to work:</p>
+
+<p>This deletes the local branch:</p>
+
+<pre><code>git branch -d the_local_branch
+</code></pre>
+
+<p>This removes the remote branch</p>
+
+<pre><code>git push origin :the_remote_branch
+</code></pre>
+
+<p><a href="http://makandracards.com/makandra/621-git-delete-a-branch-local-or-remote" rel="nofollow noreferrer">Source: Makandra Cards</a></p>

@@ -1,0 +1,11 @@
+<p>Suppose I create a new file, <code>newFile.txt</code>:</p>
+
+<p><a href="https://i.stack.imgur.com/nxRgO.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/nxRgO.png" alt="Enter image description here"></a></p>
+
+<p>Suppose I add the file accidentally, <code>git add newFile.txt</code>:</p>
+
+<p><a href="https://i.stack.imgur.com/P6fpa.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/P6fpa.png" alt="Enter image description here"></a></p>
+
+<p>Now I want to undo this add, before commit, <code>git reset newFile.txt</code>:</p>
+
+<p><a href="https://i.stack.imgur.com/pbbZ8.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/pbbZ8.png" alt="Enter image description here"></a></p>

@@ -1,0 +1,25 @@
+<p>Nice question!
+In simple words:</p>
+
+<pre><code>string - datatype 
+
+String - class Name
+</code></pre>
+
+<p>Ex:</p>
+
+<pre><code>string Name = "tata"; //datatype is string =&gt; Happy Compiler :)
+</code></pre>
+
+<p>and</p>
+
+<pre><code>String Name = "tata"; // Unknown datatype =&gt; Unhappy Compiler :(
+</code></pre>
+
+<p>Here is the thing, when you hover on String compiler says to use </p>
+
+<pre><code>System.String Name = "tata";
+</code></pre>
+
+<p>Don't get confused! 
+Hope this helps!</p>

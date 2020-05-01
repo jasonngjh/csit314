@@ -1,0 +1,33 @@
+<p>To clarify: <code>git add</code> moves changes from the current working directory to the <em>staging area</em> (index).</p>
+
+<p>This process is called <em>staging</em>. So the most natural command to <em>stage</em> the changes (changed files) is the obvious one:</p>
+
+<pre><code>git stage
+</code></pre>
+
+<p><code>git add</code> is just an easier-to-type alias for <code>git stage</code></p>
+
+<p>Pity there is no <code>git unstage</code> nor <code>git unadd</code> commands. The relevant one is harder to guess or remember, but it is pretty obvious:</p>
+
+<pre><code>git reset HEAD --
+</code></pre>
+
+<p>We can easily create an alias for this:</p>
+
+<pre><code>git config --global alias.unadd 'reset HEAD --'
+git config --global alias.unstage 'reset HEAD --'
+</code></pre>
+
+<p>And finally, we have new commands:</p>
+
+<pre><code>git add file1
+git stage file2
+git unadd file2
+git unstage file1
+</code></pre>
+
+<p>Personally I use even shorter aliases:</p>
+
+<pre><code>git a # For staging
+git u # For unstaging
+</code></pre>

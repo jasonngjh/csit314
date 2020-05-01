@@ -1,0 +1,21 @@
+<p>You can undo <code>git add</code> before commit with</p>
+
+<pre><code>git reset &lt;file&gt;
+</code></pre>
+
+<p>which will remove it from the current index (the "about to be committed" list) without changing anything else.</p>
+
+<p>You can use</p>
+
+<pre><code>git reset
+</code></pre>
+
+<p>without any file name to unstage all due changes. This can come in handy when there are too many files to be listed one by one in a reasonable amount of time.</p>
+
+<p>In old versions of Git, the above commands are equivalent to <code>git reset HEAD &lt;file&gt;</code> and <code>git reset HEAD</code> respectively, and will fail if <code>HEAD</code> is undefined (because you haven't yet made any commits in your repository) or ambiguous (because you created a branch called <code>HEAD</code>, which is a stupid thing that you shouldn't do). This <a href="https://git.kernel.org/cgit/git/git.git/tree/Documentation/RelNotes/1.8.2.txt#n179" rel="noreferrer">was changed in Git 1.8.2</a>, though, so in modern versions of Git you can use the commands above even prior to making your first commit:</p>
+
+<blockquote>
+  <p>"git reset" (without options or parameters) used to error out when
+     you do not have any commits in your history, but it now gives you
+     an empty index (to match non-existent commit you are not even on).</p>
+</blockquote>

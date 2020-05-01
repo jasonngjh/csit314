@@ -1,0 +1,3 @@
+<p>After a function is invoked, it goes out of scope. If that function contains something like a callback function, then that callback function is still in scope. If the callback function references some local variable in the immediate environment of the parent function, then naturally you'd expect that variable to be inaccessible to the callback function and return undefined.</p>
+
+<p>Closures ensure that any property that is referenced by the callback function is available for use by that function, even when its parent function may have gone out of scope.</p>

@@ -1,0 +1,23 @@
+<p>If you have committed junk but not pushed,</p>
+
+<pre><code>git reset --soft HEAD~1
+</code></pre>
+
+<blockquote>
+  <p><strong>HEAD~1</strong> is a shorthand for the commit before head. Alternatively you can refer to the <strong>SHA-1</strong> of the hash if you want to reset to. <em>--soft</em> option will delete the commit but it will leave all your changed files "Changes to be committed", as git status would put it.</p>
+  
+  <p>If you want to get rid of any changes to tracked files in the working tree since the commit before head use "<strong>--hard</strong>" instead.</p>
+</blockquote>
+
+<p>OR</p>
+
+<blockquote>
+  <p>If you already pushed and someone pulled which is usually my case, you can't use <em>git reset</em>. You can however do a <em>git revert</em>,</p>
+</blockquote>
+
+<pre><code>git revert HEAD
+</code></pre>
+
+<blockquote>
+  <p>This will create a new commit that reverses everything introduced by the accidental commit.</p>
+</blockquote>

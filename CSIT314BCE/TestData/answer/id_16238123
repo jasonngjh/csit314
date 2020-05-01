@@ -1,0 +1,13 @@
+<p>Instead of doing:</p>
+
+<pre><code>git fetch --all
+git reset --hard origin/master
+</code></pre>
+
+<p>I'd advise doing the following:</p>
+
+<pre><code>git fetch origin master
+git reset --hard origin/master
+</code></pre>
+
+<p>No need to fetch all remotes and branches if you're going to reset to the origin/master branch right?</p>

@@ -1,0 +1,1 @@
+<p>As the others are saying, they're the same.  StyleCop rules, by default, will enforce you to use <code>string</code> as a C# code style best practice, except when referencing <code>System.String</code> static functions, such as <code>String.Format</code>, <code>String.Join</code>, <code>String.Concat</code>, etc...</p>

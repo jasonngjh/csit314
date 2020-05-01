@@ -1,0 +1,45 @@
+<h1><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax" rel="noreferrer">Spread Syntax</a> (ES6)</h1>
+
+<p>To whoever needs it...</p>
+
+<p>To complete @Koen answer in this thread, in case you want to remove dynamic variable using the spread syntax, you can do it like so:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>const key = 'a';
+        
+const { [key]: foo, ...rest } = { a: 1, b: 2, c: 3 };
+
+console.log(foo);  // 1
+console.log(rest); // { b: 2, c: 3 }</code></pre>
+</div>
+</div>
+</p>
+
+<p>* <em><code>foo</code> will be a new variable with the value of <code>a</code> (which is 1).</em></p>
+
+<p><br />
+<strong><em>EXTENDED ANSWER</em></strong> 😇<br />
+There are few common ways to remove a property from an object.<br />Each one has it's own pros and cons (<a href="https://jsperf.com/delete-vs-undefined-vs-null/16" rel="noreferrer">check this performance comparison</a>):</p>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete" rel="noreferrer"><strong><em>Delete Operator</em></strong></a><br />
+Readable and short, however, it might not be the best choice if you are operating on a large number of objects as its performance is not optimized.</p>
+
+<pre><code>delete obj[key];
+</code></pre>
+
+<p><br />
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Assignment_Operators" rel="noreferrer"><strong><em>Reassignment</em></strong></a><br />
+More than 2X faster than <code>delete</code>, however the property is <strong>not</strong> deleted and can be iterated.</p>
+
+<pre><code>obj[key] = null;
+obj[key] = false;
+obj[key] = undefined;
+</code></pre>
+
+<p><br />
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax" rel="noreferrer"><strong><em>Spread Operator</em></strong></a><br />
+This <code>ES6</code> operator allows us to return a brand new object, excluding any properties, without mutating the existing object. The downside is that it has the worse performance out of the above and not suggested to be used when you need to remove many properties at a time.</p>
+
+<pre><code>{ [key]: val, ...rest } = obj;
+</code></pre>

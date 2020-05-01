@@ -1,0 +1,14 @@
+<p>Revert is the command to rollback the commits.</p>
+
+<pre><code>git revert &lt;commit1&gt; &lt;commit2&gt; 
+</code></pre>
+
+<p><em>Sample:</em></p>
+
+<p><code>git revert 2h3h23233</code></p>
+
+<p>It is capable of taking range from the HEAD like below. Here 1 says "revert last commit."</p>
+
+<p><code>git revert HEAD~1..HEAD</code></p>
+
+<p>and then do <code>git push</code></p>

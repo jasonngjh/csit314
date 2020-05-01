@@ -1,0 +1,7 @@
+<p>Imagine there is a very large park in your town where you see a magician called Mr. Coder starting baseball games in different corners of the park using his magic wand, called JavaScript.</p>
+
+<p>Naturally each baseball game has the exact same rules and each game has its own score board.</p>
+
+<p>Naturally, the scores of one baseball game are completely separate from the other games.</p>
+
+<p>A closure is the special way Mr.Coder keeps the scoring of all his magical baseball games separate.</p>

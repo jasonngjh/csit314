@@ -1,0 +1,10 @@
+<p><strong>Remove a wrong commit that is already pushed to Github</strong></p>
+
+<pre><code>git push origin +(previous good commit id):(branch name)
+</code></pre>
+
+<p>Please specify the last good commit id you would like to reset back in Github.</p>
+
+<p>For example. If latest commit id is wrong then specify the previous commit id in above git command with the branch name. </p>
+
+<p>You can get previous commit id using <code>git log</code></p>

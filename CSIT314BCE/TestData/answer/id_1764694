@@ -1,0 +1,1 @@
+<p>If you're on your initial commit and you can't use <code>git reset</code>, just declare "Git bankruptcy" and delete the <code>.git</code> folder and start over</p>
