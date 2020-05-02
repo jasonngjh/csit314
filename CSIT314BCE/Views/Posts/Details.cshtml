@@ -4,97 +4,102 @@
     ViewBag.Title = Model.Question.Title;
 }
 
-<div class="container-fluid">
-    <div id="Question">
-        <h2>@Model.Question.Title</h2>
-        <div class="row">
-            <div class="col-md-3"><p>Asked on @Model.Question.CreationDate</p></div>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="col-md-1">
-                <div class="row">Up</div>
-                <div class="row"><h3>@Model.Question.VoteCount</h3></div>
+    <div class="container-fluid">
+        <div id="Question">
+            <h2>@Model.Question.Title</h2>
+            <div class="row">
+                <div class="col-md-3"><p>Asked on @Model.Question.CreationDate</p></div>
             </div>
-            <div class="col-md-11">
-                <p>@Model.Question.Body</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
-            </div>
-            <div class="col-md-2">
-                <div class="well">
-                    Asked by @Html.ActionLink(Model.Question.OwnerUsername, "UserProfile", "Home", new { userId = Model.Question.OwnerId }, null)
+            <hr />
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="row">Up</div>
+                    <div class="row"><h3>@Model.Question.VoteCount</h3></div>
+                </div>
+                <div class="col-md-11">
+                    @Html.Raw(@Model.Question.Body)
                 </div>
             </div>
-        </div>
-        @{if (Model.Question.comments.Count != 0)
-            {
-                <div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-11">
-                        <hr />
-                        @{
-                            foreach (var qcomment in Model.Question.comments)
-                            {
-                                <p>@qcomment.Text - Asked by @Html.ActionLink(qcomment.OwnerUsername, "UserProfile", "Home", new { userId = qcomment.OwnerId }, null) @qcomment.CreationDate</p>
-                                <hr />
-                            }
-                        }
-                        <p>Add a comment</p>
+            <div class="row">
+                <div class="col-md-10">
+                </div>
+                <div class="col-md-2">
+                    <div class="well">
+                        Asked by @Html.ActionLink(Model.Question.OwnerUsername, "UserProfile", "Home", new { userId = Model.Question.OwnerId }, null)
                     </div>
                 </div>
+            </div>
+            @{
+                if (Model.Question.comments.Count != 0)
+                {
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+                            <hr />
+                            @{
+                                foreach (var qcomment in Model.Question.comments)
+                                {
+                                    <p class="col-md-offset-1">@qcomment.Text - Asked by @Html.ActionLink(qcomment.OwnerUsername, "UserProfile", "Home", new { userId = qcomment.OwnerId }, null) @qcomment.CreationDate</p>
+                                }
+                            }
+                            <hr />
+                            <p>Add a comment</p>
+                        </div>
+                    </div>
+                }
             }
-        }
-    </div>
-    <hr />
-    @{
-        if (Model.Answer.Count != 0)
-        {
-            <div class="row"><h3>@Model.Answer.Count Answers</h3></div>
-            <div id="Answers">
-                @{
-                    foreach (var answer in Model.Answer)
-                    {
-                        <div class="row">
-                            <div class="col-md-1">
-                                <div class="row">Up</div>
-                                <div class="row"><h3>@answer.VoteCount</h3></div>
-                            </div>
-                            <div class="col-md-11">
-                                <p>@answer.Body</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-10">
-                            </div>
-                            <div class="col-md-2">
-                                <div class="well">
-                                    Asked by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null)
-                                </div>
-                            </div>
-                        </div>
-                        if (answer.comments.Count != 0)
+            <hr />
+        </div>
+        @{
+            if (Model.Answer.Count != 0)
+            {
+                <div class="row"><h3>@Model.Answer.Count Answers</h3></div>
+                <div id="Answers">
+                    @{
+                        foreach (var answer in Model.Answer)
                         {
-                            <div>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-11">
-                                    <hr />
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="row">Up</div>
+                                    <div class="row"><h3>@answer.VoteCount</h3></div>
                                     @{
-                                        foreach (var acomment in answer.comments)
+                                        if (answer.PostId == Model.Question.AcceptedAnswerId)
                                         {
-                                            <p>@acomment.Text - @Html.ActionLink(acomment.OwnerUsername, "UserProfile", "Home", new { userId = acomment.OwnerId }, null) @acomment.CreationDate</p>
-                                            <hr />
+                                            <div class="row" style="text-align:center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
                                         }
                                     }
                                 </div>
+                                <div class="col-md-11">@Html.Raw(@answer.Body)</div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="well">
+                                        Asked by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null)
+                                    </div>
+                                </div>
+                            </div>
+                            if (answer.comments.Count != 0)
+                            {
+                                <div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-11">
+                                        <hr />
+                                        @{
+                                            foreach (var acomment in answer.comments)
+                                            {
+                                                <p class="col-md-offset-1">@acomment.Text - @Html.ActionLink(acomment.OwnerUsername, "UserProfile", "Home", new { userId = acomment.OwnerId }, null) @acomment.CreationDate</p>
+                                            }
+                                        }
+                                        <hr />
+                                    </div>
+                                </div>
+                            }
                         }
                     }
-                }
-            </div>
-        }
-    }
-
-</div>
+                </div>
+            }
+            Html.RenderPartial("_PostAnswer", new CSIT314BCE.Models.PostAnsViewModel() { ParentId = Model.Question.PostId });
+         }
+    </div>

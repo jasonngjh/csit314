@@ -62,6 +62,33 @@ namespace CSIT314BCE.Models
             return post.PostId;
         }
 
+        public int PostAns(PostAnsViewModel model) 
+        {
+            var userManager = new UserManager<Student>(new UserStore<Student>(context));
+            var user = userManager.FindById(model.OwnerId);
+
+            if (user == null)
+            {
+                return 0;
+            }
+
+            Post post = new Post() 
+            {
+                Body = model.Body,
+                ParentId = model.ParentId,
+                OwnerId = user.Id,
+                OwnerUsername = user.UserName,
+                CreationDate = DateTime.Now,
+                VoteCount = 0
+            };
+
+            context.Posts.Add(post);
+            context.SaveChanges();
+            context.Entry(post).GetDatabaseValues();
+
+            return post.ParentId;
+        }
+
         public DetailsViewModel GetDetails(int id)
         {
             DetailsViewModel model = new DetailsViewModel();
@@ -71,6 +98,21 @@ namespace CSIT314BCE.Models
             model.Question = question;
 
             var answers = context.Posts.Where(p => p.ParentId.Equals(id)).OrderBy(p => p.CreationDate).ToList();
+            
+            if(question.AcceptedAnswerId != 0) 
+            {
+                Post acceptedAns = new Post();
+                foreach (Post ans in answers)
+                {
+                    if (ans.PostId == question.AcceptedAnswerId) 
+                    {
+                        acceptedAns = ans;
+                    }
+                }
+                answers.Remove(acceptedAns);
+                answers.Insert(0, acceptedAns);
+            }
+
             foreach (Post a in answers)
             {
                 var answerComments = context.Comments.Where(c => c.PostId.Equals(a.PostId)).ToList();

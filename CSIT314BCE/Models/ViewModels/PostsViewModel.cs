@@ -31,6 +31,8 @@ namespace CSIT314BCE.Models
         public string Body { get; set; }
 
         [Required]
-        public int PostId { get; set; }
+        public int ParentId { get; set; }
+
+        public string OwnerId { get; set; }
     }
 }

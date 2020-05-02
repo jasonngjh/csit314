@@ -16,7 +16,6 @@ namespace CSIT314BCE.Controllers
     {
         ApplicationDbContext _context = new ApplicationDbContext();
         Admin admin = new Admin();
-        AspNetUserDBModel db = new AspNetUserDBModel();
         private ApplicationUserManager _userManager;
 
         public AdminController()
@@ -43,7 +42,7 @@ namespace CSIT314BCE.Controllers
         // GET: Admin
         public ActionResult Index(string search)
         {
-            return View(db.AspNetUsers.Where(x => x.UserName.Contains(search) || search == null).ToList());
+            return View(_context.Users.Where(x => x.UserName.Contains(search) || search == null).ToList());
         }
 
         // GET: Admin/CreateUser
@@ -65,6 +64,7 @@ namespace CSIT314BCE.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
+                        await UserManager.AddToRoleAsync(user.Id,model.Role);
                         return RedirectToAction("Index");
                     }
                     else

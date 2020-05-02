@@ -40,7 +40,7 @@ namespace CSIT314BCE.Controllers
         // GET: Comments/Create
         public ActionResult Create()
         {
-            ViewBag.OwnerId = new SelectList(db.ApplicationUsers, "Id", "FullName");
+            ViewBag.OwnerId = new SelectList(db.Users, "Id", "FullName");
             return View();
         }
 

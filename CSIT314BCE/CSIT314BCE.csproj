@@ -184,8 +184,6 @@
       <DependentUpon>202004241316254_PostCommentMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AspNetUser.cs" />
-    <Compile Include="Models\AspNetUserDBModel.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\ViewModels\AdminViewModel.cs" />
@@ -1541,6 +1539,7 @@
     <Content Include="TestData\question\id_79923" />
     <Content Include="TestData\question\id_8318911" />
     <Content Include="TestData\question\id_927358" />
+    <Content Include="Views\Posts\_PostAnswer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

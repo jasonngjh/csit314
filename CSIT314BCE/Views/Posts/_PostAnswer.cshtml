@@ -1,0 +1,28 @@
+﻿@model CSIT314BCE.Models.PostAnsViewModel
+
+@using (Html.BeginForm("PostAnswer", "Posts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Your Answer</h4>
+        <hr />
+
+        @Html.HiddenFor(model => model.ParentId)
+
+        <div class="form-group">
+            <div class="col-md-8">
+                @Html.TextAreaFor(model => model.Body, new { @class = "form-control", @rows = 10 })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Post Your Answer" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

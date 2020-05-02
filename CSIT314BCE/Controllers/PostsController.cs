@@ -70,6 +70,27 @@ namespace CSIT314BCE.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PostAnswer(PostAnsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.OwnerId = User.Identity.GetUserId();
+                var result = post.PostAns(model);
+                if (result != 0)
+                {
+                    return RedirectToAction("Details", new { id = result });
+                }
+                else
+                {
+                    return RedirectToAction("Details", new { id = result });
+                }
+            }
+            return RedirectToAction("Details", new { id = model.ParentId });
+        }
+
+
         // GET: Posts/Edit/5
         public ActionResult Edit(int? id)
         {

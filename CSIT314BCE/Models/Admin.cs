@@ -10,11 +10,6 @@ namespace CSIT314BCE.Models
     {
         private ApplicationDbContext context = new ApplicationDbContext();
 
-        public List<ApplicationUser> GetUserList()
-        {
-            return context.Users.ToList();
-        }
-
         public ApplicationUser CreateUser(CreateUserViewModel model)
         {
             if (model.Role == "Student")
