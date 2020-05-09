@@ -3,103 +3,325 @@
 @{
     ViewBag.Title = Model.Question.Title;
 }
-
-    <div class="container-fluid">
-        <div id="Question">
-            <h2>@Model.Question.Title</h2>
-            <div class="row">
-                <div class="col-md-3"><p>Asked on @Model.Question.CreationDate</p></div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-md-1">
-                    <div class="row">Up</div>
-                    <div class="row"><h3>@Model.Question.VoteCount</h3></div>
-                </div>
-                <div class="col-md-11">
-                    @Html.Raw(@Model.Question.Body)
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10">
-                </div>
-                <div class="col-md-2">
-                    <div class="well">
-                        Asked by @Html.ActionLink(Model.Question.OwnerUsername, "UserProfile", "Home", new { userId = Model.Question.OwnerId }, null)
+@Styles.Render("~/Content/Style.css")
+<div class="container-fluid">
+    <div id="Question">
+        <h2>@Model.Question.Title</h2>
+        <div class="row">
+            <div class="col-md-3"><p>Asked on @Model.Question.CreationDate</p></div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-1">
+                <div class="row">
+                    <div id="vote2">
+                        <button type="button" class="voteBtn" id="voteUpBtn" onclick="voteUpFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                        <button type="button" class="voteBtnClicked" id="voteDownBtn" onclick="voteDownFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
+                        <label id="voteCounter">@Model.Question.VoteCount</label> <br /> vote(s) <br />
                     </div>
                 </div>
             </div>
-            @{
-                if (Model.Question.comments.Count != 0)
-                {
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-11">
-                            <hr />
-                            @{
-                                foreach (var qcomment in Model.Question.comments)
-                                {
-                                    <p class="col-md-offset-1">@qcomment.Text - Asked by @Html.ActionLink(qcomment.OwnerUsername, "UserProfile", "Home", new { userId = qcomment.OwnerId }, null) @qcomment.CreationDate</p>
-                                }
-                            }
-                            <hr />
-                            <p>Add a comment</p>
-                        </div>
-                    </div>
-                }
-            }
-            <hr />
+            <div class="col-md-11">
+                @Html.Raw(@Model.Question.Body)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+            </div>
+            <div class="col-md-2">
+                <div class="well">
+                    Asked by @Html.ActionLink(Model.Question.OwnerUsername, "UserProfile", "Home", new { userId = Model.Question.OwnerId }, null)
+                </div>
+            </div>
         </div>
         @{
-            if (Model.Answer.Count != 0)
+            if (Model.Question.comments.Count != 0)
             {
-                <div class="row"><h3>@Model.Answer.Count Answers</h3></div>
-                <div id="Answers">
-                    @{
-                        foreach (var answer in Model.Answer)
-                        {
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <div class="row">Up</div>
-                                    <div class="row"><h3>@answer.VoteCount</h3></div>
-                                    @{
-                                        if (answer.PostId == Model.Question.AcceptedAnswerId)
-                                        {
-                                            <div class="row" style="text-align:center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
-                                        }
-                                    }
-                                </div>
-                                <div class="col-md-11">@Html.Raw(@answer.Body)</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10">
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="well">
-                                        Asked by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null)
-                                    </div>
-                                </div>
-                            </div>
-                            if (answer.comments.Count != 0)
+                <div class="row">
+                    <div class="col-md-11">
+                        <hr />
+                        @{
+                            foreach (var qcomment in Model.Question.comments)
                             {
-                                <div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-11">
-                                        <hr />
-                                        @{
-                                            foreach (var acomment in answer.comments)
-                                            {
-                                                <p class="col-md-offset-1">@acomment.Text - @Html.ActionLink(acomment.OwnerUsername, "UserProfile", "Home", new { userId = acomment.OwnerId }, null) @acomment.CreationDate</p>
-                                            }
-                                        }
-                                        <hr />
-                                    </div>
-                                </div>
+                                <p class="col-md-offset-1" style="padding-left:3em;" id="@qcomment.CommentId">@Html.Raw(@qcomment.Text) - @Html.ActionLink(qcomment.OwnerUsername, "UserProfile", "Home", new { userId = qcomment.OwnerId }, null) @qcomment.CreationDate</p>
+                                <hr />
                             }
                         }
-                    }
+                        <hr />
+                    </div>
                 </div>
             }
-            Html.RenderPartial("_PostAnswer", new CSIT314BCE.Models.PostAnsViewModel() { ParentId = Model.Question.PostId });
-         }
+        }
+        <div class="row">
+            <div class="PostComment">
+                @{
+                    Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = Model.Question.PostId });
+                }
+            </div>
+        </div>
+        <hr />
     </div>
+    @{
+        if (Model.Answer.Count != 0)
+        {
+            <div class="row"><h3>@Model.Answer.Count Answers</h3></div>
+            <div id="Answers">
+                @{
+                    foreach (var answer in Model.Answer)
+                    {
+                        <div class="row" id="@answer.PostId">
+                            <div class="col-md-1">
+                                <div class="row">
+                                    <div id="vote2">
+                                        <button type="button" class="voteBtn" id="@("voteUpAnsBtn"+@answer.PostId)" onclick="voteUpAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                                        <button type="button" class="voteBtnClicked" id="@("voteDownAnsBtn"+@answer.PostId)" onclick="voteDownAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
+                                        <label id="@("voteAnsCounter"+@answer.PostId)">@answer.VoteCount</label> <br /> vote(s) <br />
+                                    </div>
+                                </div>
+                                @{
+                                    if (answer.PostId == Model.Question.AcceptedAnswerId)
+                                    {
+                                        <div class="row" style="text-align:center"><span class="glyphicon glyphicon-ok" style="color:green; font-size:2em;" aria-hidden="true"></span></div>
+                                    }
+                                }
+                            </div>
+                            <div class="col-md-11">@Html.Raw(@answer.Body)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                            </div>
+                            <div class="col-md-2">
+                                <div class="well">
+                                    Answered by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null)
+                                </div>
+                            </div>
+                        </div>
+                        if (answer.comments.Count != 0)
+                        {
+                            <div>
+                                <div class="col-md-11">
+                                    <hr />
+                                    @{
+                                        foreach (var acomment in answer.comments)
+                                        {
+                                            <p class="col-md-offset-1" style="padding-left:3em;" id="@acomment.CommentId">@Html.Raw(@acomment.Text) - @Html.ActionLink(acomment.OwnerUsername, "UserProfile", "Home", new { userId = acomment.OwnerId }, null) @acomment.CreationDate</p>
+                                            <hr />
+                                        }
+                                    }
+                                    <hr />
+                                </div>
+                            </div>
+                        }
+                        <div class="row">
+                            <div id="postAnswerComment">
+                                @{
+                                    Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = answer.PostId });
+                                }
+                            </div>
+                        </div>
+                        <hr />
+                    }
+                }
+            </div>
+        }
+        Html.RenderPartial("_PostAnswer", new CSIT314BCE.Models.PostAnsViewModel() { ParentId = Model.Question.PostId });
+    }
+</div>
+@section Scripts{
+    <script type="text/javascript">
+
+    var myArray = [];
+    @foreach (var answer in Model.Answer)
+    {
+        @:myArray.push("@answer.PostId");
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+        type: "POST",
+            url: "/Posts/checkVoted",
+            data: { id: @Model.Question.PostId },
+            async: true,
+            success: function (data) {
+                if (data.responseText == "TRUE") {
+                    //disables & hide button
+                    $('#voteUpBtn').hide();
+                    $('#voteUpBtn').attr("disabled", true);
+
+                    //enables & show button
+                    $('#voteDownBtn').show();
+                    $('#voteDownBtn').attr("disabled", false);
+                }
+                else if (data.responseText == "FALSE") {
+                    //disables & hide button
+                    $('#voteDownBtn').hide();
+                    $('#voteDownBtn').attr("disabled", true);
+
+                    //enables & show button
+                    $('#voteUpBtn').show();
+                    $('#voteUpBtn').attr("disabled", false);
+                }
+                else {
+                    //disables & hide button
+                    $('#voteDownBtn').hide();
+                    $('#voteDownBtn').attr("disabled", true);
+
+                    //disables & hide button
+                    $('#voteUpBtn').hide();
+                    $('#voteUpBtn').attr("disabled", true);
+                }
+            },
+            error: function () {
+                return "error";
+            }
+        });
+
+        $.each(myArray, function (index, id) {
+            //alert(id);
+            $.ajax({
+                type: "POST",
+                url: "/Posts/checkVoted",
+                data: { id: id },
+                async: true,
+                success: function (data) {
+                    var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
+                    var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
+
+                    if (data.responseText == "TRUE") {
+                        //disables & hide button
+                        $(voteUpAnsBtnId).hide();
+                        $(voteUpAnsBtnId).attr("disabled", true);
+
+                        //enables & show button
+                        $(voteDownAnsBtnId).show();
+                        $(voteDownAnsBtnId).attr("disabled", false);
+                    }
+                    else if (data.responseText == "FALSE") {
+                        //disables & hide button
+                        $(voteDownAnsBtnId).hide();
+                        $(voteDownAnsBtnId).attr("disabled", true);
+
+                        //enables & show button
+                        $(voteUpAnsBtnId).show();
+                        $(voteUpAnsBtnId).attr("disabled", false);
+                    }
+                    else {
+                        //disables & hide button
+                        $(voteDownAnsBtnId).hide();
+                        $(voteDownAnsBtnId).attr("disabled", true);
+
+                        //disables & hide button
+                        $(voteUpAnsBtnId).hide();
+                        $(voteUpAnsBtnId).attr("disabled", true);
+                    }
+                },
+                error: function () {
+                    return "error";
+                }
+            });
+        });
+    });
+
+    function voteUpFunc(id) {
+        $.ajax({
+            type: "POST",
+            url: "/Posts/VoteUp",
+            data: { id: id },
+            async: true,
+            success: function (data) {
+                //disables & hide button
+                $('#voteUpBtn').hide();
+                $('#voteUpBtn').attr("disabled", true);
+
+                //enables & show button
+                $('#voteDownBtn').show();
+                $('#voteDownBtn').attr("disabled", false);
+
+                //displays new vote count
+                $('#voteCounter').text(data.responseText);
+            },
+            error: function () {
+                return "error";
+            }
+        });
+    }
+
+    function voteDownFunc(id) {
+        $.ajax({
+            type: "POST",
+            url: "/Posts/VoteDown",
+            data: { id: id },
+            async: true,
+            success: function (data) {
+                //disables & hide button
+                $('#voteDownBtn').hide();
+                $('#voteDownBtn').attr("disabled", true);
+
+                //enables & show button
+                $('#voteUpBtn').show();
+                $('#voteUpBtn').attr("disabled", false);
+
+                //displays new vote count
+                $('#voteCounter').text(data.responseText);
+            },
+            error: function () {
+                return "error";
+            }
+        });
+    }
+
+    function voteUpAnswerFunc(id) {
+        $.ajax({
+            type: "POST",
+            url: "/Posts/VoteUp",
+            data: { id: id },
+            async: true,
+            success: function (data) {
+                //disables & hide button
+                var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
+                $(voteUpAnsBtnId).hide();
+                $(voteUpAnsBtnId).attr("disabled", true);
+
+                //enables & show button
+                var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
+                $(voteDownAnsBtnId).show();
+                $(voteDownAnsBtnId).attr("disabled", false);
+
+                //displays new vote count
+                var voteAnsCounterId = "#voteAnsCounter" + id;
+                $(voteAnsCounterId).text(data.responseText);
+            },
+            error: function () {
+                return "error";
+            }
+        });
+    }
+
+    function voteDownAnswerFunc(id) {
+        $.ajax({
+            type: "POST",
+            url: "/Posts/VoteDown",
+            data: { id: id },
+            async: true,
+            success: function (data) {
+                //disables & hide button
+                var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
+                $(voteDownAnsBtnId).hide();
+                $(voteDownAnsBtnId).attr("disabled", true);
+
+                //enables & show button
+                var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
+                $(voteUpAnsBtnId).show();
+                $(voteUpAnsBtnId).attr("disabled", false);
+
+                //displays new vote count
+                var voteAnsCounterId = "#voteAnsCounter" + id;
+                $(voteAnsCounterId).text(data.responseText);
+            },
+            error: function () {
+                return "error";
+            }
+        });
+    }
+    </script>
+}

@@ -13,10 +13,57 @@ namespace CSIT314BCE.Controllers
         private Post post = new Post();
 
         // GET: Posts
-        public ActionResult Index()
+        public ActionResult Index() 
         {
-            var posts = db.Posts.Where(p => p.Title != null).Include(p => p.Student);
-            return View(posts.ToList());
+            return View();
+        }
+
+        // GET: Posts
+        [HttpGet]
+        public ActionResult Index(string search, string searchBy)
+        {
+            if (search != null)
+            {
+                if (searchBy == "Questions")
+                {
+                    var posts = db.Posts.Where(x => x.Title.Contains(search) || search == null).ToList();
+                    return View(posts);
+                }
+                else
+                {
+                    var posts = db.Posts.Where(x => x.Body.Contains(search) || search == null).ToList();
+                    return View("~/Views/Posts/AnswerSearch.cshtml", posts);
+                }
+            }
+            else
+            {
+                var posts = db.Posts.Where(p => p.Title != null).Include(p => p.Student);
+                return View(posts.ToList());
+            }
+        }
+
+        public ActionResult Statistics(string viewBy, string viewQuestions, string viewAnswers)
+        {
+            if (viewQuestions != null)
+            {
+                if (viewBy == "Questions")
+                {
+                    var userId = User.Identity.GetUserId();
+                    var posts = db.Posts.Where(g => g.OwnerId == userId && g.Title != null).ToList();
+                    return View(posts);
+                }
+                else
+                {
+                    var userId = User.Identity.GetUserId();
+                    var posts = db.Posts.Where(g => g.OwnerId == userId && g.Title == null).ToList();
+                    return View("~/Views/Posts/Statistics2.cshtml", posts);
+                }
+            }
+            else
+            {
+                var userId = User.Identity.GetUserId();
+                return View(db.Posts.Where(g => g.OwnerId == userId && g.Title != null).ToList());
+            }
         }
 
         // GET: Posts/Details/5
@@ -30,6 +77,11 @@ namespace CSIT314BCE.Controllers
             if (post == null)
             {
                 return HttpNotFound();
+            }
+
+            if (TempData["ViewData"] != null)
+            {
+                ViewData = (ViewDataDictionary)TempData["ViewData"];
             }
             DetailsViewModel model = post.GetDetails(post.PostId);
             return View(model);
@@ -53,7 +105,7 @@ namespace CSIT314BCE.Controllers
         [Authorize(Roles = "Student")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Ask(AskViewModel model)
+        public ActionResult Ask( AskViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +139,7 @@ namespace CSIT314BCE.Controllers
                     return RedirectToAction("Details", new { id = result });
                 }
             }
+            TempData["ViewData"] = ViewData;
             return RedirectToAction("Details", new { id = model.ParentId });
         }
 
@@ -150,10 +203,66 @@ namespace CSIT314BCE.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult PostAnswer(string body, int PostId)
+        [HttpPost]
+        public ActionResult VoteUp(int id)
         {
+            //get current user id
             var userId = User.Identity.GetUserId();
-            return View();
+
+            //update votecount to increase by 1
+            Post post = db.Posts.Find(id);
+            post.VoteCount += 1;
+
+            //add into user who has voted
+            Vote voted = new Vote
+            {
+                PostId = id,
+                UserId = userId,
+            };
+            db.Votes.Add(voted);
+
+            db.SaveChanges();
+
+            //returns new vote count
+            var newVoteCount = post.VoteCount;
+            return Json(new { success = true, responseText = newVoteCount }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult VoteDown(int id)
+        {
+            //get current user id
+            var userId = User.Identity.GetUserId();
+
+            //update votecount to decrease by 1
+            Post post = db.Posts.Find(id);
+            post.VoteCount -= 1;
+
+            //search records and delete from Voted
+            var votedRecord = db.Votes.Where(x => x.PostId == id && x.UserId == userId).Select(x => x.VoteId).FirstOrDefault();
+            Vote voted = db.Votes.Find(votedRecord);
+            db.Votes.Remove(voted);
+            db.SaveChanges();
+
+            //returns new vote count
+            var newVoteCount = post.VoteCount;
+            return Json(new { success = true, responseText = newVoteCount }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult checkVoted(int id)
+        {
+            var CurrentUserId = User.Identity.GetUserId();
+            bool contactExists = db.Votes.Where(u => u.PostId == id && u.UserId == CurrentUserId).Any();
+
+            if (contactExists)
+            {
+                return Json(new { success = true, responseText = "TRUE" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true, responseText = "FALSE" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         protected override void Dispose(bool disposing)

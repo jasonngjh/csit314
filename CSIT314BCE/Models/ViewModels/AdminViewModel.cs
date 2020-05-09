@@ -11,6 +11,7 @@ namespace CSIT314BCE.Models
         public string Id { get; set; }
 
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -22,11 +23,8 @@ namespace CSIT314BCE.Models
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [Display(Name = "Suspended Till")]
-        public DateTime? LockoutEndDateUtc { get; set; }
-
         [Display(Name = "Suspended")]
-        public bool LockoutEnabled { get; set; }
+        public bool isEnabled { get; set; }
 
         [Display(Name = "Role")]
         public string Discriminator { get; set; }

@@ -96,6 +96,18 @@ namespace CSIT314BCE
         {
         }
 
+        public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool rememberMe, bool shouldLockout)
+        {
+            var user = UserManager.FindByNameAsync(userName).Result;
+
+            if (!user.IsEnabled)
+            {
+                return Task.FromResult<SignInStatus>(SignInStatus.LockedOut);
+            }
+
+            return base.PasswordSignInAsync(userName, password, rememberMe, shouldLockout);
+        }
+
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);

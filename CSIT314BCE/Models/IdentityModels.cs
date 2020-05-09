@@ -3,12 +3,14 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace CSIT314BCE.Models
 {
     public class ApplicationUser : IdentityUser
     {
         public string FullName { set; get; }
+        public bool IsEnabled { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -31,6 +33,7 @@ namespace CSIT314BCE.Models
 
         public System.Data.Entity.DbSet<CSIT314BCE.Models.Post> Posts { get; set; }
         public System.Data.Entity.DbSet<CSIT314BCE.Models.Comment> Comments { get; set; }
+        public System.Data.Entity.DbSet<CSIT314BCE.Models.Vote> Votes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

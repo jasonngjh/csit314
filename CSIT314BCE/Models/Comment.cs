@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,5 +21,30 @@ namespace CSIT314BCE.Models
 
         [Required]
         public string OwnerUsername { get; set; }
+
+        private ApplicationDbContext context = new ApplicationDbContext();
+
+        public int PostComment(PostCommentViewModel model) 
+        {
+            var userManager = new UserManager<Student>(new UserStore<Student>(context));
+            var user = userManager.FindById(model.OwnerId);
+
+            if (user != null)
+            {
+                Comment comment = new Comment() {
+                    PostId = model.PostId,
+                    Text = model.Text,
+                    CreationDate = DateTime.Now,
+                    OwnerId = user.Id,
+                    OwnerUsername = user.UserName
+                };
+
+                context.Comments.Add(comment);
+                context.SaveChanges();
+
+                return model.PostId;
+            }   
+            return 0;
+        }
     }
 }

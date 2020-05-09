@@ -151,7 +151,7 @@ namespace CSIT314BCE.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0, LockoutEnabled = false };
+                var user = new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0, IsEnabled = true };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

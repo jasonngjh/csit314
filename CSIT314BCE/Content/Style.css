@@ -17,6 +17,33 @@
         color: black;
     }
 
+#vote2 {
+    border: 1px solid #007aff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background-color: #007aff;
+    transition: 0.3s;
+    color: white;
+}
+
+.voteBtn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.voteBtnClicked {
+    background-color: transparent;
+    border: none;
+    color: #FC3D39;
+    font-size: 30px;
+    cursor: pointer;
+}
+
 #post {
     padding: 10px;
     text-align: left;

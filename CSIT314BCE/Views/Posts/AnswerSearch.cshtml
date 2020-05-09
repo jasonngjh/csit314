@@ -14,16 +14,14 @@
     </tr>
 </table>
 <p>         </p>
-<div class="hidden-div">
-    @using (Html.BeginForm("Index", "Posts", FormMethod.Get))
-    {
-        <b>Search By:</b>
-        @Html.RadioButton("searchBy", "Questions", true)<text>Questions</text>
-        @Html.RadioButton("searchBy", "Answers")<text>Answers</text>
-        @Html.TextBox("search")
-        <input type="submit" value="Search" />
-    }
-</div>
+@using (Html.BeginForm("Index", "Posts", FormMethod.Get))
+{
+    <b>Search By:</b>
+    @Html.RadioButton("searchBy", "Questions", true)<text>Question</text>
+    @Html.RadioButton("searchBy", "Answers")<text>Answers</text>
+    @Html.TextBox("search")
+    <input type="submit" value="Search" />
+}
 <br />
 <br />
 <table style="width:100%">
@@ -42,11 +40,15 @@
                     answer(s)
                 </div>
             </td>
-            <td id="post" style="width: 850px">
+            <td id="post">
                 <div id="questionDetail">
                     @if (!string.IsNullOrEmpty(item.Title))
                     {
-                        @Html.ActionLink(item.Title, "Details", "Posts", new { id = item.PostId }, new { style = "text-decoration:none;color:black;" })
+                        @Html.ActionLink(item.BodyTrimmed, "Details", "Posts", new { id = item.PostId }, new { style = "text-decoration:none;color:black;" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(item.BodyTrimmed, "Details", "Posts", new { id = item.ParentId }, new { style = "text-decoration:none;color:black;" })
                     }
                 </div>
             </td>
@@ -55,6 +57,7 @@
                     asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
                     on @Html.DisplayFor(modelItem => item.CreationDate)
                 </div>
+
                 @if (User.IsInRole("Moderator"))
                 {
                     <div id="modOption">

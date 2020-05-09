@@ -1,34 +1,27 @@
 ﻿@model IEnumerable<CSIT314BCE.Models.Post>
-
-@{
-    ViewBag.Title = "Index";
-}
-
 @Styles.Render("~/Content/Style.css")
-
 
 <table style="width:100%">
     <tr>
-        <td><h2>Learning Platform</h2></td>
-        <td style="text-align:right">@Html.ActionLink("Ask a question", "Ask", "Posts", null, new { @class = "btn btn-primary" })</td>
+        <td><h2>Statistics</h2></td>
+        <td style="text-align:right;width:150px">
+            <div id="vote">
+                Total Votes Gained: @Model.Sum(i => i.VoteCount)
+            </div>
+        </td>
     </tr>
 </table>
-<p>         </p>
-<div class="hidden-div">
-    @using (Html.BeginForm("Index", "Posts", FormMethod.Get))
-    {
-        <b>Search By:</b>
-        @Html.RadioButton("searchBy", "Questions", true)<text>Questions</text>
-        @Html.RadioButton("searchBy", "Answers")<text>Answers</text>
-        @Html.TextBox("search")
-        <input type="submit" value="Search" />
-    }
-</div>
-<br />
-<br />
+@using (Html.BeginForm("Statistics", "Posts", FormMethod.Get))
+{
+    <b>View By:</b>
+    @Html.RadioButton("viewBy", "Questions", true)<text>Questions</text>
+    @Html.RadioButton("viewBy", "Answers")<text>Answers</text>
+    @Html.TextBox("viewQuestions", "Questions", new { style = "display:none" })
+    @Html.TextBox("viewAnswers", "Answers", new { style = "display:none" })
+    <input type="submit" value="View" />
+}
+
 <table style="width:100%">
-
-
     @foreach (var item in Model)
     {
         <tr>
@@ -52,18 +45,11 @@
             </td>
             <td>
                 <div id="askedBy">
-                    asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
+                    Asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
                     on @Html.DisplayFor(modelItem => item.CreationDate)
                 </div>
-                @if (User.IsInRole("Moderator"))
-                {
-                    <div id="modOption">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.PostId })
-                        <br />
-                        @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
-                    </div>
-                }
             </td>
         </tr>
     }
+
 </table>

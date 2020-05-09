@@ -1,0 +1,25 @@
+﻿@model CSIT314BCE.Models.PostCommentViewModel
+
+@using (Html.BeginForm("PostComment", "Comments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal col-md-offset-1">
+        @Html.HiddenFor(model => model.PostId)
+
+        <div class="form-group">
+            <div class="col-md-8">
+                @Html.TextAreaFor(model => model.Text, new { @class = "form-control", @rows = 3 })
+                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Add Comment" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

@@ -1,30 +1,30 @@
-11227809><GManNickG><2012-06-27 21:51:36><24399><Why is processing a sorted array faster than processing an unsorted array?><11227902
-927358><MarianSpanik><2009-05-30 02:09:14><20932><How do I undo the most recent local commits in Git?><927386
-2003505><Unheilig><2010-01-05 09:12:15><16850><How do I delete a Git branch locally and remotely?><2003515
-292357><NicholasHamilton><2008-11-15 17:51:09><11875><What is the difference between &#39;git pull&#39; and &#39;git fetch&#39;?><292359
-477816><FilipBartuzi><2009-01-25 23:25:19><10222><What is the correct JSON content type?><477819
-231767><NathanOliver><2008-10-24 06:21:11><10122><What does the &quot;yield&quot; keyword do?><231855
-348170><Drt><2008-12-08 05:57:46><8901><How do I undo &#39;git add&#39; before commit?><348234
-1642028><SachinVerma><2009-10-29 14:57:45><9055><What is the &quot;--&gt;&quot; operator in C++?><1642035
-6591213><rahs><2011-07-06 11:20:36><8457><How do I rename a local Git branch?><6591218
-5767325><IsmaelLuceno><2011-04-24 06:17:18><8164><How can I remove a specific item from an array?><5767357
-79923><AgrimPathak><2008-09-17 12:18:06><8072><What and where are the stack and heap?><80113
-503093><Alice><2009-02-02 20:54:16><7807><How do I redirect to another webpage?><506004
-178325><DanielFischer><2008-10-07 21:03:18><7700><How do I check if an element is hidden in jQuery?><178450
-179123><AdamFreeman><2008-10-07 23:44:47><7681><How to modify existing, unpushed commit messages?><179147
-111102><AdamFreeman><2008-09-21 22:12:07><7659><How do JavaScript closures work?><111111
-4114095><SlippD.Thompson><2010-11-07 00:58:14><7641><How do I revert a Git repository to a previous commit?><4114122
-244777><TomasAndrle><2008-10-29 04:39:03><7539><Can comments be used in JSON?><244858
-1335851><Atul><2009-08-27 00:10:13><7525><What does &quot;use strict&quot; do in JavaScript, and what is the reasoning behind it?><1335881
-8318911><AgrimPathak><2011-11-30 06:54:22><7453><Why does HTML think “chucknorris” is a color?><8333464
-1789945><naveejr><2009-11-24 21:04:29><7456><How to check whether a string contains a substring in JavaScript?><1789952
-1125968><doug65536><2009-07-14 22:58:15><7091><How do I force &quot;git pull&quot; to overwrite local files?><8888015
-336859><LewisKelsey><2008-12-03 19:31:07><6839><var functionName = function() {} vs function functionName() {}><336868
-61212><Atul><2008-09-14 17:06:10><6806><How to remove local (untracked) files from the current Git working tree><
-6841333><CodeGeek><2011-07-27 16:15:58><6831><Why is subtracting these two times (in 1927) giving a strange result?><6841479
-1783405><mp31415><2009-11-23 22:23:46><6665><How do I check out a remote Git branch?><1783426
-40480><SimonHrabec><2008-09-03 04:14:29><6527><Is Java &quot;pass-by-reference&quot; or &quot;pass-by-value&quot;?><
-7074><screwnut><2008-08-10 15:18:02><6506><What is the difference between String and string in C#?><7077
-208105><Alice><2008-10-16 18:57:45><6099><How do I remove a property from a JavaScript object?><208106
-419163><LutzPrechelt><2009-01-07 12:11:00><5981><What does if __name__ == &quot;__main__&quot;: do?><419185
-394809><TomasAndrle><2008-12-27 16:32:18><5976><Does Python have a ternary conditional operator?><394814
+11227809><GManNickG><2019-06-27 21:51:36><24399><Why is processing a sorted array faster than processing an unsorted array?><11227902
+927358><MarianSpanik><2019-05-30 02:09:14><20932><How do I undo the most recent local commits in Git?><927386
+2003505><Unheilig><2019-01-05 09:12:15><16850><How do I delete a Git branch locally and remotely?><2003515
+292357><NicholasHamilton><2019-11-15 17:51:09><11875><What is the difference between &#39;git pull&#39; and &#39;git fetch&#39;?><292359
+477816><FilipBartuzi><2019-01-25 23:25:19><10222><What is the correct JSON content type?><477819
+231767><NathanOliver><2019-10-24 06:21:11><10122><What does the &quot;yield&quot; keyword do?><231855
+348170><Drt><2019-12-08 05:57:46><8901><How do I undo &#39;git add&#39; before commit?><348234
+1642028><SachinVerma><2019-10-29 14:57:45><9055><What is the &quot;--&gt;&quot; operator in C++?><1642035
+6591213><rahs><2019-07-06 11:20:36><8457><How do I rename a local Git branch?><6591218
+5767325><IsmaelLuceno><2019-04-24 06:17:18><8164><How can I remove a specific item from an array?><5767357
+79923><AgrimPathak><2019-09-17 12:18:06><8072><What and where are the stack and heap?><80113
+503093><Alice><2019-02-02 20:54:16><7807><How do I redirect to another webpage?><506004
+178325><DanielFischer><2019-10-07 21:03:18><7700><How do I check if an element is hidden in jQuery?><178450
+179123><AdamFreeman><2019-10-07 23:44:47><7681><How to modify existing, unpushed commit messages?><179147
+111102><AdamFreeman><2019-09-21 22:12:07><7659><How do JavaScript closures work?><111111
+4114095><SlippD.Thompson><2019-11-07 00:58:14><7641><How do I revert a Git repository to a previous commit?><4114122
+244777><TomasAndrle><2019-10-29 04:39:03><7539><Can comments be used in JSON?><244858
+1335851><Atul><2019-08-27 00:10:13><7525><What does &quot;use strict&quot; do in JavaScript, and what is the reasoning behind it?><1335881
+8318911><AgrimPathak><2019-11-30 06:54:22><7453><Why does HTML think “chucknorris” is a color?><8333464
+1789945><naveejr><2019-11-24 21:04:29><7456><How to check whether a string contains a substring in JavaScript?><1789952
+1125968><doug65536><2019-07-14 22:58:15><7091><How do I force &quot;git pull&quot; to overwrite local files?><8888015
+336859><LewisKelsey><2019-12-03 19:31:07><6839><var functionName = function() {} vs function functionName() {}><336868
+61212><Atul><2019-09-14 17:06:10><6806><How to remove local (untracked) files from the current Git working tree><
+6841333><CodeGeek><2019-07-27 16:15:58><6831><Why is subtracting these two times (in 1927) giving a strange result?><6841479
+1783405><mp31415><2019-11-23 22:23:46><6665><How do I check out a remote Git branch?><1783426
+40480><SimonHrabec><2019-09-03 04:14:29><6527><Is Java &quot;pass-by-reference&quot; or &quot;pass-by-value&quot;?><
+7074><screwnut><2019-08-10 15:18:02><6506><What is the difference between String and string in C#?><7077
+208105><Alice><2019-10-16 18:57:45><6099><How do I remove a property from a JavaScript object?><208106
+419163><LutzPrechelt><2019-01-07 12:11:00><5981><What does if __name__ == &quot;__main__&quot;: do?><419185
+394809><TomasAndrle><2019-12-27 16:32:18><5976><Does Python have a ternary conditional operator?><394814

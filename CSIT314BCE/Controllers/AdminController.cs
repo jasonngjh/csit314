@@ -155,13 +155,14 @@ namespace CSIT314BCE.Controllers
             {
                 return View(model);
             }
-
-            if (await admin.EditUser(model) == true)
+            var result = await admin.EditUser(model);
+            if (result.Succeeded)
             {
                 return RedirectToAction("Edit", new { id = model.Id, Message = ManageMessageId.EditUserSuccess });
             }
             else
             {
+                AddErrors(result);
                 return View(model);
             }
         }

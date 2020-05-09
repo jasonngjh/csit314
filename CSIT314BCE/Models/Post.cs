@@ -97,7 +97,10 @@ namespace CSIT314BCE.Models
             question.comments = questionComments;
             model.Question = question;
 
-            var answers = context.Posts.Where(p => p.ParentId.Equals(id)).OrderBy(p => p.CreationDate).ToList();
+            var answers = context.Posts
+                .Where(p => p.ParentId.Equals(id))
+                .OrderByDescending(p => p.VoteCount)
+                .ToList();
             
             if(question.AcceptedAnswerId != 0) 
             {
@@ -139,6 +142,19 @@ namespace CSIT314BCE.Models
 
             context.Posts.Add(post);
             context.SaveChanges();
+        }
+
+        private int BodyLimit = 300;
+        [Display(Name = "Body")]
+        public string BodyTrimmed
+        {
+            get
+            {
+                if (this.Body.Length > this.BodyLimit)
+                    return this.Body.Substring(0, this.BodyLimit) + "...";
+                else
+                    return this.Body;
+            }
         }
     }
 }

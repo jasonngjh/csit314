@@ -146,6 +146,7 @@ namespace CSIT314BCE
                         {
                             acceptedAnsId = ReturnAnswerId(questionLine[1]);
                             post.AcceptedAnswerId = Int32.Parse(acceptedAnsId);
+                            post.ClosedDate = DateTime.Now;
                         }
                     }
                 }

@@ -11,7 +11,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="False">@Html.Label("Hello " + User.Identity.GetUserName()+" !")<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>@Html.ActionLink("Profile", "UserProfile", "Home")</li>
-                        <li>
+                        <li>@Html.ActionLink("Statistics", "Statistics", "Posts")</li>
                         <li>@Html.ActionLink("Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                     </ul>
                 </li>

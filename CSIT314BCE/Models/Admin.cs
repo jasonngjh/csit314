@@ -41,8 +41,14 @@ namespace CSIT314BCE.Models
                 editUserViewModel.Email = student.Email;
                 editUserViewModel.FullName = student.FullName;
                 editUserViewModel.UserName = student.UserName;
-                editUserViewModel.LockoutEnabled = student.LockoutEnabled;
-                editUserViewModel.LockoutEndDateUtc = student.LockoutEndDateUtc;
+                if (student.IsEnabled)
+                {
+                    editUserViewModel.isEnabled = false;
+                }
+                else 
+                {
+                    editUserViewModel.isEnabled = true;
+                }
                 editUserViewModel.Ratings = student.Ratings;
             }
             else
@@ -51,8 +57,14 @@ namespace CSIT314BCE.Models
                 editUserViewModel.Email = user.Email;
                 editUserViewModel.FullName = user.FullName;
                 editUserViewModel.UserName = user.UserName;
-                editUserViewModel.LockoutEnabled = user.LockoutEnabled;
-                editUserViewModel.LockoutEndDateUtc = user.LockoutEndDateUtc;
+                if (user.IsEnabled)
+                {
+                    editUserViewModel.isEnabled = false;
+                }
+                else
+                {
+                    editUserViewModel.isEnabled = true;
+                }
             }
             /* As of now Admin and moderator does not have additional attributes. so we do not need to cast it.
              * else if (role.FirstOrDefault() == "Admin")
@@ -64,7 +76,7 @@ namespace CSIT314BCE.Models
             return editUserViewModel;
         }
 
-        public async Task<bool> EditUser(EditUserViewModel model)
+        public async Task<IdentityResult> EditUser(EditUserViewModel model)
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var role = userManager.GetRoles(model.Id);
@@ -79,18 +91,21 @@ namespace CSIT314BCE.Models
                 user.Email = model.Email;
                 user.FullName = model.FullName;
                 user.UserName = model.UserName;
-                user.LockoutEnabled = model.LockoutEnabled;
-                user.LockoutEndDateUtc = model.LockoutEndDateUtc;
+                if (model.isEnabled)
+                {
+                    user.IsEnabled = false;
+                }
+                else
+                {
+                    user.IsEnabled = true;
+                }
                 user.Ratings = model.Ratings;
 
                 var result = await studentManager.UpdateAsync(user);
                 var ctx = studentStore.Context;
                 ctx.SaveChanges();
 
-                if (result.Succeeded)
-                {
-                    return true;
-                }
+                return result;
             }
             else if (role.FirstOrDefault() == "Admin")
             {
@@ -102,17 +117,20 @@ namespace CSIT314BCE.Models
                 user.Email = model.Email;
                 user.FullName = model.FullName;
                 user.UserName = model.UserName;
-                user.LockoutEnabled = model.LockoutEnabled;
-                user.LockoutEndDateUtc = model.LockoutEndDateUtc;
+                if (model.isEnabled)
+                {
+                    user.IsEnabled = false;
+                }
+                else
+                {
+                    user.IsEnabled = true;
+                }
 
                 var result = await adminManager.UpdateAsync(user);
                 var ctx = adminStore.Context;
                 ctx.SaveChanges();
 
-                if (result.Succeeded)
-                {
-                    return true;
-                }
+                return result;
             }
             else if (role.FirstOrDefault() == "Moderator")
             {
@@ -124,19 +142,22 @@ namespace CSIT314BCE.Models
                 user.Email = model.Email;
                 user.FullName = model.FullName;
                 user.UserName = model.UserName;
-                user.LockoutEnabled = model.LockoutEnabled;
-                user.LockoutEndDateUtc = model.LockoutEndDateUtc;
+                if (model.isEnabled)
+                {
+                    user.IsEnabled = false;
+                }
+                else
+                {
+                    user.IsEnabled = true;
+                }
 
                 var result = await moderatorManager.UpdateAsync(user);
                 var ctx = moderatorStore.Context;
                 ctx.SaveChanges();
 
-                if (result.Succeeded)
-                {
-                    return true;
-                }
+                return result;
             }
-            return false;
+            return IdentityResult.Failed("Role does not exist for this user");
         }
     }
 }

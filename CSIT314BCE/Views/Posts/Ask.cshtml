@@ -5,20 +5,23 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<hr/>
+<hr />
+
+<script src="https://cdn.tiny.cloud/1/mctolew74b75g6ajsu2eoao2pi0xsb0pr1ilz261g8t3ezk6/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
 
 <div class="row">
-    @using (Html.BeginForm("Ask", "Posts", FormMethod.Post, new { @class = "form-vertical", role = "form" }))
+    @using (Html.BeginForm("Ask", "Posts", FormMethod.Post, new { @class = "form-vertical", id = "questionForm", role = "form" }))
     {
         @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.OwnerId)
+        @Html.HiddenFor(model => model.OwnerId, new { id = "OwnerId" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-8">
-                @Html.TextAreaFor(model => model.Title, new { @class = "form-control", style="resize:none", @rows=1 })
+                @Html.TextAreaFor(model => model.Title, new { @class = "form-control", style = "resize:none", @rows = 1, id = "questionTitle" })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-4"></div>
@@ -26,15 +29,49 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-8">
-                @Html.TextAreaFor(model => model.Body, new { @class = "form-control", @rows=10 })
+                @Html.TextAreaFor(model => model.Body, new { @class = "form-control", @rows = 20, id = "questionBody" })
                 @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-4"></div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-1 col-md-11">
-                <input type="submit" value="Post Question" class="btn btn-primary" />
+                <input class="askQ btn btn-primary" type="button" id="AskQuestion" name="AskQuestion" value="Ask Question" />
+
             </div>
         </div>
     }
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <input type="submit" form="questionForm" id="btnOK" value="Post Question" class="btn btn-primary" />
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#questionBody',
+            plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+            toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+            toolbar_mode: 'floating',
+            tinycomments_mode: 'embedded',
+        });
+        $(function () {
+            $(".askQ").click(function () {
+                $(".modal-body").empty();
+                $(".modal-body").html("Confirm asking this question?");
+                $('#myModal').modal('show');
+            });
+        });
+    </script>
+}
