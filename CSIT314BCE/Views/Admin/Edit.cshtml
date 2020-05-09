@@ -6,12 +6,7 @@
 
 <h2>Editing @Model.UserName's Account</h2>
 
-@{
-    if (ViewBag.StatusMessage != "")
-    {
-        <div class="alert alert-success" role="alert">@ViewBag.StatusMessage</div>
-    }
-}
+<p class="text-success">@ViewBag.StatusMessage</p>
 
 @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -76,21 +77,16 @@ namespace CSIT314BCE.Models
             return editUserViewModel;
         }
 
-        public async Task<IdentityResult> EditUser(EditUserViewModel model)
+        public async Task<IdentityResult> EditUser(EditUserViewModel model,ApplicationUserManager userManager)
         {
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var role = userManager.GetRoles(model.Id);
 
-            if (role.FirstOrDefault() == "Student")
+            if(role.FirstOrDefault() == "Student")
             {
-                var studentStore = new UserStore<Student>(context);
-                var studentManager = new UserManager<Student>(new UserStore<Student>(context));
-                Student user = studentManager.FindById(model.Id);
-
+                Student user = (Student) await userManager.FindByIdAsync(model.Id);
                 user.UserName = model.UserName;
                 user.Email = model.Email;
                 user.FullName = model.FullName;
-                user.UserName = model.UserName;
                 if (model.isEnabled)
                 {
                     user.IsEnabled = false;
@@ -100,23 +96,15 @@ namespace CSIT314BCE.Models
                     user.IsEnabled = true;
                 }
                 user.Ratings = model.Ratings;
-
-                var result = await studentManager.UpdateAsync(user);
-                var ctx = studentStore.Context;
-                ctx.SaveChanges();
-
-                return result;
+                return await userManager.UpdateAsync(user);
             }
             else if (role.FirstOrDefault() == "Admin")
             {
-                var adminStore = new UserStore<Admin>(context);
-                var adminManager = new UserManager<Admin>(new UserStore<Admin>(context));
-                Admin user = adminManager.FindById(model.Id);
+                Admin user = (Admin) await userManager.FindByIdAsync(model.Id);
 
                 user.UserName = model.UserName;
                 user.Email = model.Email;
                 user.FullName = model.FullName;
-                user.UserName = model.UserName;
                 if (model.isEnabled)
                 {
                     user.IsEnabled = false;
@@ -125,23 +113,15 @@ namespace CSIT314BCE.Models
                 {
                     user.IsEnabled = true;
                 }
-
-                var result = await adminManager.UpdateAsync(user);
-                var ctx = adminStore.Context;
-                ctx.SaveChanges();
-
-                return result;
+                return await userManager.UpdateAsync(user);
             }
             else if (role.FirstOrDefault() == "Moderator")
             {
-                var moderatorStore = new UserStore<Moderator>(context);
-                var moderatorManager = new UserManager<Moderator>(new UserStore<Moderator>(context));
-                Moderator user = moderatorManager.FindById(model.Id);
+                Moderator user = (Moderator) await userManager.FindByIdAsync(model.Id);
 
                 user.UserName = model.UserName;
                 user.Email = model.Email;
                 user.FullName = model.FullName;
-                user.UserName = model.UserName;
                 if (model.isEnabled)
                 {
                     user.IsEnabled = false;
@@ -150,12 +130,7 @@ namespace CSIT314BCE.Models
                 {
                     user.IsEnabled = true;
                 }
-
-                var result = await moderatorManager.UpdateAsync(user);
-                var ctx = moderatorStore.Context;
-                ctx.SaveChanges();
-
-                return result;
+               return await userManager.UpdateAsync(user);
             }
             return IdentityResult.Failed("Role does not exist for this user");
         }

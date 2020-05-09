@@ -61,6 +61,7 @@ namespace CSIT314BCE.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.ChangeInformationSuccess ? "Your information has been changed."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -92,6 +93,11 @@ namespace CSIT314BCE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeInfo(ChangeInfoViewModel model)
         {
+            if (!ModelState.IsValid) 
+            {
+                return View(model);
+            }
+
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
             {
@@ -101,9 +107,17 @@ namespace CSIT314BCE.Controllers
             {
                 user.Email = model.Email;
                 user.FullName = model.FullName;
-                await UserManager.UpdateAsync(user);
+                var result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", new { Message = ManageMessageId.ChangeInformationSuccess });
+                }
+                else 
+                {
+                    AddErrors(result);
+                    return View(model);
+                }
             }
-            return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
         }
 
         //
@@ -412,6 +426,7 @@ namespace CSIT314BCE.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            ChangeInformationSuccess,
             Error
         }
 

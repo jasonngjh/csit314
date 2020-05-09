@@ -239,7 +239,8 @@ namespace CSIT314BCE
                     UserName = user[0],
                     FullName = user[1],
                     Email = user[2],
-                    Ratings = Int32.Parse(user[5])
+                    Ratings = Int32.Parse(user[5]),
+                    IsEnabled = true
                 };
                 var result = userManager.Create(student,pwd);
                 if (result.Succeeded) 
@@ -266,6 +267,7 @@ namespace CSIT314BCE
                 Admin user = new Admin {
                     UserName = "root",
                     Email = "root@domain.com",
+                    IsEnabled = true
                 };
                 string pwd = "@Abc123";
 

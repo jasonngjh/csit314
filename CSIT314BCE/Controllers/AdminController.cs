@@ -155,7 +155,7 @@ namespace CSIT314BCE.Controllers
             {
                 return View(model);
             }
-            var result = await admin.EditUser(model);
+            var result = await admin.EditUser(model,UserManager);
             if (result.Succeeded)
             {
                 return RedirectToAction("Edit", new { id = model.Id, Message = ManageMessageId.EditUserSuccess });

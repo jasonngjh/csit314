@@ -1218,7 +1218,7 @@
 912737><2019-12-09 18:54:56><As previously stated, good to dry-run it with <code>git clean -n -d</code>><Mysticial
 912737><2019-07-10 17:13:53><Same thing is to do <code>git clean -nd</code> and <code>git clean -fd</code>.><FilipBartuzi
 14521765><2019-07-24 17:03:05><BTW, this is written in <a href="http://git-scm.com/docs/git-clean" rel="nofollow noreferrer">documentation</a> : Git will refuse to delete directories with .git sub directory or file unless a second -f is given. But thanks anyway!><CodeGeek
-20195320><2019-02-29 21:10:37><@Martin One of the projects I&#39;m working on is +8 years old with +80 developers actively coding. Git sometimes fails to clean it on the first pass.><CodeGeek
+20195320><2019-07-10 17:13:53><@Martin One of the projects I&#39;m working on is +8 years old with +80 developers actively coding. Git sometimes fails to clean it on the first pass.><CodeGeek
 20195320><2020-04-17 14:37:20><I can confirm this, so this is still valid in 2020. We are also working on a large project and I had to run it 4-5 times until GIT did not find any more files to be deleted.><TheGuyWithTheFace
 20846779><2019-09-30 20:37:52><@pal4life It was added in 1.8.4, you might be running an older version of git? <a href="https://github.com/git/git/blob/master/Documentation/RelNotes/1.8.4.txt" rel="nofollow noreferrer">github.com/git/git/blob/master/Documentation/RelNotes/1.8.4.&zwnj;&#8203;txt</a>><PrajwalDhatwalia
 20846779><2019-10-22 06:38:30><I like this – I&#39;m more comfortable having it in my bash history than any of the other options, because it&#39;s no big deal if I accidentally ctrl-r or ctrl-p to it.><Mysticial
