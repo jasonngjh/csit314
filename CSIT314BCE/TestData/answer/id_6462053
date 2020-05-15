@@ -1,5 +1,0 @@
-<p>In my opinion, "pass by value" is a terrible way to singularly describe two similar but different events.  I guess they should have asked me first.</p>
-
-<p>With primitives we are passing the actual value of the primitive into the method (or constructor), be it the integer "5", the character "c", or what have you.  That actual value then becomes its own local primitive.  But with objects, all we are doing is giving the same object an additional reference (a local reference), so that we now have two references pointing to the same object.</p>
-
-<p>I hope this simple explanation helps.</p>

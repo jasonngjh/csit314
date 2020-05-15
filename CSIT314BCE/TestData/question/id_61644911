@@ -1,0 +1,13 @@
+<p>This is more of a theoretical question than anything. I'm a Comp sci major with a huge interest in low level programming. I love finding out how things work under the hood. My specialization is compiler design.</p>
+
+<p>Anyway, as I'm working on my first compiler, things are occurring to me that are kind of confusing.</p>
+
+<p>When you write a program in C/C++, the traditional thing people know is, a compiler magically turns your C/C++ code into native code for that machine.</p>
+
+<p>But something doesn't add up here. If I compile my C/C++ program targeting the x86 architecture, it would seem that the same program should run on any computer with the same architecture. But that doesn't happen. You need to recompile your code for OS X or Linux or Windows.(And yet again for 32-bit vs 64-bit)</p>
+
+<p>I'm just wondering why this is the case? Don't we target the CPU architecture/instruction set when compiling a C/C++ program? And a Mac OS and a Windows Os can very much be running on the same exact architecture.</p>
+
+<p>(I know Java and similar target a VM or CLR so those don't count)</p>
+
+<p>If I took a best-shot answer at this, I'd say C/C++ must then compile to OS-specific instructions. But every source I read says the compiler targets the machine. So I'm very confused.</p>

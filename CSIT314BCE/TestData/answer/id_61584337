@@ -1,0 +1,3 @@
+<p>simply, the first <code>x</code> is for the replacement of matching <code>asdf</code>.</p>
+
+<p>second <code>x</code> for the empty string after <code>asdf</code>. Search terminates when empty. </p>

@@ -1,4 +1,0 @@
-<p>As I often need a fast way to reset current branch on windows through command prompt, here's a fast way:</p>
-
-<pre><code>for /f "tokens=1* delims= " %a in ('git branch^|findstr /b "*"') do @git reset --hard origin/%b
-</code></pre>

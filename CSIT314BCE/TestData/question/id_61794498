@@ -1,0 +1,13 @@
+<p>I have drop-down list for currency.
+I want to force USD option only on "add new product page" so people can only add the product in Dolar</p>
+
+<p>Scenario:</p>
+
+<ol>
+<li>User choose Euro on main page to show the prices in Euro.</li>
+<li>User opened "Add new product page"</li>
+<li>The drop-down list of the currency will shift to USD
+automatically.</li>
+</ol>
+
+<p>How I can achive that in jqurey?</p>

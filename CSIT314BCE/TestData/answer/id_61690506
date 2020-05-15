@@ -1,0 +1,49 @@
+<blockquote>
+  <p>Why does using an 'if-else' statement produce a TypeScript compiler error when a seemingly identical ternary operator construct does not?</p>
+</blockquote>
+
+<h2>Short Answer</h2>
+
+<p>TypeScript sees an <code>if-else</code> as a statement with multiple expressions that each have independent types. TypeScript sees a ternary as an expression with a union type of its true and false sides. Sometimes that union type becomes wide enough for the compiler not to complain.</p>
+
+<h2>Detailed Answer</h2>
+
+<blockquote>
+  <p>Aren't the ternary operator and the if-else statement equivalent?</p>
+</blockquote>
+
+<p>Not quite.</p>
+
+<p>The difference stems from a ternary being an <em>expression</em>. There is a <a href="https://github.com/microsoft/TypeScript/issues/31518" rel="nofollow noreferrer">conversation here</a> where Ryan Cavanaugh explains the difference between a ternary and an if/else statement. The take home is that <em>the type of a ternary expression is a union of its <code>true</code> and <code>false</code> results.</em></p>
+
+<p>For your particular situation, the type of your ternary expression is <code>any</code>. That is why the compiler does not complain. Your ternary is a union of the <code>input</code> type and the <code>input.convert()</code> return type. At compile time, the <code>input</code> type extends <code>Container&lt;any&gt;</code>; therefore the <code>input.convert()</code> return type is <code>any</code>. Since a union with <code>any</code> is <code>any</code>, the type of your ternary is, well, <code>any</code>.</p>
+
+<p><strong>A quick solution for you</strong> is to change <code>any</code> to <code>unknown</code> in <code>&lt;TKey extends IDBValidKey | IDBValidKeyConvertible&lt;any&gt;</code>. That will make both the if-else and the ternary produce a compiler error.</p>
+
+<h2>Simplified Example</h2>
+
+<p>Here is <a href="https://www.typescriptlang.org/v2/en/play?#code/JYOwLgpgTgZghgYwgAgMIHtx1NAPAFQDU4AbAVwgD5kBvAKGWQDdSKAuZI1iAbjoF86dACYQEJOFBQwyIBGGCZkACzgBnYuQgEAShDVkSYSgAoGydACMAVmLAdZAaxDoA7iDoBKDldvzkwGpomGDYIHj4egZGlHx0CJhqYMgycgCSMACiJGooALzIBMgQAB6QIMJBGFg4ULhwIACelKagAA5k9pzeyElQoADmyHnU9IzAMMgmqhrcuH2DrSAdYJ6etOaMUmBkUCABy50AdCxafIyC5tu7%20%202dfPxxCSBJKbII%20NAgko3DhfjFMoQCpVEJhPANZpLFYcfA9BYgIYjcwzTQUeZgfqI6GdTybZAAfgOKxO3HxHDuYD4QA" rel="nofollow noreferrer">a playground link</a> with a simplified reproduction of your question. Try changing the <code>any</code> to <code>unknown</code> to see how the compiler responds. </p>
+
+<pre><code>interface Container&lt;TValue&gt; {
+  value: TValue;
+}
+
+declare function hasValue&lt;TResult&gt;(
+  object: unknown
+): object is Container&lt;TResult&gt;;
+
+// Change any to unknown.
+const funcIfElse = &lt;T extends Container&lt;any&gt;&gt;(input: T): string =&gt; {
+  if (hasValue&lt;string&gt;(input)) {
+    return input.value;
+  }
+
+  return input;
+};
+
+// Change any to unknown.
+const funcTernary = &lt;T extends Container&lt;any&gt;&gt;(input: T): string =&gt;
+  hasValue&lt;string&gt;(input)
+    ? input.value
+    : input;
+</code></pre>

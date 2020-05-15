@@ -1,0 +1,6 @@
+<p>a stream version of @Matthieu M. answer:</p>
+
+<pre><code> List&lt;Integer&gt; list = IntStream.iterate(value, (v) -&gt; v != 0, (v) -&gt; v - (v &amp; -v))
+                .mapToObj(val -&gt; Integer.numberOfTrailingZeros(val) + 1)
+                .collect(toList());
+</code></pre>

@@ -1,7 +1,0 @@
-<p>The practical answer for VSCode users in 2019 is to use the 'jsonc' extension.</p>
-
-<p>Practical, because that is the extension recognized by VSCode to indicate "JSON with comments".  Please let me know about other editors/IDE's in the comments below.</p>
-
-<p>It would be nice if VSCode and other editors would add native support for 'json5' as well, but for now VSCode only includes support for 'jsonc'.</p>
-
-<p>(I searched through all the answers before posting this and none mention 'jsonc'.)</p>

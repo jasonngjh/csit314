@@ -1,0 +1,5 @@
+<p>You can use <code>itertools.chain()</code> to concatenate the two ranges.</p>
+
+<pre><code>import itertools
+list(itertools.chain(range(6, 10), range(-9, -5)))
+</code></pre>

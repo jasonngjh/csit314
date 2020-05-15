@@ -1,0 +1,25 @@
+<p>You can construct an object with all the parameters but the last:</p>
+
+<pre><code>template&lt;typename A, typename B, typename C&gt;
+struct uber
+{
+   A a;
+   B b;
+   C c;
+
+   uber(A a, B b, C c) : a(a), b(b), c(c) {}
+
+   template&lt;typename F&gt; 
+   auto operator()(F f, int n) { f(a,b,c,n); }
+};
+</code></pre>
+
+<p>and then use the templated call operator to call the individual functions:</p>
+
+<pre><code>A a; B b; C c;
+auto uber_func = uber{a,b,c};
+uber_func(hello, 240);
+uber_func(there, 33);
+uber_func(how, 54);
+uber_func(are, 67);
+</code></pre>

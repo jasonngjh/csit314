@@ -1,0 +1,17 @@
+<p>What about looping through the list?</p>
+
+<pre><code>needle = 'data_update'
+haystack = [
+    ["00:00:01","data_update","data1",10.5,"blabla"],
+    ["00:00:02","proc_call","xxx","xxx","blalla"],
+    ["00:00:15","data_update","data2",34.5,"blabla"],
+    ["00:00:25","proc_call","xxx","xxx","blalla"]
+]
+
+container = []
+for x in range(len(haystack)):
+    if needle in haystack[x]:
+        container.append([haystack[x][0], haystack[x][2], haystack[x][3]])
+</code></pre>
+
+<p>This loops through each element in the list and tests if your needle is present in the list item. If it is, then it adds it appends the data to a new output container, made up of only the data that you asked for.</p>

@@ -1,0 +1,35 @@
+<p>I have a function that is intended to either return a value of <code>IDBValidKey</code> or something converted to <code>IDBValidKey</code>. If I write the function using the ternary operator it works fine but it causes a compiler error if I write it as an if-else statement:</p>
+
+<pre><code>interface IDBValidKeyConvertible&lt;TConverted extends IDBValidKey&gt; {
+    convertToIDBValidKey: () =&gt; TConverted;
+}
+
+function isIDBValidKeyConvertible&lt;TConvertedDBValidKey extends IDBValidKey&gt;(object: unknown): object is IDBValidKeyConvertible&lt;TConvertedDBValidKey&gt; {
+    return typeof((object as IDBValidKeyConvertible&lt;TConvertedDBValidKey&gt;).convertToIDBValidKey) === "function";
+}
+
+type IDBValidKeyOrConverted&lt;TKey&gt; = TKey extends IDBValidKeyConvertible&lt;infer TConvertedKey&gt; ? TConvertedKey : TKey;
+
+function getKeyOrConvertedKey&lt;TKey extends IDBValidKey | IDBValidKeyConvertible&lt;any&gt;&gt;(input: TKey): IDBValidKeyOrConverted&lt;TKey&gt; {
+    if (isIDBValidKeyConvertible&lt;IDBValidKeyOrConverted&lt;TKey&gt;&gt;(input)) {
+        return input.convertToIDBValidKey();
+    } else {
+        return input;
+    }
+}
+
+function getKeyOrConvertedKeyTernary&lt;TKey extends IDBValidKey | IDBValidKeyConvertible&lt;any&gt;&gt;(input: TKey): IDBValidKeyOrConverted&lt;TKey&gt; {
+    return (isIDBValidKeyConvertible&lt;IDBValidKeyOrConverted&lt;TKey&gt;&gt;(input)) ? input.convertToIDBValidKey() : input;
+}
+</code></pre>
+
+<p><code>getKeyOrConvertedKeyTernary</code> produces no errors but the <code>else</code> block of <code>getKeyOrConvertedKey</code> yields this error:</p>
+
+<pre><code>Type 'TKey' is not assignable to type 'IDBValidKeyOrConverted&lt;TKey&gt;'.
+  Type 'string | number | Date | ArrayBufferView | ArrayBuffer | IDBArrayKey | IDBValidKeyConvertible&lt;any&gt;' is not assignable to type 'IDBValidKeyOrConverted&lt;TKey&gt;'.
+    Type 'string' is not assignable to type 'IDBValidKeyOrConverted&lt;TKey&gt;'.
+</code></pre>
+
+<p>Aren't the ternary operator and the if-else statement equivalent?</p>
+
+<p>Thanks!</p>

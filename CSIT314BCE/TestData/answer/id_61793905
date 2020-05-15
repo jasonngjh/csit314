@@ -1,0 +1,7 @@
+<p>You can use simply this code </p>
+
+<pre><code>$(".button").click(function(){
+  alert("Value: " + $(".show-price").val());
+});
+
+</code></pre>

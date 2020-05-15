@@ -1,0 +1,9 @@
+<p>I'm trying to add a system call to my OS and when I read the online tutorials, it always starts with downloading and extracting a kernel source code from the Internet. For example:</p>
+
+<p><code>$ wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.4.56.tar.xz</code> to download the <code>.tar.xz</code> file.</p>
+
+<p>And <code>$ tar -xvJf linux-4.4.56.tar.xz</code> to extract the kernel source code.</p>
+
+<p>My question is that why do we have to use another kernel source from the Internet? Can we add the new system call to the running OS and compile it directly?</p>
+
+<p>Any help is really appreciated. Thank you.</p>

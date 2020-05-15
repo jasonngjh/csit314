@@ -1,0 +1,23 @@
+<p>Getting exception when running the following code for form validation. </p>
+
+<pre><code>File "/Users/homeduvvuri/Documents/Learning/PartyGoUdemy/PartGo/user/forms.py", line 11, in BaseUserForm
+    email = EmailField('Email', [validators.DataRequired(), validators.Email()])
+File "/Users/homeduvvuri/Documents/Learning/PartyGoUdemy/PartGo/partgo-env/lib/python3.7/site-packages/wtforms/validators.py", line 332, in __init__
+    raise Exception("Install 'email_validator' for email validation support.")
+Exception: Install 'email_validator' for email validation support.
+</code></pre>
+
+<p>Runs perfectly on codeanywhere VM. Does not on local machine.</p>
+
+<pre><code>from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import Form, StringField, PasswordField, validators, ValidationError
+from wtforms.validators import InputRequired, Email
+from wtforms.fields.html5 import EmailField
+from wtforms.widgets import TextArea
+from user.models import User
+
+class BaseUserForm(FlaskForm):
+    name = StringField('Name', [validators.DataRequired(), validators.Length(min=2, max=30)])
+    email = EmailField('Email', [validators.DataRequired(), validators.Email()])
+</code></pre>

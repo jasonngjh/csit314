@@ -1,0 +1,13 @@
+<p><code>const</code> applies to the thing on its left, or if nothing is there then to its right.</p>
+
+<p>In <code>char *const s = "hello";</code>, the <code>const</code> is applied to the <code>*</code>, not to the <code>char</code>, so <code>s</code> is a const pointer to non-const <code>char</code> data.  However, a <em>string literal</em> is const char data (in this case, <code>"hello"</code> is a <code>const char[6]</code>).  You can't have a pointer to non-const data that is actually pointing at const data, that would allow the const data to be modifiable, which is undefined behavior if something actually tried to modify the data.  That is what the compiler error is complaining about.</p>
+
+<p>So, you need a pointer to const char data instead:</p>
+
+<p><code>char const *const s = "hello";</code></p>
+
+<p>Or:</p>
+
+<p><code>const char *const s = "hello";</code></p>
+
+<p>The <code>constexpr</code> just makes the <code>s</code> variable available for evaluation at compile-time.</p>

@@ -1,0 +1,39 @@
+<p>Strictly speaking, you don't need to</p>
+
+<h1>Program Loaders</h1>
+
+<p>You have wine, the WSL1 or darling, which all are loaders for the respective other OS' binary formats. These tools work so well because the machine is <em>basically</em> the same.</p>
+
+<p>When you create an executable, the machine code for "5+3" is <em>basically</em> the same on all x86 based platforms, however there are differences, already mentioned by the other answers, like:</p>
+
+<ul>
+<li>file format</li>
+<li>API: eg. Functions exposed by the OS</li>
+<li>ABI: Binary layout etc.</li>
+</ul>
+
+<p>These differ.  Now, eg. wine makes Linux understand the WinPE format, and then "simply" runs the machine code as a Linux process (no emulation!).  It implements parts of the WinAPI and translates it for Linux.  Actually, Windows does pretty much the same thing, as Windows programs do not talk to the Windows Kernel (NT) but the Win32 subsystem... which translates the WinAPI into the NT API. As such, wine is "basically" another WinAPI implementation based on the Linux API.</p>
+
+<h1>C in a VM</h1>
+
+<p>Also, you can actually compile C into something else than "bare" machine code, like LLVM Byte code or wasm.  Projects like GraalVM make it even possible to run C in the Java Virtual Machine: Compile Once, Run Everywhere. There you target another API/ABI/File Format which was intended to be "portable" from the start.</p>
+
+<p>So while the ISA makes up the whole language a CPU can understand, most programs don't only "depend" on the CPU ISA but need the OS to be made work. The toolchain must see to that</p>
+
+<h1>But you're right</h1>
+
+<p>Actually, you are rather close to being right, however.  You actually could compile for Linux and Win32 with your compiler and perhaps even get the same result -- for a rather narrow definition of "compiler". But when you invoke the compiler like this:</p>
+
+<pre><code>c99 -o foo foo.c
+</code></pre>
+
+<p>You don't only compile (translate the C code to, eg., assembly) but you do this:</p>
+
+<ol>
+<li>Run the C preprocessor</li>
+<li>Run the "actual" C compiler frontend </li>
+<li>Run the assembler</li>
+<li>Run the linker</li>
+</ol>
+
+<p>There might be more or less steps, but that's the usual pipeline. And step 2 is, again with a grain of salt, basically the same on every platform. However the preprocessor copies different header files into your compilation unit (step 1) and the linker works completely differently. The actual translation from one language (C) to another (ASM), that is what from a theoretical perspective a compiler does, is platform independent.</p>

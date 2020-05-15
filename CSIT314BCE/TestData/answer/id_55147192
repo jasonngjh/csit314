@@ -1,0 +1,5 @@
+<p>I solved this by completing the setup of 'MAIL FROM' in AWS SES. This set the mail from header in emails to be my domain name.</p>
+
+<p>"HEADER_FROM_DIFFERENT_DOMAINS" and mail-tester.com now gives me a score of 10/10.</p>
+
+<p>Note that for some email providers it took a few weeks before we were trusted and emails stopped going to spam.</p>

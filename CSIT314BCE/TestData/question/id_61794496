@@ -1,0 +1,15 @@
+<p>I am using type script with plain html. 
+I want to open and close bootstrap modal from type script function. </p>
+
+<p>※JQuery already included and accessible.</p>
+
+<pre><code>function showDialog() {
+    $('#settings').modal('show');
+}
+
+function hideDialog() {
+    $('#settings').modal('hide');
+}
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/SBwOE.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/SBwOE.png" alt="modal() gives error : Propery modal does not exist on type &#39;JQuery&lt;HTMLElement&gt;&#39;."></a></p>

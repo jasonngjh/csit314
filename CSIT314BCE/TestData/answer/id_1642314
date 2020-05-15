@@ -1,3 +1,0 @@
-<p>That's a very complicated operator, so even <a href="https://isocpp.org/std/the-committee" rel="noreferrer">ISO/IEC JTC1 (Joint Technical Committee 1)</a> placed its description in two different parts of the C++ Standard.</p>
-
-<p>Joking aside, they are two different operators: <code>--</code> and <code>&gt;</code> described respectively in &sect;5.2.6/2 and &sect;5.9 of the C++03 Standard.</p>

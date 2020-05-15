@@ -1,0 +1,9 @@
+<p>If you take a look at wtforms/validators.py file in line 9:</p>
+
+<pre><code>import email_validator
+</code></pre>
+
+<p>Just install the package:</p>
+
+<pre><code>pip install email_validator
+</code></pre>

@@ -1,9 +1,0 @@
-<p>Coming late to the party: I use the CLR types 100% of the time (well, except if <em>forced</em> to use the C# type, but I don't remember when the last time that was). </p>
-
-<p>I originally started doing this years ago, as per the CLR books by Ritchie. It made sense to me that all CLR languages ultimately have to be able to support the set of CLR types, so using the CLR types yourself provided clearer, and possibly more "reusable" code.</p>
-
-<p>Now that I've been doing it for years, it's a habit and I like the coloration that VS shows for the CLR types.</p>
-
-<p>The only real downer is that auto-complete uses the C# type, so I end up re-typing automatically generated types to specify the CLR type instead.</p>
-
-<p>Also, now, when I see "int" or "string", it just looks really wrong to me, like I'm looking at 1970's C code.</p>

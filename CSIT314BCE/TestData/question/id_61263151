@@ -1,0 +1,10 @@
+<p>I stumbled across a surprising (to me) fact.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>console.log("asdf".replace(/.*/g, "x"));</code></pre>
+</div>
+</div>
+</p>
+
+<p>Why <em>two</em> replacements?  It seems any non-empty string without newlines will produce exactly two replacements for this pattern.  Using a replacement function, I can see that the first replacement is for the entire string, and the second is for an empty string.  </p>

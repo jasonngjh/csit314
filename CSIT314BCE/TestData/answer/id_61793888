@@ -1,0 +1,18 @@
+<p>If you don't want to deal with Qt resource system, you might convert your images to the <a href="https://en.wikipedia.org/wiki/X_PixMap" rel="nofollow noreferrer">XPM format</a>, which is a textual representation of an image, and <strong>embed</strong> it into your source code. There are plenty of online converters you can use.</p>
+
+<p>For example, you can store the converted image as a <code>static char *</code> array in the source code and use it in the GUI, as follows:</p>
+
+<pre><code>/* An image in XPM */
+static char *imageTxt[] = {
+    /* columns rows colors chars-per-pixel */
+    "300 292 64 1 ",
+    "  c black",
+    etc.
+[..]
+
+QLabel l;
+l.setPixmap( QPixmap(imageTxt) );
+l.show();
+</code></pre>
+
+<p>Basically, this is what Qt's resource system does automatically.</p>

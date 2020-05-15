@@ -1,0 +1,24 @@
+<p>You can remove comments using this script:</p>
+
+<pre><code>import re
+print re.sub(r'(?s)("[^"\\]*(?:\\.[^"\\]*)*")|#[^\n]*', lambda m: m.group(1) or '', '"Phone #"#:"555-1234"')
+</code></pre>
+
+<p>The idea is to capture first parts enclosed in double-quotes and to replace them by themself before searching a sharp: </p>
+
+<pre class="lang-none prettyprint-override"><code>(?s)              # the dot matches newlines too
+(                 # open the capture group 1
+    "             # "
+    [^"\\]*       # all characters except a quote or a backslash
+                  # zero or more times
+    (?:           # open a non-capturing group
+        \\.       # a backslash and any character
+        [^"\\]*   # 
+    )*            # repeat zero or more times
+    "             # "
+)                 # close the capture group 1
+
+|                 # OR
+
+#[^\n]*           # a sharp and zero or one characters that are not a newline.
+</code></pre>

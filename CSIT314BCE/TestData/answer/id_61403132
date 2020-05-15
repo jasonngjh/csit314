@@ -1,0 +1,48 @@
+<p>Seems in every app Google Map creates ZoomTables.data file.</p>
+
+<p><a href="https://i.stack.imgur.com/j690Q.png" rel="noreferrer"><img src="https://i.stack.imgur.com/j690Q.png" alt="enter image description here"></a></p>
+
+<p>This file was malformed, malformed version of it that could be downloaded from <a href="https://issuetracker.google.com/issues/154855417#comment205" rel="noreferrer">comment</a>.
+To reproduce the issue remove ZoomTables.data from the app packages on the device and insert malformed one. The app should crash.</p>
+
+<p>Currently, the issue was solved on google's side, but the apps still contain a cached version of that data file.
+To fix the issue we should remove that file right on the app start in Application onCreate Method.</p>
+
+<pre><code>private void fixGoogleMapBug() {
+  try {
+    SharedPreferences hasFixedGoogleBug154855417 = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE);
+    if (!hasFixedGoogleBug154855417.contains("fixed")) {
+      File corruptedZoomTables = new File(getFilesDir(), "ZoomTables.data");
+      File corruptedSavedClientParameters = new File(getFilesDir(), "SavedClientParameters.data.cs");
+      File corruptedClientParametersData =
+          new File(
+            getFilesDir(),
+            "DATA_ServerControlledParametersManager.data."
+                + getBaseContext().getPackageName());
+      File corruptedClientParametersDataV1 =
+          new File(
+            getFilesDir(),
+            "DATA_ServerControlledParametersManager.data.v1."
+                + getBaseContext().getPackageName());
+      corruptedZoomTables.delete();
+      corruptedSavedClientParameters.delete();
+      corruptedClientParametersData.delete();
+      corruptedClientParametersDataV1.delete();
+      hasFixedGoogleBug154855417.edit().putBoolean("fixed", true).apply();
+    }
+  } catch (Exception e) {
+
+  }
+}
+</code></pre>
+
+<p><strong>Update 1</strong></p>
+
+<p>I've updated workaround, base on the latest google developers <a href="https://issuetracker.google.com/issues/154855417#comment509" rel="noreferrer">comment</a>:</p>
+
+<blockquote>
+  <p>The workarounds provided here covers all available flavors and versions of our SDKs for Android. To clarify further (in case you released an earlier version of the workaround that did not delete as many files):</p>
+  
+  <p>Applications that use Maps Android SDK v2 should only need to delete one file: ZoomTables.data.
+  Applications that use Maps Android SDK v3 beta should only need to delete one file, either DATA_ServerControlledParametersManager.data.v1. + getBaseContext().getPackageName()) or DATA_ServerControlledParametersManager.data. + getBaseContext().getPackageName())</p>
+</blockquote>

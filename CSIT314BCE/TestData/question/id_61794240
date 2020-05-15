@@ -1,0 +1,141 @@
+<h1>Problem statement:</h1>
+
+<blockquote>
+  <p>Given two arrays A and B. Given Q queries each having a positive integer i denoting an index of the array A. For each query, your task is to find all the elements less than or equal to Ai in the array B.  </p>
+</blockquote>
+
+<p>My code doesn't seem to work for all the test cases.</p>
+
+<h1>Input</h1>
+
+<pre><code>   20000 // array size
+
+  24527 11330 19029 903 1178 1687 3954 11549 15705 23325 14294 23378 28891 27002 26716 13346 12153 14766 7641 17062 4928 2979 11867 833 27474 25860 28590 27 13961 12627 10021 4560 12638 10294 9878 6249 31497 28178 15015 16523 5610 8923 20040 10478 18216 21291 26497 31761 6552 32657 24942 21036 2016 11819 1928 28519 4572 14967 30245 12873 16704 22374 25667 18035 24959 30642 14977 28558 28396 4210 7022 130 287 27116 16646 21224 13467 29354 21370 21187 22446 18640 7472 29290 24216 28076 16395 6857 25327 22415 20460 27593 12865 21979 30329 24845 12284 31582 1053 11999 3723 734 4687 27498 9154 25077 6936 22569 23676 32288 10703 24479 4994 14354 2344 6985 20399 16718 4717 30161 11602 28660 522 15748 30420 1243 30031 15110 12443 6113 30066 8260 7213 7807 13267 25515 30361 16545 23428 23448 30227 28596 7177 11791 19166 29696 20828 26799 10095 25656 27957 21733 5071 15183 1415 23649 4161 142 11342 4550 19237 13796 29832 12710 28188 125 18561 12205 18029 16277 30036 9244 19623 1423 4015 1164.................
+</code></pre>
+
+<h1>Its Correct output is:</h1>
+
+<pre><code>        13068
+        6148
+        8639
+        8615
+        334
+        2586
+        19661
+        4011
+        5428
+        14464
+        4751
+        9483
+        15197
+        18490
+        13607
+        16230
+        3140
+        1360
+        14787
+        6183
+        7031
+        4198
+        8859
+        16369
+        8455
+        5355
+        1458
+        12519
+        6988
+        17495
+        2201
+        2561
+        15966
+        7950
+        15677
+        19498
+        18528
+        4413
+        1642
+        2574
+        9223
+        15598
+        2364
+        9465
+        3935
+        894
+        19076
+        272
+        12675
+        6602
+        1441
+        18835
+        2249
+        14304
+        8879
+        12463
+        9356
+        17889
+        5993
+        13893
+        11928
+        11219
+        19976
+        1812
+        7033
+        7116
+        8025
+        7354
+        7723
+        8421
+        2014
+        14545
+        5213
+        5532
+</code></pre>
+
+<p>And Your Code's output is:</p>
+
+<pre><code>6939
+</code></pre>
+
+<p>I have provided the code here</p>
+
+<pre><code>      #include &lt;iostream&gt;
+        #include&lt;algorithm&gt;
+        using namespace std;
+         int findindex (  int arr[], int start , int end ,int x)
+        {
+            while(start &lt;=end )
+            {
+                int mid = (start +end)/2; 
+                if(arr[mid]&lt;=x) // its lesser so more el can exist in rt search space
+                    start =mid+1; 
+                else 
+                    end = mid-1; 
+            }
+          return end; 
+
+        }
+        int main() {
+            int t ; cin&gt;&gt;t; 
+            while(t--)
+            {   
+                int n,i,q;
+                cin&gt;&gt;n; 
+                 int arr1[n],arr2[n]; 
+                for(i=0;i&lt;n;i++)  // arr1 
+                    cin&gt;&gt;arr1[i]; 
+                for(i=0;i&lt;n;i++)  //arr2 
+                    cin&gt;&gt;arr2[i]; 
+                cin&gt;&gt;q;           // no of querries
+                sort(arr2,arr2+n); 
+                while(q--)
+                { int x; 
+                 cin&gt;&gt;x; 
+                 int index=findindex(arr2,0,n-1,x) ;
+                 cout&lt;&lt;index+1&lt;&lt;"\n"; 
+                }
+
+            }
+            //code
+            return 0;
+        }
+</code></pre>

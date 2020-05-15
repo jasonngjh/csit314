@@ -1,0 +1,91 @@
+<p>After few hours of debugging, I realized that a very simple toy example was not efficient due to a missing <code>!</code> in an expression <code>return $ 1 + x</code> (thanks duplode!... but how come ghc does not optimize that??). I also realized it because I was comparing it with a Python code that was quicker, but I won't always write Python code to benchmark my code...</p>
+
+<p>So here is my question: is there a way to automatically detect these "lazy memory leaks", that slow down a program for no real reason? I'm still pretty bad to optimize Haskell code, and forgetting a <code>!</code> is quite likely, even when you're experimented I guess.</p>
+
+<p>I'm aware of:</p>
+
+<ul>
+<li>the <code>+RTS -s</code>, but I'm not sure how to interpret it: seeing <code>79MB</code> of memory for a simple program seems huge to me for example, but maybe it's not as it's what takes my current program... and for bigger programs it's impossible to just detect "lazy leaks" that way I guess as I have no idea of the amount of memory my program should take.</li>
+<li>the <code>cabal v2-run --enable-profiling mysatsolvers -- +RTS -p</code> command, but it seems that enabling the profiler kills some optimisations done by GHC, and therefore it's hard to use these values for a real benchmark. And still, it's not clear to me how to find leaks from that output anyway.</li>
+</ul>
+
+<p>Could you for example explain me how I could find the "lazy leaks" in a toy program like this one?</p>
+
+<pre><code>{-# LANGUAGE DerivingVia, FlexibleInstances, ScopedTypeVariables #-}
+module Main where
+
+--- It depends on the transformers, containers, and base packages.
+--- Optimisation seems to be important or the NoLog case will be way to long.
+--- $ ghc -O Main.hs
+
+import qualified Data.Map.Strict as MapStrict
+import Data.Functor.Identity
+
+import qualified Control.Monad as CM
+import qualified Control.Monad.State.Strict as State
+import qualified Data.Time as Time
+
+-- Create a class that allows me to use the function "myTell"
+-- that adds a number in the writer (either the LogEntry
+-- or StupidLogEntry one)
+class Monad m =&gt; LogFunctionCalls m where
+  myTell :: String -&gt; Int -&gt; m ()
+
+---------- Logging disabled ----------
+--- (No logging at all gives the same time so I don't put here)
+newtype NoLog a = NoLog { unNoLog :: a }
+  deriving (Functor, Applicative, Monad) via Identity
+
+instance LogFunctionCalls NoLog where
+  myTell _ _ = pure ()
+
+---------- Logging with Map ----------
+-- When logging, associate a number to each name.
+newtype LogEntryMap = LogEntryMap (MapStrict.Map String Int)
+  deriving (Eq, Show)
+
+instance LogFunctionCalls (State.State LogEntryMap) where
+  myTell namefunction n = State.modify' $
+    \(LogEntryMap m) -&gt;
+      LogEntryMap $ MapStrict.insertWith (+) namefunction n m
+
+---------- Logging with Int ----------
+-- Don't use any Map to avoid inefficiency of Map
+newtype LogEntryInt = LogEntryInt Int
+  deriving (Eq, Show)
+
+instance LogFunctionCalls (State.State LogEntryInt) where
+  myTell namefunction n = State.modify' $
+    \(LogEntryInt m) -&gt; LogEntryInt $! m + n
+
+---------- Function to compute ----------
+countNumberCalls :: (LogFunctionCalls m) =&gt; Int -&gt; m Int
+countNumberCalls 0 = return 0
+countNumberCalls n = do
+  myTell "countNumberCalls" 1
+  x &lt;- countNumberCalls $! n - 1
+  return $ 1 + x
+
+main :: IO ()
+main = do
+  let www = 15000000
+  putStrLn $ "Let's start!"
+  --- Logging disabled
+  t0 &lt;- Time.getCurrentTime
+  let n = unNoLog $ countNumberCalls www
+  putStrLn $ "Logging disabled: " ++ (show n)
+  t1 &lt;- Time.getCurrentTime
+  print (Time.diffUTCTime t1 t0)
+  -- Logging with Map
+  let (n, LogEntryMap log) = State.runState (countNumberCalls www) (LogEntryMap MapStrict.empty)
+  putStrLn $ "Logging with Map: " ++ (show n)
+  putStrLn $ (show $ log)
+  t2 &lt;- Time.getCurrentTime
+  print (Time.diffUTCTime t2 t1)
+  -- Logging with Int
+  let (n, LogEntryInt log) = State.runState (countNumberCalls www) (LogEntryInt 0)
+  putStrLn $ "Logging with Int: " ++ (show n)
+  putStrLn $ (show $ log)
+  t3 &lt;- Time.getCurrentTime
+  print (Time.diffUTCTime t3 t2)
+</code></pre>

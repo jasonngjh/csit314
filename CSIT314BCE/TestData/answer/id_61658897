@@ -1,0 +1,52 @@
+<p>This seems rather compact. I believe this is what powers <code>bind_rows()</code> from <code>dplyr</code> and therefore <code>map_df()</code> in <code>purrr</code>, so should be fairly efficient.</p>
+
+<pre class="lang-r prettyprint-override"><code>library(vctrs)
+
+vec_rbind(!!!data)
+</code></pre>
+
+<p>This gives a data.frame.</p>
+
+<pre class="lang-r prettyprint-override"><code>  ...1 ...2 ...3 ...4 ...5
+1    A    1    4    7   12
+2    B    2    5    8   15
+3    C    3    6    9   18
+</code></pre>
+
+<hr>
+
+<h2>Some Benchmarks</h2>
+
+<p>It seems like the <code>.name_repair</code> within the <code>tidyverse</code> methods is a severe bottleneck. I took a few fairly straightforward options that also seemed to run the quickest from the other posts (thanks H 1 and sindri_baldur).</p>
+
+<pre class="lang-r prettyprint-override"><code>microbenchmark(vctrs = vec_rbind(!!!data),
+               dt = rbindlist(lapply(data, as.list)),
+               map = map_df(data, as_tibble_row, .name_repair = "unique"),
+               base = as.data.frame(do.call(rbind, data)))
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/uEEu4.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/uEEu4.png" alt="benchmark 1"></a></p>
+
+<p>But if you first name the vectors (but not necessarily the list elements), you get a different story.</p>
+
+<pre class="lang-r prettyprint-override"><code>data2 &lt;- modify(data, ~set_names(.x, seq(.x)))
+
+microbenchmark(vctrs = vec_rbind(!!!data2),
+               dt = rbindlist(lapply(data2, as.list)),
+               map = map_df(data2, as_tibble_row),
+               base = as.data.frame(do.call(rbind, data2)))
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/7W80g.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/7W80g.png" alt="benchmark 2"></a></p>
+
+<p>In fact, you can include the time to name the vectors into the <code>vec_rbind()</code> solution and not the others, and still see fairly high performance.</p>
+
+<pre class="lang-r prettyprint-override"><code>microbenchmark(vctrs = vec_rbind(!!!modify(data, ~set_names(.x, seq(.x)))),
+               dt = setDF(transpose(data)),
+               map = map_df(data2, as_tibble_row),
+               base = as.data.frame(do.call(rbind, data)))
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/Tx6ux.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/Tx6ux.png" alt="final benchmark"></a></p>
+
+<p>For what its worth. </p>

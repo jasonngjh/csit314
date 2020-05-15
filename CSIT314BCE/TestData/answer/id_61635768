@@ -1,0 +1,13 @@
+<h2>No, you can't, by design.</h2>
+
+<p>You've run into an interesting demonstration of JavaScript's 'two nulls', <code>null</code> and <code>undefined</code>. </p>
+
+<p><code>null</code> is <strong>a designated null value</strong></p>
+
+<p><code>undefined</code> is <strong>the absence of any value at all</strong></p>
+
+<p>You ask about the passing the 'value' <code>undefined</code> but that premise is flawed. There <em>is no</em> value <code>undefined</code> - <code>undefined</code> is the lack of a value.</p>
+
+<p>Therefore, you shouldn't pass <code>undefined</code> as a meaningful value to be interpreted by a function. I mean, you can, but from the point of view of JavaScript it is equivalent to passing <em>nothing at all</em> - so you're fighting against the design of the language and will run into issues like this one.</p>
+
+<p>If you want to pass a meaningful, purposeful null value, that is what <code>null</code> is for.</p>

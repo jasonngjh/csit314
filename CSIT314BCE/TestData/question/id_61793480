@@ -1,0 +1,20 @@
+<p>I've rephrase my post to better explain.<br>
+I'd like to compare objects but not using reflection or annotation to declare fields mappings but use enum for mapping and functional programming, what I mean</p>
+
+<pre><code>enum MyEnum {
+  PERSON_LAST_NAME("lastName", Person::getLastName(), PersonEntity::getLstName())
+}
+</code></pre>
+
+<p>and now having instances of Person and PersonsEntity and I would like to iterate MyEnum values call these declared methods on my objects.<br>
+Just to wanted to replace the code with more generic solution</p>
+
+<pre><code>  Person person = getPerson();
+  Person personEntity = getPersonEntity();
+  if (Objects.equals(person.getLastName(), personEntity.getLstName()) {
+   return "lastName";
+  }
+  if (Objects.equals(person.getFirstName(), personEntity.getFstName()) {
+   return "firstName";
+  }
+</code></pre>

@@ -1,0 +1,116 @@
+<p>As I wrote in findDriver(). block Driver key showing with debug but not toasting and the <strong>Call Driver</strong> Button is showing once but after clicking it is moving back to the previous state which is <strong>Getting your Driver</strong>, I have tried my best from my short experience, if anyone can help I am grateful.</p>
+
+<pre><code>private void requestPickupHere(String uid) {
+        DatabaseReference dbRequest = FirebaseDatabase.getInstance().getReference(Common.pickup_request_tbl);
+        GeoFire mGeoFire = new GeoFire(dbRequest);
+        mGeoFire.setLocation(uid, new GeoLocation(mLastLocation.getLongitude(), mLastLocation.getLatitude()), new GeoFire.CompletionListener() {
+            @Override
+            public void onComplete(String key, DatabaseError error) {
+
+            }
+        });
+        if (mUserMarker.isVisible())
+            mUserMarker.remove();
+        //add new marker
+        mUserMarker = mMap.addMarker(new MarkerOptions().title("Pickup Here").snippet("")
+                .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        mUserMarker.showInfoWindow();
+
+        btnRequestPick.setText("Getting your DRIVER..");
+        findDriver();
+    }
+
+
+    private void findDriver() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Common.driver_tbl);
+        GeoFire gfDrivers = new GeoFire(databaseReference);
+        GeoQuery geoQuery = gfDrivers.queryAtLocation(new GeoLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()), radius);
+        geoQuery.removeAllListeners();
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                //if found driver
+                if (!isDriverFound) {
+                    isDriverFound = true;
+                    driverId = key;
+                    btnRequestPick.setText("CALL DRIVER");
+                    Toast.makeText(Home.this, "Found: " + key, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                //if still not found driver
+                if (!isDriverFound) {
+                    radius++;
+                    findDriver();
+                }
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
+    }
+</code></pre>
+
+<blockquote>
+  <p><strong>Debuger view</strong></p>
+</blockquote>
+
+<p>with thread set</p>
+
+<pre><code>driverId = key;   
+btnRequestPick.setText("CALL DRIVER");                        
+Toast.makeText(Home.this, "Found: " + key, Toast.LENGTH_LONG).show();
+</code></pre>
+
+<blockquote>
+  <p>Debuger value</p>
+</blockquote>
+
+<pre><code>this = {Home$6@8357} 
+key = "JXJyvoVE4Td5RLlCiEDTcAUMslE2"
+location = {GeoLocation@8360} "GeoLocation(25.6269317, 88.1373717)"
+driverId = ""
+isDriverFound = true
+btnRequestPick = {AppCompatButton@8368} "androidx.appcompat.widget.AppCompatButton{4470e09 VFED..C.. ........ 20,48-700,144 #7f08004c app:id/btnPickupRequest}"
+</code></pre>
+
+<p><strong>Debug console output:</strong></p>
+
+<pre><code>I/BufferQueueProducer: [SurfaceTexture-0-12694-0](this:0x7765692000,id:0,api:1,p:12694,c:12694) queueBuffer: slot 0 is dropped, handle=0x777427abc0
+D/libc-netbsd: getaddrinfo: get result from proxy gai_error = 0
+I/System.out: port:443
+V/FA: Inactivity, disconnecting from the service
+W/System.err: java.lang.IllegalArgumentException: Service not registered: com.google.android.gms.measurement.internal.zzjf@3780888
+W/System.err:     at android.app.LoadedApk.forgetServiceDispatcher(LoadedApk.java:1494)
+        at android.app.ContextImpl.unbindService(ContextImpl.java:1639)
+        at android.content.ContextWrapper.unbindService(ContextWrapper.java:705)
+W/System.err:     at com.google.android.gms.common.stats.ConnectionTracker.unbindService(Unknown Source:25)
+        at com.google.android.gms.measurement.internal.zzin.zzah(com.google.android.gms:play-services-measurement-impl@@17.4.1:246)
+        at com.google.android.gms.measurement.internal.zzin.zzam(com.google.android.gms:play-services-measurement-impl@@17.4.1:263)
+W/System.err:     at com.google.android.gms.measurement.internal.zzin.zzc(com.google.android.gms:play-services-measurement-impl@@17.4.1:330)
+        at com.google.android.gms.measurement.internal.zziq.zza(com.google.android.gms:play-services-measurement-impl@@17.4.1:2)
+W/System.err:     at com.google.android.gms.measurement.internal.zzah.run(com.google.android.gms:play-services-measurement-impl@@17.4.1:7)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:457)
+        at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+W/System.err:     at com.google.android.gms.measurement.internal.zzfy.run(com.google.android.gms:play-services-measurement-impl@@17.4.1:21)
+D/HWUIExtension: MTKProgramCache.generateProgram: 571849130901572
+I/BufferQueueProducer: [SurfaceTexture-0-12694-0](this:0x7765692000,id:0,api:1,p:12694,c:12694) queueBuffer: fps=8.83 dur=2265.23 max=1539.49 min=14.80
+I/System.out: [OkHttp] sendRequest&gt;&gt;
+I/System.out: [OkHttp] sendRequest&lt;&lt;
+I/BufferQueueProducer: [SurfaceTexture-0-12694-0](this:0x7765692000,id:0,api:1,p:12694,c:12694) queueBuffer: fps=1.18 dur=11019.12 max=10198.47 min=40.01
+</code></pre>

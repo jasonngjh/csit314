@@ -1,8 +1,0 @@
-<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete" rel="noreferrer">delete operator</a> is the best way to do so.</p>
-
-<p>A live example to show:</p>
-
-<pre><code>var foo = {bar: 'bar'};
-delete foo.bar;
-console.log('bar' in foo); // Logs false, because bar was deleted from foo.
-</code></pre>

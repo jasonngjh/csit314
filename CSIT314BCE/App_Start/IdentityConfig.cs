@@ -100,9 +100,11 @@ namespace CSIT314BCE
         {
             var user = UserManager.FindByNameAsync(userName).Result;
 
-            if (!user.IsEnabled)
-            {
-                return Task.FromResult<SignInStatus>(SignInStatus.LockedOut);
+            if (user != null) {
+                if (!user.IsEnabled)
+                {
+                    return Task.FromResult<SignInStatus>(SignInStatus.LockedOut);
+                }
             }
 
             return base.PasswordSignInAsync(userName, password, rememberMe, shouldLockout);

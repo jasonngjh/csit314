@@ -1,1 +1,0 @@
-<p>Just use <code>git reset --hard &lt;last good SHA&gt;</code> to reset your changes and give new commit. You can also use <code>git checkout -- &lt;bad filename&gt;</code>.</p>

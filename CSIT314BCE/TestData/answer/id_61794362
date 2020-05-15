@@ -1,0 +1,21 @@
+<p>As a side note: It might be worthwhile to check why your subprocesses are taking 'too long to finish'. </p>
+
+<p>As for the warning, it relates to when you 'lock' resources for use. For example:</p>
+
+<pre><code># function to withdraw from account 
+def withdraw(balance, lock):     
+    for _ in range(10000): 
+        lock.acquire() 
+        balance.value = balance.value - 1
+        lock.release() 
+</code></pre>
+
+<p>source: <a href="https://www.geeksforgeeks.org/synchronization-pooling-processes-python/" rel="nofollow noreferrer">https://www.geeksforgeeks.org/synchronization-pooling-processes-python/</a></p>
+
+<p>If you would terminate the subprocess after it has performed <code>lock.acquire()</code>and before it performed  <code>lock.release()</code>, you would have a deadlock situation. </p>
+
+<p>So the question is, do you use any threading.Lock or threading.Semaphore objects in the processes that you want to terminate?</p>
+
+<p>I hope this helps in understanding whether it is safe to terminate your subprocess/thread. </p>
+
+<p>EDIT: By the way, you should also consider using kill() instead of terminate().</p>

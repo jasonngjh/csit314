@@ -1,0 +1,4 @@
+<p>If you want it installed with <code>wtforms</code>:</p>
+
+<pre><code>pip install wtforms[email]
+</code></pre>

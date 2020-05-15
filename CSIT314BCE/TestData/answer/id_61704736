@@ -1,0 +1,15 @@
+<p>Try to add implicit conversion</p>
+
+<pre><code>implicit def scalaToKotlin(u: Unit): kotlin.Unit = kotlin.Unit.INSTANCE
+</code></pre>
+
+<p>Then</p>
+
+<pre><code>def adapter[E &lt;: TraitA](f: (E) =&gt; Unit): Unit = {
+  foo(None, (e: E) =&gt; f(e))
+}
+</code></pre>
+
+<p>compiles.</p>
+
+<p>Scala 2.13.2, Kotlin 1.3.50, sbt 1.3.8 + kotlin-plugin 2.0.0.</p>

@@ -1,0 +1,11 @@
+<p>Make use of angular innerHtml binding. Replace \n with <br /></p>
+
+<pre><code>title = {"text": "Hello &lt;br /&gt; World"}
+</code></pre>
+
+<p>and in html page</p>
+
+<pre><code>&lt;p [innerHtml]=title.text&gt;&lt;/p&gt;
+</code></pre>
+
+<p>Thanks.</p>

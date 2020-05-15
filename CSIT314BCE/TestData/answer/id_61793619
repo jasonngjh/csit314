@@ -1,0 +1,25 @@
+<p>Here is what I would do:</p>
+
+<pre><code>vec_to_para&lt;-function(vec,df) {
+  table(df[vec])
+}
+
+vec_to_para(c("vs", "gear"), mtcars)
+   gear
+vs   3  4  5
+  0 12  2  4
+  1  3 10  1
+</code></pre>
+
+<p>However, using <code>get()</code> you can make your current solution work with minimal modifications:</p>
+
+<pre><code>vec_to_para&lt;-function(vec,df) {
+  with(df, table(get(vec[1]), get(vec[2])))
+}
+
+vec_to_para(c("vs", "gear"), mtcars)
+
+     3  4  5
+  0 12  2  4
+  1  3 10  1
+</code></pre>

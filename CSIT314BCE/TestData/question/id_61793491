@@ -1,0 +1,19 @@
+<p>I am new in web development.</p>
+
+<pre><code>.chartBars {
+   .bars {
+      li {
+      }
+   }
+}
+</code></pre>
+
+<p>Is this the same as this?</p>
+
+<pre><code>.chartBars {
+}
+.chartBars .bars {
+}
+.chartBars .bars li {
+}
+</code></pre>

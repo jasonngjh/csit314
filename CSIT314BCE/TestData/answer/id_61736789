@@ -1,0 +1,17 @@
+<p>Just check the bits in turn:</p>
+
+<pre><code>List&lt;Integer&gt; bits(int num) {
+  List&lt;Integer&gt; setBits = new ArrayList&lt;&gt;();
+  for (int i = 1; num != 0; ++i, num &gt;&gt;&gt;= 1) {
+    if ((num &amp; 1) != 0) setBits.add(i);
+  }
+  return setBits;
+}
+</code></pre>
+
+<p><a href="https://ideone.com/P3UZpF" rel="noreferrer">Online Demo</a></p>
+
+<pre><code>6 [2, 3]
+7 [1, 2, 3]
+8 [4]
+</code></pre>

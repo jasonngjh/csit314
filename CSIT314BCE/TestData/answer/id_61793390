@@ -1,0 +1,49 @@
+<p>You can either use a for loop like thus:</p>
+
+<pre><code>reduced_array = []
+
+for i in range(len(full_array)):
+  if i[1] == 'data_update':
+    reduced_array.append([i[0],i[2],i[3]])
+</code></pre>
+
+<p>or by list comprehension</p>
+
+<pre><code>reduced_array = [[i[0],i[2],i[3]] for i in full_array if i[1] == 'data_update']
+</code></pre>
+
+<p>if you need to handle more columns you could also use </p>
+
+<pre><code>cols = [0,2,3]
+reduced_array = [[i[col] for col in cols] for i in full_array if i[1] == 'data_update']
+</code></pre>
+
+<p>With regard to <strong>adnanmuttaleb</strong> answer, using lambda functions is way faster than the list comprehension method proposed by me, however it is also more difficult if someone is not familiar with the concept. For comprehensiveness and without wanting to take credit for his answer I add it here.</p>
+
+<pre><code>reduced_array = map(lambda sub: [sub[i] for i in cols], filter(lambda sub: "data_update" in sub, full_array))
+</code></pre>
+
+<p>Runtime comparison:</p>
+
+<pre><code>import random as rd
+import time
+
+full_array = [[rd.random(),"data_update" if rd.random()&lt; 0.2 else "no",rd.random(),rd.random()] for i in range(1000000)]
+cols = [0,2,3]
+
+start1 = time.time()
+reduced_array = map(lambda sub: [sub[i] for i in cols], filter(lambda sub: "data_update" in sub, full_array))
+print(time.time()-start1)
+
+start2 = time.time()
+reduced_array2 = [[i[col] for col in cols] for i in full_array if i[1] == 'data_update']
+print(time.time()-start2)
+</code></pre>
+
+<p>results in </p>
+
+<pre><code>#Lambda function:
+0.004003286361694336
+#List comprehension
+0.254199743270874
+</code></pre>

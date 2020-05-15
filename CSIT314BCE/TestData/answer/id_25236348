@@ -1,8 +1,0 @@
-<p>Simply check visibility by checking for a boolean value, like:</p>
-
-<pre><code>if (this.hidden === false) {
-    // Your code
-}
-</code></pre>
-
-<p>I used this code for each function. Otherwise you can use <code>is(':visible')</code> for checking the visibility of an element.</p>

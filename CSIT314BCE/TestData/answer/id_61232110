@@ -1,0 +1,33 @@
+<p>in <em>sizeof(i);</em> you request the size of the variable <em>i</em>, so 1</p>
+
+<p>in <em>sizeof(~i);</em> you request the size of the type of the expression, which is an <em>int</em>, in your case 4</p>
+
+<hr>
+
+<p>To use</p>
+
+<blockquote>
+  <p>if(~i)</p>
+</blockquote>
+
+<p>to know if <em>i</em> does not value 255 (in your case with an the uint8_t) is not very readable, just do</p>
+
+<pre><code>if (i != 255)
+</code></pre>
+
+<p>and you will have a portable and readable code</p>
+
+<hr>
+
+<blockquote>
+  <p>There are multiple sizes of variables (eg., uint16_t and unsigned char etc.) </p>
+</blockquote>
+
+<p>To manage any size of unsigned :</p>
+
+<pre><code>if (i != (((uintmax_t) 2 &lt;&lt; (sizeof(i)*CHAR_BIT-1)) - 1))
+</code></pre>
+
+<p>The expression is constant, so computed at compile time.</p>
+
+<p><em>#include &lt;limits.h&gt;</em> for <em>CHAR_BIT</em> and <em>#include &lt;stdint.h&gt;</em> for <em>uintmax_t</em></p>

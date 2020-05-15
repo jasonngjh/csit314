@@ -1,0 +1,39 @@
+<p>I want to loop through list, filter basing on specific fields and get sum</p>
+
+<pre><code>class Transaction {
+
+       private String heading;
+       private LocalDate date;
+       private BigDecimal amount;
+
+       }
+</code></pre>
+
+<p>I have a list of Transactions like this :</p>
+
+<pre><code>COLLECTIONS, 14-05-2020, 250
+COLLECTIONS, 14-05-2020, 150
+TAXES, 14-05-2020, 200,
+COLLECTIONS, 15-05-2020, 300
+</code></pre>
+
+<p>Intended result</p>
+
+<pre><code>COLLECTIONS, 14-05-2020, 400
+TAXES, 14-05-2020, 200
+COLLECTIONS, 15-05-2020, 300
+</code></pre>
+
+<p>This is what i have done so far, i created a new list filtered basing on fields</p>
+
+<pre><code>private static &lt;T&gt; Predicate&lt;T&gt; distinctByKey(Function&lt;? super T, ?&gt; keyExtractor) {
+Map&lt;Object, Boolean&gt; seen = new ConcurrentHashMap&lt;&gt;();
+return t -&gt; seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+}
+</code></pre>
+
+<p>And this is my filtered list</p>
+
+<pre><code>transactions.stream().filter(distinctByKey(pr -&gt; Arrays.asList(pr.getHeading(), pr.getDate())))
+  .collect(Collectors.toList())
+</code></pre>

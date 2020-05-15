@@ -1,0 +1,38 @@
+<p>I inserted a screenshot below. Basically I have a code for array, but during compiling it gives a error code for "Expected expression before '{' token", but I really don't know what's wrong. I initiated it on top of the code right below "Int main{ "</p>
+
+<p>Here is the code</p>
+
+<pre><code>    price=car1+e+t+w+b+p;
+    printf("\n Total Price: PhP %d", price);
+
+    reciept[0][0]= {"Option"};
+    reciept[0][1]= {"Choice"};
+    reciept[0][2]= {"Price"};
+    reciept[1][0]= {"Brand"};
+    reciept[1][1]= {"Honda"};
+    reciept[1][2]= {"-----"};
+    reciept[2][0]= {"Model"};
+    reciept[2][1]= {car2};
+    reciept[2][2]= {car3};
+    reciept[3][0]= {"Engine"};
+    reciept[3][1]= {engine2};
+    reciept[3][2]= {engine3};
+    reciept[4][0]= {"Transmission"};
+    reciept[4][1]= {transmission2};
+    reciept[4][2]= {transmission3};
+    reciept[5][0]= {"Wheels"};
+    reciept[5][1]= {wheels2};
+    reciept[5][2]= {wheels3};
+    reciept[6][0]= {"Bodykit"};
+    reciept[6][1]= {bodykit2};
+    reciept[6][2]= {bodykit3};
+    reciept[7][0]= {"Paintjob"};
+    reciept[7][1]= {paintjob2};
+    reciept[7][2]= {paintjob3};
+
+    for (i=0; i&lt;=7; i++)
+        printf("\nStudent No: %d  Grade: %d", reciept[i][0], reciept[i][1], reciept[i][2]);
+    printf("\n");
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/rHPfO.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/rHPfO.png" alt="Code"></a></p>

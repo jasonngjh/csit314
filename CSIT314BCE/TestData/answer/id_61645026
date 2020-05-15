@@ -1,0 +1,5 @@
+<ol>
+<li>The standard library and the C-runtime must interact with OS API's.</li>
+<li>The executable formats for the different target OS's are different.</li>
+<li>Different OS kernels can configure the hardware differently.  Things like byte order, stack direction, register use conventions, and probably many other things can be physically different.</li>
+</ol>

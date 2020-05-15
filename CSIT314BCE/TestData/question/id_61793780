@@ -1,0 +1,47 @@
+<p>I have a div like this:</p>
+
+<pre><code>&lt;div class="configurator-item"&gt;
+    &lt;ul&gt;
+        &lt;li class="banner-list-img" data-price="122"&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Inside this div I have added another div using jQuery:</p>
+
+<p>Here's the jQuery:</p>
+
+<pre><code>jQuery('li.banner-list-img').prepend(jQuery('&lt;div class="show-price"&gt;  &lt;/div&gt;'));
+</code></pre>
+
+<p>After I run this jQuery a div is added:</p>
+
+<pre><code>&lt;div class="configurator-item"&gt;
+    &lt;ul&gt;
+        &lt;li class="banner-list-img" data-price="122"&gt;
+            &lt;div class="show-price"&gt; &lt;/div&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Now I'm trying to get the value of data-price attribute to show inside the div(with class <code>show-price</code> with this jQuery:</p>
+
+<pre><code>jQuery('.banner-list-img').each(function() {
+  var itemprice = jQuery(this).text();
+  jQuery('.show-price').html(itemprice);
+})
+</code></pre>
+
+<p>But this is not working. It should show something like this:</p>
+
+<pre><code>&lt;div class="configurator-item"&gt;
+    &lt;ul&gt;
+        &lt;li class="banner-list-img" data-price="122"&gt;
+            &lt;div class="show-price"&gt; 122 &lt;/div&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>How can I do like this.</p>

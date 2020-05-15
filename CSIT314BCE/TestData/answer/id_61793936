@@ -1,0 +1,18 @@
+<p>U can use firstOrCreate(), but in fact it may execute a lot of query to. Hope it help U to find good solution</p>
+
+<pre><code>public function initCoupon()
+{
+    $code = substr(uniqid(), 0, 8);
+    $new = false;
+    do {
+
+        $coupon = CouponModel::firstOrCreate(compact('code'));
+        $new = $coupon-&gt;wasRecentlyCreated
+
+    } while(!$new);
+
+    return $coupon;
+}
+</code></pre>
+
+<p>Than U can set additional Coupon data </p>

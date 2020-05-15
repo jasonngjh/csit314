@@ -1,0 +1,51 @@
+<p>You are right, generics aren't present after transpilation and therefore can't be used as providers.</p>
+
+<p>To solve it you need to inject factory itself in your component. Because anyway you would specify type of the generic, now you need bit more code to achieve desired behavior.</p>
+
+<p>you can use</p>
+
+<pre class="lang-js prettyprint-override"><code>
+const MY_SERVICE_FACTORY = new InjectionToken&lt;&lt;T&gt;(t: T) =&gt; MyService&lt;T&gt;&gt;('MY_SERVICE_FACTORY', {
+    providedIn: 'root',
+    factory: () =&gt; worker =&gt; new MyService(worker),
+});
+
+// just a helper to extract type, can be omitted
+export type InjectionTokenType&lt;Type&gt; = Type extends InjectionToken&lt;infer V&gt; ? V : never;
+
+class MyComponent {
+   constructor(
+     @Inject(MY_SERVICE_FACTORY) private serviceFactory: InjectionTokenType&lt;typeof MY_SERVICE_FACTORY&gt;,
+     foo: FooWorkerService,
+     bar: BarWorkerService,
+   ) {
+   this.fooWorker = this.serviceFactory(foo);
+   this.barWorker = this.serviceFactory(bar);
+  }
+}
+</code></pre>
+
+<p>also to keep the code cleaner in the constructor you can move it to the providers of the component.</p>
+
+<pre class="lang-js prettyprint-override"><code>@Component({
+  // blabla
+  providers: [
+    {
+      provide: 'foo',
+      useFactory: t =&gt; new MyService(t),
+      deps: [FooWorkerService],
+    },
+    {
+      provide: 'bar',
+      useFactory: t =&gt; new MyService(t),
+      deps: [BarWorkerService],
+    },
+  ],
+})
+class MyComponent {
+   constructor(
+     @Inject('foo') private fooWorker: MyService&lt;FooWorkerService&gt;,
+     @Inject('bar') private barWorker: MyService&lt;BarWorkerService&gt;,
+   ) {}
+}
+</code></pre>

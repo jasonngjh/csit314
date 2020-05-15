@@ -1,0 +1,20 @@
+<p>The shortest solution:</p>
+
+<pre><code>char c = 'a';
+String s = "" + c;
+</code></pre>
+
+<p>The cleanest (and probably most efficient<sup>1</sup>) solutions:</p>
+
+<pre><code>char c = 'a';
+
+String s1 = String.valueOf(c);
+// or
+String s2 = Character.toString(c);
+</code></pre>
+
+<p>Compared to your approach, the above prevents the overhead of having to box the primitive into a <code>Character</code> object.</p>
+
+<hr>
+
+<p><sup><sup>1</sup> The slight inefficiency of the string concatenation in the first approach might be optimized away by the compiler or runtime, so one (if one were so inclined) would really have to run a micro-benchmark to determine actual performance. Micro-optimizations like this are rarely worth the effort, and relying on concatenation to force string conversion just doesn't look very nice.</sup> </p>

@@ -1,0 +1,17 @@
+<p>For Android, multiple developers mentioned a workaround consisting in deleting the ZoomTable.data file directly from their application. After review, this fix seems safe, and you could try it in your application. </p>
+
+<p>Please refer to 
+<a href="https://issuetracker.google.com/154855417#comment179" rel="noreferrer">https://issuetracker.google.com/154855417#comment179</a></p>
+
+<p>If you want your users to continue using your app without re-installing,
+The sample code is copy-pasted here for your convenience. In <strong>Application.onCreate()</strong>:</p>
+
+<pre><code>SharedPreferences googleBug = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE);
+if (!googleBug.contains("fixed")) {
+        File corruptedZoomTables = new File(getFilesDir(), "ZoomTables.data");
+        corruptedZoomTables.delete();
+        googleBug.edit().putBoolean("fixed", true).apply();
+}
+</code></pre>
+
+<p>reference: <a href="https://issuetracker.google.com/issues/154855417#comment205" rel="noreferrer">Google Maps SDK is crashing -- partially resolved </a></p>

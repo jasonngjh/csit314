@@ -1,0 +1,33 @@
+<blockquote>
+<pre><code>char fullName[30] = {NULL};
+</code></pre>
+</blockquote>
+
+<p>This is something that should never be written.</p>
+
+<p><code>NULL</code> is a macro that expands to a null pointer constant. A character - not a pointer - is being initialised here, so it makes no sense to use <code>NULL</code>.</p>
+
+<p>It just so happens that some null pointer constants are also integer literals with value 0 (i.e. 0 or 0L for example), and if <code>NULL</code> expands to such literal, then the shown program is technically well-formed despite the abuse of <code>NULL</code>. What the macro expands to exactly is defined by the language implementation.</p>
+
+<p>If <code>NULL</code>instead  expands to a null pointer constant that is not an integer literal such as <code>nullptr</code> - which is entirely possible - then the program is ill-formed.</p>
+
+<p><code>NULL</code> shouldn't be written in C++ at all, even to initialise pointers. It exists for backwards compatibility with C to make it easier to port C programs to C++.</p>
+
+<hr>
+
+<p>Now, let us assume that <code>NULL</code> happens to expand to an integer literal on this particular implementation of C++.</p>
+
+<p>Nothing in the example is <em>assigned</em>. Assignment is something that is done to pre-existing object. Here, and array is being initialised.</p>
+
+<p>The first element of the array is initialised with the zero literal. The rest of the elements are value initialised. Both result in the null character. As such, the entire array will be filled with null characters.</p>
+
+<p>A simple and correct way to write the same is:</p>
+
+<pre><code>char fullName[30] = {};
+</code></pre>
+
+<hr>
+
+<p>B and C are equally close to being correct, except for wording regarding "assignment". They fail to mention value initialisation, but at least the outcome is the same. A is not wrong either, although it is not as complete because it fails to describe how the rest of the elements are initialised.</p>
+
+<p>If "empty" is interpreted as "contains no elements", then D is incorrect because the array contains 30 elements. If it is interpreted as "contains the empty string", then D would be a correct answer.</p>

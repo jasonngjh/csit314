@@ -1,7 +1,0 @@
-<p>JSON is a <a href="http://en.wikipedia.org/wiki/Domain-specific_language">domain-specific language</a> (DSL) and a data format independent of JavaScript, and as such has its own <a href="http://en.wikipedia.org/wiki/MIME">MIME</a> type, <code>application/json</code>. Respect for MIME types is of course client driven, so <code>text/plain</code> may do for transfer of bytes, but then you would be pushing up interpretation to the vendor application domain unnecessarily - <code>application/json</code>. Would you transfer XML via <code>text/plain</code>?</p>
-
-<p>But honestly, your choice of MIME type is advice to the client as to how to interpret the data- <code>text/plain</code> or <code>text/HTML</code> (when it's not HTML) is like type erasure- it's as uninformative as making all your objects of type Object in a typed language.</p>
-
-<p>No browser runtime I know of will take a JSON document and automatically make it available to the runtime as a JavaScript accessible object without intervention, but if you are working with a crippled client, that's an entirely different matter. But that's not the whole story- <a href="http://en.wikipedia.org/wiki/Representational_state_transfer#RESTful_web_services">RESTful</a> JSON services often don't have JavaScript runtimes, but it doesn't stop them using JSON as a viable data interchange format. If clients are that crippled... then I would consider perhaps HTML injection via an <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">Ajax</a> templating service instead.</p>
-
-<p>Application/JSON!</p>

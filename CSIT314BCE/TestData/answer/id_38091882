@@ -1,6 +1,0 @@
-<p>You can use:</p>
-
-<pre><code>git reset HEAD@{1}
-</code></pre>
-
-<p>This command will delete your wrong commit without a Git log.</p>

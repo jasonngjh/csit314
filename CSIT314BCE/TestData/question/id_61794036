@@ -1,0 +1,14 @@
+<p>Make the function unique (one, two) that can count the number of unique words that exist in sentences1 and sentences2 at once. The function has a special ability to combine all the same words into one word</p>
+
+<pre><code>def unique (one, two):
+
+result= unique('I like food', 'I like cat')
+print(len(result))
+print(sorted(result))
+</code></pre>
+
+<p><strong>Ouput</strong></p>
+
+<pre><code>4
+['food', 'cat', 'likelike', 'II']
+</code></pre>

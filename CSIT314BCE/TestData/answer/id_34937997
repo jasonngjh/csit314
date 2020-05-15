@@ -1,4 +1,0 @@
-<p>I personally use <a href="https://en.wikipedia.org/wiki/Underscore.js" rel="noreferrer">Underscore.js</a> or <a href="https://lodash.com" rel="noreferrer">Lodash</a> for object and array manipulation:</p>
-
-<pre><code>myObject = _.omit(myObject, 'regex');
-</code></pre>

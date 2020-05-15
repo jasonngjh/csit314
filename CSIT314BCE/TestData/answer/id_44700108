@@ -1,8 +1,0 @@
-<p>Here is what I found in the <a href="https://firebase.google.com/docs/cloud-messaging/js/client#configure_the_browser_to_receive_messages" rel="noreferrer">Google Firebase documentation</a> that allows you to put comments in JSON:</p>
-
-<pre class="lang-js prettyprint-override"><code>{
-  "//": "Some browsers will use this to enable push notifications.",
-  "//": "It is the same for all projects, this is not your project's sender ID",
-  "gcm_sender_id": "1234567890"
-}
-</code></pre>

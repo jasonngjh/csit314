@@ -1,0 +1,71 @@
+<p>I want to creat a column <code>s['C']</code> using apply() with a Pandas DataFrame.</p>
+
+<p>My dataset is similiar to this:  </p>
+
+<p>[In]:</p>
+
+<pre><code>s=pd.DataFrame({'A':['hello', 'good', 'my', 'pandas','wrong'], 
+                'B':[['all', 'say', 'hello'],
+                     ['good', 'for', 'you'], 
+                     ['so','hard'], 
+                     ['pandas'],
+                     []]})
+</code></pre>
+
+<pre><code>[Out]: 
+    A       B
+0   hello   [all, say, hello]
+1   good    [good, for, you]
+2   my      [so, hard]
+3   pandas  [pandas]
+4   wrong   []
+</code></pre>
+
+<p>I need to creat a s['C'] column where the value of each row is a list with ones and zeros dependending if the word of column A is in the list of column B and the position of the element in the list of column B. My output should be like this: </p>
+
+<pre><code>[Out]: 
+    A       B                   C
+0   hello   [all, say, hello]   [0, 0, 1]
+1   good    [good, for, you]    [1, 0, 0]
+2   my      [so, hard]          [0, 0]
+3   pandas  [pandas]            [1]
+4   wrong   []                  [0]
+
+</code></pre>
+
+<p>I've been trying with a función and apply, but I still have not realized where is the error. </p>
+
+<pre><code>[In]:
+def func(valueA,listB):
+  new_list=[]
+  for i in listB:
+    if listB[i] == valueA:
+      new_list.append(1)
+    else:
+      new_list.append(0)
+  return new_list
+
+s['C']=s.apply( lambda x: func(x.loc[:,'A'], x.loc[:,'B']))
+</code></pre>
+
+<p>The error is: Too many indexers </p>
+
+<p>And I also tried with: </p>
+
+<pre><code>[In]:
+list=[]
+listC=[]
+for i in s['A']:
+  for j in s['B'][i]:
+     if s['A'][i] == s['B'][i][j]:
+        list.append(1)
+     else:
+        list.append(0)
+  listC.append(list)
+
+s['C']=listC
+</code></pre>
+
+<p>The error is: KeyError: 'hello'</p>
+
+<p>Any suggests? </p>

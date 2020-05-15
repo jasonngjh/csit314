@@ -1,0 +1,17 @@
+<p>The question is ill-defined, but Option B seems like the most correct answer.</p>
+
+<p>The result depends on how exactly <code>NULL</code> is defined, which <a href="https://en.cppreference.com/w/cpp/types/NULL" rel="noreferrer">depends on the compiler</a> (more precisely, on the standard library implementation). If it's defined as <code>nullptr</code>, the code will not compile. (I don't think any major implementation does that, but still.)</p>
+
+<p>Assuming <code>NULL</code> is not defined as <code>nullptr</code>, then it must be defined as an integer literal with value <code>0</code> (which is <code>0</code>, or <code>0L</code>, or something similar), which makes your code equivalent to <code>char fullName[30] = {0};</code>.</p>
+
+<p>This fills the array with zeroes, so Option B is the right answer.</p>
+
+<p>In general, when you initialize an array with a brace-enclosed list, <em>every</em> element is initialized with something. If you provide fewer initializers than the number of elements, the remaining elements are zeroed.</p>
+
+<p>Regarding the remaining options:</p>
+
+<ul>
+<li><p>Option C is unclear, because if the code compiles, then <code>NULL</code> is equivalent to <code>0</code>, so option C can be considered equivalent to Option B.</p></li>
+<li><p>Option A can be valid depending on how you interpret it. If it means than the remaining elements are uninitialized, then it's wrong. If it doesn't specify what happens to the remaining elements, then it's a valid answer.</p></li>
+<li><p>Option D is outright wrong, because arrays can't be "empty".</p></li>
+</ul>

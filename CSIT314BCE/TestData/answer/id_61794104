@@ -1,0 +1,26 @@
+<p>Do I need to write 10 separate queries to get data?</p>
+
+<blockquote>
+  <p>No, you can use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.skip?view=netcore-3.1" rel="nofollow noreferrer"><code>Skip(n)</code></a> to skip first n records and then get First record by FirstOrDefault()</p>
+</blockquote>
+
+<p>Like,</p>
+
+<pre><code>private Location GetLocation(int skipIndex)
+{
+    return clientContext.Lobbies
+             .Where(location =&gt; location.FkBranchId == locationRecord.FkBranchId
+                                &amp;&amp; !location.FkAppointmentId.HasValue 
+                                 &amp;&amp; location.Status == 1 &amp;&amp; location.IsActive)     //Filter using where clause
+             .OrderBy(location =&gt; location.AddedTime)  //Order by AddedTime
+             .Skip(skipIndex)   //Skip first n records
+             .FirstOrDefault();   //Take the record at given position.
+}
+</code></pre>
+
+<p>You need to pass <code>skipIndex = 2</code> as a parameter to get third Location.</p>
+
+<pre><code>var secondLocation = GetLocation(1); 
+var thirdLocation = GetLocation(2); 
+...
+</code></pre>

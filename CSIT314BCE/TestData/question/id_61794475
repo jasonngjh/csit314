@@ -1,0 +1,97 @@
+<p>I'm developing a system that will push notification to mobile devices, I'm building an asp.net web api application as a server which will register mobile devices to aws sns as endpoints of a platform application with their token from Firebase massaging service, I've already successfully published messages to mobile devices using aws sns console,But I can't find any documentation that would guide me to implement it with asp.net server.I've already done the register and create endpoint parts from aws console document like this:</p>
+
+<pre><code>    [HttpPost]
+    public void RegisterWithSNS(TokenAuth tokenAuth)
+    {
+        String endpointArn = EndpointArn;
+        String applicationArn = "arn:aws:sns:ap-southeast-1:my arn from platform application console";
+
+        bool updateNeeded = false;
+        bool createNeeded = (null == endpointArn);
+
+        if (createNeeded)
+        {
+            // No platform endpoint ARN is stored; need to call createEndpoint.
+            EndpointArn = CreateEndpoint(tokenAuth.token, applicationArn);
+            createNeeded = false;
+        }
+
+        Console.WriteLine("Retrieving platform endpoint data...");
+        // Look up the platform endpoint and make sure the data in it is current, even if
+        // it was just created.
+        try
+        {
+            GetEndpointAttributesRequest geaReq = new GetEndpointAttributesRequest();
+            geaReq.EndpointArn = EndpointArn;
+            GetEndpointAttributesResponse geaRes = client.GetEndpointAttributes(geaReq);
+            updateNeeded = !(geaRes.Attributes["Token"] == tokenAuth.token) || !(geaRes.Attributes["Enabled"] == "true");
+        }
+        catch (NotFoundException)
+        {
+            // We had a stored ARN, but the platform endpoint associated with it
+            // disappeared. Recreate it.
+            createNeeded = true;
+        }
+
+        if (createNeeded)
+        {
+            CreateEndpoint(tokenAuth.token, applicationArn);
+        }
+
+        Console.WriteLine("updateNeeded = " + updateNeeded);
+
+        if (updateNeeded)
+        {
+            // The platform endpoint is out of sync with the current data;
+            // update the token and enable it.
+            Console.WriteLine("Updating platform endpoint " + endpointArn);
+            Dictionary&lt;String, String&gt; attribs = new Dictionary&lt;String, String&gt;();
+            attribs["Token"] = tokenAuth.token;
+            attribs["Enabled"] = "true";
+            SetEndpointAttributesRequest saeReq = new SetEndpointAttributesRequest();
+            saeReq.EndpointArn = EndpointArn;
+            saeReq.Attributes = attribs;
+            client.SetEndpointAttributes(saeReq);
+        }
+    }
+
+    private String CreateEndpoint(String token, String applicationArn)
+    {
+        String endpointArn = null;
+
+        try
+        {
+            Console.WriteLine("Creating platform endpoint with token " + token);
+            CreatePlatformEndpointRequest cpeReq = new CreatePlatformEndpointRequest();
+            cpeReq.PlatformApplicationArn = applicationArn;
+            cpeReq.Token = token;
+            CreatePlatformEndpointResponse cpeRes = client.CreatePlatformEndpoint(cpeReq);
+            endpointArn = cpeRes.EndpointArn;
+        }
+        catch (InvalidParameterException ipe)
+        {
+            String message = ipe.Message;
+            Console.WriteLine("Exception message: " + message);
+            Regex rgx = new Regex(".*Endpoint (arn:aws:sns[^ ]+) already exists with the same [Tt]oken.*",
+                RegexOptions.IgnoreCase);
+            MatchCollection m = rgx.Matches(message);
+            if (m.Count &gt; 0 &amp;&amp; m[0].Groups.Count &gt; 1)
+            {
+                // The platform endpoint already exists for this token, but with
+                // additional custom data that createEndpoint doesn't want to overwrite.
+                // Just use the existing platform endpoint.
+                endpointArn = m[0].Groups[1].Value;
+            }
+            else
+            {
+                // Rethrow the exception, the input is actually bad.
+                throw ipe;
+            }
+        }
+        EndpointArn = endpointArn;
+        return endpointArn;
+    }        
+</code></pre>
+
+<p>And on mobile device(android) I also done implement the "get token from firebase" and call RegisterWithSNS(TokenAuth tokenAuth) on my server api, but now I don't know how to publish a message to a specify endpoint by using endpoint token or arn.
+Could anyone please show me how could it be done?</p>

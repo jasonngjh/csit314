@@ -1,0 +1,12 @@
+<p>There are ways to do it without using the Qt resource system as other answers have said. However there is also a way to use the Qt resource system with CMake and by extension CLion. </p>
+
+<p>CMake has an <a href="https://cmake.org/cmake/help/latest/prop_tgt/AUTORCC.html" rel="nofollow noreferrer">option</a> called <code>AUTORCC</code>, which you can toggle on just like <code>AUTOMOC</code> and it will process your .qrc file properly. This is actually what QtCreator uses if you choose the CMake option.</p>
+
+<p>All you have to do is turn on <code>AUTORCC</code> and add your qrc file to your sources, for example:</p>
+
+<pre><code>set(AUTORCC ON)
+...
+add_target(my_target my_qrc_file.qrc ...)
+</code></pre>
+
+<p>You can then access things in the resource system normally (e.g path for your image would be <code>:/my_image</code>).</p>

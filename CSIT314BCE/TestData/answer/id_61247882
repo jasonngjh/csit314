@@ -1,0 +1,10 @@
+<p>One way is with <code>PARSENAME</code>. The below example ignores the days component of the Timespan string, returning only the time portion.</p>
+
+<pre><code>-- build string in HH:mm:ss.fffffff format and parse as time(7)
+SELECT
+    PARSE(
+          PARSENAME('3.00:00:00.0000000',2) --00:00:00
+        + '.'
+        + PARSENAME('3.00:00:00.0000000',1) --0000000
+    AS time);
+</code></pre>

@@ -1,9 +1,0 @@
-<pre><code>a if condition else b
-</code></pre>
-
-<p>Just memorize this pyramid if you have trouble remembering:</p>
-
-<pre><code>     condition
-  if           else
-a                   b 
-</code></pre>

@@ -1,0 +1,17 @@
+<p>While writing unit tests for a function returning <code>boolean</code> that takes two <code>String</code>s, and I needed to test every character of the alphabet (<code>'a'</code>-<code>'z'</code>) in sequence as one of the parameters, one-by-one, so I wrote this to do that:</p>
+
+<pre><code>for(char c = 'a'; c &lt;= 'z'; c++)
+{
+    assertTrue(MyClass.MyFunction(testSubject, new String(c));
+} 
+</code></pre>
+
+<p>I would have thought this was permissible, but it wasn't, so I just did it like this instead:</p>
+
+<pre><code>for(char c = 'a'; c &lt;= 'z'; c++)
+{
+    assertTrue(MyClass.MyFunction(testSubject, ((Character) c).toString());
+} 
+</code></pre>
+
+<p>Is this a reliable method to convert a <code>char</code> to a <code>String</code> in Java? Is it the preferred way? I don't know a whole lot about Java so would like some clarification on this.</p>

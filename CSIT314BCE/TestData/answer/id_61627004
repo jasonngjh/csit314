@@ -1,0 +1,10 @@
+<p>Maybe because you can't. That's the reason default parameters are designed to guard against <code>undefined</code> values.</p>
+
+<p>As per Mozilla <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters" rel="noreferrer">documentation</a></p>
+
+<blockquote>
+  <p>Default function parameters allow named parameters to be initialized
+  with default values if no value or undefined is passed</p>
+</blockquote>
+
+<p>See above. It's clearly written: if <code>undefined</code> is passed, <code>default</code> parameters are used.</p>

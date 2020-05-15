@@ -1,0 +1,23 @@
+<p>I need to write function <code>vec_to_para</code>,when I run   <code>vec_to_para(c('vs','gear'),mtcars)</code>,should output result of <code>with(mtcars,table(vs,gear))</code>.  </p>
+
+<p>I asked a <a href="https://stackoverflow.com/questions/61783029/how-to-convert-ca-b-to-cbinda-b-in-r-formula">similar quesiton</a> yesterday,then I tried <code>paste()</code></p>
+
+<pre><code>#expected result
+&gt; with(mtcars,table(vs,gear))
+   gear
+vs   3  4  5
+  0 12  2  4
+  1  3 10  1
+
+#my function,where is the problem?
+&gt;vec_to_para&lt;-function(vec,df){
+    with(df,tables(paste(vec,collapse=',')))
+}
+
+#run to test function
+&gt;vec_to_para(c('vs','gear'),mtcars)
+vs,gear 
+      1 
+</code></pre>
+
+<p>Where is the problem of <code>vec_to_para</code> function?</p>

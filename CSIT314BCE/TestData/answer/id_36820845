@@ -1,8 +1,0 @@
-<p><code>if __name__ == "__main__":</code> is basically the top-level script environment, and it specifies the interpreter that ('I have the highest priority to be executed first').</p>
-
-<p><code>'__main__'</code> is the name of the scope in which top-level code executes. A module’s <code>__name__</code> is set equal to <code>'__main__'</code> when read from standard input, a script, or from an interactive prompt.</p>
-
-<pre><code>if __name__ == "__main__":
-    # Execute only if run as a script
-    main()
-</code></pre>

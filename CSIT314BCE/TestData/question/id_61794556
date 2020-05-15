@@ -1,0 +1,355 @@
+<p>When the game is over, it pops up with button to play again and if you click that button it will redirect you to play button.</p>
+
+<p>If you click play the game should start but the issue when the game is over and it pop up with first box that has play again button and I click it, the game will redirect me to play button and before i click play button the game will start even i didn't click play button. </p>
+
+<p>I called function eggStop() in PLAY_Again button to stop the game but the game didn't stop. and I call the same function at gameOver() function and it worked only in gameOver().</p>
+
+<p>if there is a recommendation about writing code to enhance it, it will be appreciated.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var egg1 = document.getElementById("egg1");
+var egg2 = document.getElementById("egg2");
+var egg3 = document.getElementById("egg3");
+var pos1 = 0;
+var pos2 = 0;
+var pos3 = 0;
+var basket = document.getElementById("basket");
+var Y_Pos = 0;
+var X_Pos = 0;
+var Score = 0;
+var Life = 10;
+var SCORE1 = document.getElementById("SCORE");
+var LIFE1 = document.getElementById("LIFE");
+var speed1 = 0;
+var speed2 = 0;
+var speed3 = 0;
+var PLAY_Div = document.getElementById("PLAY-Div");
+var PLAY_Again = document.getElementById("PLAY-again");
+var caption_Score = document.getElementById("caption-score");
+var Play_Btn = document.getElementById("PLAY-btn");
+var Home1 = document.getElementById("Home");
+var basketScore = document.getElementById("basket-score");
+var basket_div = document.getElementById("basket-div");
+var L = ""
+var S = ""
+
+
+
+document.addEventListener("mousemove", function(e) {
+  basket_div.style.left = e.clientX;
+  Y_Pos = e.clientY;
+  X_Pos = e.clientX;
+  console.log("X_Pos" + X_Pos);
+  console.log("Y_Pos" + Y_Pos);
+
+})
+
+
+function eggMove() {
+  pos1 = pos1 + speed1 + 30;
+  egg1.style.top = pos1;
+  console.log("Pos1" + pos1);
+  pos2 = pos2 + speed2 + 30
+  egg2.style.top = pos2;
+  pos3 = pos3 + speed3 + 30;
+  egg3.style.top = pos3;
+  floorCollision();
+}
+
+function eggStop() {
+  pos1 = 30;
+  egg1.style.top = pos1;
+  pos2 = 30
+  egg2.style.top = pos2;
+  pos3 = 30;
+  egg3.style.top = pos3;
+}
+
+
+PLAY_Again.addEventListener("click", function() {
+  eggStop(); /* it doesn't work , it can't stop the game/eggs*/
+  PLAY_Div.style.display = "none";
+  Home1.style.display = "block";
+
+  Life = 10;
+  speed1 = 0;
+  speed2 = 0;
+  speed3 = 0;
+  Score = 0;
+})
+
+Play_Btn.addEventListener("click", function() {
+
+  setInterval(eggMove, 500);
+  Home1.style.display = "none";
+  Life = 10;
+  speed1 = 0;
+  speed2 = 0;
+  speed3 = 0;
+  Score = 0;
+})
+
+
+function gameOver(Life) {
+  if (Life &lt;= 0) {
+    eggStop();
+    PLAY_Div.style.display = "block";
+    caption_Score.innerHTML = Score;
+    Life = 0;
+    LIFE1.innerHTML = L + Life;
+
+  }
+}
+
+
+function floorCollision() {
+  gameOver(Life);
+
+  if (pos1 &gt;= 470) {
+    if (120 &lt;= X_Pos &amp;&amp; X_Pos &lt;= 275) {
+      Score++;
+      speed1 = speed1 + 10;
+      pos1 = 30;
+      egg1.style.top = pos1;
+      egg1.src = "imagess/Happy_Egg.svg"
+      console.log(Score + "Score1");
+      basketScore.innerHTML = Score;
+    } else {
+      egg1.src = "imagess/Broken_Egg.svg";
+      setTimeout(function() {
+        pos1 = 45;
+        egg1.src = "imagess/Happy_Egg.svg"
+        egg1.style.top = pos1;
+      }, 500)
+      Life = Life - 0.5;
+    }
+  }
+
+  if (pos2 &gt;= 470) {
+    if (530 &lt;= X_Pos &amp;&amp; X_Pos &lt;= 690) {
+      Score++;
+      speed2 = speed2 + 10;
+      pos2 = 30;
+      egg2.style.top = pos2;
+      egg2.src = "imagess/Happy_Egg.svg"
+      console.log(Score + "Score2");
+      basketScore.innerHTML = Score;
+    } else {
+      egg2.src = "imagess/Broken_Egg.svg";
+      setTimeout(function() {
+        pos2 = 45;
+        egg2.src = "imagess/Happy_Egg.svg"
+        egg2.style.top = pos2;
+      }, 500)
+      Life = Life - 0.5;
+    }
+
+  }
+  if (pos3 &gt;= 470) {
+    if (940 &lt;= X_Pos &amp;&amp; X_Pos &lt;= 1100) {
+      Score++;
+      speed3 = speed3 + 10;
+      pos3 = 30;
+      egg3.style.top = pos3;
+      egg3.src = "imagess/Happy_Egg.svg"
+      console.log(Score + "Score3");
+      basketScore.innerHTML = Score;
+    } else {
+      egg3.src = "imagess/Broken_Egg.svg";
+      setTimeout(function() {
+        pos3 = 45;
+        egg3.src = "imagess/Happy_Egg.svg"
+        egg3.style.top = pos3;
+      }, 500)
+      Life = Life - 0.5;
+    }
+  }
+  S = "SCORE "
+  SCORE1.innerHTML = S + Score;
+  L = "LIFE "
+  LIFE1.innerHTML = L + Life;
+
+}</code></pre>
+<pre class="snippet-code-css lang-css prettyprint-override"><code>body {
+  background-image: url(../imagess/Background_Night.svg);
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+}
+
+#chicken1 {
+  /* background-color: greenyellow; */
+  width: 10%;
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  z-index: 1;
+  animation: henMove 2s infinite;
+}
+
+#chicken2 {
+  /* background-color: greenyellow; */
+  width: 10%;
+  position: absolute;
+  top: 10%;
+  left: 45%;
+  z-index: 2;
+  animation: henMove 2s infinite;
+}
+
+#chicken3 {
+  /* background-color: greenyellow; */
+  width: 10%;
+  position: absolute;
+  top: 10%;
+  left: 75%;
+  z-index: 3;
+  animation: henMove 2s infinite;
+}
+
+#hen1,
+#hen2,
+#hen3 {
+  width: 85%;
+}
+
+#egg1,
+#egg2,
+#egg3 {
+  position: absolute;
+  left: 35px;
+  top: 45px;
+  z-index: -1;
+  width: 30%;
+}
+
+@keyframes henMove {
+  0% {
+    width: 150px;
+  }
+  50% {
+    width: 160px;
+  }
+  100% {
+    width: 150px;
+  }
+}
+
+#PLAY-Div {
+  width: 40%;
+  /* position: absolute; */
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  height: 300px;
+  top: 30%;
+  left: 30%;
+  z-index: 100;
+  border-radius: 20%;
+  display: none;
+}
+
+#PLAY-Div h2 {
+  font-size: 80px;
+}
+
+#PLAY-Div button {
+  font-size: 30px;
+}
+
+#Home {
+  width: 40%;
+  /* position: absolute; */
+  background-color: rgba(100, 100, 0, 0.5);
+  position: absolute;
+  height: 300px;
+  top: 30%;
+  left: 30%;
+  z-index: 102;
+  border-radius: 20%;
+  display: block;
+}
+
+#Home h2 {
+  font-size: 80px;
+}
+
+#Home button {
+  font-size: 30px;
+}
+
+#basket-div {
+  position: relative;
+  width: 10%;
+  height: 10%;
+  top: 550px;
+  /* background-color: tomato; */
+}
+
+#basket {
+  width: 100%;
+  position: absolute;
+  bottom: 50px;
+}
+
+#basket-div h3 {
+  width: 100%;
+  position: absolute;
+  color: white;
+  left: 45%;
+  bottom: 75%;
+  z-index: 9999;
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;!-- Home --&gt;
+&lt;div id="Home" class="text-center"&gt;
+  &lt;h2&gt;HAPPY EGGS&lt;/h2&gt;
+  &lt;button id="PLAY-btn" class="btn btn-danger w-25 my-5"&gt;PLAY &lt;/button&gt;
+&lt;/div&gt;
+
+
+
+&lt;!-- Play-Again --&gt;
+&lt;div id="PLAY-Div" class="text-center"&gt;
+  &lt;h2&gt;HAPPY EGGS&lt;/h2&gt;
+  &lt;h2 id="caption-score"&gt;&lt;/h2&gt;
+  &lt;button id="PLAY-again" class="btn btn-danger w-25 my-5"&gt;PLAY AGAIN&lt;/button&gt;
+&lt;/div&gt;
+
+
+&lt;!-- Score And Life --&gt;
+&lt;div id="dashboard" class="text-white d-flex justify-content-between mx-5"&gt;
+  &lt;h2 id="SCORE"&gt;SCORE 0&lt;/h2&gt;
+  &lt;h2 id="LIFE"&gt;LIFE 10&lt;/h2&gt;
+&lt;/div&gt;
+
+&lt;!-- Chicken and Egg --&gt;
+&lt;!-- &lt;div class="d-flex justify-content-center align-items-center"&gt;   --&gt;
+&lt;div id="chicken1"&gt;
+  &lt;img id="hen1" src="imagess/Happy_hen.svg"&gt;
+  &lt;img id="egg1" src="imagess/Happy_Egg.svg"&gt;
+&lt;/div&gt;
+
+&lt;div id="chicken2"&gt;
+  &lt;img id="hen2" src="imagess/Happy_hen.svg"&gt;
+  &lt;img id="egg2" src="imagess/Happy_Egg.svg"&gt;
+
+&lt;/div&gt;
+
+&lt;div id="chicken3"&gt;
+  &lt;img id="hen3" src="imagess/Happy_hen.svg"&gt;
+  &lt;img id="egg3" src="imagess/Happy_Egg.svg"&gt;
+
+&lt;/div&gt;
+&lt;!-- &lt;/div&gt; --&gt;
+&lt;div id="basket-div"&gt;
+  &lt;h3 id="basket-score"&gt;0&lt;/h3&gt;
+  &lt;img id="basket" src="imagess/Basket.svg"&gt;
+&lt;/div&gt;
+
+&lt;script src="js/jquery-3.4.1.min.js"&gt;&lt;/script&gt;
+&lt;script src="js/popper.min.js"&gt;&lt;/script&gt;
+&lt;script src="js/bootstrap.js"&gt;&lt;/script&gt;
+&lt;script src="js/game_new.js"&gt;&lt;/script&gt;</code></pre>
+</div>
+</div>
+</p>

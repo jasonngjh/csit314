@@ -1,0 +1,22 @@
+<p>You should call the follow method on the onCreate of your Android app to avoid the crash.</p>
+
+<pre><code>private fun clearCorruptedGMapsPreference() {
+        try {
+            val sharedPreferences = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE)
+            if (!sharedPreferences.contains("fixed")) {
+                val corruptedZoomTables = File(filesDir, "ZoomTables.data")
+                val corruptedSavedClientParameters = File(filesDir, "SavedClientParameters.data.cs")
+                val corruptedClientParametersData = File(filesDir, "DATA_ServerControlledParametersManager.data.${packageName}")
+                val corruptedClientParametersDataV1 = File(filesDir, "DATA_ServerControlledParametersManager.data.v1.${packageName}")
+                corruptedZoomTables.delete()
+                corruptedSavedClientParameters.delete()
+                corruptedClientParametersData.delete()
+                corruptedClientParametersDataV1.delete()
+                sharedPreferences.edit().putBoolean("fixed", true).apply()
+            }
+        } catch (exception: Exception) {
+            LogUtil.e(this@CourierApplication::class.java.name, "An error has happened. Error: ".plus(exception.cause?.message
+                    ?: ""))
+        }
+    }
+</code></pre>

@@ -1,0 +1,18 @@
+<p>How can I concatenate two React objects(React.createElement()) without JSX ?</p>
+
+<p><strong><em>Goal</em></strong></p>
+
+<p>My goal is to render message, the message should contain the user full name in bold. </p>
+
+<p><strong><em>Problem</em></strong></p>
+
+<p>The problem is that when I concatenate the react objects I am getting the message content and instead of the full name there is <code>[object Object]</code> in the string.</p>
+
+<p><strong><em>Code</em></strong></p>
+
+<pre><code>var firstName = React.createElement("b", {}, this.state.User["FirstName"])
+var lastName = React.createElement("b", {}, this.state.User["LastName"])
+var message = "Hello " + firstName + " " +  lastName
+message += " You can edit your profile in the Users Table"
+return React.createElement("p", {}, message)
+</code></pre>

@@ -1,0 +1,23 @@
+<p>I was recently faced with a line of code and four options:</p>
+
+<blockquote>
+<pre><code>char fullName[30] = {NULL};
+</code></pre>
+  
+  <ol>
+  <li><p>A) First element is assigned a NULL character.</p></li>
+  <li><p>B) Every element of the array is assigned 0 ( Zeroes )</p></li>
+  <li><p>C) Every element of the array is assigned NULL</p></li>
+  <li><p>D) The array is empty.</p></li>
+  </ol>
+</blockquote>
+
+<p>The answer we selected was option C, as, while the array is only initialized with a single <code>NULL</code>, C++ populates the rest of the array with <code>NULL</code>.</p>
+
+<p>However, our professor disagreed, stating that the answer is A, he said:</p>
+
+<blockquote>
+  <p>So the very first element is <code>NULL</code>, and when you display it, it's displaying the first element, which is <code>NULL</code>.</p>
+</blockquote>
+
+<p>The quote shows the question in its entirety; there was no other information provided. I'm curious to which one is correct, and if someone could explain why said answer would be correct.</p>

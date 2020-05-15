@@ -1,6 +1,0 @@
-<p>I believe there are two possible causes of conflict, which must be solved separately, and as far as I can tell none of the above answers deals with both:</p>
-
-<ul>
-<li><p>Local files that are untracked need to be deleted, either manually (safer) or as suggested in other answers, by <code>git clean -f -d</code></p></li>
-<li><p>Local commits that are not on the remote branch need to be deleted as well. IMO the easiest way to achieve this is with: <code>git reset --hard origin/master</code> (replace 'master' by whatever branch you are working on, and run a <code>git fetch origin</code> first)</p></li>
-</ul>

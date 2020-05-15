@@ -1,0 +1,1 @@
+<p>I have a ceph object bucket and an AWS bucket. I want to copy data from the AWS bucket to the ceph bucket without copying data to any intermediate system local system. Is there a way to do that, since there will be requirement of separate endpoint, separate keys.</p>

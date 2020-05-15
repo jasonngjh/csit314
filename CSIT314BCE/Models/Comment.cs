@@ -42,6 +42,17 @@ namespace CSIT314BCE.Models
                 context.Comments.Add(comment);
                 context.SaveChanges();
 
+                /*using (var db = new ApplicationDbContext())
+                {
+                    Post post = context.Posts.Find(model.PostId);
+                    if (post != null)
+                    {
+                        post.CommentCount += 1;
+                        db.SaveChanges();
+                    }
+                        
+                }*/
+
                 return model.PostId;
             }   
             return 0;

@@ -1,0 +1,11 @@
+<p>Why doesn't this code print same number? : </p>
+
+<pre><code>long long a, b;
+a = 2147483647 + 1;
+b = 2147483648;
+printf("%lld\n", a);
+printf("%lld\n", b);
+</code></pre>
+
+<p>I know that int variable's maximum number is 2147483647 because int variable is 4 byte.
+But as I know, long long variable is 8 byte, but why does that code act like that?</p>

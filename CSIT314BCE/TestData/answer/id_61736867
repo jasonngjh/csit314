@@ -1,0 +1,11 @@
+<p>Here is the explanation how to Set global Headers:</p>
+
+<ul>
+<li><a href="https://springdoc.org/faq.html#how-can-i-set-a-global-header" rel="nofollow noreferrer">https://springdoc.org/faq.html#how-can-i-set-a-global-header</a></li>
+</ul>
+
+<p>Sample code is here:</p>
+
+<ul>
+<li><a href="https://github.com/springdoc/springdoc-openapi/tree/master/springdoc-openapi-webmvc-core/src/test/java/test/org/springdoc/api/app24" rel="nofollow noreferrer">https://github.com/springdoc/springdoc-openapi/tree/master/springdoc-openapi-webmvc-core/src/test/java/test/org/springdoc/api/app24</a></li>
+</ul>

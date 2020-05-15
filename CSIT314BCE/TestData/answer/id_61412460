@@ -1,0 +1,11 @@
+<p>MacOS provides an undocumented rand() function in stdlib. If you leave it unseeded, then the first values it outputs are 16807, 282475249, 1622650073, 984943658 and 1144108930. A <a href="https://oeis.org/A096550" rel="noreferrer">quick search</a> will show that this sequence corresponds to a very basic LCG random number generator that iterates the following formula:</p>
+
+<blockquote>
+  <p><em>x</em><sub><em>n</em>+1</sub> = 7<sup>5</sup> · <em>x</em><sub><em>n</em></sub> (mod 2<sup>31</sup> &minus; 1)</p>
+</blockquote>
+
+<p>Since the state of this RNG is described entirely by the value of a single 32-bit integer, its period is not very long. To be precise, it repeats itself every 2<sup>31</sup> &minus; 2 iterations, outputting every value from 1 to 2<sup>31</sup> &minus; 2.</p>
+
+<p>I don't think there's a <em>standard</em> implementation of rand() for all versions of Linux, but there is a <a href="https://www.mathstat.dal.ca/~selinger/random/" rel="noreferrer">glibc rand() function</a> that is often used. Instead of a single 32-bit state variable, this uses a pool of over 1000 bits, which to all intents and purposes will never produce a fully repeating sequence. Again, you can probably find out what version you have by printing the first few outputs from this RNG without seeding it first. (The glibc rand() function produces the numbers 1804289383, 846930886, 1681692777, 1714636915 and 1957747793.)</p>
+
+<p>So the reason you're getting more collisions in Linux (and hardly any in MacOS) is that the Linux version of rand() is basically more random.</p>

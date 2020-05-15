@@ -1,6 +1,0 @@
-<p>You can use <a href="https://www.w3.org/TR/json-ld/" rel="nofollow">JSON-LD</a> and the <a href="https://schema.org/comment" rel="nofollow">schema.org comment</a> type to properly write comments: </p>
-
-<pre><code>{
-    "https://schema.org/comment": "this is a comment"
-}
-</code></pre>

@@ -1,0 +1,164 @@
+<p>Here is a fun example of drilling down infinitely and changing your data for the next detail view programmatically </p>
+
+<pre><code>import SwiftUI
+
+struct ContentView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+
+    var body: some View {
+        NavigationView {
+            DynamicView(viewModel: ViewModel(message: "Get Information", type: .information))
+        }
+    }
+}
+
+struct DynamicView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+
+    let viewModel: ViewModel
+
+    var body: some View {
+        VStack {
+            if viewModel.type == .information {
+                InformationView(viewModel: viewModel)
+            }
+            if viewModel.type == .person {
+                PersonView(viewModel: viewModel)
+            }
+            if viewModel.type == .productDisplay {
+                ProductView(viewModel: viewModel)
+            }
+            if viewModel.type == .chart {
+                ChartView(viewModel: viewModel)
+            }
+            // If you want the DynamicView to be able to be other views, add to the type enum and then add a new if statement!
+            // Your Dynamic view can become "any view" based on the viewModel
+            // If you want to be able to navigate to a new chart UI component, make the chart view
+        }
+    }
+}
+
+struct InformationView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    let viewModel: ViewModel
+
+    // Customize your  view based on more properties you add to the viewModel
+    var body: some View {
+        VStack {
+            VStack {
+                Text(viewModel.message)
+                .foregroundColor(.white)
+            }
+            .frame(width: 300, height: 300)
+            .background(Color.blue)
+
+
+            NavigationLink(destination: navigationManager.destination(forModel: viewModel)) {
+                Text("Navigate")
+            }
+        }
+    }
+}
+
+struct PersonView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    let viewModel: ViewModel
+
+    // Customize your  view based on more properties you add to the viewModel
+    var body: some View {
+        VStack {
+            VStack {
+                Text(viewModel.message)
+                .foregroundColor(.white)
+            }
+            .frame(width: 300, height: 300)
+            .background(Color.red)
+            NavigationLink(destination: navigationManager.destination(forModel: viewModel)) {
+                Text("Navigate")
+            }
+        }
+    }
+}
+
+struct ProductView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    let viewModel: ViewModel
+
+    // Customize your  view based on more properties you add to the viewModel
+    var body: some View {
+        VStack {
+            VStack {
+                Text(viewModel.message)
+                    .foregroundColor(.white)
+            }
+            .frame(width: 300, height: 300)
+            .background(Color.green)
+            NavigationLink(destination: navigationManager.destination(forModel: viewModel)) {
+                Text("Navigate")
+            }
+        }
+    }
+}
+
+struct ChartView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    let viewModel: ViewModel
+
+    var body: some View {
+        VStack {
+            VStack {
+                Text(viewModel.message)
+                    .foregroundColor(.white)
+            }
+            .frame(width: 300, height: 300)
+            .background(Color.green)
+            NavigationLink(destination: navigationManager.destination(forModel: viewModel)) {
+                Text("Navigate")
+            }
+        }
+    }
+}
+
+struct ViewModel {
+    let message: String
+    let type: DetailScreenType
+}
+
+enum DetailScreenType: String {
+    case information
+    case productDisplay
+    case person
+    case chart
+}
+
+class NavigationManager: ObservableObject {
+    func destination(forModel viewModel: ViewModel) -&gt; DynamicView {
+        DynamicView(viewModel: generateViewModel(context: viewModel))
+    }
+
+    // This is where you generate your next viewModel dynamically.
+    // replace the switch statement logic inside with whatever logic you need.
+    // DYNAMICALLY MAKE THE VIEWMODEL AND YOU DYNAMICALLY MAKE THE VIEW
+    // You could even lead to a view with no navigation link in it, so that would be a dead end, if you wanted it.
+    // In my case my "context" is the previous viewMode, by you could make it something else.
+    func generateViewModel(context: ViewModel) -&gt; ViewModel {
+        switch context.type {
+        case .information:
+            return ViewModel(message: "Serial Number 123", type: .productDisplay)
+        case .productDisplay:
+            return ViewModel(message: "Susan", type: .person)
+        case .person:
+            return ViewModel(message: "Get Information", type: .chart)
+        case .chart:
+            return ViewModel(message: "Chart goes here. If you don't want the navigation link on this page, you can remove it! Or do whatever you want! It's all dynamic. The point is, the DynamicView can be as dynamic as your model makes it.", type: .information)
+        }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+        .environmentObject(NavigationManager())
+    }
+}
+</code></pre>

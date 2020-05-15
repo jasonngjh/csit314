@@ -1,3 +1,0 @@
-<p>If the JSON is with padding then it will be <code>application/jsonp</code>. If the JSON is without padding then it will be <code>application/json</code>.</p>
-
-<p>To deal with both, it is a good practice to use: 'application/javascript' without bothering whether it is with padding or without padding.</p>

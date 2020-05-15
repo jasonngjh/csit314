@@ -1,0 +1,11 @@
+<p>Change in package.json :</p>
+
+<pre><code>"moment": "2.25.1",
+</code></pre>
+
+<p>to </p>
+
+<pre><code>"moment": "2.24.0",
+</code></pre>
+
+<p>then run on terminal: <strong>npm install</strong></p>

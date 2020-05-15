@@ -1,0 +1,57 @@
+<p>I was using <code>LongStream</code>'s <code>rangeClosed</code> to test the performance of the sum of the numbers. When I tested the performance through JMH, the result was as below.</p>
+
+<pre><code>@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@Fork(value = 1, jvmArgs = {"-Xms4G", "-Xmx4G"})
+@State(Scope.Benchmark)
+@Warmup(iterations = 10, time = 10)
+@Measurement(iterations = 10, time = 10)
+public class ParallelStreamBenchmark {
+  private static final long N = 10000000L;
+
+  @Benchmark
+  public long sequentialSum() {
+    return Stream.iterate(1L, i -&gt; i + 1).limit(N).reduce(0L, Long::sum);
+  }
+
+  @Benchmark
+  public long parallelSum() {
+    return Stream.iterate(1L, i -&gt; i + 1).limit(N).parallel().reduce(0L, Long::sum);
+  }
+
+  @Benchmark
+  public long rangedReduceSum() {
+    return LongStream.rangeClosed(1, N).reduce(0, Long::sum);
+  }
+
+  @Benchmark
+  public long rangedSum() {
+    return LongStream.rangeClosed(1, N).sum();
+  }
+
+  @Benchmark
+  public long parallelRangedReduceSum() {
+    return LongStream.rangeClosed(1, N).parallel().reduce(0L, Long::sum);
+  }
+
+  @Benchmark
+  public long parallelRangedSum() {
+    return LongStream.rangeClosed(1, N).parallel().sum();
+  }
+
+  @TearDown(Level.Invocation)
+  public void tearDown() {
+    System.gc();
+  }
+</code></pre>
+
+<pre class="lang-none prettyprint-override"><code>Benchmark                                        Mode  Cnt   Score   Error  Units
+ParallelStreamBenchmark.parallelRangedReduceSum  avgt   10   7.895 ± 0.450  ms/op
+ParallelStreamBenchmark.parallelRangedSum        avgt   10   1.124 ± 0.165  ms/op
+ParallelStreamBenchmark.rangedReduceSum          avgt   10   6.832 ± 0.165  ms/op
+ParallelStreamBenchmark.rangedSum                avgt   10  21.564 ± 0.831  ms/op
+</code></pre>
+
+<p>The difference between <code>rangedReduceSum</code> and <code>rangedSum</code> is that only the internal function sum () is used. Why is there so much performance difference?</p>
+
+<p>After verifying that the <code>sum()</code> function eventually uses <code>reduce(0, Long::sum)</code>, isn't it the same as using <code>reduce(0, Long::sum)</code> in the <code>rangedReduceSum</code> method?</p>

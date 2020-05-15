@@ -1,0 +1,32 @@
+<p>@Matt's answer worked for me as well for <strong>ng serve</strong>, but needed additional steps.
+First do these steps "Quoting the steps from his answer":</p>
+
+<ol>
+<li>First check <code>ng --version</code>. Go to next step if you get:</li>
+</ol>
+
+<pre><code>Angular CLI: 9.1.4
+Node: 12.16.3
+OS: win32 x64
+
+Angular: 9.1.5
+... animations, cli, common, compiler, compiler-cli, core, forms
+... language-service, platform-browser, platform-browser-dynamic
+... router
+Ivy Workspace: Yes
+</code></pre>
+
+<ol start="2">
+<li>Force reinstall the angular packages with 9.1.4 as the version using:</li>
+</ol>
+
+<pre><code>npm install @angular/core@9.1.4 @angular/animations@9.1.4 @angular/common@9.1.4 @angular/forms@9.1.4 @angular/platform-browser@9.1.4 @angular/router@9.1.4 @angular/platform-browser-dynamic@9.1.4 @angular/compiler@9.1.4 @angular/compiler-cli@9.1.4 @angular/language-service@9.1.4
+</code></pre>
+
+<p>Couple of more steps for more <code>ng serve</code> to finally work.</p>
+
+<ol>
+<li>Next error I got was about tslib: <code>An unhandled exception occurred: Cannot find module 'tslib'</code>
+For this I installed the tslib package manually using npm.</li>
+<li>Next error I got was <code>You seem to not be depending on "@angular/core" and/or "rxjs". This is an error.</code>. For this I referred <a href="https://stackoverflow.com/questions/49537782/you-seem-to-not-be-depending-on-angular-core">&quot;You seem to not be depending on &quot;@angular/core&quot;.&quot;</a> and voila! ng serve worked!</li>
+</ol>

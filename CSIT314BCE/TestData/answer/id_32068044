@@ -1,6 +1,0 @@
-<pre><code>if($('#id_element').is(":visible")){
-   alert('shown');
-}else{
-   alert('hidden');
-}
-</code></pre>

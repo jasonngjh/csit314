@@ -1,0 +1,21 @@
+<p>One major architectural goal when designing large applications is to reduce coupling and dependencies. By dependencies, I mean source-code dependencies, when one function or data type uses another function or another type. A high-level architecture guideline seems to be the <a href="https://blog.ploeh.dk/2016/03/18/functional-architecture-is-ports-and-adapters/" rel="nofollow noreferrer">Ports &amp; Adapters</a> architecture, with slight variations also referred to as <a href="https://dzone.com/articles/onion-architecture-is-interesting" rel="nofollow noreferrer">Onion Architecture</a>, <a href="https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)" rel="nofollow noreferrer">Hexagonal Architecture</a>, or <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html" rel="nofollow noreferrer">Clean Architecture</a>: Types and functions that model the <em>domain</em> of the application are at the center, then come <em>use cases</em> that provide useful services on the basis of the domain, and in the outermost ring are technical aspects like persistence, networking and UI.</p>
+
+<p>The <em>dependency rule</em> says that dependencies must point inwards only. E.g.; persistence may depend on functions and types from use cases, and use cases may depend on functions and types from the domain. But the domain is not allowed to depend on the outer rings. How should I implement this kind of architecture in Haskell? To make it concrete: How can I implement a <em>use case</em> module that does not depend (= import) functions and types from a persistence module, even though it needs to retrieve and store data?</p>
+
+<p>Say I want to implement a use case <em>order placement</em> via a function <code>U.placeOrder :: D.Customer -&gt; [D.LineItem] -&gt; IO U.OrderPlacementResult</code>, which creates an order from line items and attempts to persist the order. Here, <code>U</code> indicates the use case module and <code>D</code> the domain module. The function returns an IO action because it somehow needs to persist the order. However, the persistence itself is in the outermost architectural ring - implemented in some module <code>P</code>; so, the above function must not depend on anything exported from <code>P</code>.</p>
+
+<p>I can imagine two generic solutions:</p>
+
+<ol>
+<li>Higher order functions: The function <code>U.placeOrder</code> takes an additional function argument, say  <code>U.OrderDto -&gt; U.PersistenceResult</code>. This function is implemented in the persistence (<code>P</code>) module, but it depends on types of the <code>U</code> module, whereas the <code>U</code> module does not need to declare a dependency on <code>P</code>.</li>
+<li>Type classes: The <code>U</code> module defines a <code>Persistence</code> type class that declares the above function. The <code>P</code> module depends on this type class and provides an instance for it.</li>
+</ol>
+
+<p>Variant 1 is quite explicit but not very general. Potentially it results in functions with many arguments. Variant 2 is less verbose (see, for example, <a href="https://github.com/eckyputrady/haskell-scotty-realworld-example-app" rel="nofollow noreferrer">here</a>). However, Variant 2 results in many <em>unprincipled</em> type classes, something considered bad practice in most modern Haskell textbooks and tutorials.</p>
+
+<p>So, I am left with two questions:</p>
+
+<ul>
+<li>Am I missing other alternatives?</li>
+<li>Which approach is the generally recommended one, if any?</li>
+</ul>

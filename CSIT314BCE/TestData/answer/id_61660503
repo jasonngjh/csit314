@@ -1,0 +1,5 @@
+<p>The very <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters" rel="nofollow noreferrer">definition</a> of default parameters is to initialize no values or <em>undefined</em> with the given values. </p>
+
+<p>So, you would want to remove the default parameter and add a conditional check within your function(see Kaiido's answer). Otherwise, you cannot differentiate between foo(undefined) and foo().</p>
+
+<p>If you want both foo(undefined) and foo() to log undefined, you can simply remove the default parameter</p>

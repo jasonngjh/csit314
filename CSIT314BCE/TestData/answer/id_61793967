@@ -1,0 +1,15 @@
+<p>This is a simple way to do it:</p>
+
+<pre class="lang-py prettyprint-override"><code>import numpy as np
+
+N = 10
+n = 10000
+
+np.random.seed(0)
+i = np.random.choice(N, n)
+j = np.random.choice(N - 1, n)
+j[j &gt;= i] += 1
+print(np.any(i == j))
+# False
+ij = np.stack([i, j], axis=1)
+</code></pre>

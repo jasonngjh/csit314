@@ -1,0 +1,29 @@
+<p>Short code:</p>
+
+<pre><code>arr.sort((x, y) =&gt;x.car.localeCompare(y.car));
+</code></pre>
+
+<p>Full code:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>const arr = [
+    {
+        car: 'audi',
+        age: 2015
+    },
+    {
+        car: 'bmw',
+        age: 1999
+    },
+    {
+        car: 'alfa',
+        age: 2019
+    },
+];
+
+let output = arr.sort((x, y) =&gt;x.car.localeCompare(y.car));
+console.log(output);</code></pre>
+</div>
+</div>
+</p>

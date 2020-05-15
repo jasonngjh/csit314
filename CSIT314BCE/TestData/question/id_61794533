@@ -1,0 +1,29 @@
+<p>i have defined these two different routes in laravel RouteServiceProvider like this:</p>
+
+<pre><code>protected function mapABCRoutes()
+    {
+        Route::prefix('abc')
+            -&gt;middleware('web')
+            -&gt;namespace($this-&gt;namespace)
+            -&gt;group(base_path('routes/abc.php'));
+    }
+
+protected function mapXYZRoutes()
+    {
+        Route::prefix('xyz')
+            -&gt;middleware('web')
+            -&gt;namespace($this-&gt;namespace)
+            -&gt;group(base_path('routes/xyz.php'));
+    }
+</code></pre>
+
+<p>and i defined a route in <strong>abc.php</strong></p>
+
+<pre><code>Route::get('/', function(){ return '&lt;h1&gt;ABC Admin&lt;/h1&gt;'; })-&gt;name('abc.dashboard');
+</code></pre>
+
+<p>all defined routes in <strong>abc.php</strong> are working as well except <strong>route('abc.dashboard')</strong>. it throws a 404 with message <em>"The requested resource /abc was not found on this server."</em>
+same thing resulting for <strong>xyz.php</strong> im working with all of this things in an ubuntu using laravel 6.2 in apache with mod rewrite enabled. i cant understand why these routes are not working? but the same type route works as well on laravels default route in <strong>web.php</strong></p>
+
+<pre><code>Route::get('/', function () { return view('auth.login'); });
+</code></pre>

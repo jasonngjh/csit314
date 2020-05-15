@@ -1,0 +1,51 @@
+<p>My homework was to program a simple item management system that reads user input from the console, validates the command via a controller and the executes the command in the model.</p>
+
+<p>Here is the part of the code that is causing problems:</p>
+
+<pre><code>package src.main.application;
+
+import java.util.Scanner;
+
+import src.main.application.controller.Controller;
+import src.main.application.model.Inventory;
+
+public class App {
+
+
+    public static void start() {
+        Inventory inventory = new Inventory();
+        String input;
+        Scanner scan = new Scanner(System.in);
+        while(true) {
+
+
+            System.out.println("Please enter your command: ");
+            input = scan.nextLine();
+            if(input.equals("q")) break;
+            Controller.readInput(input, inventory);
+            input = "";
+
+        }
+        System.out.println("Exiting programm....");
+        scan.close();
+        System.exit(2);
+    }
+
+
+}
+
+</code></pre>
+
+<p>When I go on the next iteration of the while true loop I get following exception thrown:</p>
+
+<pre><code>Exception in thread "main" java.util.NoSuchElementException: No line found
+    at java.util.Scanner.nextLine(Scanner.java:1540)
+    at src.main.application.App.start(App.java:19)
+    at src.main.Main.main(Main.java:8)
+</code></pre>
+
+<p>My only presumption is that I somehow need to reset the scanner back before it got any input from System.in</p>
+
+<p>Do you know what is causing the exception to be thrown and how to fix it?</p>
+
+<p>Thanks in advance.</p>

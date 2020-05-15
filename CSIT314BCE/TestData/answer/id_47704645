@@ -1,3 +1,0 @@
-<p>In my work experience, JavaScript is much better to redirect.</p>
-
-<p>It depends on how you want to change the location. If you want to log your website in users history, use <code>window.location.href='ur website';</code>. Otherwise to do it without logging in history, use <code>window.location.replace("your website");</code>.</p>

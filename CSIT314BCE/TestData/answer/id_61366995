@@ -1,0 +1,17 @@
+<p>You can use <code>itertools.product</code>, which is the cartesian product.</p>
+
+<pre class="lang-py prettyprint-override"><code>[sign*x for sign, x in product((-1, 1), range(6, 10))]
+[-6, -7, -8, -9, 6, 7, 8, 9]
+</code></pre>
+
+<p>This might be slower because you use multiplication, but should be easy to read.</p>
+
+<p>If you want a purely functional solution, you can also import <code>itertools.starmap</code> and <code>operator.mul</code>:</p>
+
+<pre class="lang-py prettyprint-override"><code>from itertools import product, starmap
+from operator import mul
+
+list(starmap(mul, product((-1, 1), range(6, 10))))
+</code></pre>
+
+<p>However, this is less readable.</p>

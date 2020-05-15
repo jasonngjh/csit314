@@ -1,0 +1,24 @@
+<p>When running following code, I get an error in XCode output saying</p>
+
+<blockquote>
+  <p>nw_path_close_fd Failed to close guarded necp fd 47 [9: Bad file
+  descriptor]</p>
+</blockquote>
+
+<p>Code:</p>
+
+<pre><code>#include &lt;boost/process.hpp&gt;
+int main()
+{       
+   boost::process::ipstream outStream;
+   boost::process::system( "df", boost::process::std_out &gt; outStream );
+}
+</code></pre>
+
+<p>Boost version 1.70</p>
+
+<p>XCode version 11.3.1</p>
+
+<p>Error is also present even if I just run <code>boost::process::system( "df" )</code></p>
+
+<p>Saw this post: <a href="https://stackoverflow.com/questions/57752670/boostprocess-system-leaking-file-descriptors">boost::process system leaking file descriptors</a> , I tried making the change suggested in posix/executor.hpp. But I still get the error. (After making the change I did not do any boost library build. I thought, it might not be required as it is just an hpp file change) </p>

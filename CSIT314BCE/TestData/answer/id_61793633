@@ -1,0 +1,6 @@
+<pre><code>result = filter(lambda x: "data_update" in x, a)
+result = [[item[0],item[2],item[3]] for item in result]
+</code></pre>
+
+<p>The first line, find out all lines contains "data_update"
+The second line, rebuild the result with the 3 columns you need.</p>

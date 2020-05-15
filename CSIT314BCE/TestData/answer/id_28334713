@@ -1,6 +1,0 @@
-<p>I believe some people may come to this question wanting to know how to rollback committed changes they've made in their master - ie throw everything away and go back to origin/master, in which case, do this:</p>
-
-<pre><code>git reset --hard origin/master
-</code></pre>
-
-<p><a href="https://superuser.com/questions/273172/how-to-reset-master-to-origin-master">https://superuser.com/questions/273172/how-to-reset-master-to-origin-master</a></p>

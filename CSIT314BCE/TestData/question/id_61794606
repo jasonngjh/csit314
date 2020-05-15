@@ -1,0 +1,53 @@
+<p>I'm attempting to write <strong>jest</strong> tests for promises. </p>
+
+<p>calculateSquare() returns a promise. </p>
+
+<p>testing this within the script with console.log, this function resolves and rejects as expected.</p>
+
+<p><strong>square.js</strong>  </p>
+
+<pre class="lang-js prettyprint-override"><code>const calculateSquare = (number) =&gt; {
+    const promise = new Promise((resolve, reject) =&gt; {
+        if (typeof number !== "number") {
+            return reject(new Error("NaN"));
+        }
+        const square = number * number;
+        resolve(square);
+    });
+    return promise;
+};
+
+// testing locally
+calculateSquare(3).then((value) =&gt; { console.log(value) });
+calculateSquare("3").catch((err) =&gt; { console.log(err.message) });
+
+exports = { calculateSquare }
+</code></pre>
+
+<p>but when I try to run the jest tests below: </p>
+
+<p><strong>square.test.js</strong>  </p>
+
+<pre class="lang-js prettyprint-override"><code>const { calculateSquare } = require("./square");
+
+describe("test calculateSquare function", () =&gt; {
+    test("2 squared is 4", () =&gt; {
+        return expect(calculateSquare(2)).resolves.toEqual(4);
+    });
+
+    test("'2' throws exception", () =&gt; {
+        return expect(calculateSquare("2")).rejects.toMatch("NaN");
+    });
+});
+
+</code></pre>
+
+<p>my tests fail with this error:</p>
+
+<blockquote>
+  <p>TypeError: calculateSquare is not a function</p>
+</blockquote>
+
+<p>Could you please help me understand why this is "not a function" when it is and what's the right way to write these tests?</p>
+
+<p>thanks in advance for the help</p>

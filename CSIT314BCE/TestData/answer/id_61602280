@@ -1,0 +1,31 @@
+<p>Expanding on Christian Gibbons' answer a bit...</p>
+
+<p>In C, string literals like <code>"Hello World"</code> are stored in arrays of <code>char</code> such that they are visible over the lifetime of the program.  String literals are <em>supposed</em> to be immutable, and some implementations will store them in a read-only memory segment (such that attempting to modify the literal's contents will trigger a runtime error).  Some implementations don't, and attempting to modify the literal's contents may not trigger a runtime error (it may even appear to work as intended).  The C language definition leaves the behavior "undefined" so that the compiler is free to handle the situation however it sees fit.</p>
+
+<p>In C++, string literals are stored in arrays of <code><em>const</em> char</code>, so that any attempt to modify the literal's contents will trigger a diagnostic <em>at compile time</em>.  </p>
+
+<p>As Christian points out, the <code>const</code> keyword was not originally a part of C.  It was, however, originally part of C++, and it makes using string literals a little safer.  </p>
+
+<p>Remember that the <code>const</code> keyword <em>does not</em> mean "store this in read-only memory", it only means "this thing may not be the target of an assignment."  </p>
+
+<p>Also remember that, unless it is the operand of the <code>sizeof</code> or unary <code>*</code> operators, or is a string literal used to initialize a character array in a declaration, an <em>expression</em> of type "N-element array of <code>T</code>" will be converted ("decay") to an expression of type "pointer to <code>T</code>" and the value of the expression will be the address of the first element of the array.</p>
+
+<p>In C++, when you write</p>
+
+<pre><code>const char *str = "Hello, world";
+</code></pre>
+
+<p>the <em>address</em> of the first character of the string is stored to <code>str</code>.  You can set <code>str</code> to point to a <em>different</em> string literal:</p>
+
+<pre><code>str = "Goodbye cruel world";
+</code></pre>
+
+<p>but what you <em>cannot</em> do is modify the contents of the string, something like</p>
+
+<pre><code>str[0] = 'h';
+</code></pre>
+
+<p>or</p>
+
+<pre><code>strcpy( str, "Something else" );
+</code></pre>

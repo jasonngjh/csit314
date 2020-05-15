@@ -1,5 +1,0 @@
-<p>I like <code>git stash push -u</code> because you can undo them all with <code>git stash pop</code>.</p>
-
-<p>EDIT: Also I found a way to show untracked file in a stash (e.g. <code>git show stash@{0}^3</code>) <a href="https://stackoverflow.com/a/12681856/338986">https://stackoverflow.com/a/12681856/338986</a></p>
-
-<p>EDIT2: <code>git stash save</code> is deprecated in favor of <code>push</code>. Thanks @script-wolf.</p>

@@ -1,0 +1,13 @@
+<p>I have a store module containing <code>i18n</code> data in state variables:</p>
+
+<pre><code>import i18n from '@/localization';
+export default {
+  state: {
+    title: i18n.t('title'),
+    recommendation: i18n.t('recommendation')
+  ...
+</code></pre>
+
+<p>Problem: in this module, <code>i18n</code> is never updated when user changes language. It is as if the import <code>i18n</code> at the beginning of it was done once and for all.</p>
+
+<p>How can I make this reactive, so that this store module re-imports <code>i18n</code> every time language changes?</p>

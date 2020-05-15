@@ -1,6 +1,0 @@
-<p>In addition to the other answers, I often use the <a href="https://github.com/webmat/git_remote_branch" rel="nofollow noreferrer">git_remote_branch</a> tool. It's an extra install, but it gets you a convenient way to interact with remote branches. In this case, to delete:</p>
-
-<pre><code>grb delete branch
-</code></pre>
-
-<p>I find that I also use the <code>publish</code> and <code>track</code> commands quite often.</p>

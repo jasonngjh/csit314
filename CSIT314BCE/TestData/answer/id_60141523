@@ -1,9 +1,0 @@
-<p>I see that all answers contain the same: pass by value. However, a recent Brian Goetz update on project Valhalla actually answers it differently:</p>
-
-<blockquote>
-  <p>Indeed, it is a common “gotcha” question about whether Java objects are passed by value or by reference, and <strong>the answer is “neither”: object references are passed by value.</strong></p>
-</blockquote>
-
-<p>You can read more here: <a href="http://cr.openjdk.java.net/~briangoetz/valhalla/sov/02-object-model.html" rel="nofollow noreferrer">State of Valhalla. Section 2: Language Model</a></p>
-
-<p><strong>Edit:</strong> Brian Goetz is Java Language Architect, leading such projects as Project Valhalla and Project Amber.</p>

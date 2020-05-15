@@ -1,6 +1,0 @@
-<p>Use</p>
-
-<pre><code>git commit --amend
-</code></pre>
-
-<p>To understand it in detail, an excellent post is <em><a href="https://www.atlassian.com/git/tutorials/rewriting-history#git-commit--amend" rel="noreferrer">4. Rewriting Git History</a></em>. It also talks about <strong>when not to use</strong> <code>git commit --amend</code>.</p>

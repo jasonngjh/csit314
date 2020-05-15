@@ -1,0 +1,5 @@
+<p>In texts about fixed points in Haskell there is often mention of least and greatest fixed points. E.g. in the <a href="https://hackage.haskell.org/package/unification-fd-0.10.0.1/docs/Data-Functor-Fixedpoint.html" rel="noreferrer">Data.Functor.Fixedpoint</a> documentation or <a href="https://bartoszmilewski.com/2020/04/22/terminal-coalgebra-as-directed-limit/" rel="noreferrer">here</a>. </p>
+
+<p>Least and greatest imply an order on the involved types (or is it enough to solely define it on the fixed points?) Anyway, I never saw this order being made explicit. </p>
+
+<p>What does it formally mean for a fixed point to be greater than another one in Haskell? </p>

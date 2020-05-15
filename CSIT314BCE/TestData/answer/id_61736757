@@ -1,0 +1,9 @@
+<p>You don't need to reverse the actual binary string. You can just calculate the index.</p>
+
+<pre><code>String str = Integer.toBinaryString(num);
+int len = str.length();
+List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+for (int i=0; i &lt; len; i ++) {
+  if (str.charAt(i) == '1') list.add(len - 1 - i);
+}
+</code></pre>

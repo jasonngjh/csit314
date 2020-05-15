@@ -1,0 +1,14 @@
+<p>Here is a slight variation on tmfmnk's suggested approach using <code>as_tibble_row()</code> to convert the vectors into single row tibbles.  It's also necessary to use the <code>.name_repair</code> argument:</p>
+
+<pre><code>library(purrr)
+library(tibble)
+
+map_df(data, as_tibble_row, .name_repair = ~paste0("value", seq(.x)))
+
+# A tibble: 3 x 5
+  value1 value2 value3 value4 value5
+  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; 
+1 A      1      4      7      12    
+2 B      2      5      8      15    
+3 C      3      6      9      18
+</code></pre>

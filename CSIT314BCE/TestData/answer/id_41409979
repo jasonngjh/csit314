@@ -1,0 +1,14 @@
+<p>I'd like to add this solution to the list, for historical purposes. It allows you to find out based on .exe instead of window title, and also returns memory used &amp; PID.</p>
+
+<pre><code>processes = subprocess.Popen('tasklist', stdin=subprocess.PIPE, stderr=subprocess.PIPE, stdout=subprocess.PIPE).communicate()[0]
+# Put a regex for exact matches, or a simple 'in' for naive matches
+</code></pre>
+
+<p>A slice of example output:</p>
+
+<pre><code>notepad.exe                  13944 Console                    1     11,920 K
+python.exe                    5240 Console                    1     28,616 K
+conhost.exe                   9796 Console                    1      7,812 K
+svchost.exe                   1052 Services                   0     18,524 K
+iTunes.exe                    1108 Console                    1    157,764 K
+</code></pre>

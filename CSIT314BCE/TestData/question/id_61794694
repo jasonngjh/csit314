@@ -1,0 +1,126 @@
+<p>I want to store specific values (<code>id</code> and <code>journal</code> from all the <code>docs</code>) from a JSON in my DynamoDB using node.js in Lambda. I tried to loop through the <code>docs</code>, but the loop is not working and my code only stores the very first <code>id</code> and <code>journal</code> value in my DynamoDB, which is:</p>
+
+<pre><code>    "id": "10.1371/journal.pone.0000290",
+    "journal": "PLoS ONE",
+</code></pre>
+
+<p>I use the following JSON: <a href="http://api.plos.org/search?q=title:DNA" rel="nofollow noreferrer">http://api.plos.org/search?q=title:DNA</a></p>
+
+<p>A snippet from the JSON:</p>
+
+<pre><code>{
+  "response": {
+    "numFound": 5192,
+    "start": 0,
+    "maxScore": 6.561543,
+    "docs": [
+      {
+        "id": "10.1371/journal.pone.0000290",
+        "journal": "PLoS ONE",
+        "eissn": "1932-6203",
+        "publication_date": "2007-03-14T00:00:00Z",
+        "article_type": "Research Article",
+        "author_display": [
+          "Rayna I. Kraeva",
+          "Dragomir B. Krastev",
+          "Assen Roguev",
+          "Anna Ivanova",
+          "Marina N. Nedelcheva-Veleva",
+          "Stoyno S. Stoynov"
+        ],
+        "abstract": [
+          "Nucleic acids, due to their structural and chemical properties, can form double-stranded secondary structures that assist the transfer of genetic information and can modulate gene expression. However, the nucleotide sequence alone is insufficient in explaining phenomena like intron-exon recognition during RNA processing. This raises the question whether nucleic acids are endowed with other attributes that can contribute to their biological functions. In this work, we present a calculation of thermodynamic stability of DNA/DNA and mRNA/DNA duplexes across the genomes of four species in the genus Saccharomyces by nearest-neighbor method. The results show that coding regions are more thermodynamically stable than introns, 3′-untranslated regions and intergenic sequences. Furthermore, open reading frames have more stable sense mRNA/DNA duplexes than the potential antisense duplexes, a property that can aid gene discovery. The lower stability of the DNA/DNA and mRNA/DNA duplexes of 3′-untranslated regions and the higher stability of genes correlates with increased mRNA level. These results suggest that the thermodynamic stability of DNA/DNA and mRNA/DNA duplexes affects mRNA transcription."
+        ],
+        "title_display": "Stability of mRNA/DNA and DNA/DNA Duplexes Affects mRNA Transcription",
+        "score": 6.561543
+      },
+      {
+        "id": "10.1371/journal.pone.0154785",
+        "journal": "PLOS ONE",
+        "eissn": "1932-6203",
+        "publication_date": "2016-05-04T00:00:00Z",
+        "article_type": "Research Article",
+        "author_display": [
+          "Choon Seok Oh",
+          "Jean Sippy",
+          "Bridget Charbonneau",
+          "Jennifer Crow Hutchinson",
+          "Olga Esther Mejia-Romero",
+          "Michael Barton",
+          "Priyal Patel",
+          "Rachel Sippy",
+          "Michael Feiss"
+        ],
+        "abstract": [
+          "\nDuring progeny assembly, viruses selectively package virion genomes from a nucleic acid pool that includes host nucleic acids. For large dsDNA viruses, including tailed bacteriophages and herpesviruses, immature viral DNA is recognized and translocated into a preformed icosahedral shell, the prohead. Recognition involves specific interactions between the viral packaging enzyme, terminase, and viral DNA recognition sites. Generally, viral DNA is recognized by terminase’s small subunit (TerS). The large terminase subunit (TerL) contains translocation ATPase and endonuclease domains. In phage lambda, TerS binds a sequence repeated three times in cosB, the recognition site. TerS binding to cosB positions TerL to cut the concatemeric DNA at the adjacent nicking site, cosN. TerL introduces staggered nicks in cosN, generating twelve bp cohesive ends. Terminase separates the cohesive ends and remains bound to the cosB-containing end, in a nucleoprotein structure called Complex I. Complex I docks on the prohead’s portal vertex and translocation ensues. DNA topology plays a role in the TerSλ-cosBλ interaction. Here we show that a site, I2, located between cosN and cosB, is critically important for an early DNA packaging step. I2 contains a complex static bend. I2 mutations block DNA packaging. I2 mutant DNA is cut by terminase at cosN in vitro, but in vivo, no cos cleavage is detected, nor is there evidence for Complex I. Models for what packaging step might be blocked by I2 mutations are presented.\n"
+        ],
+        "title_display": "DNA Topology and the Initiation of Virus DNA Packaging",
+        "score": 6.3241396
+      },
+      {
+        "id": "10.1371/journal.pone.0047101",
+        "journal": "PLoS ONE",
+        "eissn": "1932-6203",
+        "publication_date": "2012-11-08T00:00:00Z",
+        "article_type": "Research Article",
+        "author_display": [
+          "Sheng-Yu Wang",
+          "Yueh-Luen Lee",
+          "Yi-Hua Lai",
+          "Jeremy J. W. Chen",
+          "Wen-Lin Wu",
+          "Jeu-Ming P. Yuann",
+          "Wang-Lin Su",
+          "Show-Mei Chuang",
+          "Ming-Hon Hou"
+        ],
+        "abstract": [
+          "\n        The anticancer activity of DNA intercalators is related to their ability to intercalate into the DNA duplex with high affinity, thereby interfering with DNA replication and transcription. Polyamines (spermine in particular) are almost exclusively bound to nucleic acids and are involved in many cellular processes that require nucleic acids. Until now, the effects of polyamines on DNA intercalator activities have remained unclear because intercalation is the most important mechanism employed by DNA-binding drugs.\n      "
+        ],
+</code></pre>
+
+<p>etc.</p>
+
+<p>My Code:</p>
+
+<pre><code>exports.handler = async (event) =&gt; {
+    try {
+        const data = await httprequest();
+
+        //date to string
+
+        var d = Date();
+        var n = d.toString();
+
+        //add items to DynamoDB
+
+        console.log("LENGTH IS: " + data.response.docs.length);
+
+        for (var i = 0; i &lt; data.response.docs.length; i++){
+
+            var params = {
+            Item: {
+                date: n,
+                id: data.response.docs[i].id,
+                journal: data.response.docs[i].journal
+
+            },
+
+            TableName: 'employee'
+        };
+
+        await docClient.put(params).promise();               
+        }
+
+        console.log('Document inserted.');
+
+        return JSON.stringify(data);
+    } catch(err) {
+        console.log(err);
+
+        return err;
+    }
+};
+</code></pre>
+
+<p>Where is my mistake? </p>

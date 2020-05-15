@@ -1,9 +1,0 @@
-<p>There's a quote on this issue from <a href="https://www.goodreads.com/book/show/14975275-illustrated-c-2012" rel="noreferrer">Daniel Solis' book</a>.</p>
-
-<blockquote>
-  <p>All the predefined types  are mapped directly to
-  underlying .NET types. The C# type names (string) are simply aliases for the
-  .NET types (String or System.String), so using the .NET names works fine syntactically, although
-  this is discouraged. Within a C# program, you should use the C# names
-  rather than the .NET names.</p>
-</blockquote>

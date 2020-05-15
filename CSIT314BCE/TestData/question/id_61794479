@@ -1,0 +1,15 @@
+<p>On my page that I implented with React I have implementeed a Paypal Button (I use the React-paypal-button library):</p>
+
+<pre><code>                   &lt;PayPalButton
+                        amount={'100'}
+                        currency={'USD'}
+                        success={success}
+                        error={error}
+                        cancel={cancel}
+                        clientId={/*myClientId*/}
+                    /&gt;
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/G75hJ.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/G75hJ.png" alt="Paypal Button"></a></p>
+
+<p>Now I wonder if there is any way to change the appearance of the "Pay Now" button, is there even a way to overwrite that CSS?</p>

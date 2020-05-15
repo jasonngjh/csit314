@@ -1,0 +1,293 @@
+<p>I bootstrapped my application with <em>create-react-app</em> and when I run my app it compiles with warnings and it throws errors on the browser.</p>
+
+<p><em>Error while compiling</em></p>
+
+<pre><code>./node_modules/rc-picker/node_modules/moment/src/lib/locale/locales.js
+Module not found: Can't resolve './locale' in '/Users/macbook/Desktop/projects/pizza/Yummi-fend/node_modules/rc-picker/node_modules/moment/src/lib/locale'
+</code></pre>
+
+<p><em>Error on browser</em></p>
+
+<pre><code>Error: Cannot find module './locale'
+▶ 2 stack frames were collapsed.
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+Module../node_modules/moment/src/lib/moment/moment.js
+node_modules/moment/src/lib/moment/moment.js:1
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+Module../node_modules/moment/src/moment.js
+node_modules/moment/src/moment.js:1
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+Module../node_modules/rc-picker/es/generate/moment.js
+node_modules/rc-picker/es/generate/moment.js:1
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+Module../node_modules/antd/es/calendar/index.js
+node_modules/antd/es/calendar/index.js:1
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+Module../node_modules/antd/es/index.js
+node_modules/antd/es/index.js:3
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+Module../src/components/AuthPage/loginPage.js
+http://localhost:3000/static/js/main.chunk.js:313:62
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+Module../src/App.js
+http://localhost:3000/static/js/main.chunk.js:127:88
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+Module../src/index.js
+http://localhost:3000/static/js/main.chunk.js:1595:62
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+fn
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:150
+  147 |         );
+  148 |         hotCurrentParents = [];
+  149 |     }
+&gt; 150 |     return __webpack_require__(request);
+      | ^  151 | };
+  152 | var ObjectFactory = function ObjectFactory(name) {
+  153 |     return {
+View compiled
+1
+http://localhost:3000/static/js/main.chunk.js:1737:18
+__webpack_require__
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:784
+  781 | };
+  782 | 
+  783 | // Execute the module function
+&gt; 784 | modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+      | ^  785 | 
+  786 | // Flag the module as loaded
+  787 | module.l = true;
+View compiled
+checkDeferredModules
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:45
+  42 |  }
+  43 |  if(fulfilled) {
+  44 |      deferredModules.splice(i--, 1);
+&gt; 45 |      result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+     | ^  46 |  }
+  47 | }
+  48 | 
+View compiled
+Array.webpackJsonpCallback [as push]
+/Users/macbook/Desktop/projects/pizza/Yummi-fend/webpack/bootstrap:32
+  29 |  deferredModules.push.apply(deferredModules, executeModules || []);
+  30 | 
+  31 |  // run deferred modules when all chunks ready
+&gt; 32 |  return checkDeferredModules();
+     | ^  33 | };
+  34 | function checkDeferredModules() {
+  35 |  var result;
+View compiled
+(anonymous function)
+http://localhost:3000/static/js/main.chunk.js:1:65
+</code></pre>
+
+<p><em>Package.json</em></p>
+
+<pre><code>{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "antd": "^4.2.0",
+    "axios": "^0.19.2",
+    "formik": "^2.1.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "yup": "^0.28.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      "&gt;0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
+</code></pre>
+
+<p>I have tried researching and its an error originating from <strong>moment-js</strong> yet I'm not using that module and it is also not installed.</p>
+
+<p>What could be the problem?</p>

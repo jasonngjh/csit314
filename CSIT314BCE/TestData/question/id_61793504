@@ -1,0 +1,20 @@
+<p>I have class that has properties:</p>
+
+<pre><code>export class Model {
+   public id: number;
+   public name: string;
+}
+</code></pre>
+
+<p>How to make this class observable, to listen changes inm properties.</p>
+
+<p>I need something like that:</p>
+
+<pre><code>let m = new Model();
+m.id = 10;
+</code></pre>
+
+<p>Listen changes:</p>
+
+<pre><code>m.pipe(map() =&gt; m.id);
+</code></pre>

@@ -1,1 +1,0 @@
-<p>Java does manipulate objects by reference, and all object variables are references. However, Java doesn't pass method arguments by reference; it passes them by value. </p>

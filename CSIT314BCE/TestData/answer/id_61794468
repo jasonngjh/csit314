@@ -1,0 +1,8 @@
+<p>I think the reason for this could be that you have inserted the "&lt;%" tag inside another one.</p>
+
+<p>Can you please try to rewrite the code like this?</p>
+
+<pre><code>&lt;% for(var j = 0;j &lt; items.length; j++){ %&gt;
+&lt;li&gt;&lt;%= items[j] %&gt;&lt;/li&gt;
+&lt;%}%&gt;
+</code></pre>

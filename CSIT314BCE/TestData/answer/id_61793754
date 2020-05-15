@@ -1,0 +1,3 @@
+<p>Given that you are not distributing the image(s) in question through the Qt resource system (as in, packaging the image(s) into the application binary), I assume that you are distributing the image(s) alongside the applciation binary.</p>
+
+<p>In this case, <a href="https://doc.qt.io/qt-5/qcoreapplication.html#applicationDirPath" rel="nofollow noreferrer">QCoreApplication::applicationDirPath()</a> would most likely suit your needs.</p>

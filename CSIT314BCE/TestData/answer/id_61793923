@@ -1,0 +1,10 @@
+<p>It should work. Let me know after try.</p>
+
+<pre><code>$(document).ready(function(){
+$(".button").on("click", function(){
+    let dataId = $(this).attr("data-price");
+    $(".show-price").text(dataId);
+});
+</code></pre>
+
+<p>});</p>

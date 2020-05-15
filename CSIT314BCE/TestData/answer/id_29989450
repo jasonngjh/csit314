@@ -1,7 +1,0 @@
-<p>I'm adding my own answer just because everyone else has covered the hoisting part thoroughly.</p>
-
-<p>I've wondered about which way is better for a long while now, and thanks to <a href="http://jsperf.com" rel="noreferrer">http://jsperf.com</a> now I know :)</p>
-
-<p><img src="https://i.stack.imgur.com/bCrSm.png" alt="enter image description here"></p>
-
-<p><strong>Function declarations</strong> are faster, and that's what really matters in web dev right? ;)</p>

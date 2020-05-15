@@ -1,0 +1,8 @@
+<blockquote>
+  <p>First one will make the Get calls in parallel whereas the second one will make the calls in serial?</p>
+</blockquote>
+
+<p>It also depends on what happens inside the Get___Async() methods.<br>
+They could be (partly) synchronous, you can't tell from the outside. </p>
+
+<p>But if they live up to their name then yes, the first version will usually be faster. </p>

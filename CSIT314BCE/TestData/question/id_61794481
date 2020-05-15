@@ -1,0 +1,21 @@
+<p>I'm writing code which calls a third party web API. The web response is important because it contains details of whether a record was inserted. The API returns JSON representing the object which has been created. The returned ID is required for other inserts, e.g. the id of an address is a foreign key required before you can insert an employee. It could be difficult to keep track of inserted addresses if the returned value is not kept for later use.</p>
+
+<p>Is it possible to annotate or otherwise write a method so that the return value must be assigned? This would mean that the method can't be called without assigning some other variable, and thus you can't accidentally loose the response.</p>
+
+<p>e.g.</p>
+
+<pre><code>[MustAssignReturnResult]
+public string InsertRecord(string json)
+{
+    return "{json representing result}";
+}
+</code></pre>
+
+<p>I want the compiler to fail if this is not assigned.</p>
+
+<pre><code>//this is ok
+string result = InsertRecord(json);
+
+//valid under normal circumstances
+InsertRecord(json); //but should give a compiler error because result is not assigned.
+</code></pre>

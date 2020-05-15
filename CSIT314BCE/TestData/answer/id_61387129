@@ -1,0 +1,15 @@
+<p>This is a completely off-the-top-of-my-head answer, so will probably turn out to be nonsense, but I'd be tempted to use a hybrid approach.</p>
+
+<p>Use the environment to pass through a single coordinator object - lets call it NavigationCoordinator.</p>
+
+<p>Give your re-usable views some sort of identifier which is set dynamically. This identifier gives semantic information corresponding to the client application's actual use case and navigation hierarchy.</p>
+
+<p>Have the re-usable views query the NavigationCoordinator for the destination view, passing their identifier and the identifier of the view type they are navigating to.</p>
+
+<p>This leaves the NavigationCoordinator as a single injection point, and it's a non-view object which can be accessed outside the view hierarchy.</p>
+
+<p>During setup you can register the right view classes for it to return, using some sort of matching with the identifiers it's passed at runtime. Something as simple as matching with the destination identifier might work in some cases. Or matching against a pair of host and destination identifiers.</p>
+
+<p>In more complex cases you can write a custom controller which takes account of other app-specific information. </p>
+
+<p>Since it is injected via the environment, any view can override the default NavigationCoordinator at any point and supply a different one to its subviews.</p>

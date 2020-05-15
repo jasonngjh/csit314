@@ -263,12 +263,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
-    <Content Include="Views\Admin\CreateRole.cshtml" />
     <Content Include="Views\Admin\ListUsers.cshtml" />
-    <Content Include="Views\Admin\ViewDetails.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Home\UserProfile.cshtml" />
-    <Content Include="Views\Admin\AssignRole.cshtml" />
     <Content Include="Views\Admin\ResetUserPassword.cshtml" />
     <Content Include="Views\Posts\Ask.cshtml" />
     <Content Include="Views\Posts\Delete.cshtml" />
@@ -1542,6 +1539,10 @@
     <Content Include="Views\Posts\AnswerSearch.cshtml" />
     <Content Include="Views\Posts\Statistics.cshtml" />
     <Content Include="Views\Posts\Statistics2.cshtml" />
+    <Content Include="Views\Posts\PRatings.cshtml" />
+    <Content Include="Views\Posts\Reports.cshtml" />
+    <Content Include="Views\Posts\Reports2.cshtml" />
+    <Content Include="Views\Posts\Reports3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

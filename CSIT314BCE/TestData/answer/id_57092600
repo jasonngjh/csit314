@@ -1,6 +1,0 @@
-<p>You can use jQuery <code>is()</code> function to check the selected element visible or hidden. This method traverses along the DOM elements to find a match, which satisfies the passed parameter. It will return true if there is a match otherwise returns false.</p>
-
-<pre><code>&lt;script&gt;
-    ($("#myelement").is(":visible"))? alert("#myelement is visible") : alert("#myelement is hidden");
-&lt;/script&gt;
-</code></pre>

@@ -1,0 +1,19 @@
+<p>Since you wrote "modern Java", this is how it can be done with <strong>streams</strong> (Java 8 or better):</p>
+
+<pre><code>final int num = 7;
+
+List&lt;Integer&gt; digits = IntStream.range(0,31).filter(i-&gt; ((num &amp; 1&lt;&lt;i) != 0))
+        .map(i -&gt; i+1).boxed().collect(Collectors.toList());
+</code></pre>
+
+<p>The map is only needed since you start counting at 1 and not at 0.</p>
+
+<p>Then </p>
+
+<pre><code>System.out.println(digits);
+</code></pre>
+
+<p>prints</p>
+
+<pre><code>[1, 2, 3]
+</code></pre>

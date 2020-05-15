@@ -1,0 +1,36 @@
+<p>I am tryin to access one of protected api using client credential flow in my asp.net core 3.1 application. </p>
+
+<p>For token management I am using <code>IdentityModel.AspNetCore -1.0.0-rc.4.1</code>.</p>
+
+<pre><code> public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddHttpClient&lt;ApiService&gt;(client =&gt;
+            {
+                client.BaseAddress = new Uri("http://localhost:10811/");
+            })
+            .AddClientAccessTokenHandler();
+
+        services.AddAccessTokenManagement(options =&gt;
+        {
+            options.Client.Clients.Add("auth", new ClientCredentialsTokenRequest
+            {
+                Address = "http://localhost:10811/token",
+                ClientId = "client1",
+                ClientSecret = "Supersecret"
+            });
+        });
+</code></pre>
+
+<p>I am always getting 401 while trying to access the protected api service.</p>
+
+<p><strong>ApiService code,</strong></p>
+
+<pre><code> public async Task&lt;string&gt; GetContactsAsync()
+    {
+        var response = await HttpClient.GetAsync("http://localhost:10811/test");
+        response.EnsureSuccessStatusCode();
+        return "Done";
+    }
+</code></pre>
+
+<p>Is above code setting any token, what I am missing here? Thanks!</p>

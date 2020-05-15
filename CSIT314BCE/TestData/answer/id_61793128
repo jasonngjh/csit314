@@ -1,0 +1,17 @@
+<p>Here you go, replica.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-css lang-css prettyprint-override"><code>.btn {
+    width:200px;
+    height:50px;
+    border-radius: 6px;
+    border: 2px solid #278CD3;
+    background: linear-gradient(315deg,#278CD3 150px, #FFD667 90px, #FFD667 100%);
+    font-size:16px;
+    color: #FFD667;
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;button type="button" class="btn"&gt;Button&lt;/button&gt;</code></pre>
+</div>
+</div>
+</p>

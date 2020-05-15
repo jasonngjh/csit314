@@ -1,0 +1,30 @@
+<p>edit: @David answer seems a better way !</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var arr = [
+    {
+        car: 'audi',
+        age: 2015
+    },
+    {
+        car: 'bmw',
+        age: 1999
+    },
+    {
+        car: 'alfa',
+        age: 2019
+    },
+];
+
+
+
+arr.sort(function(a, b){
+  if(a.car&lt; b.car) { return -1; }
+  if(a.car&gt; b.car) { return 1; }
+  return 0;
+})
+console.log(arr)</code></pre>
+</div>
+</div>
+</p>

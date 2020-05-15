@@ -1,7 +1,0 @@
-<p>Always try to remember these three content types even though there are <a href="https://github.com/h5bp/server-configs-nginx/blob/master/mime.types" rel="noreferrer">many content types</a>. as you may have to use these more frequently. </p>
-
-<ul>
-<li>Content-Type: application/json </li>
-<li>Content-Type: application/xml </li>
-<li>Content-Type: text/html</li>
-</ul>

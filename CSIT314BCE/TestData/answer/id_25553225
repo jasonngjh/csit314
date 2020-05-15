@@ -1,4 +1,0 @@
-<p>To reset to the previous revision, permanently deleting all uncommitted changes: </p>
-
-<pre><code>git reset --hard HEAD~1
-</code></pre>

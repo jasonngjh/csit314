@@ -1,0 +1,46 @@
+<p>Without the .htaccess file the application running perfectly, 
+Whenever I add .htaccess file it showing forbidden don't have access to the / server.
+I tried to put "Test." in the first line of .htaccess file it "showing Internal server error" that's good apache reading .htaccess file.
+But whenever it read "RewriteEngine on" line in .htaccess file immediately it showing forbidden error.</p>
+
+<p>here is my .htaccess file.</p>
+
+<pre><code> RewriteEngine on
+ RewriteCond $1 !^(index\.php|resources|robots\.txt)
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+</code></pre>
+
+<p>And httpd.config file</p>
+
+<pre><code>   DocumentRoot "${SRVROOT}/htdocs"
+   &lt;Directory "${SRVROOT}/htdocs"&gt;
+   #
+   # Possible values for the Options directive are "None", "All",
+   # or any combination of:
+   #   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews
+   #
+   # Note that "MultiViews" must be named *explicitly* --- "Options All"
+   # doesn't give it to you.
+   #
+   # The Options directive is both complicated and important.  Please see
+   # http://httpd.apache.org/docs/2.4/mod/core.html#options
+   # for more information.
+   #
+   Options Indexes FollowSymLinks
+
+   #
+   # AllowOverride controls what directives may be placed in .htaccess files.
+   # It can be "All", "None", or any combination of the keywords:
+   #   AllowOverride FileInfo AuthConfig Limit
+   #
+   AllowOverride All
+
+   #
+   # Controls who can get stuff from this server.
+   #
+   Require all granted
+   Options ExecCGI 
+   &lt;/Directory&gt;
+</code></pre>

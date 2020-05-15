@@ -1,0 +1,121 @@
+<p>I think the best way is to use Lazy class and ConcurrentDictionary. </p>
+
+<p>But what's the reason to have Driver property? If it runs parallel, you have only the last loaded driver. So for all test you will use one Driver. I think you should use ConcurrentDictionary only and do it like this</p>
+
+<pre><code>class BrowserFactory
+{
+    private static readonly ConcurrentDictionary&lt;string, IWebDriver&gt; Drivers = new ConcurrentDictionary&lt;string, IWebDriver&gt;();
+
+    public static void InitBrowser(string browserName)
+    {
+        IWebDriver driver;
+        switch (browserName.ToLower())
+        {
+            case "firefox":
+                driver = new FirefoxDriver();
+                Drivers.TryAdd("Firefox", driver);
+                break;
+            case "chrome":
+                var options = new ChromeOptions();
+                options.AddArguments(
+                    "--headless",
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage"
+                );
+
+                driver = new ChromeDriver(options);
+                Drivers.TryAdd("Chrome", driver);
+                break;
+
+            case "ie":
+                driver = new InternetExplorerDriver();
+                Drivers.TryAdd("IE", driver);
+                break;
+
+            //case "chromium":
+            //        driver = new ChromeDriver();
+            //    break;
+
+            default:
+                driver = new ChromeDriver();
+                Drivers.TryAdd("Chrome", driver);
+                break;
+        }
+    }
+
+    public static IWebDriver GetDriver(string browserName)
+    {
+        return Drivers[browserName];
+    }
+
+    public static void LoadApplication(string browserName, string url)
+    {
+        Drivers[browserName].Navigate().GoToUrl(url);
+    }
+
+    public static void CloseAllDrivers()
+    {
+        foreach (var key in Drivers.Keys)
+        {
+            Drivers[key].Close();
+            Drivers[key].Quit();
+        }
+    }
+}
+</code></pre>
+
+<p>But if you still need the Driver property, do it like this</p>
+
+<pre><code>public static Lazy&lt;IWebDriver&gt; Driver
+    {
+        get;
+        private set;
+    }
+
+    public static void InitBrowser(string browserName)
+    {
+        Driver = new Lazy&lt;IWebDriver&gt;(() =&gt;
+        {
+            IWebDriver driver;
+            switch (browserName.ToLower())
+            {
+                case "firefox":
+                    driver = new FirefoxDriver();
+                    Drivers.TryAdd("Firefox", driver);
+                    break;
+                case "chrome":
+                    var options = new ChromeOptions();
+                    options.AddArguments(
+                        "--headless",
+                        "--no-sandbox",
+                        "--disable-dev-shm-usage"
+                    );
+
+                    driver = new ChromeDriver(options);
+                    Drivers.TryAdd("Chrome", driver);
+                    break;
+
+                case "ie":
+                    driver = new InternetExplorerDriver();
+                    Drivers.TryAdd("IE", driver);
+                    break;
+
+                //case "chromium":
+                //        driver = new ChromeDriver();
+                //    break;
+
+                default:
+                    driver = new ChromeDriver();
+                    Drivers.TryAdd("Chrome", driver);
+                    break;
+            }
+
+            return driver;
+        });
+    }
+
+    public static void LoadApplication(string url)
+    {
+        Driver.Value.Navigate().GoToUrl(url);
+    }
+</code></pre>

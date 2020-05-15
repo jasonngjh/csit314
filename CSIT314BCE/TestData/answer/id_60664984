@@ -1,7 +1,0 @@
-<p>Please read  this.</p>
-
-<p>Many programming languages allow passing parameters by reference or by value. In Java, we can only pass parameters by value. This imposes some limits and also raises questions. For instance, if the parameter value is changed in the method, what happens to the value following method execution? You may also wonder how Java manages object values in the memory heap. This Java Challenger helps you resolve these and other common questions about object references in Java.</p>
-
-<p>For the more:</p>
-
-<p><a href="https://www.javaworld.com/article/3512039/does-java-pass-by-reference-or-pass-by-value.html" rel="nofollow noreferrer">https://www.javaworld.com/article/3512039/does-java-pass-by-reference-or-pass-by-value.html</a></p>

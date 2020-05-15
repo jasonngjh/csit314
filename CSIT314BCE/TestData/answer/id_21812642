@@ -1,8 +1,0 @@
-<p>Should just be able to set using <code>window.location</code>.</p>
-
-<p><strong>Example:</strong></p>
-
-<pre><code>window.location = "https://stackoverflow.com/";
-</code></pre>
-
-<p>Here is a past post on the subject: <a href="https://stackoverflow.com/questions/503093/how-can-i-make-a-redirect-page-in-jquery-javascript">How do I redirect to another webpage?</a></p>

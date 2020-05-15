@@ -1,8 +1,0 @@
-<p>I also ran into the situation where I had to remove an element from <code>Array</code>. <code>.indexOf</code> was not working in Internet&nbsp;Explorer, so I am sharing my working <code>jQuery.inArray()</code> solution:</p>
-
-<pre><code>var index = jQuery.inArray(val, arr);
-if (index &gt; -1) {
-    arr.splice(index, 1);
-    //console.log(arr);
-}
-</code></pre>

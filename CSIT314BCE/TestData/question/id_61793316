@@ -1,0 +1,19 @@
+<p>I would like to extract some lines and columns (kind of sub array) based on conditions</p>
+
+<p>here is an exemple of input and desired output</p>
+
+<pre><code>[["00:00:01","data_update","data1",10.5,"blabla"],
+ ["00:00:02","proc_call","xxx","xxx","blalla"],
+ ["00:00:15","data_update","data2",34.5,"blabla"],
+ ["00:00:25","proc_call","xxx","xxx","blalla"]]
+</code></pre>
+
+<p>desired output (keep "data_update" line with col 0, 2 and 3)</p>
+
+<p>here is an exemple of input and desired output</p>
+
+<pre><code>[["00:00:01","data1",10.5],
+ ["00:00:15","data2",34.5]]
+</code></pre>
+
+<p>Is there a simple way to do that in python ?</p>

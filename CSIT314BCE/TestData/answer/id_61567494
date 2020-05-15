@@ -1,0 +1,66 @@
+<p><strong>TL;DR</strong>: It's an OpenJDK regression.</p>
+
+<p>I did not except that but I could reproduce the issue with a simple hello world:</p>
+
+<pre><code>public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello world");
+    }
+}
+</code></pre>
+
+<p>I have used these two batch files:</p>
+
+<p><code>main-1cpu.bat</code>, which limits the <code>java</code> process to only one CPU:</p>
+
+<pre><code>c:\windows\system32\cmd.exe /C start /affinity 1 \
+    \jdk-14\bin\java \
+    -Xlog:all=trace:file=app-1cpu.txt:uptime,tid,level,tags:filecount=50 \
+    Main
+</code></pre>
+
+<p><code>main-full.bat</code>, the <code>java</code> process can use both CPUs:</p>
+
+<pre><code>c:\windows\system32\cmd.exe /C start /affinity FF \
+    \jdk-14\bin\java \
+    -Xlog:all=trace:file=app-full.txt:uptime,tid,level,tags:filecount=50 \
+    Main
+</code></pre>
+
+<p>(The differences are the <code>affinity</code> value and name of the log file. I've wrapped it for easier reading but wrapping with <code>\</code> probably doesn't work on Windows.)</p>
+
+<p>A few measurements on Windows 10 x64 in VirtualBox (with two CPUs):</p>
+
+<pre><code>PS Z:\main&gt; Measure-Command { .\main-1cpu.bat }
+
+...    
+TotalSeconds      : 7.0203455
+...
+
+
+PS Z:\main&gt; Measure-Command { .\main-full.bat }
+
+...
+TotalSeconds      : 1.5751352
+...
+
+
+PS Z:\main&gt; Measure-Command { .\main-full.bat }
+
+...
+TotalSeconds      : 1.5585384
+...
+
+
+PS Z:\main&gt; Measure-Command { .\main-1cpu.bat }
+
+...
+TotalSeconds      : 23.6482685
+...
+</code></pre>
+
+<p>The produced tracelogs contain similar pauses that you can see in the question.</p>
+
+<p>Running <code>Main</code> without tracelogs is faster but the difference still can be seen between the single-CPU and two-CPU version: ~4-7 seconds vs. ~400 ms.</p>
+
+<p>I've sent <a href="https://mail.openjdk.java.net/pipermail/hotspot-dev/2020-April/041589.html" rel="noreferrer">this findings to the hotspot-dev@openjdk mail list</a> and devs there confirmed that <a href="https://mail.openjdk.java.net/pipermail/hotspot-dev/2020-April/041604.html" rel="noreferrer">this is something that the JDK could handle better</a>. You can find <a href="https://mail.openjdk.java.net/pipermail/hotspot-dev/2020-April/041611.html" rel="noreferrer">supposed fixes</a> in the thread too. Hopefully it will be fixed in OpenJDK 15.</p>

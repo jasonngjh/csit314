@@ -1,0 +1,3 @@
+<p>Basically If you want to get better result for training data, your training accuracy should be high as possible. You should use better model with respect to data you have. Basically you should check whether your training accuracy for this purpose regardless of the test accuracy. This is also called as overfitting which gives better accuracy in training data rather than test data.</p>
+
+<p>Early stopping might be affect for this scenario where the best test/validation accuracy is taken rather than training accuracy.</p>

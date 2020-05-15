@@ -1,1 +1,0 @@
-<p>It's a bit hard to understand, but Java always copies the value - the point is, normally the value is a reference. Therefore you end up with the same object without thinking about it...</p>

@@ -1,0 +1,25 @@
+<p>So it turns out v8 has a non-standard multi-language word segmenter and it handles Japanese. </p>
+
+<pre class="lang-js prettyprint-override"><code>function tokenizeJA(text) {
+  var it = Intl.v8BreakIterator(['ja-JP'], {type:'word'})
+  it.adoptText(text)
+  var words = []
+
+  var cur = 0, prev = 0
+
+  while (cur &lt; text.length) {
+    prev = cur
+    cur = it.next()
+    words.push(text.substring(prev, cur))
+  }
+
+  return words
+}
+
+console.log(tokenizeJA('どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。'))
+// ["どこ", "で", "生れ", "たか", "とんと", "見当", "が", "つ", "か", "ぬ", "。", "何でも", "薄暗い", "じめじめ", "した", "所", "で", "ニャーニャー", "泣", "い", "て", "いた事", "だけ", "は", "記憶", "し", "て", "いる", "。"]
+</code></pre>
+
+<p>I also made a <a href="https://jsfiddle.net/97v0yo23/" rel="noreferrer">jsfiddle</a> that shows this. </p>
+
+<p>The quality is not amazing but I'm surprised this is supported at all.</p>

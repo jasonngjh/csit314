@@ -1,0 +1,80 @@
+<p>Python makes no promises about when (if ever) this loop will end. Modifying a set during iteration can lead to skipped elements, repeated elements, and other weirdness. <strong>Never rely on such behavior.</strong></p>
+
+<p>Everything I am about to say is implementation details, subject to change without notice. If you write a program that relies on any of it, your program may break on any combination of Python implementation and version other than CPython 3.8.2.</p>
+
+<p>The short explanation for why the loop ends at 16 is that 16 is the first element that happens to be placed at a lower hash table index than the previous element. The full explanation is below.</p>
+
+<hr>
+
+<p>The internal hash table of a Python set always has a power of 2 size. For a table of size 2^n, if no collisions occur, elements are stored in the position in the hash table corresponding to the n least-significant bits of their hash. You can see this implemented in <a href="https://github.com/python/cpython/blob/v3.8.2/Objects/setobject.c#L137" rel="noreferrer"><code>set_add_entry</code></a>:</p>
+
+
+
+<pre class="lang-c prettyprint-override"><code>mask = so-&gt;mask;
+i = (size_t)hash &amp; mask;
+
+entry = &amp;so-&gt;table[i];
+if (entry-&gt;key == NULL)
+    goto found_unused;
+</code></pre>
+
+<hr>
+
+<p>Most small Python ints hash to themselves; particularly, all ints in your test hash to themselves. You can see this implemented in <a href="https://github.com/python/cpython/blob/v3.8.2/Objects/longobject.c#L3091" rel="noreferrer"><code>long_hash</code></a>. Since your set never contains two elements with equal low bits in their hashes, no collision occurs.</p>
+
+<hr>
+
+<p>A Python set iterator keeps track of its position in a set with a simple integer index into the set's internal hash table. When the next element is requested, the iterator searches for a populated entry in the hash table starting at that index, then sets its stored index to immediately after the found entry and returns the entry's element. You can see this in <a href="https://github.com/python/cpython/blob/v3.8.2/Objects/setobject.c#L867" rel="noreferrer"><code>setiter_iternext</code></a>:</p>
+
+<pre class="lang-c prettyprint-override"><code>while (i &lt;= mask &amp;&amp; (entry[i].key == NULL || entry[i].key == dummy))
+    i++;
+si-&gt;si_pos = i+1;
+if (i &gt; mask)
+    goto fail;
+si-&gt;len--;
+key = entry[i].key;
+Py_INCREF(key);
+return key;
+</code></pre>
+
+<hr>
+
+<p>Your set initially starts with a hash table of size 8, and a pointer to a <code>0</code> int object at index 0 in the hash table. The iterator is also positioned at index 0. As you iterate, elements are added to the hash table, each at the next index because that's where their hash says to put them, and that's always the next index the iterator looks at. Removed elements have a dummy marker stored at their old position, for collision resolution purposes. You can see that implemented in <a href="https://github.com/python/cpython/blob/v3.8.2/Objects/setobject.c#L396" rel="noreferrer"><code>set_discard_entry</code></a>:</p>
+
+<pre class="lang-c prettyprint-override"><code>entry = set_lookkey(so, key, hash);
+if (entry == NULL)
+    return -1;
+if (entry-&gt;key == NULL)
+    return DISCARD_NOTFOUND;
+old_key = entry-&gt;key;
+entry-&gt;key = dummy;
+entry-&gt;hash = -1;
+so-&gt;used--;
+Py_DECREF(old_key);
+return DISCARD_FOUND;
+</code></pre>
+
+<p>When <code>4</code> is added to the set, the number of elements and dummies in the set becomes high enough that <code>set_add_entry</code> triggers a hash table rebuild, calling <code>set_table_resize</code>:</p>
+
+<pre class="lang-c prettyprint-override"><code>if ((size_t)so-&gt;fill*5 &lt; mask*3)
+    return 0;
+return set_table_resize(so, so-&gt;used&gt;50000 ? so-&gt;used*2 : so-&gt;used*4);
+</code></pre>
+
+<p><code>so-&gt;used</code> is the number of populated, non-dummy entries in the hash table, which is 2, so <code>set_table_resize</code> receives 8 as its second argument. Based on this, <code>set_table_resize</code> <a href="https://github.com/python/cpython/blob/v3.8.2/Objects/setobject.c#L303" rel="noreferrer">decides</a> the new hash table size should be 16:</p>
+
+<pre class="lang-c prettyprint-override"><code>/* Find the smallest table size &gt; minused. */
+/* XXX speed-up with intrinsics */
+size_t newsize = PySet_MINSIZE;
+while (newsize &lt;= (size_t)minused) {
+    newsize &lt;&lt;= 1; // The largest possible value is PY_SSIZE_T_MAX + 1.
+}
+</code></pre>
+
+<p>It rebuilds the hash table with size 16. All elements still end up at their old indexes in the new hash table, since they didn't have any high bits set in their hashes.</p>
+
+<p>As the loop continues, elements keep getting placed at the next index the iterator will look. Another hash table rebuild is triggered, but the new size is still 16.</p>
+
+<p>The pattern breaks when the loop adds 16 as an element. There is no index 16 to place the new element at. The 4 lowest bits of 16 are 0000, putting 16 at index 0. The iterator's stored index is 16 at this point, and when the loop asks for the next element from the iterator, the iterator sees that it has gone past the end of the hash table.</p>
+
+<p>The iterator terminates the loop at this point, leaving only <code>16</code> in the set.</p>

@@ -1,0 +1,53 @@
+<p><strong>Context</strong></p>
+
+<p>We are porting C code that was originally compiled using an 8-bit C compiler for the PIC microcontroller. A common idiom that was used in order to prevent unsigned global variables (for example, error counters) from rolling over back to zero is the following:</p>
+
+<pre><code>if(~counter) counter++;
+</code></pre>
+
+<p>The bitwise operator here inverts all the bits and the statement is only true if <code>counter</code> is less than the maximum value. Importantly, this works regardless of the variable size.</p>
+
+<p><strong>Problem</strong></p>
+
+<p>We are now targeting a 32-bit ARM processor using GCC. We've noticed that the same code produces different results. So far as we can tell, it looks like the bitwise complement operation returns a value that is a different size than we would expect. To reproduce this, we compile, in GCC:</p>
+
+<pre><code>uint8_t i = 0;
+int sz;
+
+sz = sizeof(i);
+printf("Size of variable: %d\n", sz); // Size of variable: 1
+
+sz = sizeof(~i);
+printf("Size of result: %d\n", sz); // Size of result: 4
+</code></pre>
+
+<p>In the first line of output, we get what we would expect: <code>i</code> is 1 byte. However, the bitwise complement of <code>i</code> is actually <strong><em>four bytes</em></strong> which causes a problem because comparisons with this now will not give the expected results. For example, if doing (where <code>i</code> is a properly-initialized <code>uint8_t</code>):</p>
+
+<pre><code>if(~i) i++;
+</code></pre>
+
+<p>we will see <code>i</code> "wrap around" from 0xFF back to 0x00. This behaviour is different in GCC compared with when it used to work as we intended in the previous compiler and 8-bit PIC microcontroller.</p>
+
+<p>We are aware that we can resolve this by casting like so:</p>
+
+<pre><code>if((uint8_t)~i) i++;
+</code></pre>
+
+<p>or, by</p>
+
+<pre><code>if(i &lt; 0xFF) i++;
+</code></pre>
+
+<p>however in both of these workarounds, the size of the variable must be known and is error-prone for the software developer. These kinds of upper bounds checks occur throughout the codebase. There are multiple sizes of variables (eg., <code>uint16_t</code> and <code>unsigned char</code> etc.) and changing these in an otherwise working codebase is not something we're looking forward to.</p>
+
+<p><strong>Question</strong></p>
+
+<p>Is our understanding of the problem correct, and are there options available to resolving this that do not require re-visiting each case where we've used this idiom? Is our assumption correct, that an  operation like bitwise complement should return a result that is the same size as the operand? It seems like this would break, depending on processor architectures. I feel like I'm taking crazy pills and that C should be a bit more portable than this. Again, our understanding of this could be wrong.</p>
+
+<p>On the surface this might not seem like a huge issue but this previously-working idiom is used in hundreds of locations and we're eager to understand this before proceeding with expensive changes.</p>
+
+<hr>
+
+<p><em>Note:</em> There is a seemingly similar but not exact duplicate question here: <a href="https://stackoverflow.com/questions/11001843/bitwise-operation-on-char-gives-32-bit-result">Bitwise operation on char gives 32 bit result</a></p>
+
+<p>I didn't see the actual crux of the issue discussed there, namely, the result size of a bitwise complement being different than what's passed into the operator.</p>

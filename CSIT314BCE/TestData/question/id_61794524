@@ -1,0 +1,59 @@
+<p>My environment</p>
+
+<p>Windows 10</p>
+
+<p>.NET Framework 4.6.1</p>
+
+<p>I have registered the following as trusted sites
+<a href="https://www.yahoo.co.jp/" rel="nofollow noreferrer">https://www.yahoo.co.jp/</a></p>
+
+<p>If you add the URL to the trusted site and enable protection mode, then run <code>ExecuteByInternetExplorer()</code> in the source code below to open the link in a separate tab (or in a separate window), the IeOnNewWindow3 event will be triggered.
+However, if you disable the protection mode, it won't work.
+IeOnNewWindow3 events are not fired when I jump to a link on a page launched with <code>ExerciseByInternetExplorerMedium()</code>.</p>
+
+<p>The following Microsoft documentation states that InternetExplorerMedium has IeOnNewWindow3.
+<a href="https://docs.microsoft.com/en-us/dotnet/api/shdocvw.internetexplorermedium?view=dynamics-usd-3" rel="nofollow noreferrer">https://docs.microsoft.com/en-us/dotnet/api/shdocvw.internetexplorermedium?view=dynamics-usd-3</a></p>
+
+<p>I thought it would work the same way, but does it need any processing?
+Or is there some other part that has to do with IE settings?</p>
+
+<pre><code>using System;
+using SHDocVw;
+
+namespace InternetExplorerMediumTest
+{
+    class Program
+    {
+        private const string url = "https://www.yahoo.co.jp/";
+        static void Main(string[] args)
+        {
+            ExecuteByInternetExplorerMedium();
+            //ExecuteByInternetExplorer();
+        }
+
+        private static void ExecuteByInternetExplorerMedium()
+        {
+            var ie = new InternetExplorerMedium();
+            ie.Navigate(url);
+            ie.Visible = true;
+            ie.NewWindow3 += IeOnNewWindow3;
+            var r = Console.ReadLine();
+        }
+
+        private static void ExecuteByInternetExplorer()
+        {
+            var ie = new InternetExplorer();
+            ie.Navigate(url);
+            ie.Visible = true;
+            ie.NewWindow3 += IeOnNewWindow3;
+            var r = Console.ReadLine();
+        }
+
+        private static void IeOnNewWindow3(ref object ppdisp, ref bool cancel, uint dwflags, string bstrurlcontext, string bstrurl)
+        {
+            Console.WriteLine("test");
+        }
+    }
+}
+
+</code></pre>

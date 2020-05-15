@@ -1,0 +1,170 @@
+<p><strong>Edit</strong>: following is the official solution from Google (<a href="https://issuetracker.google.com/issues/154855417#comment509" rel="noreferrer">link</a>)</p>
+
+<h2><strong>Summary</strong></h2>
+
+<p>Google Maps SDK thread crashes App (ArrayIndexOutOfBoundsException) - Solution Offered</p>
+
+<h2><strong>Description</strong></h2>
+
+<p>On <strong>April 23 2020 starting at 11:30 PDT</strong>, Google served for 4 hours an update to the configuration of a Maps mobile component, triggering crashes in Maps SDKs for Android and iOS. Applications on devices that downloaded this version of the configuration (during the outage period) were vulnerable to the crash. Workaround solutions are offered for Maps SDKs for Android and iOS.</p>
+
+<h2><strong>Maps SDK for Android</strong></h2>
+
+<p><strong>Maps SDK for Android v2 (included in Google Play Services)</strong></p>
+
+<p>The updates to Google Play Services to fix the crash has been published to all devices with Google Play Services version 17.4.55 and newer. There is no change to the version number of Google Play Services on the device after the update is installed. No action is required from developers or end users to receive the updated Maps module; however, developers can verify that the module is present on a given device with the following adb command:</p>
+
+<pre><code>adb shell dumpsys activity provider com.google.android.gms.chimera.container.GmsModuleProvider
+</code></pre>
+
+<p>You should see the line <code>Module Set ID: maps</code> listed in the <code>Module Sets</code> section.</p>
+
+<pre><code>Module Set ID: maps, Module Set Version: 2015120015120000
+</code></pre>
+
+<p>The crash rates of Maps SDK for Android v2 are back to normal.</p>
+
+<p>As of now, if you have not updated your app with the client-side code workarounds mentioned below, you do not need to take further action.</p>
+
+<p>If you have already updated your app with the workarounds, you can remove the workaround in a subsequent update of your app (but keeping the workaround is safe).</p>
+
+<p><strong>Premium Plan Maps SDK for Android v2 or Maps SDK for Android v3 beta (static libraries)</strong></p>
+
+<p>If your app uses the Premium Plan Maps SDK for Android v2 or Maps SDK for Android v3 beta (static libraries), and is still experiencing crashes, we still highly recommend you to roll out the workarounds below via an update to your app. As your application is loading a static version of the SDK which is vulnerable to the bad data being stored on some devices, only an update to your application can solve the problem.</p>
+
+<p><strong>Play Store review approvals</strong></p>
+
+<p>If you update your app but experience Play Store review approvals delays, please file a support case with your app’s Package ID: ⁠<a href="https://developers.google.com/maps/documentation/android-sdk/support#contact-maps-support" rel="noreferrer">Contact the support team</a>. Our Support Team will internally escalate your request and expedite the approval.</p>
+
+<p><strong>Negative reviews in the Google Play Store</strong></p>
+
+<p>Some application developers inquired about 1-star reviews in the Google Play Store left by end-users due to crashes. Only comments that violate Google Play's policy [ 1 ] can be removed. You can also flag abusive reviews in the Play Console [ 2 ]. Applications will not be automatically removed from the Google Play store due to negative reviews. It's also worth noting that the calculation of your overall app review rating favors recent reviews, which means that your rating will recover to pre-incident levels over time.</p>
+
+<p>[ 1 ] ⁠<a href="https://play.google.com/about/comment-posting-policy/" rel="noreferrer">Ratings &amp; Review on the Play Store</a></p>
+
+<p>[ 2 ] ⁠<a href="https://support.google.com/googleplay/android-developer/answer/7318385" rel="noreferrer">Report inappropriate reviews</a></p>
+
+<h2><strong>Maps SDK for iOS</strong></h2>
+
+<p>Crash rates on iOS are back to normal. If your application is still experiencing crashes, you need to update and publish your app with the code workarounds communicated here.</p>
+
+<p>For questions about deploying or expediting your application in the Apple App Store, please contact Apple directly.</p>
+
+<hr>
+
+<p><strong><em>With this update, we are closing this issue. Thank you to everyone for your patience. Our team is performing an in-depth internal investigation of this incident; as soon as possible, we will publish our analysis (in approximately a week). In the meantime, if you have any questions, or are still experiencing problems, please ⁠<a href="https://developers.google.com/maps/documentation/android-sdk/support#contact-maps-support" rel="noreferrer">file a support case</a>.</em></strong></p>
+
+<h2><strong>Workarounds:</strong></h2>
+
+<ul>
+<li><p>End users on Android can clear the affected app's data (not just the
+cache).   </p></li>
+<li><p>End users on iOS can uninstall then reinstall the affected app(s).</p></li>
+<li><p>App Developers can apply the code workarounds below in order to solve
+the issue for all their end users.</p></li>
+</ul>
+
+<p><strong>Code workaround for iOS:</strong></p>
+
+<p>Recommended placement for the code is before GMSServices initialization in the application(_:didFinishLaunchingWithOptions:) (Swift) or application:didFinishLaunchingWithOptions: (Objective-C) method. Specifically:</p>
+
+<p><strong>Swift:</strong></p>
+
+<pre><code>let key = "GoogleMapsServerControlledParamsKey_bug_154855417"
+if !UserDefaults.standard.bool(forKey: key) {
+    let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+    if urls.count &gt; 0 {
+        let paramUrl = urls[0].appendingPathComponent("com.google.GoogleMaps/ServerControlledParams", isDirectory: false)
+        try? FileManager.default.removeItem(at: paramUrl)
+    }
+    UserDefaults.standard.set(true, forKey: key)
+}
+</code></pre>
+
+<p><strong>Objective-C:</strong></p>
+
+<pre><code>NSString *key = @"GoogleMapsServerControlledParamsKey_bug_154855417";
+BOOL keyExists = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+if (!keyExists) {
+    NSArray&lt;NSURL *&gt; *array =
+        [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
+                                               inDomains:NSUserDomainMask];
+    if (array.count &gt; 0) {
+        NSURL *url =
+            [array[0] URLByAppendingPathComponent:@"com.google.GoogleMaps/ServerControlledParams"
+                                      isDirectory:NO];
+        if (url) {
+            [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
+        }
+    }
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
+}
+</code></pre>
+
+<p><strong>Code workaround for Android:</strong></p>
+
+<p>The recommended placement for the code is in Application.onCreate():</p>
+
+<p><strong>Java</strong></p>
+
+<pre><code>try {
+  SharedPreferences hasFixedGoogleBug154855417 = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE);
+  if (!hasFixedGoogleBug154855417.contains("fixed")) {
+    File corruptedZoomTables = new File(getFilesDir(), "ZoomTables.data");
+    File corruptedSavedClientParameters = new File(getFilesDir(), "SavedClientParameters.data.cs");
+    File corruptedClientParametersData =
+        new File(
+          getFilesDir(),
+          "DATA_ServerControlledParametersManager.data."
+              + getBaseContext().getPackageName());
+    File corruptedClientParametersDataV1 =
+        new File(
+          getFilesDir(),
+          "DATA_ServerControlledParametersManager.data.v1."
+              + getBaseContext().getPackageName());
+    corruptedZoomTables.delete();
+    corruptedSavedClientParameters.delete();
+    corruptedClientParametersData.delete();
+    corruptedClientParametersDataV1.delete();
+    hasFixedGoogleBug154855417.edit().putBoolean("fixed", true).apply();
+  }
+} catch (Exception e) {
+
+}
+</code></pre>
+
+<p><strong>Kotlin</strong></p>
+
+<pre><code>try {
+    val sharedPreferences = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE)
+    if (!sharedPreferences.contains("fixed")) {
+        val corruptedZoomTables = File(filesDir, "ZoomTables.data")
+        val corruptedSavedClientParameters = File(filesDir, "SavedClientParameters.data.cs")
+        val corruptedClientParametersData = File(filesDir, "DATA_ServerControlledParametersManager.data.${packageName}")
+        val corruptedClientParametersDataV1 = File(filesDir, "DATA_ServerControlledParametersManager.data.v1.${packageName}")
+        corruptedZoomTables.delete()
+        corruptedSavedClientParameters.delete()
+        corruptedClientParametersData.delete()
+        corruptedClientParametersDataV1.delete()
+        sharedPreferences.edit().putBoolean("fixed", true).apply()
+    }
+} catch (exception: Exception) {
+
+}
+</code></pre>
+
+<p>The workarounds provided here covers all available flavors and versions of our SDKs for Android. To clarify further (in case you released an earlier version of the workaround that did not delete as many files):</p>
+
+<ul>
+<li>Applications that use Maps Android SDK v2 should only need to delete
+one file: ZoomTables.data.</li>
+<li><p>Applications that use Maps Android SDK v3 beta should only need to
+delete one file, either</p>
+
+<p>DATA_ServerControlledParametersManager.data.v1. +
+               getBaseContext().getPackageName())
+or</p>
+
+<p>DATA_ServerControlledParametersManager.data. +
+           getBaseContext().getPackageName())</p></li>
+</ul>

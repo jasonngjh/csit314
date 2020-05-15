@@ -1,0 +1,11 @@
+<p>With <code>apply</code> would be</p>
+
+<pre class="lang-py prettyprint-override"><code>s['c'] = s.apply(lambda x: [int(x.A == i) for i in x.B], axis=1)
+s
+        A                  B          c
+0   hello  [all, say, hello]  [0, 0, 1]
+1    good   [good, for, you]  [1, 0, 0]
+2      my         [so, hard]     [0, 0]
+3  pandas           [pandas]        [1]
+4   wrong                 []         []
+</code></pre>

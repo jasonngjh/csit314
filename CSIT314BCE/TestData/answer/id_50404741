@@ -1,9 +1,0 @@
-<pre><code>git clean -f
-</code></pre>
-
-<p>will remove the untracked files from the current git </p>
-
-<pre><code>git clean -fd
-</code></pre>
-
-<p>when you want to remove directories and files, this will delete only untracked directories and files</p>

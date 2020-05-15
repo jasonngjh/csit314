@@ -1,3 +1,0 @@
-<p>Java passes references by value.</p>
-
-<p>So you can't change the reference that gets passed in.</p>

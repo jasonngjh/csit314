@@ -1,0 +1,82 @@
+<p>Here are two functions, one in <code>kotlin.kt</code>:</p>
+
+<pre class="lang-kotlin prettyprint-override"><code>interface TraitA
+
+fun &lt;T : TraitA&gt; foo(a: Any, f: (T) -&gt; Unit) {
+    TODO()
+}
+</code></pre>
+
+<p>another adapter function in <code>Scala.scala</code></p>
+
+<pre class="lang-scala prettyprint-override"><code>import KotlinKt.foo
+
+object Scala {
+  def adapter[E &lt;: TraitA](f: (E) =&gt; Unit): Unit = {
+    foo[E](None, { a =&gt;
+      // Do something
+
+      kotlin.Unit.INSTANCE
+    })
+  }
+}
+</code></pre>
+
+<p>Till this moment, it compiles. But when I overload this function in Kotlin:</p>
+
+<pre class="lang-kotlin prettyprint-override"><code>interface TraitA
+
+fun &lt;T : TraitA&gt; foo(f: (T) -&gt; Unit) {
+    TODO()
+}
+
+fun &lt;T : TraitA&gt; foo(a: Any, f: (T) -&gt; Unit) {
+    TODO()
+}
+</code></pre>
+
+<p>Scala fails to compile with the following error:</p>
+
+<pre><code>&gt; Task :scala:compileScala
+[Error] E:\Documents\Projects\Temp\kotlin-example\scala\src\main\scala\Scala.scala:5: missing parameter type
+one error found
+</code></pre>
+
+<p>It tells me to add parameter type, so I added it:</p>
+
+<pre class="lang-scala prettyprint-override"><code>import KotlinKt.foo
+
+object Scala {
+  def adapter[E &lt;: TraitA](f: (E) =&gt; Unit): Unit = {
+    foo[E](None, { (a: E) =&gt;
+      kotlin.Unit.INSTANCE
+    })
+  }
+}
+</code></pre>
+
+<p>The compiler throws other error after the change:</p>
+
+<pre><code>[Error] E:\Documents\Projects\Temp\kotlin-example\scala\src\main\scala\Scala.scala:5: overloaded method foo with alternatives:
+  (x$1: Object,x$2: kotlin.jvm.functions.Function1[_ &gt;: E, kotlin.Unit])Unit &lt;and&gt;
+  (x$1: kotlin.jvm.functions.Function1[_ &gt;: E, kotlin.Unit])Unit
+ cannot be applied to (None.type, E =&gt; kotlin.Unit)
+one error found
+</code></pre>
+
+<p>I tried to construct a Kotlin <code>Function1</code> "explicitly":</p>
+
+<pre class="lang-scala prettyprint-override"><code>import KotlinKt.foo
+
+import kotlin.jvm.functions.{Function1 =&gt; KF1}
+
+object Scala {
+  def adapter[E &lt;: TraitA](f: (E) =&gt; Unit): Unit = {
+    val kf: KF1[E, kotlin.Unit] = { e =&gt; f(e); kotlin.Unit.INSTANCE }
+
+    foo[E](None, kf)
+  }
+}
+</code></pre>
+
+<p>It compiles and works well. But it is too circuitous, is there a prettier way to call <code>foo[T](Any, Function1[_ &gt;: T, kotlin.Unit])</code>?</p>

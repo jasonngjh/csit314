@@ -1,0 +1,204 @@
+<p>We have a client application (with 10+ years of development). Its JDK was upgraded from OpenJDK 11 to OpenJDK 14 recently. On single-CPU (hyper-threading disabled) Windows 10 setups (and inside VirtualBox machines with only one available CPU) the application starts quite slowly compared to Java 11. Furthermore, it uses 100% CPU most of the time. We could also reproduce the issue with setting the processor affinity to only one CPU (<code>c:\windows\system32\cmd.exe /C start /affinity 1 ...</code>).</p>
+
+<p>Some measurement with starting the application and doing a query with minimal manual interaction in my VirtualBox machine:</p>
+
+<ul>
+<li>OpenJDK 11.0.2: 36 seconds</li>
+<li>OpenJDK 13.0.2: ~1.5 minutes</li>
+<li>OpenJDK 13.0.2 with <code>-XX:-UseBiasedLocking</code>: 46 seconds</li>
+<li>OpenJDK 13.0.2 with <code>-XX:-ThreadLocalHandshakes</code>: 40 seconds</li>
+<li>OpenJDK 14: 5-6 minutes</li>
+<li>OpenJDK 14 with <code>-XX:-UseBiasedLocking</code>: 3-3,5 minutes</li>
+<li>OpenJDK 15 EA Build 20: ~4,5 minutes</li>
+</ul>
+
+<p>Only the used JDK (and the mentioned options) has been changed. (<code>-XX:-ThreadLocalHandshakes</code> is not available in Java 14.)</p>
+
+<p>We have tried logging what JDK 14 does with <code>-Xlog:all=debug:file=app.txt:uptime,tid,level,tags:filecount=50</code>.</p>
+
+<p>Counting the log lines for every second seems quite smooth with OpenJDK 11.0.2:</p>
+
+<pre><code>$ cat jdk11-log/app* | grep "^\[" | cut -d. -f 1 | cut -d[ -f 2 | sort | uniq -c | sort -k 2 -n
+  30710 0
+  44012 1
+  55461 2
+  55974 3
+  27182 4
+  41292 5
+  43796 6
+  51889 7
+  54170 8
+  58850 9
+  51422 10
+  44378 11
+  41405 12
+  53589 13
+  41696 14
+  29526 15
+   2350 16
+  50228 17
+  62623 18
+  42684 19
+  45045 20
+</code></pre>
+
+<p>On the other hand, OpenJDK 14 seems to have interesting quiet periods:</p>
+
+<pre><code>$ cat jdk14-log/app* | grep "^\[" | cut -d. -f 1 | cut -d[ -f 2 | sort | uniq -c | sort -k 2 -n
+   7726 0
+   1715 5
+  10744 6
+   4341 11
+  42792 12
+  45979 13
+  38783 14
+  17253 21
+  34747 22
+   1025 28
+   2079 33
+   2398 39
+   3016 44
+</code></pre>
+
+<p>So, what's happening between seconds 1-4, 7-10 and 14-20?</p>
+
+<pre><code>...
+[0.350s][7248][debug][class,resolve        ] jdk.internal.ref.CleanerFactory$1 java.lang.Thread CleanerFactory.java:45
+[0.350s][7248][debug][class,resolve        ] jdk.internal.ref.CleanerImpl java.lang.Thread CleanerImpl.java:117
+[0.350s][7248][info ][biasedlocking        ] Aligned thread 0x000000001727e010 to 0x000000001727e800
+[0.350s][7248][info ][os,thread            ] Thread started (tid: 2944, attributes: stacksize: default, flags: CREATE_SUSPENDED STACK_SIZE_PARAM_IS)
+[0.350s][6884][info ][os,thread            ] Thread is alive (tid: 6884).
+[0.350s][6884][debug][os,thread            ] Thread 6884 stack dimensions: 0x00000000175b0000-0x00000000176b0000 (1024k).
+[0.350s][6884][debug][os,thread            ] Thread 6884 stack guard pages activated: 0x00000000175b0000-0x00000000175b4000.
+[0.350s][7248][debug][thread,smr           ] tid=7248: Threads::add: new ThreadsList=0x0000000017254500
+[0.350s][7248][debug][thread,smr           ] tid=7248: ThreadsSMRSupport::free_list: threads=0x0000000017253d50 is freed.
+[0.350s][2944][info ][os,thread            ] Thread is alive (tid: 2944).
+[0.350s][2944][debug][os,thread            ] Thread 2944 stack dimensions: 0x00000000177b0000-0x00000000178b0000 (1024k).
+[0.350s][2944][debug][os,thread            ] Thread 2944 stack guard pages activated: 0x00000000177b0000-0x00000000177b4000.
+[0.351s][2944][debug][class,resolve        ] java.lang.Thread java.lang.Runnable Thread.java:832
+[0.351s][2944][debug][class,resolve        ] jdk.internal.ref.CleanerImpl jdk.internal.misc.InnocuousThread CleanerImpl.java:135
+[0.351s][2944][debug][class,resolve        ] jdk.internal.ref.CleanerImpl jdk.internal.ref.PhantomCleanable CleanerImpl.java:138
+[0.351s][2944][info ][biasedlocking,handshake] JavaThread 0x000000001727e800 handshaking JavaThread 0x000000000286d800 to revoke object 0x00000000c0087f78
+[0.351s][2944][debug][vmthread               ] Adding VM operation: HandshakeOneThread
+[0.351s][6708][debug][vmthread               ] Evaluating non-safepoint VM operation: HandshakeOneThread
+[0.351s][6708][debug][vmoperation            ] begin VM_Operation (0x00000000178af250): HandshakeOneThread, mode: no safepoint, requested by thread 0x000000001727e800
+
+# no log until 5.723s
+
+[5.723s][7248][info ][biasedlocking          ]   Revoked bias of currently-unlocked object
+[5.723s][7248][debug][handshake,task         ] Operation: RevokeOneBias for thread 0x000000000286d800, is_vm_thread: false, completed in 94800 ns
+[5.723s][7248][debug][class,resolve          ] java.util.zip.ZipFile$CleanableResource java.lang.ref.Cleaner ZipFile.java:715
+[5.723s][7248][debug][class,resolve          ] java.lang.ref.Cleaner jdk.internal.ref.CleanerImpl$PhantomCleanableRef Cleaner.java:220
+[5.723s][7248][debug][class,resolve          ] java.util.zip.ZipFile$CleanableResource java.util.WeakHashMap ZipFile.java:716
+...
+</code></pre>
+
+<p>The second pause a little bit later:</p>
+
+<pre><code>...
+[6.246s][7248][info ][class,load              ] java.awt.Graphics source: jrt:/java.desktop
+[6.246s][7248][debug][class,load              ]  klass: 0x0000000100081a00 super: 0x0000000100001080 loader: [loader data: 0x0000000002882bd0 of 'bootstrap'] bytes: 5625 checksum: 0025818f
+[6.246s][7248][debug][class,resolve           ] java.awt.Graphics java.lang.Object (super)
+[6.246s][7248][info ][class,loader,constraints] updating constraint for name java/awt/Graphics, loader 'bootstrap', by setting class object
+[6.246s][7248][debug][jit,compilation         ]   19       4       java.lang.Object::&lt;init&gt; (1 bytes)   made not entrant
+[6.246s][7248][debug][vmthread                ] Adding VM operation: HandshakeAllThreads
+[6.246s][6708][debug][vmthread                ] Evaluating non-safepoint VM operation: HandshakeAllThreads
+[6.246s][6708][debug][vmoperation             ] begin VM_Operation (0x000000000203ddf8): HandshakeAllThreads, mode: no safepoint, requested by thread 0x000000000286d800
+[6.246s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026b0800, is_vm_thread: true, completed in 1400 ns
+[6.246s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026bb800, is_vm_thread: true, completed in 700 ns
+[6.246s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026ef800, is_vm_thread: true, completed in 100 ns
+[6.246s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026f0800, is_vm_thread: true, completed in 100 ns
+[6.246s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026f1800, is_vm_thread: true, completed in 100 ns
+[6.246s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026f4800, is_vm_thread: true, completed in 100 ns
+[6.247s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x0000000002768800, is_vm_thread: true, completed in 100 ns
+[6.247s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x000000000276e000, is_vm_thread: true, completed in 100 ns
+[6.247s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x0000000017268800, is_vm_thread: true, completed in 100 ns
+[6.247s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x000000001727e800, is_vm_thread: true, completed in 800 ns
+
+# no log until 11.783s
+
+[11.783s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x000000000286d800, is_vm_thread: true, completed in 6300 ns
+[11.783s][6708][info ][handshake               ] Handshake "Deoptimize", Targeted threads: 11, Executed by targeted threads: 0, Total completion time: 5536442500 ns
+[11.783s][6708][debug][vmoperation             ] end VM_Operation (0x000000000203ddf8): HandshakeAllThreads, mode: no safepoint, requested by thread 0x000000000286d800
+[11.783s][7248][debug][protectiondomain        ] Checking package access
+[11.783s][7248][debug][protectiondomain        ] class loader: a 'jdk/internal/loader/ClassLoaders$AppClassLoader'{0x00000000c0058628} protection domain: a 'java/security/ProtectionDomain'{0x00000000c058b948} loading: 'java/awt/Graphics'
+[11.783s][7248][debug][protectiondomain        ] granted
+[11.783s][7248][debug][class,resolve           ] sun.launcher.LauncherHelper java.awt.Graphics LauncherHelper.java:816 (reflection)
+[11.783s][7248][debug][class,resolve           ] jdk.internal.reflect.Reflection [Ljava.lang.reflect.Method; Reflection.java:300
+[11.783s][7248][debug][class,preorder          ] java.lang.PublicMethods$MethodList source: C:\Users\example\AppData\Local\example\stable\jdk\lib\modules
+...
+</code></pre>
+
+<p>Then the third one:</p>
+
+<pre><code>...
+[14.578s][7248][debug][class,preorder          ] java.lang.InheritableThreadLocal source: C:\Users\example\AppData\Local\example\stable\jdk\lib\modules
+[14.578s][7248][info ][class,load              ] java.lang.InheritableThreadLocal source: jrt:/java.base
+[14.578s][7248][debug][class,load              ]  klass: 0x0000000100124740 super: 0x0000000100021a18 loader: [loader data: 0x0000000002882bd0 of 'bootstrap'] bytes: 1338 checksum: 8013ed55
+[14.578s][7248][debug][class,resolve           ] java.lang.InheritableThreadLocal java.lang.ThreadLocal (super)
+[14.578s][7248][debug][jit,compilation         ]  699       3       java.lang.ThreadLocal::get (38 bytes)   made not entrant
+[14.578s][7248][debug][vmthread                ] Adding VM operation: HandshakeAllThreads
+[14.578s][6708][debug][vmthread                ] Evaluating non-safepoint VM operation: HandshakeAllThreads
+[14.578s][6708][debug][vmoperation             ] begin VM_Operation (0x000000000203d228): HandshakeAllThreads, mode: no safepoint, requested by thread 0x000000000286d800
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026b0800, is_vm_thread: true, completed in 1600 ns
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026bb800, is_vm_thread: true, completed in 900 ns
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026ef800, is_vm_thread: true, completed in 100 ns
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026f0800, is_vm_thread: true, completed in 100 ns
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026f1800, is_vm_thread: true, completed in 100 ns
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x00000000026f4800, is_vm_thread: true, completed in 0 ns
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x0000000002768800, is_vm_thread: true, completed in 0 ns
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x000000000276e000, is_vm_thread: true, completed in 0 ns
+[14.578s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x0000000017268800, is_vm_thread: true, completed in 0 ns
+[14.579s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x000000001727e800, is_vm_thread: true, completed in 900 ns
+
+# no log until 21.455s
+
+[21.455s][6708][debug][handshake,task          ] Operation: Deoptimize for thread 0x000000000286d800, is_vm_thread: true, completed in 12100 ns
+[21.455s][6708][info ][handshake               ] Handshake "Deoptimize", Targeted threads: 11, Executed by targeted threads: 0, Total completion time: 6876829000 ns
+[21.455s][6708][debug][vmoperation             ] end VM_Operation (0x000000000203d228): HandshakeAllThreads, mode: no safepoint, requested by thread 0x000000000286d800
+[21.455s][7248][debug][class,resolve           ] sun.security.jca.Providers java.lang.InheritableThreadLocal Providers.java:39
+[21.455s][7248][info ][class,init              ] 1251 Initializing 'java/lang/InheritableThreadLocal'(no method) (0x0000000100124740)
+[21.455s][7248][debug][class,resolve           ] java.lang.InheritableThreadLocal java.lang.ThreadLocal InheritableThreadLocal.java:57
+[21.456s][7248][debug][class,preorder          ] sun.security.jca.ProviderList source: C:\Users\example\AppData\Local\example\stable\jdk\lib\modules
+[21.456s][7248][info ][class,load              ] sun.security.jca.ProviderList source: jrt:/java.base
+[21.456s][7248][debug][class,load              ]  klass: 0x00000001001249a8 super: 0x0000000100001080 loader: [loader data: 0x0000000002882bd0 of 'bootstrap'] bytes: 11522 checksum: bdc239d2
+[21.456s][7248][debug][class,resolve           ] sun.security.jca.ProviderList java.lang.Object (super)
+...
+</code></pre>
+
+<p>The following two lines seems interesting:</p>
+
+<pre><code>[11.783s][6708][info ][handshake               ] Handshake "Deoptimize", Targeted threads: 11, Executed by targeted threads: 0, Total completion time: 5536442500 ns
+[21.455s][6708][info ][handshake               ] Handshake "Deoptimize", Targeted threads: 11, Executed by targeted threads: 0, Total completion time: 6876829000 ns
+</code></pre>
+
+<p>Is that normal that these handshakes took 5.5 and 6.8 seconds?</p>
+
+<p>I have experienced the same slowdown (and similar logs) with the <a href="https://github.com/update4j/update4j/wiki/Demo-Application" rel="noreferrer">update4j demo app</a> (which is completely unrelated to our application) running with this command:</p>
+
+<pre><code>Z:\swing&gt;\jdk-14\bin\java -Xlog:all=debug:file=app.txt:uptime,tid,level,tags:filecount=50 \
+    -jar update4j-1.4.5.jar --remote http://docs.update4j.org/demo/setup.xml
+</code></pre>
+
+<p>What should I look for to make our app faster again on single-CPU Windows 10 setups? Can I fix this by changing something in our application or by adding JVM arguments?</p>
+
+<p>Is that a JDK bug, should I report it?</p>
+
+<p><strong>update 2020-04-25:</strong></p>
+
+<p>As far as I see the log files also contains GC logs. These are the first GC logs:</p>
+
+<pre><code>$ cat app.txt.00 | grep "\[gc"
+[0.016s][7248][debug][gc,heap          ] Minimum heap 8388608  Initial heap 60817408  Maximum heap 1073741824
+[0.017s][7248][info ][gc,heap,coops    ] Heap address: 0x00000000c0000000, size: 1024 MB, Compressed Oops mode: 32-bit
+[0.018s][7248][info ][gc               ] Using Serial
+[22.863s][6708][info ][gc,start                ] GC(0) Pause Young (Allocation Failure)
+[22.863s][6708][debug][gc,heap                 ] GC(0) Heap before GC invocations=0 (full 0): def new generation   total 17856K, used 15936K [0x00000000c0000000, 0x00000000c1350000, 0x00000000d5550000)
+...
+</code></pre>
+
+<p>Unfortunately it does not seem related since it starts after the third pause.</p>
+
+<p><strong>update 2020-04-26:</strong></p>
+
+<p>With OpenJDK 14 the application uses 100% CPU in my (single-CPU) VirtualBox machine (running on a i7-6600U CPU). The virtual machine has 3,5 GB RAM. According to Task Manager 40%+ is free and disk activity is 0% (I guess this means no swapping). Adding another CPU to the virtual machine (and enabling hyper-threading for physical machines) make the application fast enough again. I just wondering, was it an intentional trade-off during JDK development to loss performance on (rare) single-CPU machines to make the JVM faster on multicore/hyper-threading CPUs?</p>

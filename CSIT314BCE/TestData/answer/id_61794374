@@ -1,0 +1,7 @@
+<p><code>std::set</code> is not just a set of elements, it is a sorted set of elements. Elements of <code>std::set</code> are immutable by design, so that you cannot break <code>std::set</code> invariant by modifying its elements. That's the reason why <code>std::set::iterator</code> and <code>std::set::const_iterator</code> are both constant iterators.</p>
+
+<p><a href="https://en.cppreference.com/w/cpp/container/set#Member_types" rel="nofollow noreferrer">cppreference</a> reads:</p>
+
+<pre><code>iterator          Constant LegacyBidirectionalIterator
+const_iterator    Constant LegacyBidirectionalIterator
+</code></pre>

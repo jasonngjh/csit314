@@ -1,9 +1,0 @@
-<p>To keep the changes from the previous commit to HEAD and move to the previous commit, do:</p>
-
-<pre><code>git reset &lt;SHA&gt;
-</code></pre>
-
-<p>If changes are not required from the previous commit to HEAD and just discard all changes, do:</p>
-
-<pre><code>git reset --hard &lt;SHA&gt;
-</code></pre>

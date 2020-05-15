@@ -1,0 +1,22 @@
+<p>The fact that you can write in raku the following</p>
+
+<pre class="lang-perl prettyprint-override"><code>unit sub MAIN(Int $j = 2);
+
+say $j
+</code></pre>
+
+<p>is amazing, and the fact that the argument parsing is done for you is beyond
+useful. However I find personally extremely unergonomic
+that for such arguments you habe to write a <code>=</code> to set the value, i.e.</p>
+
+<pre><code>./script.raku -j=5
+</code></pre>
+
+<p>I was wondering if there is a way to tell the parser that it should allow options without
+the <code>=</code> so that I can write</p>
+
+<pre><code>./script.raku -j 5
+</code></pre>
+
+<p>I haven't seen this in the docs and this would really be much more intuitive for some people
+like me. If it is not currently possible, I think it would be a useful add-on.</p>

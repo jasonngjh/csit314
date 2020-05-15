@@ -1,0 +1,20 @@
+<p>You can do it in O(n) (single pass over each list) by converting 1 to a dict, then per item in the 2nd list access that dict (in O(1)), like this:</p>
+
+<pre class="lang-py prettyprint-override"><code>mylist1 = [["lemon", 0.1], ["egg", 0.1], ["muffin", 0.3], ["chocolate", 0.5]]
+mylist2 = [["chocolate", 0.5], ["milk", 0.2], ["carrot", 0.8], ["egg", 0.8]]
+
+l1_as_dict = dict(mylist1)
+
+myoutput = []
+for item,price2 in mylist2:
+    if item in l1_as_dict:
+        price1 = l1_as_dict[item]
+        myoutput.append([item, (price1+price2)/2])
+
+print(myoutput)
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>[['chocolate', 0.5], ['egg', 0.45]]
+</code></pre>

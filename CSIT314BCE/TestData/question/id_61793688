@@ -1,0 +1,12 @@
+<p>I want to get rid of all the unholy <code>enable_if</code>s in my templates and replace them with C++20 concepts, however there's barely any info on concepts and the syntax changes with just about any source I read.</p>
+
+<p>Here's a function that takes two iterators of any container with <code>MyClass</code> values:</p>
+
+<pre><code>template &lt;class IteratorType, typename = std::enable_if&lt;std::is_same&lt;
+                                typename std::iterator_traits&lt;IteratorType&gt;::value_type,
+                                MyClass
+                            &gt;::value, void&gt;&gt;
+void myFunction( IteratorType begin, IteratorType end ) {}
+</code></pre>
+
+<p>I know this function could be converted using concepts but I just can't find good leads to start with. </p>

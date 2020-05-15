@@ -1,0 +1,41 @@
+<p>Here are several options for implementing “Add 1 to <code>x</code> but clamp at the maximum representable value,” given that <code>x</code> is some unsigned integer type:</p>
+
+<ol>
+<li><p>Add one if and only if <code>x</code> is less than the maximum value representable in its type:</p>
+
+<pre><code>x += x &lt; Maximum(x);
+</code></pre>
+
+<p>See the following item for the definition of <code>Maximum</code>. This method
+stands a good chance of being optimized by a compiler to efficient
+instructions such as a compare, some form of conditional set or move,
+and an add.</p></li>
+<li><p>Compare to the largest value of the type:</p>
+
+<pre><code>if (x &lt; ((uintmax_t) 2u &lt;&lt; sizeof x * CHAR_BIT - 1) - 1) ++x
+</code></pre>
+
+<p>(This calculates 2<sup><em>N</em></sup>, where <em>N</em> is the number of bits in <code>x</code>, by shifting 2 by <em>N</em>−1 bits. We do this instead of shifting 1 <em>N</em> bits because a shift by the number of bits in a type is not defined by the C standard. The <code>CHAR_BIT</code> macro may be unfamiliar to some; it is the number of bits in a byte, so <code>sizeof x * CHAR_BIT</code> is the number of bits in the type of <code>x</code>.)</p>
+
+<p>This can be wrapped in a macro as desired for aesthetics and clarity:</p>
+
+<pre><code>#define Maximum(x) (((uintmax_t) 2u &lt;&lt; sizeof (x) * CHAR_BIT - 1) - 1)
+if (x &lt; Maximum(x)) ++x;
+</code></pre></li>
+<li><p>Increment <code>x</code> and correct if it wraps to zero, using an <code>if</code>:</p>
+
+<pre><code>if (!++x) --x; // !++x is true if ++x wraps to zero.
+</code></pre></li>
+<li><p>Increment <code>x</code> and correct if it wraps to zero, using an expression:</p>
+
+<pre><code>++x; x -= !x;
+</code></pre>
+
+<p>This is is nominally branchless (sometimes beneficial for performance), but a compiler may implement it the same as above, using a branch if needed but possibly with unconditional instructions if the target architecture has suitable instructions.</p></li>
+<li><p>A branchless option, using the above macro, is:</p>
+
+<pre><code>x += 1 - x/Maximum(x);
+</code></pre>
+
+<p>If <code>x</code> is the maximum of its type, this evaluates to <code>x += 1-1</code>. Otherwise, it is <code>x += 1-0</code>. However, division is somewhat slow on many architectures. A compiler may optimize this to instructions without division, depending on the compiler and the target architecture.</p></li>
+</ol>

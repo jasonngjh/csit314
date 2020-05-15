@@ -1,0 +1,76 @@
+<p>I am facing the following error for my code. Would really helpful if someone could look into it and help me. this page is about editing an album record in the database. Could you please check and tell me if any error is there in the below code. </p>
+
+<p>Error : Parse Error :Syntax Error , Unexpected if (T_IF) in C:\wamp64\www\sample\editalbum.php line 12</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8" http-equiv="Content-Type" content="text/html"; charset="iso-8859-1"/&gt;
+    &lt;title&gt;Edit Album&lt;/title&gt;
+&lt;/head&gt;
+&lt;h1&gt;Welcome to Edit Album Page &lt;/h1&gt;
+&lt;body&gt;
+&lt;?php
+require_once("connection.php")
+
+if(isset($_REQUEST["id"])){
+
+$album_id =$_REQUEST["id"];
+$query = "select * from album where Album_Id=$album_id";
+$result = mysqli_query($query) or die("Selection on the basis of ID Fail Error:".mysqli_error());
+$num = mysqli_num_rows($result);
+
+  if($num &gt;0)
+
+  {
+
+    $row = mysqli_fetch_array($result);
+    echo "&lt;fieldset&gt;&lt;legend&gt;Update Album&lt;/legend&gt;&lt;form action='editalbum.php' method='post'&gt;
+    &lt;table style='margin:10px 10px 10px 10px;'&gt;&lt;tr&gt;&lt;td&gt;Title&lt;/td&gt;&lt;td&gt;&lt;input type='text' id='txtTitle' name='Title' value='$row[Title]/&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Album Name&lt;/td&gt;
+    &lt;td&gt;&lt;input id='txtAlbumName' type='text' name='AlbumName' value=$row[Album_Name]/&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Artist&lt;/td&gt;
+    &lt;td&gt;&lt;input id='txtArtist' type='text' name='Artist' value=$row[Artist]/&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;&lt;td&gt;Language&lt;/td&gt;
+    &lt;td&gt;&lt;input id='txtLanguage' type='text' name='Language' value=$row[Language]/&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input type ='submit' id='btnSubmit' name='Update' value='Update'/&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;/table&gt;
+    &lt;/form&gt;
+    &lt;/fieldset&gt;";
+
+
+   }
+
+}
+
+if(isset($_REQUEST['Update']))
+
+{
+   $title = $_REQUEST['Title'];
+   $album_name =  $_REQUEST['Album_Name'];
+   $artist = $_REQUEST['Artist'];
+   $language = $_REQUEST['Language'];
+   $query1 = "update album set Title='$title',Album_Name='$album_name',Artist='$artist',Language='$language' where Album_Id=$album_id";
+   $result = mysqli_query($query1) or die("Execution fail Error:".mysqli_error());
+
+   if($result&gt;0){
+
+     header("location:welcome.php");
+
+   }
+
+}
+
+
+
+
+?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>

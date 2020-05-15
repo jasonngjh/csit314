@@ -1,0 +1,3 @@
+<p>Its outlooks rubbish filtering system. They have "AI" rules that look at the sending ip address for reputation. They score you on user reportsand lots of other bits they will not tell you about. Make sure you have SPF, DMARC, DKIM, and sign up for their JMRP and SDNS they will tell you. But it still is a game of cat and mouse. Its a slippery slope and even Microsoft trap their own mail to their own outlook users. PITA, to be honest and luckily we managed to get a mitigation to the issue. However some users in different domains still complain of email going to JUNK. Go figure. I hate having to work on issues with Outlook.com. They themselves send out spam and have the audacity to block well configured SMTP senders. </p>
+
+<p>I wish you luck. You will need it.</p>

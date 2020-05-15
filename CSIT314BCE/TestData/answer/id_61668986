@@ -1,0 +1,130 @@
+<blockquote>
+  <p>If I compile my C/C++ program targeting the x86 architecture, it would seem that the same program should run on any computer with the same architecture.</p>
+</blockquote>
+
+<p>It is very true, but there're a few nuances.</p>
+
+<p>Let's consider several cases of programs that are, from C-language point of view, OS-independent.</p>
+
+<hr>
+
+<ol>
+<li>Suppose all that your program does, from the very beginning, is stress-testing the CPU by doing lots of computations without any I/O.</li>
+</ol>
+
+<p>The machine code could be exactly the same for all the OSes (provided they all run in the same CPU mode, e.g. x86 32-bit Protected Mode). You could even write it in assembly language directly, it wouldn't need to be adapted for each OS.</p>
+
+<p>But each OS wants different headers for the binaries containing this code. E.g. Windows wants <a href="https://en.wikipedia.org/wiki/Portable_Executable" rel="noreferrer">PE format</a>, Linux needs <a href="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format" rel="noreferrer">ELF</a>, macOS uses <a href="https://en.wikipedia.org/wiki/Mach-O" rel="noreferrer">Mach-O</a> format. For your simple program you could prepare the machine code as a separate file, and a bunch of headers for each OS's executable format. Then all you need to "recompile" would actually be to concatenate the header and the machine code and, possibly, add alignment "footer".</p>
+
+<p>So, suppose you compiled your C code into machine code, which looks as follows:</p>
+
+<pre class="lang-none prettyprint-override"><code>offset:  instruction  disassembly
+    00:  f7 e0        mul eax
+    02:  eb fc        jmp short 00
+</code></pre>
+
+<p>This is the simple stress-testing code, repeatedly doing multiplications of <code>eax</code> register by itself.</p>
+
+<p>Now you want to make it run on 32-bit Linux and 32-bit Windows. You'll need two headers, here're examples (hex dump):</p>
+
+<ul>
+<li>For Linux:</li>
+</ul>
+
+<pre class="lang-none prettyprint-override"><code>000000 7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00  &gt;.ELF............&lt;
+000010 02 00 03 00 01 00 00 00 54 80 04 08 34 00 00 00  &gt;........T...4...&lt;
+000020 00 00 00 00 00 00 00 00 34 00 20 00 01 00 28 00  &gt;........4. ...(.&lt;
+000030 00 00 00 00 01 00 00 00 54 00 00 00 54 80 04 08  &gt;........T...T...&lt;
+000040 54 80 04 08 04 00 00 00 04 00 00 00 05 00 00 00  &gt;T...............&lt;
+000050 00 10 00 00                                      &gt;....&lt;
+</code></pre>
+
+<ul>
+<li>For Windows (<code>*</code> simply repeats previous line until the address below <code>*</code> is reached):</li>
+</ul>
+
+<pre class="lang-none prettyprint-override"><code>000000 4d 5a 80 00 01 00 00 00 04 00 10 00 ff ff 00 00  &gt;MZ..............&lt;
+000010 40 01 00 00 00 00 00 00 40 00 00 00 00 00 00 00  &gt;@.......@.......&lt;
+000020 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  &gt;................&lt;
+000030 00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 00  &gt;................&lt;
+000040 0e 1f ba 0e 00 b4 09 cd 21 b8 01 4c cd 21 54 68  &gt;........!..L.!Th&lt;
+000050 69 73 20 70 72 6f 67 72 61 6d 20 63 61 6e 6e 6f  &gt;is program canno&lt;
+000060 74 20 62 65 20 72 75 6e 20 69 6e 20 44 4f 53 20  &gt;t be run in DOS &lt;
+000070 6d 6f 64 65 2e 0d 0a 24 00 00 00 00 00 00 00 00  &gt;mode...$........&lt;
+000080 50 45 00 00 4c 01 01 00 ee 71 b4 5e 00 00 00 00  &gt;PE..L....q.^....&lt;
+000090 00 00 00 00 e0 00 0f 01 0b 01 01 47 00 02 00 00  &gt;...........G....&lt;
+0000a0 00 02 00 00 00 00 00 00 00 10 00 00 00 10 00 00  &gt;................&lt;
+0000b0 00 10 00 00 00 00 40 00 00 10 00 00 00 02 00 00  &gt;......@.........&lt;
+0000c0 01 00 00 00 00 00 00 00 03 00 0a 00 00 00 00 00  &gt;................&lt;
+0000d0 00 20 00 00 00 02 00 00 40 fb 00 00 03 00 00 00  &gt;. ......@.......&lt;
+0000e0 00 10 00 00 00 10 00 00 00 00 01 00 00 00 00 00  &gt;................&lt;
+0000f0 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00  &gt;................&lt;
+000100 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  &gt;................&lt;
+*
+000170 00 00 00 00 00 00 00 00 2e 66 6c 61 74 00 00 00  &gt;.........flat...&lt;
+000180 04 00 00 00 00 10 00 00 00 02 00 00 00 02 00 00  &gt;................&lt;
+000190 00 00 00 00 00 00 00 00 00 00 00 00 60 00 00 e0  &gt;............`...&lt;
+0001a0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  &gt;................&lt;
+*
+000200
+</code></pre>
+
+<p>Now if you append your machine code to these headers and, for Windows, also append a bunch of null bytes to make file size 1024 bytes, you'll get valid executables that will run on the corresponding OS.</p>
+
+<hr>
+
+<ol start="2">
+<li><p>Suppose now that your program wants to terminate after doing some amount of calculations.</p>
+
+<p>Now it has two options:</p>
+
+<ol>
+<li><p>Crash—e.g. by execution of an invalid instruction (on x86 it could be <code>UD2</code>). This is easy, OS-independent, but not elegant.</p></li>
+<li><p>Ask the OS to correctly terminate the process. At this point we need an OS-dependent mechanism to do this.</p></li>
+</ol></li>
+</ol>
+
+<p>On x86 Linux it would be</p>
+
+<pre class="lang-none prettyprint-override"><code>xor ebx, ebx ; zero exit code
+mov eax, 1   ; __NR_exit
+int 0x80     ; do the system call (the easiest way)
+</code></pre>
+
+<p>On x86 Windows 7 it would be</p>
+
+<pre class="lang-none prettyprint-override"><code>    ; First call terminates all threads except caller thread, see for details:
+    ; http://www.rohitab.com/discuss/topic/41523-windows-process-termination/
+    mov eax, 0x172  ; NtTerminateProcess_Wind7
+    mov edx, terminateParams
+    int 0x2e        ; do the system call
+    ; Second call terminates current process
+    mov eax, 0x172
+    mov edx, terminateParams
+    int 0x2e
+terminateParams:
+    dd 0, 0 ; processHandle, exitStatus
+</code></pre>
+
+<p>Note that on other Windows version you'd need another system call number. The proper way to call <code>NtTerminateProcess</code> is via yet another nuance of OS-dependence: shared libraries.</p>
+
+<hr>
+
+<ol start="3">
+<li>Now your program wants to load some shared library to avoid reinventing some wheels.</li>
+</ol>
+
+<p>OK, we've seen that our executable file formats are different. Suppose that we've taken this into account and prepared the import sections for the file targeting each of the target OS. There's still a problem: the way to call a function—the so called <a href="https://en.wikipedia.org/wiki/Calling_convention" rel="noreferrer">calling convention</a>—for each OS is different. </p>
+
+<p>E.g. suppose the C-language function your program needs to call returns a structure containing two <code>int</code> values. On Linux the caller would have to allocate some space (e.g. on the stack) and pass the pointer to it as the first parameter to the function being called, like so:</p>
+
+<pre class="lang-none prettyprint-override"><code>sub esp, 12 ; 4*2+alignment: stack must be 16-byte aligned
+push esp    ;                right before the call instruction
+call myFunc
+</code></pre>
+
+<p>On Windows you'd get the first <code>int</code> value of the structure in <code>EAX</code>, and the second in <code>EDX</code>, without passing any additional parameters to the function.</p>
+
+<hr>
+
+<p>There are other nuances like different <a href="https://en.wikipedia.org/wiki/Name_mangling" rel="noreferrer">name mangling</a> schemes (though these can differ between compilers even on the same OS), different data types (e.g. <code>long double</code> on MSVC vs <code>long double</code> on GCC) etc., but the above mentioned ones are the most important differences between the OSes from the point of view of the compiler and linker.</p>

@@ -1,0 +1,39 @@
+<p><strong>edit</strong></p>
+
+<p>If you use angular 9.1.6 it should be fine now</p>
+
+<pre><code>npm update @angular/cli @angular/core
+</code></pre>
+
+<p><strong>original post</strong></p>
+
+<p>Something is broken in Angular 9.1.5 - if you run the following it should work:</p>
+
+<pre><code>npm install @angular/core@9.1.4 @angular/animations@9.1.4 @angular/common@9.1.4 @angular/forms@9.1.4 @angular/platform-browser@9.1.4 @angular/router@9.1.4 @angular/platform-browser-dynamic@9.1.4 @angular/compiler@9.1.4 @angular/compiler-cli@9.1.4 @angular/language-service@9.1.4
+
+ng build
+</code></pre>
+
+<p>Just spent about 4-5 hours trying to fix it myself...</p>
+
+<p>The issue seems to stem from using Angular CLI 9.1.4 with Angular 9.1.5 (most likely the compiler</p>
+
+<p>You'll see the issue when you do</p>
+
+<pre><code>ng --version
+</code></pre>
+
+<p>if you get:</p>
+
+<pre><code>Angular CLI: 9.1.4
+Node: 12.16.3
+OS: win32 x64
+
+Angular: 9.1.5
+... animations, cli, common, compiler, compiler-cli, core, forms
+... language-service, platform-browser, platform-browser-dynamic
+... router
+Ivy Workspace: Yes
+</code></pre>
+
+<p>Then you will need to follow the npm installs i listed above</p>

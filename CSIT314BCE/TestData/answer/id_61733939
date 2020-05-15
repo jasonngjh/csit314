@@ -1,0 +1,32 @@
+<p>If you are working with pandas 0.25+, <code>explode</code> is an option:</p>
+
+<pre><code>(s.explode('B')
+  .assign(C=lambda x: x['A'].eq(x['B']).astype(int))
+  .groupby(level=0).agg({'A':'first','B':list,'C':list})
+)
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>        A                  B          C
+0   hello  [all, say, hello]  [0, 0, 1]
+1    good   [good, for, you]  [1, 0, 0]
+2      my         [so, hard]     [0, 0]
+3  pandas           [pandas]        [1]
+4   wrong              [nan]        [0]
+</code></pre>
+
+<p><strong>Option 2</strong>: Based on your logic, you can do a list comprehension. This should work with any version of <code>pandas</code>:</p>
+
+<pre><code>s['C'] = [[x==a for x in b] if b else [0] for a,b in zip(s['A'],s['B'])]
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>        A                  B                     C
+0   hello  [all, say, hello]  [False, False, True]
+1    good   [good, for, you]  [True, False, False]
+2      my         [so, hard]        [False, False]
+3  pandas           [pandas]                [True]
+4   wrong                 []                   [0]
+</code></pre>

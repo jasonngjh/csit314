@@ -1,9 +1,0 @@
-<p>Comments were removed from JSON by design.</p>
-
-<blockquote>
-  <p>I removed comments from JSON because I saw people were using them to hold parsing directives, a practice which would have destroyed interoperability. I know that the lack of comments makes some people sad, but it shouldn't. </p>
-  
-  <p>Suppose you are using JSON to keep configuration files, which you would like to annotate. Go ahead and insert all the comments you like. Then pipe it through JSMin before handing it to your JSON parser.</p>
-</blockquote>
-
-<p>Source: <a href="https://web.archive.org/web/20120507093915/https://plus.google.com/118095276221607585885/posts/RK8qyGVaGSr" rel="noreferrer">Public statement by Douglas Crockford on G+</a></p>

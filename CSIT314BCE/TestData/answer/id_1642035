@@ -1,8 +1,0 @@
-<p><code>--&gt;</code> is not an operator. It is in fact two separate operators, <code>--</code> and <code>&gt;</code>.</p>
-
-<p>The conditional's code decrements <code>x</code>, while returning <code>x</code>'s original (not decremented) value, and then compares the original value with <code>0</code> using the <code>&gt;</code> operator.</p>
-
-<p><strong>To better understand, the statement could be written as follows:</strong></p>
-
-<pre><code>while( (x--) &gt; 0 )
-</code></pre>

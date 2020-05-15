@@ -1,0 +1,15 @@
+<p>You're really close, with combining two <code>range</code> objects. But there is an easier way to do it:</p>
+
+<pre><code>&gt;&gt;&gt; list(range(6, 10)) + list(range(-9, -5))
+[6, 7, 8, 9, -9, -8, -7, -6]
+</code></pre>
+
+<p>That is, convert each <code>range</code> object to a list, and then concatenate the two lists.</p>
+
+<p>Another approach, using itertools:</p>
+
+<pre><code>&gt;&gt;&gt; list(itertools.chain(range(6, 10), range(-9, -5)))
+[6, 7, 8, 9, -9, -8, -7, -6]
+</code></pre>
+
+<p><code>itertools.chain()</code> is like a generalized <code>+</code>: instead of adding two lists, it chains one iterator after another to make a "super-iterator". Then pass that to <code>list()</code> and you get a concrete list, with all the numbers you want in memory.</p>

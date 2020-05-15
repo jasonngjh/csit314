@@ -1,3 +1,0 @@
-<p><a href="https://i.stack.imgur.com/ueFVY.png" rel="noreferrer"><img src="https://i.stack.imgur.com/ueFVY.png" alt="enter image description here"></a></p>
-
-<p>Assuming you're working in Visual Studio, if you go in to you branch history and look at all of your commits, simply select the event prior to the commit you want to undo, right-click it, and select <code>Revert</code>.  Easy as that.</p>

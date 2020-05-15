@@ -1,0 +1,107 @@
+<p>I am new in C# .net and I'm currently working on a Selenium C# Project that have the BrowserFactory class and have POCO named Driver. </p>
+
+<p>And the InitBrowser method sets its value.</p>
+
+<p>When trying to run the test using Parallel Test in NUnitFramework having 2 parallel tests, it will certainly have an error because as you can see the code is not thread safe so it will not be able to work on parallel test environments.</p>
+
+<p>Below is the code:</p>
+
+<pre><code>namespace SeleniumAutomationFramework.WrapperFactory {
+    class BrowserFactory
+    {
+        private static readonly IDictionary&lt;string, IWebDriver&gt; Drivers = new Dictionary&lt;string, IWebDriver&gt;();
+        private static IWebDriver driver;
+
+
+        public static IWebDriver Driver
+        {
+            get
+            {
+                if (driver == null)
+                    throw new NullReferenceException("The WebDriver browser instance was not initialized. Try to call the method InitBrowser instead.");
+                return driver;
+            }
+            private set
+            {
+                driver = value;
+            }
+        }
+
+        public static void InitBrowser(string browserName)
+        {
+            switch(browserName.ToLower())
+            {
+                case "firefox":
+                    driver = new FirefoxDriver();
+                    Drivers.Add("Firefox", Driver);
+                    break;
+
+                case "chrome":
+                    var options = new ChromeOptions();
+                    options.AddArguments(
+                        "--headless",
+                        "--no-sandbox",
+                        "--disable-dev-shm-usage"
+                            );
+
+                    driver = new ChromeDriver(options);
+                    Drivers.Add("Chrome", Driver);
+                    break;
+
+                case "ie":
+                        driver = new InternetExplorerDriver();
+                        Drivers.Add("IE", Driver);
+                    break;
+
+                //case "chromium":
+                //        driver = new ChromeDriver();
+                //    break;
+
+                default:
+                    driver = new ChromeDriver();
+                    Drivers.Add("Chrome", Driver);
+                    break;
+            }
+        }
+
+        public static void LoadApplication(string url)
+        {
+            Driver.Navigate().GoToUrl(url);
+        }
+
+        public static void CloseAllDrivers()
+        {
+            foreach (var key in Drivers.Keys)
+            {
+                Drivers[key].Close();
+                Drivers[key].Quit();
+            }
+        }
+    } }
+</code></pre>
+
+<p><strong>The Driver property is being called by a Page Generator class.</strong></p>
+
+<pre><code>namespace SeleniumAutomationFramework.PageObjects
+{
+    public static class Page
+    {
+        private static T GetPage&lt;T&gt;() where T : new()
+        {
+            var page = new T();
+            PageFactory.InitElements(BrowserFactory.Driver, page);
+            return page;
+        }
+
+        public static HomePage Home
+        {
+            get { return GetPage&lt;HomePage&gt;();  }
+        }
+
+        public static LoginPage Login
+        {
+            get { return GetPage&lt;LoginPage&gt;(); }
+        }
+    }
+}
+</code></pre>

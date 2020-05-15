@@ -1,3 +1,0 @@
-<p>If untracked directory is a git repository of its own (e.g. submodule), you need to use <code>-f</code> twice:</p>
-
-<p><code>git clean -d -f -f</code></p>

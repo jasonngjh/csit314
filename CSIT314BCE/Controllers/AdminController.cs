@@ -87,51 +87,6 @@ namespace CSIT314BCE.Controllers
             }
         }
 
-
-        [HttpPost]
-        public ActionResult NewRole(FormCollection form)
-        {
-            string rolename = form["RoleName"];
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
-            if (!roleManager.RoleExists(rolename))
-            {
-                //create super admin role
-                var role = new IdentityRole(rolename);
-                roleManager.Create(role);
-            }
-
-            return View("Index");
-        }
-
-        public ActionResult AssignRole()
-        {
-            ViewBag.Users = _context.Users.Select(r => new SelectListItem { Value = r.UserName, Text = r.UserName }).ToList();
-            ViewBag.Roles = _context.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList();
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult AssignRole(FormCollection form)
-        {
-            string usrname = form["txtUserName"];
-            string rolname = form["RoleName"];
-            ApplicationUser user = _context.Users.Where(u => u.UserName.Equals(usrname, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
-            userManager.AddToRole(user.Id, rolname);
-
-            return View("Index");
-        }
-
-        public ActionResult ListUsers()
-        {
-            return View(_context.Users.ToList());
-        }
-
-        public ActionResult ViewDetails(string id)
-        {
-            return View(_context.Users.Where(x => x.Id == id).FirstOrDefault());
-        }
-
         public ActionResult Edit(string id, ManageMessageId? message)
         {
             ViewBag.StatusMessage =

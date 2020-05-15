@@ -1,9 +1,0 @@
-<p>You can do that without jQuery as:</p>
-
-<pre><code>window.location = "http://yourdomain.com";
-</code></pre>
-
-<p>And if you want only jQuery then you can do it like:</p>
-
-<pre><code>$jq(window).attr("location","http://yourdomain.com");
-</code></pre>

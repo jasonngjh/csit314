@@ -1,0 +1,114 @@
+<p>I'm trying to get multiple parameters of root page of my Angular 2 application. 
+I want to get param1, param2 ... of path like "<a href="http://example.com/param1/param2/" rel="nofollow noreferrer">http://example.com/param1/param2/</a>.." in my HomeComponent.
+For example, the path may seem like: "<a href="http://example.com/telephones/accessories/cases" rel="nofollow noreferrer">http://example.com/telephones/accessories/cases</a>"
+But i can get only the first parameter.</p>
+
+<p><strong>app-routing.module.ts</strong></p>
+
+<pre><code>import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', loadChildren: () =&gt; import('./pages/home/home.module').then(m =&gt; m.HomeModule) },
+  { path: ':a', loadChildren: () =&gt; import('./pages/home/home.module').then(m =&gt; m.HomeModule) },
+  { path: ':a/:b', loadChildren: () =&gt; import('./pages/home/home.module').then(m =&gt; m.HomeModule) },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+</code></pre>
+
+<p><strong>home-routing.module.ts</strong></p>
+
+<pre><code>import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home.component';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class HomeRoutingModule { }
+</code></pre>
+
+<p><strong>home.component.ts</strong></p>
+
+<pre><code>import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
+})
+export class HomeComponent implements OnInit 
+{
+  id1:any;
+  id2:any;
+
+  constructor(private activateRoute: ActivatedRoute,){}
+
+  ngOnInit() {
+      this.id1 = this.activateRoute.snapshot.params['a'];
+      console.log("id1 - "+this.id1);
+      this.id2 = this.activateRoute.snapshot.params['b'];
+      console.log("id2 - "+this.id2);
+    };
+}
+</code></pre>
+
+<p>On <a href="http://localhost:4200/param1" rel="nofollow noreferrer">http://localhost:4200/param1</a> it works, but <a href="http://localhost:4200/param1/param2" rel="nofollow noreferrer">http://localhost:4200/param1/param2</a> is not, i'm getting error:</p>
+
+<blockquote>
+  <p>GET <a href="http://localhost:4200/8/runtime.js" rel="nofollow noreferrer">http://localhost:4200/8/runtime.js</a> net::ERR_ABORTED 404 (Not Found)</p>
+</blockquote>
+
+<p>I've try another way like this:</p>
+
+<p><strong>app-routing.module.ts</strong></p>
+
+<pre><code>import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', loadChildren: () =&gt; import('./pages/home/home.module').then(m =&gt; m.HomeModule) },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+</code></pre>
+
+<p><strong>home-routing.module.ts</strong></p>
+
+<pre><code>import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home.component';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: ':a', component: HomeComponent, pathMatch: 'full' },
+  { path: ':a/:b', component: HomeComponent, pathMatch: 'full' },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class HomeRoutingModule { }
+</code></pre>
+
+<p>with absolutely the same result.</p>
+
+<p>Please, advise how can i resolve my problem?</p>

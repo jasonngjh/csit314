@@ -1,0 +1,13 @@
+<p>In the dockerfile, suppose I set a LABEL immediately after the FROM command, then is the label applied to every intermediate container and image generated in the subsequent step?</p>
+
+<p>I know that intermediate containers get removed during build after each step. But I am facing an issue where-in some of the intermediate container are not getting removed. This is causing some images to become dangled.</p>
+
+<p>I can see the images in <code>docker images</code> and containers in <code>docker ps -aq</code>.</p>
+
+<p>I am trying to filter them to get a list - with eventual goal to prune the images.</p>
+
+<p>Filter to get list of images based on LABEL: <code>docker images --filter "label=some-key=some-value"</code> - this shows me the images that I wish to prune.</p>
+
+<p>But before that I need to prune those containers created from the above images. Filter to get list based on LABEL - <code>docker ps --filter "label=some-key=some-value"</code>, but it doesn't return me the containers.</p>
+
+<p>When I do <code>docker inspect &lt;container-id&gt;</code>, then I can see label ("some-key"="some-value") in the Config section, under Labels.</p>

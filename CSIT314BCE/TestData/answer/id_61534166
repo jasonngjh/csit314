@@ -1,0 +1,15 @@
+<p><strong>There can be different ways to get the job done.</strong></p>
+
+<p>Variables given:
+ 1. start=6 
+ 2. stop=10</p>
+
+<h3>You can try this also, for different approach:</h3>
+
+<pre><code>def mirror_numbers(start,stop):
+  if start&lt;stop:
+    val=range(start,stop)
+    return [j if i &lt; len(val) else -j for i,j in enumerate([x for x in val]*2) ]
+
+mirror_numbers(6,10)
+</code></pre>

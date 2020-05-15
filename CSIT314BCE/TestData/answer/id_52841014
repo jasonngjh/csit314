@@ -1,5 +1,0 @@
-<p><code>String</code> is the class of <code>string</code>. If you remove <code>System</code> namespace from using statements, you can see that <code>String</code> has gone but <code>string</code> is still here. <code>string</code> is keyword for String. Like<br>
- <code>int and Int32<br>
-short and Int16<br>
-long and Int64</code><br>
-   So the keywords are just some words that uses a class. These keywords are specified by C#(so Microsoft, because C# is Microsoft's). Briefly, there's no difference. Using <code>string or String</code>. That doesn't matter. They are same.</p>

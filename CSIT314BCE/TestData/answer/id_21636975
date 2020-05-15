@@ -1,9 +1,0 @@
-<p>This is how I use it.</p>
-
-<pre><code>   window.location.replace('yourPage.aspx');   
-   // If you're on root and redirection page is also on the root
-
-   window.location.replace(window.location.host + '/subDirectory/yourPage.aspx');
-
-   // If you're in sub directory and redirection page is also in some other sub directory.
-</code></pre>

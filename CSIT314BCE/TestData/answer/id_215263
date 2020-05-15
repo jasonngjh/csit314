@@ -1,3 +1,0 @@
-<p><code>string</code> and <code>String</code> are identical in all ways (except the uppercase "S").  There are no performance implications either way.</p>
-
-<p>Lowercase <code>string</code> is preferred in most projects due to the syntax highlighting</p>

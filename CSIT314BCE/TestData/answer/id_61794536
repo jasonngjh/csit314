@@ -1,0 +1,6 @@
+<p>Please correct your code as below </p>
+
+<pre><code>&lt;% for(var j = 0;j &lt; items.length; j++){ %&gt;
+   &lt;li&gt;&lt;%= items[j] %&gt;&lt;/li&gt;
+&lt;%}%&gt;
+</code></pre>

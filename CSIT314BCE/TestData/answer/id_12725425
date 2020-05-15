@@ -1,5 +1,0 @@
-<p><code>String</code> refers to a string object which comes with various functions for manipulating the contained string.</p>
-
-<p><code>string</code> refers to a primitive type </p>
-
-<p>In C# they both compile to String but in other languages they do not so you should use String if you want to deal with String objects and string if you want to deal with literals.</p>

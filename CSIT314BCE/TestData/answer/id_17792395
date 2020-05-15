@@ -1,0 +1,23 @@
+<p>This code was so ugly, I had to post it.</p>
+
+<pre><code>def remove_comments(text):
+    char_list = list(text)
+    in_str = False
+    deleting = False
+    for i, c in enumerate(char_list):
+        if deleting:
+            if c == '\n':
+                deleting = False
+            else:
+                char_list[i] = None
+        elif c == '"':
+            in_str = not in_str
+        elif c == '#':
+            if not in_str:
+                deleting = True
+                char_list[i] = None
+    char_list = filter(lambda x: x is not None, char_list)
+    return ''.join(char_list)
+</code></pre>
+
+<p>Seems to work though. Although I'm not sure how it might handle newline chars between windows and linux.</p>

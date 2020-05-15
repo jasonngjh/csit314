@@ -1,0 +1,3 @@
+<p>How do you allocate memory? There's no CPU instruction for allocating dynamic memory, you have to ask the OS for the memory. But what are the parameters? How do you invoke the OS?</p>
+
+<p>How do you print output? How do you open a file? How do you set a timer? How do you display a UI? All of these things require requesting services from the OS, and different OSes provide different services with different calls necessary to request them.</p>

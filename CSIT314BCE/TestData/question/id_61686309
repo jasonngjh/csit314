@@ -1,0 +1,27 @@
+<p>I have </p>
+
+<pre><code>list1 = [('a', 0), ('b', 100), ('c', 200), ('d', 300), ('e', 400), ('f', 500)]
+list2 = [[0, 200, 400], [100, 300, 500]]
+</code></pre>
+
+<p>List 2 just basically reorganizes the numbers into teams, the 2 sublists.</p>
+
+<p>My <code>list3</code> would then be</p>
+
+<pre><code>list3 = [['a', 'c', 'e'], ['b', 'd', 'f']]
+</code></pre>
+
+<p>So by looking up the values in <code>list2</code> in <code>list1</code>, what code do I need to produce <code>list3</code>?</p>
+
+<p>This is also valid:</p>
+
+<pre><code>list1 = [('a', 0), ('b', 0), ('c', 0), ('d', 0), ('e', 0), ('f', 0)]
+list2 = [[0, 0, 0], [0, 0, 0]]
+</code></pre>
+
+<p>It would give</p>
+
+<pre><code>list3 = [['a', 'b', 'c'], ['d', 'e', 'f']]
+</code></pre>
+
+<p>So basically <code>'a'</code> and <code>'f'</code> could have the same value but they can only return once in <code>list3</code></p>

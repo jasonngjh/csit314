@@ -1,9 +1,0 @@
-<p>Find the last commit hash code by seeing the log by:</p>
-
-<pre><code>git log
-</code></pre>
-
-<p>Then</p>
-
-<pre><code>git reset &lt;the previous co&gt;
-</code></pre>

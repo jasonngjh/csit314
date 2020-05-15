@@ -1,7 +1,0 @@
-<p>An alternative option to the command line for deleting remote branches is the <strong>GitHub branches page</strong>.</p>
-
-<p>See for example: <a href="https://github.com/angular/angular.js/branches" rel="noreferrer">https://github.com/angular/angular.js/branches</a></p>
-
-<p>Found in the <code>Code</code> -> <code>Branches</code> page of a GitHub repository.</p>
-
-<p>I generally prefer command line myself but this <strong>GitHub page shows you lots more information</strong> about the branches, such as <strong>last updated date and user</strong>, and <strong>number of commits ahead and behind</strong>. It is useful when dealing with a large number of branches.</p>

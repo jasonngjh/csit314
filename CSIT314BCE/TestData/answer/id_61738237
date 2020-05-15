@@ -1,0 +1,27 @@
+<p>Given the original integer returns a list with the bit positions.</p>
+
+<pre><code>static List&lt;Integer&gt; bitPositions(int v) {
+     return BitSet.valueOf(new long[]{v&amp;0xFF_FF_FF_FFL})
+                .stream()
+                .mapToObj(b-&gt;b+1)
+                .collect(Collectors.toList());
+}
+</code></pre>
+
+<p>Or if you want to do bit shifting.</p>
+
+<pre><code>static List&lt;Integer&gt; bitPositions(int v ) {
+    List&lt;Integer&gt; bits  = new ArrayList&lt;&gt;();
+    int pos = 1;
+    while (v != 0) {
+        if ((v &amp; 1) == 1) {
+            bits.add(pos);
+        }
+        pos++;
+        v &gt;&gt;&gt;= 1;
+    }
+    return bits;
+
+}
+
+</code></pre>

@@ -1,0 +1,5 @@
+<p>You can not rely on lock files in Linux or Windows.  I would just bite the bullet and iterate through all the running programs.  I really do not believe it will be as "expensive" as you think.  <a href="https://github.com/giampaolo/psutil" rel="noreferrer">psutil</a> is an excellent cross-platform python module cable of enumerating all the running programs on a system.</p>
+
+<pre><code>import psutil    
+"someProgram" in (p.name() for p in psutil.process_iter())
+</code></pre>

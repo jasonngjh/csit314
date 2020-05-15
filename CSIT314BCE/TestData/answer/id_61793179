@@ -1,0 +1,11 @@
+<p>My preferred solution would be to stop using <a href="https://softwareengineering.stackexchange.com/questions/148108/why-is-global-state-so-evil">global fields</a> (i.e. static properties/methods) and instead create a object that is handed to all components that need this functionality. You probably also want to make an interface for this object. This would allow your unit tests to use a mock object instead of the real thing. This would avoid a bunch of web-browsers popping up when you run your unit tests.</p>
+
+<p>The worse solution would be to just add lock statements to all public methods, </p>
+
+<pre><code>static object lockObj = new object();
+public static MyPublicMethod(){
+    lock(lockObj){
+         // Logic
+    }
+}
+</code></pre>

@@ -1,8 +1,0 @@
-<p>I find cumbersome the default python syntax <code>val = a if cond else b</code>, so sometimes I do this:</p>
-
-<pre><code>iif = lambda (cond, a, b): a if cond else b
-# so I can then use it like:
-val = iif(cond, a, b)
-</code></pre>
-
-<p>Of course, it has the downside of always evaluating both sides (a and b), but the syntax it's way clearer to me</p>

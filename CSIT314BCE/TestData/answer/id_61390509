@@ -1,0 +1,6 @@
+<p>Weighing in with yet another possibility.</p>
+
+<p>If you want readability your original one-liner was pretty good, but I would change the ranges to be the same as I think the negative bounds make things less clear.</p>
+
+<pre><code>[x for x in range(6, 10)] + [-x for x in range(6, 10)]
+</code></pre>

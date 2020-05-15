@@ -1,0 +1,13 @@
+<p>Please use this </p>
+
+<pre><code>onQuantity(event:InputEvent, i: number){
+    // do your operation
+  }
+</code></pre>
+
+<p>the type of event is InputEvent.
+You can check it by using <code>console.log(event)</code></p>
+
+<p>For me it gives </p>
+
+<p><img src="https://i.stack.imgur.com/hjCRZ.png" alt="1"></p>

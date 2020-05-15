@@ -1,0 +1,6 @@
+<p>convert list to set before counting</p>
+
+<pre><code>random_list = random_integers(lb, ub, trials)
+union = set(random_list)
+counting = {num:random_list.count(num) for num in union}
+</code></pre>

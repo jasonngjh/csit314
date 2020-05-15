@@ -1,0 +1,61 @@
+<blockquote>
+  <p>In the for loop i is incremented by 8 if sizeof(t[0]) is 4.</p>
+  
+  <p>But I don't understand the reasons why we skip 32 bytes, and not read it fully (to protect against cache timing attacks)?</p>
+</blockquote>
+
+<p>In the for loop, <code>i</code> is incremented by the equivalent of 32 <code>char</code>s (regardless of what <code>sizeof(t[0])</code> happens to be) because "32 <code>char</code>s" (or 32 bytes) is what the authors determined is the minimum cache line size for all CPUs they care about. Note that you only need to read from 1 byte of the cache line to ensure that the entire cache line is fetched into cache.</p>
+
+<blockquote>
+  <p>What is the motivation behind sum ^= t[i] and setting ret = sum ?</p>
+</blockquote>
+
+<p>A good compiler will notice that the data you're reading is not used, and will avoid doing an "unnecessary" (for correctness of the "C abstract machine") read to improve performance without knowing that the "unnecessary" read is necessary for reasons that the compiler can't be expected to know about. To prevent the compiler from optimizing like that you need to trick it into thinking the data is actually used, or use <code>volatile</code>. The OpenSSL authors are doing both (trying to trick the compiler into not optimizing by doing the <code>sum ^= t[i]</code> and <code>ret sum</code>; and also using <code>volatile</code>), possibly because (historically) plenty of old compilers had bugs involving <code>volatile</code>.</p>
+
+<p>Also note that there's still a very tiny timing problem - cache could be flushed (e.g. by task switch, etc) after the data was prefetched but before part of the table is used for AES; so there's an (extremely tiny) chance that an attacker can still use a cache timing attack to determine which part of the table AES used. See "Confidence In Cache Timing Attack Prevention" (below).</p>
+
+<blockquote>
+  <p>Will this following simpler code help me:</p>
+</blockquote>
+
+<p>It's very likely that the compiler will turn your code into literally nothing (and if it didn't, it'd have the same problems as <code>prefetch256()</code> and may be slower because you're writing to memory rather than only reading).</p>
+
+<blockquote>
+  <p>Are there other simpler solutions to protect my implementation from cache timing attacks?</p>
+</blockquote>
+
+<p>Everything is a compromise between complexity, portability, security, features and performance; and "simpler" almost always means "worse portability" and/or "worse quality" and/or "worse features" and/or "worse performance". You can't make the quality or features worse while still protecting against cache timing attacks. You can't make performance worse because it's already as simple as it can be.</p>
+
+<p>You might (or might not) be able to make it simpler by sacrificing portability. For example; if you know that the whole table fits in a single cache line on one computer (and  is aligned to a cache line boundary), then you could do nothing for that one computer and say the code should never be used for any other computer.</p>
+
+<p><strong>Confidence In Cache Timing Attack Prevention</strong></p>
+
+<p>One of the key factors in guarding against cache timing attacks is how much control the attacker has. The typical scenario is that the attacker floods the cache (pollutes it with known data to cause its previous contents to become evicted due to "least recently used"), then lets the victim do something, then measures how quickly it can access its known data to determine if that known data is still in the cache or was evicted. If a cache line of known data was evicted the attacker knows that the victim accessed something that has the same location in the cache as the evicted cache line.</p>
+
+<p>The worst possible case is that the attacker is able to do this extremely often (e.g. for every instruction the victim executes), the cache has no associativity (direct mapped), and the attacker either knows everything about how the victim uses virtual addresses and the relationship between the victim's virtual addresses and locations in the cache (likely including the relationship between virtual addresses and physical addresses) or is in the same process (e.g. shared library, where they can access the table themselves to determine if it was accessed instead of relying on the eviction of other data). In this case the only defense is to ensure that all memory access patterns are always the same (never dependent on any data). This is extremely hard, but not impossible - e.g. if you want to read one byte from a table (e.g. "<code>byte = table[index]</code>" where you don't want the attacker to know anything about <code>index</code>), you can read all preceding cache lines, then read the byte you want, then read all following cache lines (so that it always looks like a sequential read of the whole table) and do those accesses at a fixed rate (no "pause before reading the byte you want" and no "pause after reading the byte you want", including "no pause caused by branch mispredictions"). If you do this; then you can have extremely high confidence in your ability to guard against cache timing attacks (up to guaranteeing that your code is immune to all possible cache timing attacks).</p>
+
+<p>However; it's almost impossible for the attacker to gain that level of control, extremely hard to write code like this, and code like that would have large performance overheads.</p>
+
+<p>At the other extreme; you can do nothing and have no confidence in your ability to prevent cache timing attacks. Everything else falls between these extremes.</p>
+
+<p>The question then is; what is a good compromise? This depends on too many factors - how much control the attacker has, if the attacker is in the same process, if the attacker can repeat the attack (and use a probabilistic approach to defeat any "noise"), how much the data is worth to the attacker (sane thieves don't spend more than $2 in an attempt to steal something that's worth $2 to the thief), how much the data is worth to the victim (nobody spends $100 per day to protect something that can be replaced for $2), what other mitigations are in place (e.g. most operating systems provide "address space layout randomization" now), etc.</p>
+
+<p>For a good compromise; for your purposes, I'm personally fond of the "make it look like a sequential read of the whole table" approach, but a significantly simpler version that doesn't care very much about the fixed rate of accesses (or the "pause before/after reading the piece you want" and doesn't care about cache line sizes (accessing every byte won't cost much if the table is only 256 bytes, partly because most accesses will be "cache hit"). An example of this might be:</p>
+
+<pre><code>uint16_t fetch_byte_from_table(int index) {
+    size_t table_entries = sizeof(table)/sizeof(table[0]);
+    uint8_t dummy = 0;
+    uint8_t data = 0;
+
+    for(i = 0; i &lt; table_entries; i++) {
+        if(i == index) {
+            data ^= table[i];
+        } else {
+            dummy ^= table[i];
+        }
+    }
+    return ((uint16_t)dummy &lt;&lt; 8) | data;        // Caller can ignore the higher 8 bits
+}
+</code></pre>
+
+<p>Of course there are tricks you can use to try to hide or avoid the branches (e.g. <code>data ^= table[i] * (i == index); dummy = data ^= table[i] * (i != index);</code>), but they depend on compiler and target CPU.</p>

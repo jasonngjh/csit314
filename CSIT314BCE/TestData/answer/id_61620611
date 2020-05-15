@@ -1,0 +1,15 @@
+<p><strong>Edit</strong> </p>
+
+<p>Use <a href="https://stackoverflow.com/users/4552295/sindri-baldur">@sindri_baldur</a>'s approach: <a href="https://stackoverflow.com/a/61660119/8583393">https://stackoverflow.com/a/61660119/8583393</a></p>
+
+<hr>
+
+<p>A way with <code>data.table</code>, similar to what @tmfmnk showed</p>
+
+<pre><code>library(data.table)
+as.data.table(transpose(data))
+#   V1 V2 V3 V4 V5
+#1:  A  1  4  7 12
+#2:  B  2  5  8 15
+#3:  C  3  6  9 18
+</code></pre>

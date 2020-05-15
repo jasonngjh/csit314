@@ -1,0 +1,11 @@
+<p>I have a function with argument <code>bar</code> that has a default parameter, <code>""</code>. How do I override <code>bar</code>'s default parameter with value <code>undefined</code>?</p>
+
+<pre class="lang-js prettyprint-override"><code>const foo = (bar = "") =&gt; {
+  console.log(bar)
+}
+
+foo(null) // null
+foo(undefined) // "" &lt;-- I want this to log `undefined`
+</code></pre>
+
+<p>If this is impossible with default parameters, what would be an appropriate way to write <code>foo</code> to achieve this?</p>

@@ -1,0 +1,49 @@
+<h1>Suspect #1 - Regularization</h1>
+
+<p>Neural networks are great at overfitting the training data, actually there is an <a href="https://arxiv.org/pdf/1611.03530.pdf" rel="nofollow noreferrer">experiment</a> replacing CIFAR10 (image classification task) labels (y values) by random labels on the training dataset and the network fits the random labels resulting in almost zero loss.</p>
+
+<p><a href="https://i.stack.imgur.com/pzaXj.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/pzaXj.png" alt="enter image description here"></a></p>
+
+<blockquote>
+  <p>on the left side we can see that given enough epochs random labels
+  gets around 0 loss - perfect score (from <a href="https://arxiv.org/pdf/1611.03530.pdf" rel="nofollow noreferrer">understanding deep learning 
+  requires re-thinking generalization by zhang et al 2016</a>)</p>
+</blockquote>
+
+<p>So why its not happening all the time? <strong><a href="https://en.wikipedia.org/wiki/Regularization_(mathematics)" rel="nofollow noreferrer">regularization</a></strong>.</p>
+
+<p>regularization is (roughly) trying to solve harder problem than the optimization problem (the loss) we defined for the model.</p>
+
+<p>some common regularizations methods in neural networks:</p>
+
+<ul>
+<li>early stopping</li>
+<li>dropout</li>
+<li>batch normalization</li>
+<li>weight decay (e.g. l1 l2 norms)</li>
+<li>data augmentation</li>
+<li>adding random/gaussian noise</li>
+</ul>
+
+<p>these methods help reduce overfitting and usually result in better validation and test performance, but result in lower train performance (which doesnt matter actually as explained on the last paragraph).</p>
+
+<p>train data performance are usually not so important and for that we use the validation set.</p>
+
+<h2>Suspect #2 - Model Size</h2>
+
+<p>you are using single LSTM layer with 32 units. thats pretty small.
+try increase the size and even put two LSTM layers (or bidirectional one) and I'm sure the model and the optimizer will overfit your data as long as you let them - i.e. remove the early stopping, restore_last_weights and any other regularization specified above.</p>
+
+<h2>Note on Problem Complexity</h2>
+
+<p>trying to predict future stock prices just by looking at the history is not an easy task, and even if the model can (over)fit perfectly the training set it will probably wont do anything useful on the test set or in real world.</p>
+
+<p>ML is not black magic, the x samples needs to be correlated in some way to the y tags, we usually assume that (x,y) are drawn from some distribution together.</p>
+
+<p>A more intuitive way to think about it, when you need to tag an image manually for dog/cat class - that pretty straight forward. but can you manually "tag" the stock price by looking at the history of that stock alone?</p>
+
+<p>Thats some intuition on how hard this problem is.</p>
+
+<h2>Note on Overfitting</h2>
+
+<p><strong>One should not chase higher training performance</strong> its almost useless to try overfit the training data, as we usually try to perform well with a model on new unseen data with similar properties to the train data. the all idea is to try to generalize and learn the properties of the data and correlation with the target, thats what learning is :)</p>

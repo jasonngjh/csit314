@@ -1,0 +1,38 @@
+<p>I am building web scrapper to get daily important events on that day from <a href="http://www.tarihtebugun.gen.tr/?t=1" rel="nofollow noreferrer">url</a>,
+my code is:</p>
+
+<pre><code>import requests
+from bs4 import BeautifulSoup        
+
+url = "http://www.tarihtebugun.gen.tr/?t=1"
+
+# Get the latest link for the updated news:
+try:
+    r = requests.get(url)
+except Exception as err:
+    logging.error("Connect: {}, {}".format(err, url))
+
+soup = BeautifulSoup(r.content, "html.parser")
+soup = soup.find_all('td', class_='Maddeler')
+
+olaylar = "Tarihte Bugün\n"
+
+for tarih, olay in zip(soup[0::2], soup[1::2]):        
+    olaylar = olaylar + "{}-{}\n".format(fx._b(tarih.get_text().strip()), olay.get_text().strip())
+</code></pre>
+
+<p>for the html line:</p>
+
+<pre><code>&lt;td align='left' valign='top' class='Maddeler' Style='padding-right:3px;'&gt;&lt;a href=http://www.tarihtebugun.gen.tr/türkiye.html /&gt;Türkiye&lt;/a&gt; Tas Kömürü Kurumu Zonguldak'ta kuruldu.&lt;/td&gt;
+</code></pre>
+
+<p>I get </p>
+
+<pre><code>&lt;td align='left' valign='top' class='Maddeler' Style='padding-right:3px;'&gt;&lt;a href=http://www.tarihtebugun.gen.tr/türkiye.html /&gt;Türkiye&lt;/a&gt;&lt;/td&gt;
+</code></pre>
+
+<p>Text after the URL Anchor is missing in BeautifulSoup result. if there is no <code>&lt;a&gt;</code> tag, than it works okay.</p>
+
+<p>I can't figure out what is the problem</p>
+
+<p>Thanks a lot</p>

@@ -1,0 +1,22 @@
+<p>The reason this happens is because <strong>moment</strong> has released the new version from <strong>2.24.0 to 2.25.0</strong></p>
+
+<p><strong>Perform the following Steps to solve this issue :</strong></p>
+
+<p><strong>Step 1:</strong> <strong>change the versions</strong> (In your case just add the <strong>"moment":"2.24.0"</strong> to your dependencies in your <strong>package.json</strong> since I don't see it present in your package.json)</p>
+
+<pre><code>"moment": "2.24.0",
+"moment-timezone": "^0.5.28",
+</code></pre>
+
+<p><strong>Step 2:</strong> If you are using <strong>yarn</strong> please add resolutions in your package.json file like this</p>
+
+<pre><code>"dependencies" {
+"moment": "2.24.0",
+"moment-timezone": "^0.5.28"
+},
+"resolutions": {
+"moment": "2.24.0"
+},
+</code></pre>
+
+<p>For more information about this issue go to <a href="https://github.com/moment/moment/issues/4505" rel="noreferrer">https://github.com/moment/moment/issues/4505</a></p>

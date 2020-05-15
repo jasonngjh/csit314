@@ -1,0 +1,8 @@
+<p>A silly answer, just for variety:</p>
+
+<pre><code>BitSet bs = BitSet.valueOf(new long[] {input});
+List&lt;Integer&gt; setBits = new ArrayList&lt;&gt;();
+for (int next = -1; (next = bs.nextSetBit(next + 1)) != -1;) {
+  setBits.add(next + 1);
+}
+</code></pre>

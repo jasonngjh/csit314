@@ -1,0 +1,5 @@
+<p>I'm writing a GUI without QT IDE(in clion).I want use image(QICON) in my GUI.I've done some research,QT offical website told me that "The resource system is based on tight cooperation between qmake, rcc (Qt's resource compiler), and QFile.".I don't want to use qmake,.qrc file.</p>
+
+<p>I can do this with absolute path,or QIcon(QDir::currentPath().But when I change workpath,this method work uncorrectly(image is not shown in GUI).</p>
+
+<p>So,how can I use image file correctly with out qmake,.qrc?</p>

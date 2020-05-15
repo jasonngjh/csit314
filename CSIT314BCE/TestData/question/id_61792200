@@ -1,0 +1,29 @@
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;array&gt;
+#include &lt;vector&gt;
+
+std::vector&lt;int&gt; foo() {
+ int i;
+ std::vector&lt;int&gt; a(100);
+ printf("%p, %p, %p\n", &amp;i, &amp;a, &amp;(a[0]));
+ return a;
+}
+
+int main() {
+ int i;
+ std::vector&lt;int&gt; b = foo();
+ printf("%p, %p, %p\n", &amp;i, &amp;b, &amp;(b[0]));
+}
+</code></pre>
+
+<p>I don't understand why a &amp; b have the same address? How this is achieved? Some kind of "cross-stack-frame" optimization? I even used -O0 option, the result is the same.</p>
+
+<p>Sorry, forgot the out put:</p>
+
+<pre><code>WilldeMacBook-Pro:~ Will$ vim main.cpp 
+WilldeMacBook-Pro:~ Will$ cc -std=c++11 -lc++ main.cpp
+WilldeMacBook-Pro:~ Will$ ./a.out
+0x7ffee28d28ac, 0x7ffee28d28f0, 0x7ff401402c00
+0x7ffee28d290c, 0x7ffee28d28f0, 0x7ff401402c00
+WilldeMacBook-Pro:~ Will$ 
+</code></pre>

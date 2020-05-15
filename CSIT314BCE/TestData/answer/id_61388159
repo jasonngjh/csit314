@@ -1,0 +1,65 @@
+<p>My idea would pretty much be a combination of <code>Coordinator</code> and <code>Delegate</code> pattern. First,
+ create a <code>Coordinator</code> class:</p>
+
+<pre><code>
+struct Coordinator {
+    let window: UIWindow
+
+      func start() {
+        var view = ContentView()
+        window.rootViewController = UIHostingController(rootView: view)
+        window.makeKeyAndVisible()
+    }
+}
+
+</code></pre>
+
+<p>Adapt the <code>SceneDelegate</code> to use the <code>Coordinator</code> :</p>
+
+<pre class="lang-swift prettyprint-override"><code>  func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            let coordinator = Coordinator(window: window)
+            coordinator.start()
+        }
+    }
+</code></pre>
+
+<p>Inside of <code>ContentView</code>, we have this:</p>
+
+<pre class="lang-swift prettyprint-override"><code>
+struct ContentView: View {
+    var delegate: ContentViewDelegate?
+
+    var body: some View {
+        NavigationView {
+            List {
+                NavigationLink(destination: delegate!.didSelect(Item())) {
+                    Text("Destination1")
+                }
+            }
+        }
+    }
+}
+
+</code></pre>
+
+<p>We can define the <code>ContenViewDelegate</code> protocol like this: </p>
+
+<pre class="lang-swift prettyprint-override"><code>protocol ContentViewDelegate {
+    func didSelect(_ item: Item) -&gt; AnyView
+}
+</code></pre>
+
+<p>Where <code>Item</code> is just a struct which is identifiable, could be anything else (e.g id of some element like in a <code>TableView</code> in UIKit)</p>
+
+<p>Next step is to adopt this protocol in <code>Coordinator</code> and simply pass the view you want to present: </p>
+
+<pre class="lang-swift prettyprint-override"><code>extension Coordinator: ContentViewDelegate {
+    func didSelect(_ item: Item) -&gt; AnyView {
+        AnyView(Text("Returned Destination1"))
+    }
+}
+</code></pre>
+
+<p>This has so far worked nicely in my apps. I hope it helps.</p>

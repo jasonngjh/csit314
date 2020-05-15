@@ -7,9 +7,9 @@
     text-align: center;
     border-radius: 10px;
     margin-bottom: 5px;
-    background-color: #007aff;
+    
     transition: 0.3s;
-    color: white;
+    color: black;
 }
 
     #vote:hover {
@@ -52,7 +52,7 @@
     vertical-align: top;
 }
 
-#answer {
+#acceptedAnswer {
     border: 1px solid #53d769;
     padding: 10px;
     text-align: center;
@@ -60,6 +60,15 @@
     background-color: #53d769;
     transition: 0.3s;
     color: white;
+}
+
+#answer {
+    border: 1px solid #53d769;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: transparent;
+    color: black;
 }
 
     #answer:hover {

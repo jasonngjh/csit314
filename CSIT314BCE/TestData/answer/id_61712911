@@ -1,0 +1,15 @@
+<p>You get the common keys from the two lists by using the <code>set</code> <code>intersection</code> method and then using a list comprehension calculate the mean:</p>
+
+<pre><code>mylist1 = [["lemon", 0.1], ["egg", 0.1], ["muffin", 0.3], ["chocolate", 0.5]]
+mylist2 = [["chocolate", 0.5], ["milk", 0.2], ["carrot", 0.8], ["egg", 0.8]]
+
+dict1 = dict(mylist1)
+dict2 = dict(mylist2)
+res = [[key, (dict1.get(key)+dict2.get(key))/2] for key in set(dict1.keys()).intersection(set(dict2.keys()))]
+print(res)
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>&gt;&gt; [['chocolate', 0.5], ['egg', 0.45]]
+</code></pre>

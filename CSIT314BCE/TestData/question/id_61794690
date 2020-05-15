@@ -1,0 +1,16 @@
+<p>I have to update the Matching Flag Column depending on the following Condition :</p>
+
+<p>When F_ZN=IC_ZN AND F_STN=IC_STN  then Matching Flag would be set to 1 else 0 ,I could think of this but I don't know the exact syntax .</p>
+
+<pre><code>UPDATE F_STATE_MAPPING SET MATCHING_FLAG=CASE WHEN F_ZN=IC_ZN AND F_STN=IC_STN THEN 1 ELSE 0 END  
+FROM 
+(
+SELECT F_ZN,F_STN,IC_ZN,IC_STN FROM 
+(
+SELECT A.ZN_CD AS F_ZN,A.STN AS F_STN,B.ZN_CD AS IC_ZN,B.STN AS IC_STN FROM 
+F_STATE_MAPPING A,TEMP_STN_STATE_MAPPING B WHERE A.ZN_CD=B.ZN_CD AND A.STN=B.STN
+)
+)
+</code></pre>
+
+<p>Please guide .</p>

@@ -1,5 +1,0 @@
-<p>I just had to update this ridiculousness with yet another newer jQuery method:</p>
-
-<pre><code>var url = 'http://www.fiftywaystoleaveyourlocation.com';
-$(location).prop('href', url);
-</code></pre>

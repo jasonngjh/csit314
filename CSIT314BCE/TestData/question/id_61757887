@@ -1,0 +1,80 @@
+<p>This declaration:</p>
+
+<pre><code>char constexpr *const s = "hello";
+</code></pre>
+
+<p>Fails with this error:</p>
+
+<pre><code>g++ -g -Wall -Werror -std=c++17 test.cc -o test
+test.cc:8:31: error: ISO C++11 does not allow conversion from string literal to 'char *const' [-Werror,-Wwritable-strings]
+char constexpr *const s = "hello";
+</code></pre>
+
+<p>But if I add const to constexpr, the compiler is happy:</p>
+
+<pre><code>char const constexpr *const s = "hello";
+</code></pre>
+
+<p>Compilation:</p>
+
+<pre><code>g++ -g -Wall -Werror -std=c++17 test.cc -o test
+./test
+hello
+</code></pre>
+
+<p>This seems unintuitive to me. Why does const need to decorate constexpr? Doesn't constexpr imply const? If it's a compiler constant, how is it not a constant in some other sense? Is it possible for something to be constexpr but change in some other way such that is not constant?</p>
+
+<p>Here's a minimal godbolt:</p>
+
+<p><a href="https://godbolt.org/z/sSQMVa" rel="noreferrer">https://godbolt.org/z/sSQMVa</a></p>
+
+<hr>
+
+<h1>Update:</h1>
+
+<p>StoryTeller's answer has the key to understanding this. I've accepted his answer, but I'll expand on it here in case that's helpful for someone else trying to understand this. When interacting with const, I'm used to thinking of const as applying to the item on the left of it. Thus:</p>
+
+<pre><code>char a[] = "hello";
+char * const s = a;
+s[0] = 'H'; // OK
+s = "there"; // Compiler error.
+</code></pre>
+
+<p>Here, <code>char * const s</code> means that the pointer, s, is const while the characters it dereferences to are modifiable. On the other hand:</p>
+
+<pre><code>char const * s = "hello";
+a[0] = 'H'; // Compiler error
+s = "there"; // OK
+</code></pre>
+
+<p>In this case, <code>char const * s</code> means that the characters that s points to are const, not the pointer.</p>
+
+<p>OK, most people who have worked with const and pointers understand all that. Where I got thrown off is that I assumed that constexpr would work this way as well. That is, given this:</p>
+
+<pre><code>char constexpr * const s = "hello";
+</code></pre>
+
+<p>I thought that would mean that the pointer is const (it is) and that the characters themselves would be const and constexpr. But the syntax doesn't work that way. Rather, the constexpr in this case:</p>
+
+<ul>
+<li>Does not apply to the characters, but rather...</li>
+<li>applies to <code>s</code> itself, which is a pointer, and...</li>
+<li>therefore is redundant with the const after the pointer.</li>
+</ul>
+
+<p>Thus, in this case, there is no const being declared on the characters. Indeed, if I remove the constexpr entirely I get the exact same error:</p>
+
+<pre><code>char * const s = "hello"; // Produces same error as char constexpr * const s = "hello";
+</code></pre>
+
+<p>This, however, works:</p>
+
+<pre><code>constexpr char const * s = "hello";
+</code></pre>
+
+<p>The above has what we want and it means:</p>
+
+<ul>
+<li>The characters are const via <code>const</code></li>
+<li>And the pointer <code>s</code> is const and a compile time constant via <code>constexpr</code></li>
+</ul>

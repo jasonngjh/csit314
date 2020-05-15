@@ -1,0 +1,1 @@
+<p>How does one convert a string to the name of a class in Python? For example, if I have a series of related classes such as <code>MyClass1</code>, <code>MyClass2</code>, <code>MyClassN...</code>, how do I call the class I need if I were in a conditional assuming only the ending number of the string were to change?</p>

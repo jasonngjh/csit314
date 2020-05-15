@@ -1,0 +1,49 @@
+<ol>
+<li>There is no need to change <code>httpd.conf</code> file, <code>.htaccess</code> file is
+enough to make your <code>CI</code> project up and running.</li>
+<li>But if you must, you need to give absolute path in <code>DocumentRoot</code> ie change <code>${SRVROOT}/htdocs</code> to
+<code>"F:/xampp/htdocs" -- (your/location/here)</code></li>
+<li><code>${SRVROOT}</code> will not work as you are not writing in a <code>.php</code> file.</li>
+</ol>
+
+<p>See these for more info --<br> </p>
+
+<ul>
+<li><a href="https://stackoverflow.com/questions/43273975/how-to-set-codeigniter-for-apache-server">How to set codeigniter for apache server?</a></li>
+<li><a href="https://stackoverflow.com/questions/3033110/setting-up-httpd-conf-mod-rewrite-to-redirect-to-codeigniter">Setting up httpd.conf / mod_rewrite to redirect to codeigniter?</a></li>
+<li><a href="https://stackoverflow.com/questions/33272182/how-to-correct-config-apache-and-codeigniter">How to correct config Apache and Codeigniter?</a></li>
+</ul>
+
+<p>This is my httpd.conf file - </p>
+
+<pre><code>DocumentRoot "F:/xampp/htdocs"
+&lt;Directory "F:/xampp/htdocs"&gt;
+    #
+    # Possible values for the Options directive are "None", "All",
+    # or any combination of:
+    #   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews
+    #
+    # Note that "MultiViews" must be named *explicitly* --- "Options All"
+    # doesn't give it to you.
+    #
+    # The Options directive is both complicated and important.  Please see
+    # http://httpd.apache.org/docs/2.4/mod/core.html#options
+    # for more information.
+    #
+    Options Indexes FollowSymLinks Includes ExecCGI
+
+    #
+    # AllowOverride controls what directives may be placed in .htaccess files.
+    # It can be "All", "None", or any combination of the keywords:
+    #   AllowOverride FileInfo AuthConfig Limit
+    #
+    AllowOverride All
+
+    #
+    # Controls who can get stuff from this server.
+    #
+    Require all granted
+&lt;/Directory&gt;
+</code></pre>
+
+<p>Hope this helps you. </p>

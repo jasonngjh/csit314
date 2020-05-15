@@ -1,0 +1,94 @@
+<p>Complete &amp; official answer for all :</p>
+
+<p>Diagnosis: Crash of the Google Maps Platform mobile SDKs (iOS &amp; Android) at load.</p>
+
+<p>Workaround: * Clear the affected app's data (not just the cache), or uninstall then reinstall the affected app(s).</p>
+
+<ul>
+<li>Code workaround for iOS:</li>
+</ul>
+
+<p>Recommended placement for the code is before GMSServices initialization in the application(_:didFinishLaunchingWithOptions:) (Swift) or application:didFinishLaunchingWithOptions: (Objective-C) method.  Specifically:</p>
+
+<h1>Swift:</h1>
+
+<pre><code>let key = "GoogleMapsServerControlledParamsKey_bug_154855417"
+if !UserDefaults.standard.bool(forKey: key) {
+    let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+    if urls.count &gt; 0 {
+        let paramUrl = urls[0].appendingPathComponent("com.google.GoogleMaps/ServerControlledParams", isDirectory: false)
+        try? FileManager.default.removeItem(at: paramUrl)
+    }
+    UserDefaults.standard.set(true, forKey: key)
+}
+</code></pre>
+
+<h1>Objective-C:</h1>
+
+<pre><code>NSString *key = @"GoogleMapsServerControlledParamsKey_bug_154855417";
+BOOL keyExists = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+if (!keyExists) {
+    NSArray&lt;NSURL *&gt; *array =
+        [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
+                                               inDomains:NSUserDomainMask];
+    if (array.count &gt; 0) {
+        NSURL *url =
+            [array[0] URLByAppendingPathComponent:@"com.google.GoogleMaps/ServerControlledParams"
+                                      isDirectory:NO];
+        if (url) {
+            [[NSFileManager defaultManager] removeItemAtURL:url error:NULL]);
+        }
+    }
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
+}
+</code></pre>
+
+<p>Once you have deployed it in your app, you can file a Maps Support case if you would like us to help expedite its approval. Please make sure to include your application's ID, Bundle ID, and the version you want reviewed in your case.</p>
+
+<ul>
+<li><p>Code workaround for Android:</p>
+
+<p>The recommended placement for the code is in Application.onCreate(): </p>
+
+<h1>Java</h1>
+
+<pre><code>try {
+  SharedPreferences hasFixedGoogleBug154855417 = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE);
+  if (!hasFixedGoogleBug154855417.contains("fixed")) {
+    File corruptedZoomTables = new File(getFilesDir(), "ZoomTables.data");
+    File corruptedSavedClientParameters = new File(getFilesDir(), "SavedClientParameters.data.cs");
+    File corruptedClientParametersData =
+        new File(
+          getFilesDir(),
+          "DATA_ServerControlledParametersManager.data.v1."
+              + getBaseContext().getPackageName());
+    corruptedZoomTables.delete();
+    corruptedSavedClientParameters.delete();
+    corruptedClientParametersData.delete();
+    hasFixedGoogleBug154855417.edit().putBoolean("fixed", true).apply();
+  }
+} catch (Exception e) {
+
+}
+</code></pre>
+
+<h1>Kotlin</h1>
+
+<pre><code>try {
+    val sharedPreferences = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE)
+    if (!sharedPreferences.contains("fixed")) {
+        val corruptedZoomTables = File(filesDir, "ZoomTables.data")
+        val corruptedSavedClientParameters = File(filesDir, "SavedClientParameters.data.cs")
+        val corruptedClientParametersData = File(filesDir, "DATA_ServerControlledParametersManager.data.v1.${packageName}")
+        corruptedZoomTables.delete()
+        corruptedSavedClientParameters.delete()
+        corruptedClientParametersData.delete()
+        sharedPreferences.edit().putBoolean("fixed", true).apply()
+    }
+} catch (exception: Exception) {
+
+}
+</code></pre></li>
+</ul>
+
+<p>Source : <a href="https://issuetracker.google.com/issues/1548554" rel="noreferrer">https://issuetracker.google.com/issues/1548554</a></p>

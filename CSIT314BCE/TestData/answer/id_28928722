@@ -1,3 +1,0 @@
-<p>Another option is not to use the command line at all. Git GUI clients such as <a href="http://www.sourcetreeapp.com/" rel="noreferrer">SourceTree</a> take away much of the syntactical learning curve / pain that causes questions such as this one to be amongst the most viewed on Stack Overflow.</p>
-
-<p>In SourceTree, right click on any local branch in the "Branches" pane on the left and select "Rename ...".</p>

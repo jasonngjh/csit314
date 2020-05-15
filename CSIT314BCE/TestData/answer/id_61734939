@@ -1,0 +1,11 @@
+<p>Yep.</p>
+
+<blockquote>
+  <p><code>[C99 6.6/6]:</code> An integer constant expression shall have integer type and shall only have operands that are integer constants, enumeration constants, character constants, sizeof expressions whose results are integer constants, and floating constants that are the immediate operands of casts. Cast operators in an integer constant expression shall only convert arithmetic types to integer types, except as part of an operand to the sizeof operator.</p>
+</blockquote>
+
+<p>Note that this is not the case in C++, where null pointer constants are defined differently:</p>
+
+<blockquote>
+  <p><a href="http://eel.is/c++draft/conv.ptr#1" rel="nofollow noreferrer"><code>[conv.ptr]/1:</code></a> A null pointer constant is an integer literal ([lex.icon]) with value zero or a <em>prvalue</em> of type <code>std​::​nullptr_­t</code>. <em>[..]</em></p>
+</blockquote>

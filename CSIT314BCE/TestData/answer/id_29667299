@@ -1,8 +1,0 @@
-<p>A better way is to use: git clean</p>
-
-<pre><code>git clean -d -x -f
-</code></pre>
-
-<p>This removes untracked files, including directories <code>(-d)</code> and files ignored by <code>git (-x)</code>.</p>
-
-<p>Also, replace the <code>-f</code> argument with <code>-n</code> to perform a <code>dry-run</code> or <code>-i</code> for interactive mode and it will tell you what will be removed.</p>

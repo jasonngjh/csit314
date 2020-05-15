@@ -1,0 +1,30 @@
+<p>Apparently, constraints don't allow selecting the nested registers, but you can add an <code>h</code> modifier to instruction references. This is mentioned in the docs on <a href="https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html#InputOperands" rel="nofollow noreferrer">Input Operands</a>. For example,</p>
+
+<pre class="lang-c prettyprint-override"><code>void f(char x) {
+    char a;
+    __asm__ __volatile__(
+        "mov  %0, %h1" :: "X"(x), "a"(a)
+    );
+}
+</code></pre>
+
+<p>produces</p>
+
+<pre><code>f:
+        xorl    %eax, %eax
+        mov  4(%esp), %ah
+        ret
+</code></pre>
+
+<p>I haven't been able to get rid of the <code>xor</code> that clears <code>eax</code>. My guess is the code generator is interpreting "%h1" as a 32-bit word with 8 bits set, not a character register reference.  For example, this:</p>
+
+<pre><code>char f(char x) {
+    char a;
+    __asm__ __volatile__(
+        "movb  %0, %h1" :: "X"(x), "a"(a)
+    );
+    return a;
+}
+</code></pre>
+
+<p>... compiles to the same code, even though it returns <code>\0</code>, not very intuitive.</p>

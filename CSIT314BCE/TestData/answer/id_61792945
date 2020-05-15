@@ -1,0 +1,15 @@
+<p>use this clean and simple:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-css lang-css prettyprint-override"><code>.btn {
+  width: 200px;
+  height: 50px;
+  background: linear-gradient(315deg, #278CD3 150px, #FFD667 90px, #FFD667 100%);
+  border-radius: 7px;
+  border: 1px solid #278CD3;
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;button type="button" class="btn "&gt;Button&lt;/button&gt;</code></pre>
+</div>
+</div>
+</p>

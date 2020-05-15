@@ -1,0 +1,5 @@
+<p>I believe this has got something to do with the actual implementation of sets in python. Sets use hash tables for storing their items and so iterating over a set means iterating over the rows of its hash table. </p>
+
+<p>As you iterate and add items to your set, new hashes are being created and appended to the hash table until you reach number 16. At this point, the next number is actually added to the beginning of the hash table and not to the end. And since you already iterated over the first row of the table, the iteration loop ends. </p>
+
+<p>My answer is based on <a href="https://stackoverflow.com/questions/48018680/updating-a-set-while-iterating-over-its-elements">this</a> one of a similar question, it actually shows this exact same example. I really recommend reading it for more detail. </p>

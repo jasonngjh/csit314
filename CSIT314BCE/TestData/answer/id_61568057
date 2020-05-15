@@ -1,0 +1,11 @@
+<p>l just like symmetries.</p>
+
+<pre class="lang-py prettyprint-override"><code>a = 6
+b = 10
+
+nums = [x+y for x in (-(a+b-1),0) for y in range(a,b)]
+</code></pre>
+
+<p>The result is <code>[-9, -8, -7, -6, 6, 7, 8, 9]</code>. </p>
+
+<p>I believe that the nums expression can be improved, what follows "in" and "range" still looks unbalanced to me. </p>

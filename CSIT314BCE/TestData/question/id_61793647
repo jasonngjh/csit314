@@ -1,0 +1,47 @@
+<p><strong>Desc:</strong></p>
+
+<p>I get data from the controller from the database via dropdownbox (enum), returns to view through ajax values ​​from enum as int (0/1/2)</p>
+
+<p><strong>Problem</strong></p>
+
+<p>Unfortunately they do not want to be assigned to the dropdownbox, I tried "document.getElementById("Test_ID").value"</p>
+
+<p><strong>Model:</strong></p>
+
+<pre><code>
+public partial class Test_Model
+   {
+       [Key]
+       public int Id { get; set; }
+       public TestNumu? Test { get; set; } 
+
+   }
+
+
+public enum TestNumu
+   {
+       UoP = 0,
+       B2B = 1,
+       UZ = 2
+   }
+</code></pre>
+
+<p><strong>View:</strong></p>
+
+<pre><code>
+ @Html.DropDownListFor(m =&gt; m.Test, new SelectList(Enum.GetValues(typeof(TestNumu))), "  ", new { @class = "form-control", @id = "Test_ID",  })
+
+// .....
+data: {"userId": JSON.stringify(userId)},
+                    cache: false,
+                    success: function (data) {
+
+//  in data I have have for exp.: Test = 1
+
+document.getElementById("Test_ID").value = data[0].Test;
+
+
+// ....
+
+
+</code></pre>

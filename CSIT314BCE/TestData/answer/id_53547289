@@ -1,3 +1,0 @@
-<p>If you simply want to trash all your local changes/commits and make your local branch look like the origin branch you started from...</p>
-
-<p><code>git reset --hard origin/branch-name</code></p>

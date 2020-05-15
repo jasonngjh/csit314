@@ -1,0 +1,23 @@
+<p><code>win32ui.FindWindow(classname, None)</code> returns a window handle if any window with the given class name is found. It raises <code>window32ui.error</code> otherwise.</p>
+
+<pre><code>import win32ui
+
+def WindowExists(classname):
+    try:
+        win32ui.FindWindow(classname, None)
+    except win32ui.error:
+        return False
+    else:
+        return True
+
+if WindowExists("DropboxTrayIcon"):
+    print "Dropbox is running, sir."
+else:
+    print "Dropbox is running..... not."
+</code></pre>
+
+<p>I found that the window class name for the Dropbox tray icon was DropboxTrayIcon using Autohotkey Window Spy.</p>
+
+<p>See also</p>
+
+<p><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms633499%28v=vs.85%29.aspx" rel="noreferrer">MSDN FindWindow</a></p>

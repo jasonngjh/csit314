@@ -1,0 +1,1 @@
+<p>I want to render a scene with its depth image,but I do not know how to render 16bit or 32bit single channel depth image? I can only save 8bit with 4 channel png image.</p>

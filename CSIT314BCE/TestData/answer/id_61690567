@@ -1,0 +1,25 @@
+<p>There are <strong>two totally separate problems</strong> going on:</p>
+
+<ol>
+<li><p>Typescript has a bug or limitation[1], but it is <strong>the opposite of what your question assumes</strong>. </p>
+
+<blockquote>
+  <p>if I write the function using the ternary operator it works fine</p>
+</blockquote>
+
+<p>Actually, it's not fine. The error for the if-else version is correct, and the ternary version should have the same error.</p>
+
+<p>You probably made the assumption that you did because, like most of us, we are inclined to assume our code is correct. Which leads to the second problem:</p></li>
+</ol>
+
+<hr>
+
+<ol start="2">
+<li>Your code is illogical. (Please excuse the bluntness.)</li>
+</ol>
+
+<p>I think (with the now simplified code in the question) that #2 should be easier to see. But when I get some free time I'll try to explain in detail.</p>
+
+<hr>
+
+<p>[1] There is a possibility that this isn't a Typescript flaw, but expected behavior due to some subtle non-equivalence between <code>if-else</code> and <code>? :</code> that I don't know about. I wouldn't be surprised, because Javascript has a bunch of legacy weirdness.  [EDIT: See <a href="https://stackoverflow.com/a/61690506/8910547">Shaun Luttin's answer</a> which came in just as I was typing mine.]</p>

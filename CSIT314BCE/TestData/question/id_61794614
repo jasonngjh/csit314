@@ -1,0 +1,10 @@
+<p>I have found almost no information about where to start.</p>
+
+<p>The question is "simple". I have a (dynamic) String containing <code>"Maria"</code> I want to find the different String variations. For example, 
+<code>maaria, mharia, mariia, marriia</code>, etc.</p>
+
+<p>My deduction is that I have to create a loop to separate the string by letters and add the patterns.</p>
+
+<p>But I do not know where to start.</p>
+
+<p>I have also been looking for complex examples but have not found much beyond credit card and email validation.</p>

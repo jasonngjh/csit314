@@ -1,0 +1,5 @@
+<p>I think your expression is readable, but an alternative would be the following:</p>
+
+<pre><code>if any(x in somelist for x in ['text1', 'text2']):
+   do_something()
+</code></pre>

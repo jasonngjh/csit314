@@ -1,0 +1,9 @@
+<p>Something that occurs to me is that when you say:</p>
+
+<blockquote>
+  <p>But what if ViewB also needs a preconfigured view-destination ViewC? I would need to create ViewB already in such a way that ViewC is injected already in ViewB before I inject ViewB into ViewA. And so on.... but as the data which at that time has to be passed is not available the whole construct fails.</p>
+</blockquote>
+
+<p>it's not quite true. Rather than supplying views, you can design your re-usable components so that you supply closures which supply views on demand.</p>
+
+<p>That way the closure which produces ViewB on demand can supply it with a closure which produces ViewC on demand, but the actual construction of the views can happen at a time when the contextual information that you need is available.</p>

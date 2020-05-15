@@ -1,0 +1,8 @@
+<p>Convert lists to dicts</p>
+
+<pre><code>d_list1 = dict(mylist1)
+d_list2 = dict(mylist2)
+
+[[k, (v+d_list2[k])/2] for k, v in d_list1.items() if k in d_list2]
+#[['egg', 0.45], ['chocolate', 0.5]]
+</code></pre>

@@ -1,30 +1,205 @@
-11227809><GManNickG><2019-06-27 21:51:36><24399><Why is processing a sorted array faster than processing an unsorted array?><11227902
-927358><MarianSpanik><2019-05-30 02:09:14><20932><How do I undo the most recent local commits in Git?><927386
-2003505><Unheilig><2019-01-05 09:12:15><16850><How do I delete a Git branch locally and remotely?><2003515
-292357><NicholasHamilton><2019-11-15 17:51:09><11875><What is the difference between &#39;git pull&#39; and &#39;git fetch&#39;?><292359
-477816><FilipBartuzi><2019-01-25 23:25:19><10222><What is the correct JSON content type?><477819
-231767><NathanOliver><2019-10-24 06:21:11><10122><What does the &quot;yield&quot; keyword do?><231855
-348170><Drt><2019-12-08 05:57:46><8901><How do I undo &#39;git add&#39; before commit?><348234
-1642028><SachinVerma><2019-10-29 14:57:45><9055><What is the &quot;--&gt;&quot; operator in C++?><1642035
-6591213><rahs><2019-07-06 11:20:36><8457><How do I rename a local Git branch?><6591218
-5767325><IsmaelLuceno><2019-04-24 06:17:18><8164><How can I remove a specific item from an array?><5767357
-79923><AgrimPathak><2019-09-17 12:18:06><8072><What and where are the stack and heap?><80113
-503093><Alice><2019-02-02 20:54:16><7807><How do I redirect to another webpage?><506004
-178325><DanielFischer><2019-10-07 21:03:18><7700><How do I check if an element is hidden in jQuery?><178450
-179123><AdamFreeman><2019-10-07 23:44:47><7681><How to modify existing, unpushed commit messages?><179147
-111102><AdamFreeman><2019-09-21 22:12:07><7659><How do JavaScript closures work?><111111
-4114095><SlippD.Thompson><2019-11-07 00:58:14><7641><How do I revert a Git repository to a previous commit?><4114122
-244777><TomasAndrle><2019-10-29 04:39:03><7539><Can comments be used in JSON?><244858
-1335851><Atul><2019-08-27 00:10:13><7525><What does &quot;use strict&quot; do in JavaScript, and what is the reasoning behind it?><1335881
-8318911><AgrimPathak><2019-11-30 06:54:22><7453><Why does HTML think “chucknorris” is a color?><8333464
-1789945><naveejr><2019-11-24 21:04:29><7456><How to check whether a string contains a substring in JavaScript?><1789952
-1125968><doug65536><2019-07-14 22:58:15><7091><How do I force &quot;git pull&quot; to overwrite local files?><8888015
-336859><LewisKelsey><2019-12-03 19:31:07><6839><var functionName = function() {} vs function functionName() {}><336868
-61212><Atul><2019-09-14 17:06:10><6806><How to remove local (untracked) files from the current Git working tree><
-6841333><CodeGeek><2019-07-27 16:15:58><6831><Why is subtracting these two times (in 1927) giving a strange result?><6841479
-1783405><mp31415><2019-11-23 22:23:46><6665><How do I check out a remote Git branch?><1783426
-40480><SimonHrabec><2019-09-03 04:14:29><6527><Is Java &quot;pass-by-reference&quot; or &quot;pass-by-value&quot;?><
-7074><screwnut><2019-08-10 15:18:02><6506><What is the difference between String and string in C#?><7077
-208105><Alice><2019-10-16 18:57:45><6099><How do I remove a property from a JavaScript object?><208106
-419163><LutzPrechelt><2019-01-07 12:11:00><5981><What does if __name__ == &quot;__main__&quot;: do?><419185
-394809><TomasAndrle><2019-12-27 16:32:18><5976><Does Python have a ternary conditional operator?><394814
+61672829><polm23><2020-05-08 13:50:01><165><How does Chrome decide what to highlight when you double-click Japanese text?><
+61263151><recursive><2020-04-17 10:25:53><152><Why is &quot;asdf&quot;.replace(/.*/g, &quot;x&quot;) == &quot;xx&quot;?><61263944
+61396588><PremChand><2020-04-24 04:40:55><151><AndroidRuntime: FATAL EXCEPTION: androidmapsapi-ZoomTableManager><
+61411498><erjiang><2020-04-24 23:08:24><105><Why does rand() repeat numbers far more often on Linux than Mac?><61413211
+61395654><Felipe><2020-04-24 03:44:09><91><Google Maps SDK Error started popping on last hour><
+61213866><Maher><2020-04-15 01:40:39><75><Why do I get this many iterations when adding to and removing from a set while iterating over it?><61221502
+61624859><Lux><2020-05-06 07:37:23><67><why does long long 2147483647 + 1 = -2147483648?><61624886
+61281771><user961186><2020-04-18 06:32:43><52><Do any compilers for the JVM use the &quot;wide&quot; goto?><61282148
+61348795><JWMittag><2020-04-22 00:51:21><52><Generate list of numbers and their negative counterparts in Python><61348876
+61644911><Strawberry><2020-05-07 04:36:20><46><Why do you need to recompile C/C++ for each OS?><61645042
+61304700><MidnightGuest><2020-04-19 20:55:12><39><SwiftUI - how to avoid navigation hardcoded into the view?><
+61663807><sideshowbarker><2020-05-08 01:17:20><36><Why does sizeof(x)++ compile?><61664022
+61670882><user427969><2020-05-08 10:14:03><40><ERROR in TypeError: Cannot read property &#39;flags&#39; of undefined><61671596
+61590721><DroidDev><2020-05-04 19:03:34><35><Does C++20 remove the requirement for class members to be in ascending order?><61590855
+61601872><rsan><2020-05-05 05:23:52><33><Why do string literals (char*) in C++ have to be constants?><61602280
+61397027><recursive><2020-04-24 05:09:24><33><AndroidRuntime: FATAL EXCEPTION: androidmapsapi-ZoomTableManager, java.lang.ArrayIndexOutOfBoundsException: length=1; index=12><
+61232081><SyedRazaMehdi><2020-04-15 23:05:56><30><Bitwise operation results in unexpected variable size><61232339
+61375565><Abhra><2020-04-23 05:39:39><28><Slow application, frequent JVM hangs with single-CPU setups and Java 12+><61567494
+61718622><hobbs><2020-05-11 04:55:53><29><Character array initialization with the first element being null><
+61419952><Brettins><2020-04-25 09:39:35><27><Distribution of final digits of random numbers in Python><
+61712660><sideshowbarker><2020-05-10 21:16:49><25><How to efficiently get the mean of the elements in two list of lists in Python><61712730
+61626600><AlexVPerl><2020-05-06 10:58:03><25><Override JavaScript default parameter with undefined><
+61637291><Felipe><2020-05-06 22:08:01><23><Why is this valid syntax?><61637367
+61356834><DavidSK><2020-04-22 11:31:35><23><WTForms: Install &#39;email_validator&#39; for email validation support><
+61425296><MidnightGuest><2020-04-25 20:02:09><24><Why neural network predicts wrong on its own training data?><61578364
+61470669><Bellan><2020-04-28 08:21:18><23><Is this the correct way to convert a char to a String in Java?><61470687
+61563923><OllieStrevel><2020-05-03 01:55:46><23><Create react app Error: Cannot find module &#39;./locale&#39;><61565750
+61285990><user961186><2020-04-18 16:02:51><28><Why does const char* not need a pointer to a memory address?><61286064
+61614900><PabloDbSys><2020-05-05 21:58:18><20><Tidyverse approach to binding unnamed list of unnamed vectors by row - do.call(rbind,x) equivalent><61615073
+61736649><PremChand><2020-05-12 02:26:17><18><In Java, how to get positions of ones in reversed binary form of an integer?><61736789
+61715253><Joshua><2020-05-11 00:29:29><16><How to make a bone shaped button><
+61776855><AlanLiang><2020-05-13 22:10:11><12><Haskell: Variable Type confusion between Double and Int><61777358
+61757887><Brettins><2020-05-13 01:16:53><12><Why does const have to be added to constexpr for a string literal declaration?><61757983
+61732690><user961186><2020-05-11 22:54:24><11><Why is it allowed to have both immutable and mutable borrows of a vector of numeric types in one expression?><61734260
+61686309><Nathaniel><2020-05-09 03:05:48><11><How do I reorganize a list back with the help of a dict><
+61665607><Xorlev><2020-05-08 02:54:20><9><Renaming a Django superclass model and updating the subclass pointers correctly><61723620
+61734858><ComFreek><2020-05-12 00:45:02><9><Can a null pointer constant be any integer constant expression evaluated to 0?><61734992
+61705478><JWMittag><2020-05-10 08:07:23><9><How do I get GCC to put a char in ah/bh/ch/dh?><
+61711964><recursive><2020-05-10 20:27:32><9><Find ghc version from executable><61711965
+61680474><AndersKaseorg><2020-05-08 21:38:41><9><Find k out of n subset with maximal area><61685333
+61784002><Joshua><2020-05-14 04:14:07><8><What order does &quot;least&quot; and &quot;greatest&quot; refer to when talking about fixed point><
+61756636><Abhra><2020-05-13 00:16:42><8><Weird (let) variable assignment behavior in node repl - can&#39;t assign values><61756736
+61721255><polm23><2020-05-11 10:11:00><8><Why is there a difference between LongStream reduce and sum performance?><
+61706963><AndersKaseorg><2020-05-10 11:53:01><8><TypeError: require.requireActual is not a function><61736570
+61685303><PremChand><2020-05-09 02:07:03><9><Why does using an &#39;if-else&#39; statement produce a TypeScript compiler error when a seemingly identical ternary operator construct does not?><61690506
+61702209><lewkka><2020-05-10 03:02:06><8><Calling overloaded method of Kotlin in Scala><61704736
+61666819><NilankaManoj><2020-05-08 04:07:49><8><Haskell: how to detect &quot;lazy memory leaks&quot;><61670171
+61674580><EricDuminil><2020-05-08 15:55:00><9><Does C# await keyword cause the function call to block?><
+61706535><Felipe><2020-05-10 10:46:16><7><Keras - Validation Loss and Accuracy stuck at 0><61707324
+61763357><SyedRazaMehdi><2020-05-13 06:53:16><7><Opposite of std::bind, pass in different functions for given parameters><61763552
+61664979><Maher><2020-05-08 02:21:26><7><How to enable helpful NullPointerExceptions in gradle test><
+61730006><EricDuminil><2020-05-11 20:42:58><7><Drop use of = in parsing arguments in raku><
+61733854><Nathaniel><2020-05-11 23:51:40><7><Creating a new column from two columns with apply()><
+61699873><Joshua><2020-05-10 00:13:11><7><Does this prefetch256() function offer any protection against cache timing attacks on AES?><61701596
+61793452><miguev><2020-05-14 17:06:39><2><Pandas dataframe column match and group by><
+61793556><PremChand><2020-05-14 17:12:47><1><Sort an array with custom function><
+61793780><erjiang><2020-05-14 17:23:54><2><How can I add value of data attribute in another div?><
+61793316><polm23><2020-05-14 17:00:59><0><Extract a sub-array from and array according to a condition in python><
+61793439><Celsiuss><2020-05-14 17:05:58><0><How to find an element in the results of &quot;find()&quot;?><
+61793730><MidnightGuest><2020-05-14 17:21:27><0><I don&#39;t know why my string array in C isn&#39;t working><
+61794216><JWMittag><2020-05-14 17:46:03><0><JavaScript array have length of 1 but its empty?><
+61793884><DavidSK><2020-05-14 17:28:54><2><Generating multiple pairs of unequal random integers in python/numpy><61793967
+61793924><Lux><2020-05-14 17:30:50><0><Conditional statement refactor><
+61793446><erjiang><2020-05-14 17:06:16><1><How can I use image in qt with pure c++　environment?><
+61794240><jimh><2020-05-14 17:47:05><0><can anyone please tell why this code is producing the wrong output?><
+61793348><EricDuminil><2020-05-14 17:02:02><0><Java : how to parse a doc file (word 97-2003)?><
+61793491><Felipe><2020-05-14 17:08:19><1><CSS class inside of class><
+61793431><iravul><2020-05-14 17:05:50><0><C Program : Modification of airport simulation to 3 runways><
+61793621><hobbs><2020-05-14 17:15:57><1><How to count the frequency of element of list of random integers?><
+61793535><jimh><2020-05-14 17:10:54><0><C# INSERT DATA TO DATABASE><
+61793504><Bellan><2020-05-14 17:09:02><0><How to make class Observable?><
+61793381><MuhammadSaqib><2020-05-14 17:03:19><0><Generate hundreds of random unique coupon codes and insert in database><
+61792200><miguev><2020-05-14 16:00:23><5><Why a &amp; b have the same address?><
+61793353><MidnightGuest><2020-05-14 17:02:12><0><JS program to rotate a given String in specified direction by specified magnitude><
+61793558><Felipe><2020-05-14 17:12:52><0><How to convert `c(a,b)` to parameter of `table(a,b)`?><
+61792705><MidnightGuest><2020-05-14 16:28:09><3><Apply two color on button background><
+61793855><Costin><2020-05-14 17:27:39><0><Safe way to terminate a python subprocess?><
+61794001><Sean><2020-05-14 17:35:29><0><How to get second and third rows using Entity Framework><
+61794137><ComFreek><2020-05-14 17:41:45><0><I get const_iterator instead of iterator from std::set><
+61793830><user427969><2020-05-14 17:26:14><1><Compare item by item from 2 list&lt;A&gt; in C#><
+61793480><EricDuminil><2020-05-14 17:07:54><0><enum declare method for call><
+61793647><DavidSK><2020-05-14 17:17:15><0><Assigning a value from enum to a dropdownbox><
+61793812><T.J.Crowder><2020-05-14 17:25:10><0><Trying to make an bank management System but having errors><
+61793827><iravul><2020-05-14 17:26:01><0><Want to generate random set of coordinates (Java/Swing)><
+61794524><Joshua><2020-05-14 18:01:31><0><NewWindow3 does not work with InternetExplorerMedium><
+61794521><EduardoHerzer><2020-05-14 18:01:22><0><Access-Control-Allow-Origin error when trying to invoke Firebase Functions (Even using firebase&#39;s example code!)><
+61794520><MidnightGuest><2020-05-14 18:01:19><0><AWS S3 Responds with HTTP 400><
+61794519><SyedRazaMehdi><2020-05-14 18:01:19><0><Easy way to automate cluster reboot and failover on two-node cluster?><
+61794518><phuclv><2020-05-14 18:01:17><0><Getting a Value error for testing a model><
+61794512><OllieStrevel><2020-05-14 18:00:58><0><How to get the maximum Z-Index of multiple elements (JQuery)><
+61794511><ComFreek><2020-05-14 18:00:57><0><Use Iteration number in SSIS><
+61794509><jimh><2020-05-14 18:00:38><0><how to insert the values in prexisting values into the database in prexisting values?><
+61794508><Costin><2020-05-14 18:00:36><0><Connection Refused from Local Node Server to Postgres DB><
+61794506><Costin><2020-05-14 18:00:28><0><BeautifulSoup returns missing information><
+61794503><AlexVPerl><2020-05-14 18:00:15><0><Update Multiple columns of a dataframe using joins in PYTHON><
+61794500><Costin><2020-05-14 17:59:59><0><Copying Data from AWS bucket to Ceph Bucket><
+61794498><recursive><2020-05-14 17:59:57><0><How to force dropdown option on one page?><
+61794496><rsan><2020-05-14 17:59:54><0><How can i open/close bootstrap dialog in typescript function><
+61794495><NilankaManoj><2020-05-14 17:59:51><0><finding a coordinate of a point using a given distance and two points><
+61794493><Felipe><2020-05-14 17:59:49><0><Conflict in the implementation of the Dependency Inversion Principle and cross refencing between related classes><
+61794490><ComFreek><2020-05-14 17:59:40><0><Filter array of objects with another array of objects but just part of string><
+61794489><WaiHaLee><2020-05-14 17:59:36><0><Convert Data Rows into string array c#><
+61794486><AlexVPerl><2020-05-14 17:59:29><0><An unhandled exception occurred: Configuration &#39;production&#39; is not set in the workspace><
+61794484><rsan><2020-05-14 17:59:20><0><Insert files into database using Camel and spring boot><
+61794483><Felipe><2020-05-14 17:59:20><0><Docker: How to health check a container that dont have port 80><
+61794482><methodsignature><2020-05-14 17:59:18><0><Is it possible to print on console during a readLine?><
+61794481><MidnightGuest><2020-05-14 17:59:17><0><Is there a way to ensure a value returned from a c# method is assigned to a variable?><
+61794480><phuclv><2020-05-14 17:59:16><0><Using Adobe Sign API to populate form fields within a template before sending><
+61794479><Celsiuss><2020-05-14 17:59:15><0><Change Paypal &quot;Pay Now&quot; Button Appearance - Javascript/CSS/iFrame><
+61794477><MidnightGuest><2020-05-14 17:59:14><0><CSS scroll-snap-type with Horizontal Scrolling><
+61794475><Abhra><2020-05-14 17:59:12><0><Amazon simple notification service (SNS) - How to publish a message to specify endpoint by its arn or token><
+61794474><user961186><2020-05-14 17:59:03><0><What does &#39;has_3([1, 3, 3])&#39; mean in Python?><
+61794473><MuhammadSaqib><2020-05-14 17:59:02><0><Is there any way you can install NumPy package on Pycharm without installing pip?><
+61794472><Maher><2020-05-14 17:58:57><0><Using a C struct in multiple packages in golang cgo><
+61794540><MidnightGuest><2020-05-14 18:02:37><0><typed.js is not working though followed the exact steps><
+61794539><EricDuminil><2020-05-14 18:02:35><0><How do you manage user domains?><
+61794538><Maher><2020-05-14 18:02:32><0><Given a fixed length array of integerin java, how can I duplicate each occurrence of zero, shifting the remaining elements to the right><
+17791143><PabloDbSys><2013-07-22 23:12:28><5><Removing hash comments that are not inside quotes><17791724
+61794412><MuhammadSaqib><2020-05-14 17:55:45><2><How to concatenate React objects without JSX><
+61794224><mosvy><2020-05-14 17:46:18><0><Could not find matching close tag for &quot;&lt;%&quot;, how can I fix that?><
+60955104><erjiang><2020-04-01 00:15:35><0><Convert any JSON, multiple-times nested structure into the KEY and VALUE fields><
+61792148><recursive><2020-05-14 15:56:32><0><By Pass a ReCaptcha><
+61793326><Sean><2020-05-14 17:01:14><1><How to remove duplicate lines in VB while generating a text file?><
+61794535><Celsiuss><2020-05-14 18:02:25><0><how to save 16bit or 32bit single channel depth map to file in unity?><
+61776765><NilankaManoj><2020-05-13 22:05:47><0><Added Gradle to Java project &quot;Exception ... java.lang.NoClassDefFoundError&quot;><
+61794534><user427969><2020-05-14 18:02:22><0><Why do we have to use another kernel source from the Internet when implementing a system call?><
+61794410><Brettins><2020-05-14 17:55:38><0><Weird variables behaviour in d3js><
+61794023><AndersKaseorg><2020-05-14 17:36:28><0><How to use label filter on intermediate containers that get created during build (assuming LABEL is set immediately after FROM command)?><
+61794225><JWMittag><2020-05-14 17:46:19><0><Setup SQL jobs in multi-tenant database in same server?><
+61793061><T.J.Crowder><2020-05-14 16:47:59><0><Firebase Realtime Database android client detect user logout after one hour><
+61794533><PabloDbSys><2020-05-14 18:02:13><0><root route problem in laravel 6.2 RouteServiceProvider><
+61794532><user427969><2020-05-14 18:02:12><0><Vue i18n doesn&#39;t update in store when switching language in components><
+61794208><EricDuminil><2020-05-14 17:45:29><1><How do I check to see if values in a dict are the exact same?><
+61777515><rsan><2020-05-13 22:40:16><0><TokenError: EOF in multi-line statement><
+61794147><SyedRazaMehdi><2020-05-14 17:42:12><1><Getting parser error for the following PHP Code><
+61792141><MuhammadSaqib><2020-05-14 15:56:08><0><select and update pandas dataframe columns in bokeh plot><
+61794267><ComFreek><2020-05-14 17:48:37><0><ValueError: too many values to unpack (expected 2) when i try to create a data-set><
+61794529><erjiang><2020-05-14 18:01:58><0><NgRx: how do I declare the explicit type of an action created by action creator?><
+61794528><AlexVPerl><2020-05-14 18:01:56><0><EPPLUS How Do We Refresh OData Connection using EPPLUS method?><
+61794527><erjiang><2020-05-14 18:01:54><0><Express limit file size azurewebsites><
+61792230><Sean><2020-05-14 16:01:35><0><Create Folders out of PDF-Names, crop the foldername and move them into the folder><
+61794526><NilankaManoj><2020-05-14 18:01:52><0><getting multiple user inputs><
+61794525><erjiang><2020-05-14 18:01:52><0><Use type classes to implement dependency inversion in a Haskell application?><
+61794634><RichardDavies><2020-05-14 18:07:14><0><Combining expressions in an expression tree using lambda syntax><
+61794633><Gobinda><2020-05-14 18:07:06><0><Everything is OK but the toast is not showing, &quot;Getting Your Driver&quot; comes again after clicking the &quot;CALL DRIVER&quot;><
+61794628><ManuPandu><2020-05-14 18:06:50><0><E commerce cart logic - Django><
+61794627><DaveC><2020-05-14 18:06:49><0><Office 2016 automation><
+61794626><Petr><2020-05-14 18:06:46><0><Aggregade dataframes in R based on string filtering><
+61794623><red_rose><2020-05-14 18:06:41><0><Why lose something when install the matlab &quot;parallelserver_doc_en_common&quot;?><
+61794622><MrGPG><2020-05-14 18:06:39><0><Output from matplotlib in Juptyter Notebook><
+61794621><CarlosGarcia><2020-05-14 18:06:38><0><How to show pretty colored and collapsable json in MVC.Core><
+61794620><rjziden><2020-05-14 18:06:34><0><Adding images in cube using javafx><
+61794618><RajeshRai><2020-05-14 18:06:23><0><python dictionary string indices must be integers><
+61794617><JWMittag><2020-05-14 18:06:23><0><Making a javascript API for a java program><
+61794615><lewkka><2020-05-14 18:06:17><0><Laravel API with large datasets very slow in loading><
+61794614><rickster><2020-05-14 18:06:13><0><Find name with two/three alternatives REGEX><
+61794613><AndersKaseorg><2020-05-14 18:06:10><1><Python string to Class name><
+61794611><T.J.Crowder><2020-05-14 18:06:07><0><winston custom transport formatted message><
+61794610><AndersKaseorg><2020-05-14 18:06:05><0><How to detect character set of a file in Angular 8?><
+61794606><NilankaManoj><2020-05-14 18:05:57><0><jest errors with not a not a function for promises><
+61794603><user961186><2020-05-14 18:05:49><0><how to let pre-commit only check the python codes you changed, not the whole file><
+61794601><Joshua><2020-05-14 18:05:36><0><Async method thows strange exception><
+61794599><MuhammadSaqib><2020-05-14 18:05:30><0><jwt token missing scope with adal azure delegating><
+61794597><AlanLiang><2020-05-14 18:05:29><0><Angular 2 - multiple parameters of root path router><
+61794595><DavidSK><2020-05-14 18:05:19><0><Test multiple DbContext with EF Core MemoryDatabase><
+61794594><polm23><2020-05-14 18:05:18><0><Laravel &amp; VueJS - questions><
+61794593><Abhra><2020-05-14 18:05:10><0><Get error while try to get data from public/webconfig.js on React><
+61794591><lewkka><2020-05-14 18:05:08><0><Not able to upload file using Windows file upload popup, tried using Java Robot class><
+61794590><Narro><2020-05-14 18:05:01><0><getting 401 unauthorize while using IdentityModel.AspNetCore -1.0.0-rc.4.1><
+61794588><hobbs><2020-05-14 18:04:49><0><Random sleep argument doesn&#39;t work in VBScript><
+61794587><recursive><2020-05-14 18:04:49><0><Runtime error, shape is invalid for input><
+61794585><Strawberry><2020-05-14 18:04:46><0><image upload error with &quot;Cannot read property &#39;filename&#39; of undefined&quot; error message in my react><
+61794584><DavidSK><2020-05-14 18:04:37><0><R Text data scraper loop through dates><
+61792587><user961186><2020-05-14 16:22:22><0><How can I make the C# .net POCO thread safe?><
+61794036><Costin><2020-05-14 17:36:59><0><How to combine the same words in sets into one word><61794122
+61792963><erjiang><2020-05-14 16:42:25><3><Open generic injection via factory in Angular><
+61793688><PremChand><2020-05-14 17:19:13><3><c++ iterator of any container with specific value type using concepts><
+61794382><PremChand><2020-05-14 17:54:15><0><Java 8 loop through list, filter basing on fields and get sum><
+61794697><Brettins><2020-05-14 18:10:30><0><Getting error while publishing message to SQS: AmazonSQS; Status Code: 403; Error Code: RequestThrottled><
+61794696><lewkka><2020-05-14 18:10:26><0><What am I missing in the algorithm?><
+61794690><OllieStrevel><2020-05-14 18:09:58><0><How to use Update command with CASE statement in Oracle?><
+61794642><Joshua><2020-05-14 18:07:50><0><java.lang.IndexOutOfBoundsException: Index: 1, Size: 0 at java.util.ArrayList.get(ArrayList.java:437)><
+61794694><mosvy><2020-05-14 18:10:17><0><Looping through nested JSON and storing values in DynamoDB><
+61792316><T.J.Crowder><2020-05-14 16:07:01><0><Bad File Descriptor error when running boost::process::system><
+61794556><rsan><2020-05-14 18:03:19><0><Clicking stop button in my game does not stop the game as expected><
+61790553><AlanLiang><2020-05-14 14:16:39><0><Detached signing using apache pdfbox><
+61793077><sideshowbarker><2020-05-14 16:48:55><0><Install specific version of kubernetes-helm using Homebrew><
+61794568><user427969><2020-05-14 18:03:58><0><Adding newline in JSON object Typescript and Angular><
+61780691><T.J.Crowder><2020-05-14 01:09:36><0><Stm32 Hardfault access invalid Mem address (Hardfault handler is called from there, timerinterupt the delay function .etc)><
+61729201><SyedRazaMehdi><2020-05-11 20:00:32><0><SpringDoc - How to Add schemas programmatically><
+61734076><Costin><2020-05-12 00:02:34><0><Setting up permissions for Google Cloud AI Platform Notebooks><
+61792534><hobbs><2020-05-14 16:19:22><0><Out of memory exception when decrypt large file using Cipher><
+61793068><T.J.Crowder><2020-05-14 16:48:11><1><How does Google identify devices?><
+61794688><EricDuminil><2020-05-14 18:09:53><0><Scanner throws NoSuchElementException on nextLine><
+61793230><Abhra><2020-05-14 16:56:35><0><Angular Ivy strictTemplates Argument of type &#39;Event&#39; is not assignable to parameter of type &#39;InputEvent&#39;><
+61794687><Sean><2020-05-14 18:09:52><0><not defined mongoose promise in ejs><
+61794686><user427969><2020-05-14 18:09:50><0><Counting values from case statement><
+61793340><lewkka><2020-05-14 17:01:41><0><Branching strategy for helm charts><
+61767041><jimh><2020-05-13 13:25:56><0><.htaccess file causing forbidden error in my codeigniter application, I am running apache 24 in my windows server><
+7787120><Makyen><2011-10-17 04:33:02><41><Python check if a process is running or not><7788702
+61247448><sideshowbarker><2020-04-16 17:56:38><1><How to use PARSE with a .net timestamp string as time in SQL?><61247882
+61794276><phuclv><2020-05-14 17:49:14><0><replacing &#39;==&#39; with &#39;in&#39; operator in if conditions><
+54895197><Costin><2019-02-27 06:27:42><4><SpamAssassin negative score for HEADER_FROM_DIFFERENT_DOMAINS><55147192
+61794682><Brettins><2020-05-14 18:09:38><0><In mac, how to copy by filename and keep all subdirectories?><
+61794681><SyedRazaMehdi><2020-05-14 18:09:32><0><Alert of $_GET message in PHP not showing><

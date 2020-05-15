@@ -1,0 +1,38 @@
+<p>There are two obvious ways to generate a random digit from 0 to 9 in Python. One could generate a random floating point number between 0 and 1, multiply by 10, and round down. Alternatively, one could use the <code>random.randint</code> method.</p>
+
+<pre><code>import random
+
+def random_digit_1():
+    return int(10 * random.random())
+
+def random_digit_2():
+    return random.randint(0, 9)
+</code></pre>
+
+<p>I was curious about what would happen if one generated a random number between 0 and 1, and kept the <em>last</em> digit. I didn't necessarily expect the distribution to be uniform, but I found the result quite surprising.</p>
+
+<pre><code>from random import random, seed
+from collections import Counter
+
+seed(0)
+counts = Counter(int(str(random())[-1]) for _ in range(1_000_000))
+print(counts)
+</code></pre>
+
+<p><strong>Output:</strong></p>
+
+<pre><code>Counter({1: 84206,
+         5: 130245,
+         3: 119433,
+         6: 129835,
+         8: 101488,
+         2: 100861,
+         9: 84796,
+         4: 129088,
+         7: 120048})
+</code></pre>
+
+<p>A histogram is shown below. Note that 0 does not appear, since trailing zeros are truncated. But can anyone explain why the digits 4, 5, and 6 are more common than the rest? I used
+Python 3.6.10, but the results were similar in Python 3.8.0a4.</p>
+
+<p><a href="https://i.stack.imgur.com/uTEOE.png" rel="noreferrer"><img src="https://i.stack.imgur.com/uTEOE.png" alt="Distribution of final digits of random floats"></a></p>

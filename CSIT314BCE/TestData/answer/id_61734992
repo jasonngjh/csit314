@@ -1,0 +1,44 @@
+<p>You are correct that all of these are valid.</p>
+
+<p>Section 6.6 of the <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf" rel="noreferrer">C standard</a> states:</p>
+
+<blockquote>
+  <p><em>1</em> </p>
+
+<pre><code>constant-expression:
+    conditional-expression
+</code></pre>
+  
+  <p>...</p>
+  
+  <p><em>3</em> Constant  expressions  shall  not  contain  assignment,  increment,  decrement,  function-call,or  comma  operators,  except  when  they are  contained  within  a  subexpression  that  is  not evaluated.</p>
+  
+  <p>...</p>
+  
+  <p><em>6</em> An <em>integer constant  expression</em> shall  have  integer  type  and 
+  shall  only  have  operands that   are   integer   constants,<br>
+  enumeration   constants,   character   constants, <code>sizeof</code> expressions
+  whose  results  are  integer  constants, <code>_Alignof</code> expressions,  and 
+  floating constants that are the immediate operands of casts.  Cast
+  operators in an integer constant expression  shall  only  convert 
+  arithmetic  types  to  integer  types,  except  as  part  of  an
+  operand to the <code>sizeof</code> or <code>_Alignof</code> operator.</p>
+</blockquote>
+
+<p>Each of the expressions in your examples fit this description, i.e.: </p>
+
+<ul>
+<li>All operands are integer constants</li>
+<li>The expression is a <em>conditional-expression</em> (i.e. doesn't use assignment or comma operators) with no increment, decrement, or function call operators</li>
+<li>Evaluates to 0</li>
+</ul>
+
+<p>So all are valid ways to assign <code>NULL</code> to a pointer.</p>
+
+<p>Some examples that are <strong>not</strong> integer constant expressions:</p>
+
+<pre><code>int x = 1;
+int *ptr1 = (3, 0);    //  invalid, comma operator not allowed
+int *ptr2 = (x = 0);   //  invalid, assignment not allowed
+int *ptr3 = x - 1;     //  invalid, an operand is not an integer constant
+</code></pre>

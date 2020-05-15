@@ -1,6 +1,0 @@
-<p>A single command:</p>
-
-<pre class="lang-bash prettyprint-override"><code>git reset --soft 'HEAD^' 
-</code></pre>
-
-<p>It works great to undo the last local commit!</p>

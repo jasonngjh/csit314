@@ -1,0 +1,104 @@
+<ul>
+<li><p>If you use <code>keras</code> instead of <code>tf.keras</code> everything works fine.</p></li>
+<li><p>With <code>tf.keras</code>, I even tried <code>validation_data = [X_train, y_train]</code>, this also gives zero accuracy.</p></li>
+</ul>
+
+<p><code>model.fit(X_train, y_train, validation_data=[X_train.to_numpy(), y_train.to_numpy()], epochs=10, batch_size=64)</code></p>
+
+<pre><code>Epoch 1/10
+8/8 [==============================] - 0s 6ms/step - loss: 0.7898 - accuracy: 0.6087 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 2/10
+8/8 [==============================] - 0s 6ms/step - loss: 0.6710 - accuracy: 0.6500 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 3/10
+8/8 [==============================] - 0s 5ms/step - loss: 0.6748 - accuracy: 0.6500 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 4/10
+8/8 [==============================] - 0s 6ms/step - loss: 0.6716 - accuracy: 0.6370 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 5/10
+8/8 [==============================] - 0s 6ms/step - loss: 0.6085 - accuracy: 0.6326 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 6/10
+8/8 [==============================] - 0s 6ms/step - loss: 0.6744 - accuracy: 0.6326 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 7/10
+8/8 [==============================] - 0s 6ms/step - loss: 0.6102 - accuracy: 0.6522 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 8/10
+8/8 [==============================] - 0s 6ms/step - loss: 0.7032 - accuracy: 0.6109 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 9/10
+8/8 [==============================] - 0s 5ms/step - loss: 0.6283 - accuracy: 0.6717 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+Epoch 10/10
+8/8 [==============================] - 0s 5ms/step - loss: 0.6120 - accuracy: 0.6652 - val_loss: 0.0000e+00 - val_accuracy: 0.0000e+00
+</code></pre>
+
+<p>So, definitely there is some issue with <code>tensorflow</code> implementation of <code>fit</code>.</p>
+
+<p>I dug up the source, and it seems the part responsible for <code>validation_data</code>:</p>
+
+<pre><code>...
+...
+        # Run validation.
+        if validation_data and self._should_eval(epoch, validation_freq):
+          val_x, val_y, val_sample_weight = (
+              data_adapter.unpack_x_y_sample_weight(validation_data))
+          val_logs = self.evaluate(
+              x=val_x,
+              y=val_y,
+              sample_weight=val_sample_weight,
+              batch_size=validation_batch_size or batch_size,
+              steps=validation_steps,
+              callbacks=callbacks,
+              max_queue_size=max_queue_size,
+              workers=workers,
+              use_multiprocessing=use_multiprocessing,
+              return_dict=True)
+          val_logs = {'val_' + name: val for name, val in val_logs.items()}
+          epoch_logs.update(val_logs)
+</code></pre>
+
+<p>internally calls <code>model.evaluate</code>, as we have already established <code>evaluate</code> works fine, I realized the only culprit could be <code>unpack_x_y_sample_weight</code>.</p>
+
+<p>So, I looked into the implementation:</p>
+
+<pre><code>def unpack_x_y_sample_weight(data):
+  """Unpacks user-provided data tuple."""
+  if not isinstance(data, tuple):
+    return (data, None, None)
+  elif len(data) == 1:
+    return (data[0], None, None)
+  elif len(data) == 2:
+    return (data[0], data[1], None)
+  elif len(data) == 3:
+    return (data[0], data[1], data[2])
+
+  raise ValueError("Data not understood.")
+
+</code></pre>
+
+<p>It's crazy, but if you just pass a tuple instead of a list, everything works fine due to the check inside <code>unpack_x_y_sample_weight</code>. (Your labels are missing after this step and somehow the data is getting fixed inside <code>evaluate</code>, so you're training with no reasonable labels, this seems like a bug but the documentation clearly states to pass tuple)</p>
+
+<p>The following code gives correct validation accuracy and loss:</p>
+
+<p><code>model.fit(X_train, y_train, validation_data=(X_train.to_numpy(), y_train.to_numpy()), epochs=10, batch_size=64)</code></p>
+
+<pre><code>Epoch 1/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.5832 - accuracy: 0.6696 - val_loss: 0.6892 - val_accuracy: 0.6674
+Epoch 2/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.6385 - accuracy: 0.6804 - val_loss: 0.8984 - val_accuracy: 0.5565
+Epoch 3/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.6822 - accuracy: 0.6391 - val_loss: 0.6556 - val_accuracy: 0.6739
+Epoch 4/10
+8/8 [==============================] - 0s 6ms/step - loss: 0.6276 - accuracy: 0.6609 - val_loss: 1.0691 - val_accuracy: 0.5630
+Epoch 5/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.7048 - accuracy: 0.6239 - val_loss: 0.6474 - val_accuracy: 0.6326
+Epoch 6/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.6545 - accuracy: 0.6500 - val_loss: 0.6659 - val_accuracy: 0.6043
+Epoch 7/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.5796 - accuracy: 0.6913 - val_loss: 0.6891 - val_accuracy: 0.6435
+Epoch 8/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.5915 - accuracy: 0.6891 - val_loss: 0.5307 - val_accuracy: 0.7152
+Epoch 9/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.5571 - accuracy: 0.7000 - val_loss: 0.5465 - val_accuracy: 0.6957
+Epoch 10/10
+8/8 [==============================] - 0s 7ms/step - loss: 0.7133 - accuracy: 0.6283 - val_loss: 0.7046 - val_accuracy: 0.6413
+</code></pre>
+
+<p>So, as this seems to be a <strong>bug</strong>, I have just opened a relevant issue at Tensorflow Github repo: </p>
+
+<p><a href="https://github.com/tensorflow/tensorflow/issues/39370" rel="nofollow noreferrer">https://github.com/tensorflow/tensorflow/issues/39370</a></p>

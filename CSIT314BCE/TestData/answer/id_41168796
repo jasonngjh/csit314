@@ -1,7 +1,0 @@
-<p>I have found <a href="http://ohshitgit.com/" rel="noreferrer">this</a> site which describes how to undo things that you have committed into the repository.</p>
-
-<p>Some commands:</p>
-
-<pre><code>git commit --amend        # Change last commit
-git reset HEAD~1 --soft   # Undo last commit
-</code></pre>

@@ -1,9 +1,0 @@
-<h2>This is one more way to directly reset to a recent commit</h2>
-
-<pre><code>git stash
-git stash clear
-</code></pre>
-
-<p>It directly clears all the changes that you have been making since the last commit.</p>
-
-<p>PS: It has a little problem; it also deletes all you recently stored stash changes. Which I guess in most cases should not matter.</p>

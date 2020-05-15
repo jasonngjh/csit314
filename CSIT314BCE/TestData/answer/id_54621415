@@ -1,9 +1,0 @@
-<p>As others said, it's a time change in 1927 in Shanghai. </p>
-
-<p>When it was <code>23:54:07</code> in Shanghai, the local standard time, but after 5 minutes and 52 seconds, it turned to the next day at <code>00:00:00</code>, and then local standard time changed back to <code>23:54:08</code>. So, that's why the difference between the two times is 343 seconds not 1 second, as you would have expected.</p>
-
-<p>The time can also mess up in other places like the US. The US has Daylight Saving Time. When the Daylight Saving Time starts the time goes forward 1 hour. But after a while the Daylight Saving Time ends, and it goes backward 1 hour back to the standard time zone. So sometimes when comparing times in the US the difference is about <code>3600</code> seconds not 1 second.</p>
-
-<p>But there is something different about these two time changes. The latter changes continuously and the former was just a change. It didn't change back or change again by the same amount.</p>
-
-<p><strong>It's better to use UTC where time doesn't change unless if needed to use non-UTC time like in display.</strong></p>

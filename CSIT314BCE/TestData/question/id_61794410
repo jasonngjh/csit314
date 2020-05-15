@@ -1,0 +1,77 @@
+<p>Let's say I have two simple figures which have <code>x,y,width,height</code> as variables. My code looks like the following:</p>
+
+<pre><code>var numberclick = 0;
+var newwidth;
+var newheight;
+var oldwidth;
+var oldheight;
+var oldfigure;
+.on("click", function(d,i) {
+        numberclick++;
+        console.log(numberclick);
+        if (numberclick%2==1) { 
+            newwidth = d.width;
+            newheigth = d.heigth;
+            oldfigure = this;
+
+        }
+
+        else {
+            oldwidth = d.width;
+            oldheigth = d.heigth;
+            d.width = newwidth;
+            d.heigth = newheigth;
+            oldfigure.width= oldwidth;
+            oldfigure.heigth = oldheigth;
+            d3.select(this)
+            .attr("d", function(d) {
+                return design(d.x,d.y,newwidth,newheigth);
+            });
+            d3.select(oldfigure)
+            .attr("d", function(d) {
+                return design(d.x,d.y,oldwidth,oldheigth);
+            });
+</code></pre>
+
+<p>Suppose I have two figure first one <code>width=200, heigth=100</code>, second one <code>width=100, heigth=50</code>
+Suppose I click on the first one and variables are updated as following:</p>
+
+<pre><code>newwidht = 200
+newheigth = 100
+</code></pre>
+
+<p>Now I click on the second and variables are updated as following:</p>
+
+<pre><code>oldwidth = 100
+oldheight = 50
+d.width = 200;
+d.heigth = 100;
+oldfigure.width= 100;
+oldfigure.heigth = 50;
+</code></pre>
+
+<p>Now I click again on the second and variables are updated as following:</p>
+
+<pre><code>newwidth = 200
+newheigth = 100
+</code></pre>
+
+<p>Now I click again on the first and variables are updates as following</p>
+
+<pre><code>oldwidth = 200
+oldheight = 100
+d.width = 200;
+d.heigth = 100;
+oldfigure.width= 200;
+oldfigure.heigth = 100
+</code></pre>
+
+<p>I don't understand why in this last step <code>oldwidth</code> and <code>oldheigth</code> have this values, they should be:</p>
+
+<pre><code>oldwidth = 100
+oldheight = 50
+d.width = 200;
+d.heigth = 100;
+oldfigure.width= 100;
+oldfigure.heigth = 50
+</code></pre>

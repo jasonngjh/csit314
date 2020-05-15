@@ -1,0 +1,38 @@
+<p>It's an internal error in Google Maps API, and it is aware of the issue and working on a fix.</p>
+
+<p>References:</p>
+
+<ol>
+<li><a href="https://stackoverflow.com/questions/61396588/androidruntime-fatal-exception-androidmapsapi-zoomtablemanager?answertab=oldest#tab-top">FATAL EXCEPTION: androidmapsapi-ZoomTableManager java.lang.ArrayIndexOutOfBoundsException: length=1; index=12</a></li>
+<li><a href="https://issuetracker.google.com/issues/154855144" rel="nofollow noreferrer">com.google.maps.api.android has a fatal exception</a></li>
+<li><a href="https://issuetracker.google.com/issues/154855417" rel="nofollow noreferrer">Google Maps SDK is crashing </a></li>
+</ol>
+
+<hr>
+
+<p>Update:</p>
+
+<p>If you want your users to continue using your app without re-installing, The sample code is copy-pasted here for your convenience. In <strong>Application</strong> class:</p>
+
+<pre><code>import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.io.File;
+
+public class MyApp extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        SharedPreferences googleBug = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE);
+        if (!googleBug.contains("fixed")) {
+            File corruptedZoomTables = new File(getFilesDir(), "ZoomTables.data");
+            corruptedZoomTables.delete();
+            googleBug.edit().putBoolean("fixed", true).apply();
+        }
+    }
+
+}
+</code></pre>
+
+<p>Reference: <a href="https://issuetracker.google.com/154855417#comment179" rel="nofollow noreferrer">https://issuetracker.google.com/154855417#comment179</a></p>

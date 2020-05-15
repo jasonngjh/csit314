@@ -1,0 +1,9 @@
+<p>This is working code for Xamarin. You need to install Xamarin.Essentials nuget package.</p>
+
+<pre><code>if (!Preferences.Get("google_bug_fixed", false))
+{
+    var corruptedZoomTables = new File(FileSystem.AppDataDirectory, "ZoomTables.data");
+    corruptedZoomTables.Delete();
+    Preferences.Set("google_bug_fixed", true);
+}
+</code></pre>

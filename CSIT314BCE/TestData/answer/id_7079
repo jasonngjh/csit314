@@ -1,5 +1,0 @@
-<p><code>System.String</code> is the .NET string class - in C# <code>string</code> is an alias for <code>System.String</code> - so in use they are the same.</p>
-
-<p>As for guidelines I wouldn't get too bogged down and just use whichever you feel like - there are more important things in life and the code is going to be the same anyway.</p>
-
-<p>If you find yourselves building systems where it is necessary to specify the size of the integers you are using and so tend to use <code>Int16</code>, <code>Int32</code>, <code>UInt16</code>, <code>UInt32</code> etc. then it might look more natural to use <code>String</code> - and when moving around between different .net languages it might make things more understandable - otherwise I would use string and int.</p>

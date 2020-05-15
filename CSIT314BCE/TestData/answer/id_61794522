@@ -1,0 +1,11 @@
+<p>Try this:</p>
+
+<pre><code>seen = set()
+res = {}
+for x in d:
+    for k, v in d[x].items():
+        if k in seen:
+            res[k] = v
+        seen.add(k)
+print(res)
+</code></pre>

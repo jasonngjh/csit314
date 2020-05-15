@@ -1,0 +1,18 @@
+<p>I'm writing a little winston custom transport to send my logs to Kafka (existing transports are not updated or don't match my needs).</p>
+
+<p>As explained in the <a href="https://github.com/winstonjs/winston#adding-custom-transports" rel="nofollow noreferrer">documentation</a> for creating a new custom transport, I have a function called "log" which take 2 parameters, info and callback.
+When I watch the content of info I see this :</p>
+
+<pre><code>{
+  level: 'debug',
+  message: '[Worker.ts - sleep] Sleeping 2929 ms',
+  worker: 'default',
+  timestamp: '2020-05-14 11:40:51.186',
+  [Symbol(level)]: 'debug',
+  [Symbol(message)]: '[2020-05-14 11:40:51.186][debug][default][Worker.ts - sleep] Sleeping 2929 ms'
+}
+</code></pre>
+
+<p>So my question is, how can I access to [Symbol(message)] so I don't have to set a static formatting for my transport ?</p>
+
+<p>Thanks in advance for your response.</p>

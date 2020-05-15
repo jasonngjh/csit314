@@ -1,0 +1,23 @@
+<p>Another approach that requires <code>numpy</code> for easy indexing:</p>
+
+<pre><code>import numpy as np
+
+def create_vector(word, vector):
+
+    out = np.zeros(len(vector))
+    indices = [i for i, x in enumerate(vector) if x == word]
+    out[indices] = 1
+
+    return out.astype(int)
+
+
+s['C'] = s.apply(lambda x: create_vector(x.A, x.B), axis=1)
+
+# Output
+#      A        B                   C
+# 0    hello    [all, say, hello]   [0, 0, 1]
+# 1    good     [good, for, you]    [1, 0, 0]
+# 2    my       [so, hard]          [0, 0]
+# 3    pandas   [pandas]            [1]
+# 4    wrong    []                  []
+</code></pre>

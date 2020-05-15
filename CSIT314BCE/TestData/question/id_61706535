@@ -1,0 +1,13 @@
+<p>I am trying to train a simple 2 layer Fully Connected neural net for Binary Classification in Tensorflow keras. I have split my data into Training and Validation sets with a 80-20 split using sklearn's <code>train_test_split()</code>.</p>
+
+<p>When I call <code>model.fit(X_train, y_train, validation_data=[X_val, y_val])</code>, <strong>it shows 0 validation loss and accuracy for all epochs</strong>, but it trains just fine.</p>
+
+<p><a href="https://i.stack.imgur.com/aJVoW.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/aJVoW.png" alt="Screenshot of model.fit call and verbose log"></a></p>
+
+<p>Also, when I try to evaluate it on the validation set, the output is non-zero.</p>
+
+<p><a href="https://i.stack.imgur.com/8C34g.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/8C34g.png" alt="Screenshot of model.evaluate function call"></a></p>
+
+<p>Can someone please explain why I am facing this 0 loss 0 accuracy error on validation. Thanks for your help.</p>
+
+<p>Here is the complete sample code (MCVE) for this error: <a href="https://colab.research.google.com/drive/1P8iCUlnD87vqtuS5YTdoePcDOVEKpBHr?usp=sharing" rel="nofollow noreferrer">https://colab.research.google.com/drive/1P8iCUlnD87vqtuS5YTdoePcDOVEKpBHr?usp=sharing</a></p>

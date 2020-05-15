@@ -1,0 +1,4 @@
+<p>I had the same problem with the latest updates, tried to install email_validator and flask-validator and continued with this exception. Solved by adding in
+requirements.txt the following line: email-validator == 1.0.5 as suggested [here].(<a href="https://github.com/alphagov/notifications-admin/commit/5ce2906c5aa6d16" rel="nofollow noreferrer">https://github.com/alphagov/notifications-admin/commit/5ce2906c5aa6d16</a>)</p>
+
+<p>Actually wtforms[email]==2.3.1 is what I need.</p>

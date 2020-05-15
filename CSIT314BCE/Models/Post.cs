@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 
 namespace CSIT314BCE.Models
@@ -15,6 +16,7 @@ namespace CSIT314BCE.Models
         public int ParentId { get; set; } //Id of Original Post
         public int VoteCount { get; set; }
         public int AnswerCount { get; set; }
+        public int CommentCount { get; set; }
         public DateTime? CreationDate { get; set; }
         public DateTime? DeletionDate { get; set; }
         public DateTime? ClosedDate { get; set; }
@@ -56,6 +58,7 @@ namespace CSIT314BCE.Models
             };
 
             context.Posts.Add(post);
+            user.Ratings += 5;
             context.SaveChanges();
             context.Entry(post).GetDatabaseValues();
 
@@ -83,6 +86,7 @@ namespace CSIT314BCE.Models
             };
 
             context.Posts.Add(post);
+            user.Ratings += 5;
             context.SaveChanges();
             context.Entry(post).GetDatabaseValues();
 
@@ -125,25 +129,6 @@ namespace CSIT314BCE.Models
             return model;
         }
 
-        public void PostAns(string body, int PostId, string userId)
-        {
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            var user = userManager.FindById(userId);
-
-            Post post = new Post()
-            {
-                ParentId = PostId,
-                Body = body,
-                CreationDate = DateTime.Now,
-                OwnerId = user.Id,
-                OwnerUsername = user.UserName,
-                VoteCount = 0
-            };
-
-            context.Posts.Add(post);
-            context.SaveChanges();
-        }
-
         private int BodyLimit = 300;
         [Display(Name = "Body")]
         public string BodyTrimmed
@@ -155,6 +140,26 @@ namespace CSIT314BCE.Models
                 else
                     return this.Body;
             }
+        }
+
+        public int ChooseAnswer(int postId) 
+        {
+            Post answer = context.Posts.Find(postId);
+            if (answer != null) 
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    Post question = db.Posts.Find(answer.ParentId);
+                    if (question != null) 
+                    {
+                        question.AcceptedAnswerId = postId;
+                        question.ClosedDate = DateTime.Now;
+                        db.SaveChanges();
+                        return question.PostId;
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

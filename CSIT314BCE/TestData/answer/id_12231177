@@ -1,8 +1,0 @@
-<p>You also can use <code>git filter-branch</code> for that.</p>
-
-<pre class="lang-c prettyprint-override"><code>git filter-branch -f --msg-filter "sed 's/errror/error/'" $flawed_commit..HEAD
-</code></pre>
-
-<p>It's not as easy as a trivial <code>git commit --amend</code>, but it's especially useful, if you already have some merges after your erroneous commit message.</p>
-
-<p>Note that this will try to rewrite <em>every</em> commit between <code>HEAD</code> and the flawed commit, so you should choose your <code>msg-filter</code> command very wisely ;-)</p>

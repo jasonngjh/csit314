@@ -1,0 +1,47 @@
+<p>Here is a simple example. </p>
+
+<p><a href="https://stackblitz.com/edit/angular-ivy-kc9e4q" rel="nofollow noreferrer">https://stackblitz.com/edit/angular-ivy-kc9e4q</a></p>
+
+<pre><code>import { Component, OnInit, VERSION } from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+
+
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+})
+export class AppComponent implements OnInit {
+model: Model;
+
+  ngOnInit() {
+    this.model.id$.subscribe(newid =&gt; {
+      // do something.
+    });
+  }
+}
+export class Model {
+  // @ts-ignore
+  private readonly _id = new BehaviorSubject&lt;number&gt;();
+  readonly id$ = this._id.asObservable();
+  // @ts-ignore
+  private readonly _name = new BehaviorSubject&lt;string&gt;();
+  readonly name$ = this._name.asObservable();
+
+  get id(): number {
+    return this._id.getValue();
+  }
+
+  set id(val) {
+    this._id.next(val);
+  }
+
+  get name(): number {
+    return this._name.getValue();
+  }
+
+  set name(val) {
+    this._name.next(val);
+  }
+}
+</code></pre>

@@ -1,0 +1,24 @@
+<p>I'm getting an error on my Jest tests:</p>
+
+<pre><code> FAIL  test/storyshots.test.ts
+  ● Test suite failed to run
+
+    TypeError: require.requireActual is not a function
+
+      1 | import initStoryshots from "@storybook/addon-storyshots"
+      2 | 
+    &gt; 3 | initStoryshots({
+        | ^
+      4 |   configPath: "./storybook",
+      5 |   framework: "react-native",
+      6 | })
+
+      at Object.load (node_modules/@storybook/addon-storyshots/dist/frameworks/react-native/loader.js:23:29)
+      at Object.loadFramework [as default] (node_modules/@storybook/addon-storyshots/dist/frameworks/frameworkLoader.js:26:19)
+      at testStorySnapshots (node_modules/@storybook/addon-storyshots/dist/api/index.js:48:14)
+      at Object.&lt;anonymous&gt; (test/storyshots.test.ts:3:1)
+</code></pre>
+
+<p>I'm not using <code>requireActual</code> anywhere in my code. It looks like <a href="https://github.com/storybookjs/storybook/search?q=requireActual&amp;unscoped_q=requireActual" rel="nofollow noreferrer">Storybook</a> does, though.</p>
+
+<p>A Google search turned up only one (since deleted) Stackoverflow question with no answer.</p>

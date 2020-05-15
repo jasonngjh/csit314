@@ -1,0 +1,18 @@
+<p>I would like to aggregade dataframe based on partial string filtering.</p>
+
+<p>My example is as follows:</p>
+
+<pre><code>     RMSE  MAPE term                                      count
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                                     &lt;dbl&gt;
+ 1  20.3 0.146 (Intercept)                                   1
+ 2  20.3 0.146 as.factor(Gear)420599                         1
+ 3  20.3 0.146 as.factor(Gear)433453                         1
+</code></pre>
+
+<p>and the reuslt should look like this </p>
+
+<pre><code>     RMSE  MAPE term                                      count
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                                     &lt;dbl&gt;
+ 1  20.3 0.146 (Intercept)                                   1
+ 2  20.3 0.146 as.factor(Gear)                               2
+</code></pre>

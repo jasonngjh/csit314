@@ -1,6 +1,0 @@
-<p>You can write the Url.Action for the Button click event in the script section as follows.</p>
-
-<pre><code>function onclick() {
-    location.href = '@Url.Action("Index", "Home")';
-}
-</code></pre>

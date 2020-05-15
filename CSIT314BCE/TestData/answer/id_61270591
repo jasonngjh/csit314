@@ -1,0 +1,70 @@
+<p>Together in an offline chat with <a href="https://stackoverflow.com/users/1116343/yawkat">yawkat</a>, we found an <strong>intuitive way</strong> of seeing why <code>"abcd".replace(/.*/g, "x")</code> exactly produces two matches. Note that we haven't checked whether it completely equals the semantics imposed by the ECMAScript standard, hence just take it as a rule of thumb.</p>
+
+<h3>Rules of Thumb</h3>
+
+<ul>
+<li>Consider the matches as a list of tuples <code>(matchStr, matchIndex)</code> in 
+chronological order that indicate which string parts and indices of the input string have already been eaten up.</li>
+<li>This list is continuously built up starting from the left of the input string for the regex.</li>
+<li>Parts already eaten up cannot be matched anymore</li>
+<li>Replacement is done at indices given by <code>matchIndex</code> overwriting the substring <code>matchStr</code> at that position. If <code>matchStr = ""</code>, then the "replacement" is effectively insertion.</li>
+</ul>
+
+<p>Formally, the act of matching and replacement is described as a loop as seen <a href="https://stackoverflow.com/a/61263944/603003">in the other answer</a>.</p>
+
+<h3>Easy Examples</h3>
+
+<ol>
+<li><p><code>"abcd".replace(/.*/g, "x")</code> outputs <code>"xx"</code>:</p>
+
+<ul>
+<li><p>The match list is <code>[("abcd", 0), ("", 4)]</code></p>
+
+<p>Notably, it does <em>not</em> include the following matches one could have thought of for the following reasons:</p>
+
+<ul>
+<li><code>("a", 0)</code>, <code>("ab", 0)</code>: the quantifier <code>*</code> is greedy</li>
+<li><code>("b", 1)</code>, <code>("bc", 1)</code>: due to the previous match <code>("abcd", 0)</code>, the strings <code>"b"</code> and <code>"bc"</code> are already eaten up</li>
+<li><code>("", 4), ("", 4)</code> (i.e. twice): the index position 4 is already eaten up by the first apparent match</li>
+</ul></li>
+<li><p>Hence, the replacement string <code>"x"</code> replaces the found match strings exactly at those positions: at position 0 it replaces the string <code>"abcd"</code> and at position 4 it replaces <code>""</code>.</p>
+
+<p>Here you can see that replacement can act as true replacement of a previous string or just as insertion of a new string.</p></li>
+</ul></li>
+<li><p><code>"abcd".replace(/.*?/g, "x")</code> with a <a href="https://www.regular-expressions.info/repeat.html#lazy" rel="noreferrer">lazy quantifier <code>*?</code></a> outputs <code>"xaxbxcxdx"</code></p>
+
+<ul>
+<li><p>The match list is <code>[("", 0), ("", 1), ("", 2), ("", 3), ("", 4)]</code></p>
+
+<p>In contrast to the previous example, here <code>("a", 0)</code>, <code>("ab", 0)</code>, <code>("abc", 0)</code>, or even <code>("abcd", 0)</code> are not included due to the quantifier's laziness that strictly limits it to find the shortest possible match.</p></li>
+<li><p>Since all match strings are empty, no actual replacement occurs, but instead insertions of <code>x</code> at positions 0, 1, 2, 3, and 4.</p></li>
+</ul></li>
+<li><p><code>"abcd".replace(/.+?/g, "x")</code> with a <a href="https://www.regular-expressions.info/repeat.html#lazy" rel="noreferrer">lazy quantifier <code>+?</code></a> outputs <code>"xxxx"</code></p>
+
+<ul>
+<li>The match list is <code>[("a", 0), ("b", 1), ("c", 2), ("d", 3)]</code></li>
+</ul></li>
+<li><p><code>"abcd".replace(/.{2,}?/g, "x")</code> with a <a href="https://www.regular-expressions.info/repeat.html#lazy" rel="noreferrer">lazy quantifier <code>[2,}?</code></a> outputs <code>"xx"</code></p>
+
+<ul>
+<li>The match list is <code>[("ab", 0), ("cd", 2)]</code></li>
+</ul></li>
+<li><p><code>"abcd".replace(/.{0}/g, "x")</code> outputs <code>"xaxbxcxdx"</code> by the same logic as in example 2.</p></li>
+</ol>
+
+<h3>Harder Examples</h3>
+
+<p>We can consistently exploit the idea of <em>insertion instead of replacement</em> if we just always match an empty string and control the position where such matches happen to our advantage. For example, we can create regular expressions matching the empty string at every even position to insert a character there:</p>
+
+<ol>
+<li><p><code>"abcdefgh".replace(/(?&lt;=^(..)*)/g, "_"))</code> with a <a href="https://www.regular-expressions.info/lookaround.html" rel="noreferrer">positive lookbehind <code>(?&lt;=...)</code></a> outputs <code>"_ab_cd_ef_gh_"</code> (only supported in Chrome so far)</p>
+
+<ul>
+<li>The match list is <code>[("", 0), ("", 2), ("", 4), ("", 6), ("", 8)]</code></li>
+</ul></li>
+<li><p><code>"abcdefgh".replace(/(?=(..)*$)/g, "_"))</code> with a <a href="https://www.regular-expressions.info/lookaround.html" rel="noreferrer">positive lookahead <code>(?=...)</code></a> outputs <code>"_ab_cd_ef_gh_"</code></p>
+
+<ul>
+<li>The match list is <code>[("", 0), ("", 2), ("", 4), ("", 6), ("", 8)]</code></li>
+</ul></li>
+</ol>

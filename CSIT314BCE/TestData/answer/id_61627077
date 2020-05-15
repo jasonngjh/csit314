@@ -1,0 +1,7 @@
+<p><strong>In the example code you just provided, that's apparently not possible</strong>.</p>
+
+<p>As per the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters" rel="nofollow noreferrer">official documentation</a>. </p>
+
+<blockquote>
+  <p>In JavaScript, function parameters default to undefined. However, it's often useful to set a different default value. This is where default parameters can help.</p>
+</blockquote>

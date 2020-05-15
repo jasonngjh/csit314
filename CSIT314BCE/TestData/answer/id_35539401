@@ -1,7 +1,0 @@
-<p>A lifehack for such situation I just invented and tried (that works perfectly):</p>
-
-<pre><code>git add .
-git reset --hard HEAD
-</code></pre>
-
-<p><strong>Beware!</strong> Be sure to <strong>commit any needed changes</strong> (even in non-untracked files) <strong>before performing this</strong>.</p>

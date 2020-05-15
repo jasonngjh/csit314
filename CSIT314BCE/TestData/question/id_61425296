@@ -1,0 +1,232 @@
+<p>I made a LSTM (RNN) neural network with supervised learning for data stock prediction. The problem is why it predicts wrong on its own training data? (note: <strong>reproducible example</strong> below)</p>
+
+<p>I created simple model to predict next 5 days stock price:</p>
+
+<pre><code>model = Sequential()
+model.add(LSTM(32, activation='sigmoid', input_shape=(x_train.shape[1], x_train.shape[2])))
+model.add(Dense(y_train.shape[1]))
+model.compile(optimizer='adam', loss='mse')
+
+es = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
+model.fit(x_train, y_train, batch_size=64, epochs=25, validation_data=(x_test, y_test), callbacks=[es])
+</code></pre>
+
+<p>The correct results are in <code>y_test</code> (5 values), so model trains, looking back 90 previous days and then restore weights from best (<code>val_loss=0.0030</code>) result with <code>patience=3</code>:</p>
+
+<pre><code>Train on 396 samples, validate on 1 samples
+Epoch 1/25
+396/396 [==============================] - 1s 2ms/step - loss: 0.1322 - val_loss: 0.0299
+Epoch 2/25
+396/396 [==============================] - 0s 402us/step - loss: 0.0478 - val_loss: 0.0129
+Epoch 3/25
+396/396 [==============================] - 0s 397us/step - loss: 0.0385 - val_loss: 0.0178
+Epoch 4/25
+396/396 [==============================] - 0s 399us/step - loss: 0.0398 - val_loss: 0.0078
+Epoch 5/25
+396/396 [==============================] - 0s 391us/step - loss: 0.0343 - val_loss: 0.0030
+Epoch 6/25
+396/396 [==============================] - 0s 391us/step - loss: 0.0318 - val_loss: 0.0047
+Epoch 7/25
+396/396 [==============================] - 0s 389us/step - loss: 0.0308 - val_loss: 0.0043
+Epoch 8/25
+396/396 [==============================] - 0s 393us/step - loss: 0.0292 - val_loss: 0.0056
+</code></pre>
+
+<p>Prediction result is pretty awesome, isn't it?</p>
+
+<p><a href="https://i.stack.imgur.com/5z91q.png" rel="noreferrer"><img src="https://i.stack.imgur.com/5z91q.png" alt="enter image description here"></a></p>
+
+<p>That's because algorithm restored best weights from #5 epoch. Okey, let's now save this model to <code>.h5</code> file, move back -10 days and predict last 5 days (at first example we made model and validate on 17-23 April including day off weekends, now let's test on 2-8 April). Result:</p>
+
+<p><a href="https://i.stack.imgur.com/vXIvp.png" rel="noreferrer"><img src="https://i.stack.imgur.com/vXIvp.png" alt="enter image description here"></a></p>
+
+<p>It shows absolutely wrong direction. As we see that's because model was trained and took #5 epoch best for validation set on 17-23 April, but not on 2-8. If I try train more, playing with what epoch to choose, whatever I do, there are always a lot of time intervals in the past that have wrong prediction.</p>
+
+<p>Why does model show wrong results on its own trained data? I trained data, it must remember how to predict data on this piece of set, but predicts wrong. What I also tried:</p>
+
+<ul>
+<li>Use large data sets with 50k+ rows, 20 years stock prices, adding more or less features</li>
+<li>Create different types of model, like adding more hidden layers, different batch_sizes, different layers activations, dropouts, batchnormalization</li>
+<li>Create custom EarlyStopping callback, get average val_loss from many validation data sets and choose the best</li>
+</ul>
+
+<p>Maybe I miss something? What can I improve?</p>
+
+<p>Here is very simple and <strong>reproducible</strong> example. <code>yfinance</code> downloads S&amp;P 500 stock data.</p>
+
+<pre><code>"""python 3.7.7
+tensorflow 2.1.0
+keras 2.3.1"""
+
+
+import numpy as np
+import pandas as pd
+from keras.callbacks import EarlyStopping, Callback
+from keras.models import Model, Sequential, load_model
+from keras.layers import Dense, Dropout, LSTM, BatchNormalization
+from sklearn.preprocessing import MinMaxScaler
+import plotly.graph_objects as go
+import yfinance as yf
+np.random.seed(4)
+
+
+num_prediction = 5
+look_back = 90
+new_s_h5 = True # change it to False when you created model and want test on other past dates
+
+
+df = yf.download(tickers="^GSPC", start='2018-05-06', end='2020-04-24', interval="1d")
+data = df.filter(['Close', 'High', 'Low', 'Volume'])
+
+# drop last N days to validate saved model on past
+df.drop(df.tail(0).index, inplace=True)
+print(df)
+
+
+class EarlyStoppingCust(Callback):
+    def __init__(self, patience=0, verbose=0, validation_sets=None, restore_best_weights=False):
+        super(EarlyStoppingCust, self).__init__()
+        self.patience = patience
+        self.verbose = verbose
+        self.wait = 0
+        self.stopped_epoch = 0
+        self.restore_best_weights = restore_best_weights
+        self.best_weights = None
+        self.validation_sets = validation_sets
+
+    def on_train_begin(self, logs=None):
+        self.wait = 0
+        self.stopped_epoch = 0
+        self.best_avg_loss = (np.Inf, 0)
+
+    def on_epoch_end(self, epoch, logs=None):
+        loss_ = 0
+        for i, validation_set in enumerate(self.validation_sets):
+            predicted = self.model.predict(validation_set[0])
+            loss = self.model.evaluate(validation_set[0], validation_set[1], verbose = 0)
+            loss_ += loss
+            if self.verbose &gt; 0:
+                print('val' + str(i + 1) + '_loss: %.5f' % loss)
+
+        avg_loss = loss_ / len(self.validation_sets)
+        print('avg_loss: %.5f' % avg_loss)
+
+        if self.best_avg_loss[0] &gt; avg_loss:
+            self.best_avg_loss = (avg_loss, epoch + 1)
+            self.wait = 0
+            if self.restore_best_weights:
+                print('new best epoch = %d' % (epoch + 1))
+                self.best_weights = self.model.get_weights()
+        else:
+            self.wait += 1
+            if self.wait &gt;= self.patience or self.params['epochs'] == epoch + 1:
+                self.stopped_epoch = epoch
+                self.model.stop_training = True
+                if self.restore_best_weights:
+                    if self.verbose &gt; 0:
+                        print('Restoring model weights from the end of the best epoch')
+                    self.model.set_weights(self.best_weights)
+
+    def on_train_end(self, logs=None):
+        print('best_avg_loss: %.5f (#%d)' % (self.best_avg_loss[0], self.best_avg_loss[1]))
+
+
+def multivariate_data(dataset, target, start_index, end_index, history_size, target_size, step, single_step=False):
+    data = []
+    labels = []
+    start_index = start_index + history_size
+    if end_index is None:
+        end_index = len(dataset) - target_size
+    for i in range(start_index, end_index):
+        indices = range(i-history_size, i, step)
+        data.append(dataset[indices])
+        if single_step:
+            labels.append(target[i+target_size])
+        else:
+            labels.append(target[i:i+target_size])
+    return np.array(data), np.array(labels)
+
+
+def transform_predicted(pr):
+    pr = pr.reshape(pr.shape[1], -1)
+    z = np.zeros((pr.shape[0], x_train.shape[2] - 1), dtype=pr.dtype)
+    pr = np.append(pr, z, axis=1)
+    pr = scaler.inverse_transform(pr)
+    pr = pr[:, 0]
+    return pr
+
+
+step = 1
+
+# creating datasets with look back
+scaler = MinMaxScaler()
+df_normalized = scaler.fit_transform(df.values)
+dataset = df_normalized[:-num_prediction]
+x_train, y_train = multivariate_data(dataset, dataset[:, 0], 0,len(dataset) - num_prediction + 1, look_back, num_prediction, step)
+indices = range(len(dataset)-look_back, len(dataset), step)
+x_test = np.array(dataset[indices])
+x_test = np.expand_dims(x_test, axis=0)
+y_test = np.expand_dims(df_normalized[-num_prediction:, 0], axis=0)
+
+# creating past datasets to validate with EarlyStoppingCust
+number_validates = 50
+step_past = 5
+validation_sets = [(x_test, y_test)]
+for i in range(1, number_validates * step_past + 1, step_past):
+    indices = range(len(dataset)-look_back-i, len(dataset)-i, step)
+    x_t = np.array(dataset[indices])
+    x_t = np.expand_dims(x_t, axis=0)
+    y_t = np.expand_dims(df_normalized[-num_prediction-i:len(df_normalized)-i, 0], axis=0)
+    validation_sets.append((x_t, y_t))
+
+
+if new_s_h5:
+    model = Sequential()
+    model.add(LSTM(32, return_sequences=False, activation = 'sigmoid', input_shape=(x_train.shape[1], x_train.shape[2])))
+    # model.add(Dropout(0.2))
+    # model.add(BatchNormalization())
+    # model.add(LSTM(units = 16))
+    model.add(Dense(y_train.shape[1]))
+    model.compile(optimizer = 'adam', loss = 'mse')
+
+    # EarlyStoppingCust is custom callback to validate each validation_sets and get average
+    # it takes epoch with best "best_avg" value
+    # es = EarlyStoppingCust(patience = 3, restore_best_weights = True, validation_sets = validation_sets, verbose = 1)
+
+    # or there is keras extension with built-in EarlyStopping, but it validates only 1 set that you pass through fit()
+    es = EarlyStopping(monitor = 'val_loss', patience = 3, restore_best_weights = True)
+
+    model.fit(x_train, y_train, batch_size = 64, epochs = 25, shuffle = True, validation_data = (x_test, y_test), callbacks = [es])
+    model.save('s.h5')
+else:
+    model = load_model('s.h5')
+
+
+
+predicted = model.predict(x_test)
+predicted = transform_predicted(predicted)
+print('predicted', predicted)
+print('real', df.iloc[-num_prediction:, 0].values)
+print('val_loss: %.5f' % (model.evaluate(x_test, y_test, verbose=0)))
+
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x = df.index[-60:],
+    y = df.iloc[-60:,0],
+    mode='lines+markers',
+    name='real',
+    line=dict(color='#ff9800', width=1)
+))
+fig.add_trace(go.Scatter(
+    x = df.index[-num_prediction:],
+    y = predicted,
+    mode='lines+markers',
+    name='predict',
+    line=dict(color='#2196f3', width=1)
+))
+fig.update_layout(template='plotly_dark', hovermode='x', spikedistance=-1, hoverlabel=dict(font_size=16))
+fig.update_xaxes(showspikes=True)
+fig.update_yaxes(showspikes=True)
+fig.show()
+</code></pre>

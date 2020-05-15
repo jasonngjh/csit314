@@ -1,8 +1,0 @@
-<p>Only when using <code>application/json</code> as the <a href="http://en.wikipedia.org/wiki/MIME" rel="noreferrer">MIME</a> type I have the following (as of November 2011 with the most recent versions of Chrome, Firefox with <a href="http://en.wikipedia.org/wiki/Firebug_%28software%29" rel="noreferrer">Firebug</a>):</p>
-
-<ul>
-<li>No more warnings from Chrome when the JSON is loaded from the server.</li>
-<li>Firebug will add a tab to the response showing you the JSON data
-formatted. If the MIME type is different, it will just show up as
-'Response content'.</li>
-</ul>

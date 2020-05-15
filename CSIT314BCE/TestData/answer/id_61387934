@@ -1,0 +1,20 @@
+<p>The closure is all you need!</p>
+
+<pre><code>struct ItemsView&lt;Destination: View&gt;: View {
+    let items: [Item]
+    let buildDestination: (Item) -&gt; Destination
+
+    var body: some View {
+        NavigationView {
+            List(items) { item in
+                NavigationLink(destination: self.buildDestination(item)) {
+                    Text(item.id.uuidString)
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>I wrote a post about replacing the delegate pattern in SwiftUI with closures.
+<a href="https://swiftwithmajid.com/2019/11/06/the-power-of-closures-in-swiftui/" rel="noreferrer">https://swiftwithmajid.com/2019/11/06/the-power-of-closures-in-swiftui/</a></p>

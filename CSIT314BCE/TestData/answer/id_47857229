@@ -1,0 +1,8 @@
+<p>If can't rely on the process name like python scripts which will always have python.exe as process name. If found this method very handy</p>
+
+<pre><code>import psutil
+psutil.pid_exists(pid)
+</code></pre>
+
+<p>check docs for further info
+<a href="http://psutil.readthedocs.io/en/latest/#psutil.pid_exists" rel="nofollow noreferrer">http://psutil.readthedocs.io/en/latest/#psutil.pid_exists</a></p>

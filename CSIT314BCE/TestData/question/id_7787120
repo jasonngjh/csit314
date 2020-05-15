@@ -1,0 +1,9 @@
+<p>I am trying to create a python script which I will later run as a service. Now I want to run a particular part of the code only when iTunes is running. I understand from some research that polling the entire command list and then searching for the application for that list is expensive. </p>
+
+<p>I found out that processes on UNIX-based operating systems create a lock file to notify that a program is currently running, at which point we can use <code>os.stat(location_of_file)</code> to check if the file exists to determine if a program is running or not.</p>
+
+<p>Is there a similar lock file created on Windows?</p>
+
+<p>If not what are the various ways in Python by which we can determine if a process is running or not?</p>
+
+<p>I am using python 2.7 and iTunes COM interface.</p>

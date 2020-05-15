@@ -1,0 +1,10 @@
+<p>just for fun:</p>
+
+<pre><code>Pattern one = Pattern.compile("1");
+List&lt;Integer&gt; collect = one.matcher(
+             new StringBuilder(Integer.toBinaryString(value)).reverse())
+            .results()
+            .map(m -&gt; m.start() + 1)
+            .collect(Collectors.toList());
+System.out.println(collect);
+</code></pre>

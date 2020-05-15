@@ -1,0 +1,6 @@
+<p>Easier solution will be to use an image like that as the background of the button. </p>
+
+<pre><code>&lt;button&gt;&lt;img src="pic_trulli.jpg" width="30px" height= "30px"&gt;&lt;/button&gt;
+</code></pre>
+
+<p>A bit more adjustment with css is needed to make the image to fit into the button</p>

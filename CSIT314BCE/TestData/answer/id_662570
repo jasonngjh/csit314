@@ -1,5 +1,0 @@
-<p>Simply, the stack is where local variables get created. Also, every time you call a subroutine the program counter (pointer to the next machine instruction) and any important registers, and sometimes the parameters get pushed on the stack. Then any local variables inside the subroutine are pushed onto the stack (and used from there). When the subroutine finishes, that stuff all gets popped back off the stack. The PC and register data gets and put back where it was as it is popped, so your program can go on its merry way.</p>
-
-<p>The heap is the area of memory dynamic memory allocations are made out of (explicit "new" or "allocate" calls). It is a special data structure that can keep track of blocks of memory of varying sizes and their allocation status.</p>
-
-<p>In "classic" systems RAM was laid out such that the stack pointer started out at the bottom of memory, the heap pointer started out at the top, and they grew towards each other. If they overlap, you are out of RAM. That doesn't work with modern multi-threaded OSes though. Every thread has to have its own stack, and those can get created dynamicly.</p>

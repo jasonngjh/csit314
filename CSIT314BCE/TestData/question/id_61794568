@@ -1,0 +1,13 @@
+<p>I've the following data, I wanted the text to appear in new line. I tried <code>\n</code>. But new line is not working, </p>
+
+<p>Do I need to do anything else ? Please help</p>
+
+<p>Below is my code.</p>
+
+<pre><code>title = {"text": "Hello \n World"}
+</code></pre>
+
+<p>and in app.html</p>
+
+<pre><code>{{title}}
+</code></pre>

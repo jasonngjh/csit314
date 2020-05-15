@@ -1,0 +1,14 @@
+<p>Data</p>
+
+<pre><code>df=pd.DataFrame({'A':[1,2,3,2,1,3]})
+df1=pd.DataFrame({'B':[1,3,3,1,1,3]})
+</code></pre>
+
+<p>Resolve it using groupby, sort_value and drop any duplicates keeping highest value in each group</p>
+
+<pre><code> df['count']=df[df.A.isin(df1.B)].groupby('A')['A'].transform('count')
+ df2=df.sort_values(by='count', ascending=True).drop_duplicates(subset='A', keep="last").fillna(0)
+ #df2['count']=df2['count'].sort_values(ascending=True).astype(int)
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/cvgRO.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/cvgRO.png" alt="enter image description here"></a></p>

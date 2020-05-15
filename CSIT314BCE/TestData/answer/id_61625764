@@ -1,0 +1,21 @@
+<p>My approach would be to just turn those list entries into expected type</p>
+
+<pre class="lang-r prettyprint-override"><code>rbindlist(lapply(data, as.list))
+#       V1     V2     V3     V4     V5
+#   &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt; &lt;char&gt;
+#1:      A      1      4      7     12
+#2:      B      2      5      8     15
+#3:      C      3      6      9     18
+</code></pre>
+
+<hr>
+
+<p>If you want your data types to be adjusted from character vector to appropriate types, then <code>lapply</code> can help here as well. First <code>lapply</code> is called for every row, second <code>lapply</code> is called for every column.</p>
+
+<pre class="lang-r prettyprint-override"><code>rbindlist(lapply(data, as.list))[, lapply(.SD, type.convert)]
+       V1    V2    V3    V4    V5
+   &lt;fctr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1:      A     1     4     7    12
+2:      B     2     5     8    15
+3:      C     3     6     9    18
+</code></pre>

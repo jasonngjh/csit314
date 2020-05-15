@@ -1,0 +1,8 @@
+<p><code>2147483647 + 1</code> is executed as the sum of two <code>ints</code> and therefore overflows.</p>
+
+<p><code>2147483648</code> is too big to fit in an <code>int</code> and is therefore assumed by the compiler to be a <code>long</code>.  It therefore does not overflow.</p>
+
+<p>To perform the summation as a <code>long long</code> use the appropriate constant suffix, i.e.</p>
+
+<pre><code>a = 2147483647LL + 1;
+</code></pre>

@@ -1,8 +1,0 @@
-<p>This works for me, and I am using <code>show()</code> and <code>hide()</code> to make my div hidden/visible:</p>
-
-<pre><code>if( $(this).css('display') == 'none' ){
-    /* your code goes here */
-} else {
-    /* alternate logic   */
-}
-</code></pre>

@@ -1,0 +1,31 @@
+<p>I have developed a <code>Laravel</code> application with api routes that load the data from mysql db, the controller action executes a nested DB query and returns a collection; by default Laravel converts returned collection to JSON, below is my contrller action:</p>
+
+<pre><code>public function index()
+    {
+        $admin0 = 2;
+
+        return DB::table('commodities_monthly_prices as CMP')
+            -&gt;join('locations', 'CMP.location_id', '=', 'locations.id')
+            -&gt;where('locations.admin0', $admin0)
+            -&gt;join('global_admins', 'locations.admin0', '=', 'global_admins.admin0_code')
+            -&gt;join('commodities', 'CMP.commodity_id', '=', 'commodities.id')
+            -&gt;join('price_types', 'CMP.price_type_id', '=', 'price_types.id')
+            -&gt;join('measure_units', 'CMP.measure_unit_id', '=', 'measure_units.id')
+            -&gt;select('commodities.name AS commodity_name', 'price_types.name AS type_name',
+                'measure_units.name AS unit_name', 'global_admins.admin0_code AS admin0',
+                'global_admins.admin0_name AS country_name', 'global_admins.admin1_code AS admin1',
+                'global_admins.admin1_name AS governorate_name')
+            -&gt;selectRaw('date(concat_WS(\'-\', CMP.price_year, CMP.price_month, \'01\')) as date, ROUND(AVG(CMP.price) / 1000, 3) as price')
+            -&gt;groupBy('date', 'commodity_name', 'type_name', 'unit_name', 'global_admins.admin0_name',
+                'global_admins.admin0_code', 'global_admins.admin1_name', 'global_admins.admin1_code')
+            -&gt;orderBy('date')
+            -&gt;orderBy('commodity_name')
+            -&gt;get();
+    }
+</code></pre>
+
+<p>Number of returned JSON objects more than 50000 objects and take about 90 seconds to finish loading, the only thing came to my mind is to change the response from JSON to CSV (will this help) as the front-end library accepts JSON and CSV http response, if this helps please tell me how to do it? if I need a third party library?</p>
+
+<p>Please advie me how I can make the action loads faster.</p>
+
+<p>Thank you for your help,</p>

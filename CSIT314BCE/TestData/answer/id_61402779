@@ -1,0 +1,9 @@
+<p>Delete com.google.android.gms.maps._m_u and ZoomTables.data</p>
+
+<p>My app stores critical data in App Data.  I cannot ask my users to clear App Data without their throwing away years of work.  So I looked in the Documents directory of my app and found these two files/directories.  </p>
+
+<p>com.google.android.gms.maps._m_u</p>
+
+<p>ZoomTables.data</p>
+
+<p>I can’t tell you how to do this for your app but what I did in my app is write code that only runs one time when my app  is next launched  and that code deletes those two files/directories which seems to clear the problem.  When my app later displays a Google Map, those files/directories are created again but with data that does not cause a crash.  Lastly I’ve had to build and release a new version of my app to production.  Now I just have to get all my crashing users to use the new version.</p>

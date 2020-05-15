@@ -1,0 +1,17 @@
+<p>Just follow these steps:-</p>
+
+<p>step 1: <code>npm install --save-dev npm-force-resolutions</code></p>
+
+<p>step 2: add in package.json</p>
+
+<pre><code>"resolutions": {
+    "moment": "2.24.0"
+ }
+</code></pre>
+
+<p>step 3: add in scripts in package.json</p>
+
+<pre><code>"preinstall": "npx npm-force-resolutions"
+</code></pre>
+
+<p>step 4: <code>npm install</code></p>

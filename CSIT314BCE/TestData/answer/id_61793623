@@ -1,0 +1,12 @@
+<p>You can use this type of function to get unique coupon code.</p>
+
+<pre><code>function generateCode(){
+
+    $code = substr(uniqid(), 0, 8);
+    $exists = YourModel::where('code', $code)-&gt;count();
+    if($exists &gt; 0){
+        $this-&gt;generateCode();
+    }
+    return $code;
+}
+</code></pre>

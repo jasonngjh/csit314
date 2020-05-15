@@ -1,0 +1,11 @@
+<p>Using lamdba function and generator</p>
+
+<pre><code>def find(x):
+    " find matching value of x in lst2 " 
+    return next(t[0] for t in list1 if t[1]==x)
+
+list3 = [[find(a) for a in sublist] for sublist in list2]
+
+print(list3)
+# out: [['a', 'c', 'e'], ['b', 'd', 'f']]
+</code></pre>

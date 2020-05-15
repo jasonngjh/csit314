@@ -1,0 +1,41 @@
+<p>What you are seeing is the result of <strong>integer promotions</strong>.  In most cases where an integer value is used in an expression, if the type of the value is smaller than <code>int</code> the value is promoted to <code>int</code>.  This is documented in section 6.3.1.1p2 of the <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf" rel="noreferrer">C standard</a>:</p>
+
+<blockquote>
+  <p>The following may be used in an expression wherever an <code>int</code>or
+  <code>unsigned int</code> may be used</p>
+  
+  <ul>
+  <li>An object  or  expression  with  an  integer  type  (other  than <code>int</code>or <code>unsigned int</code>) whose  integer  conversion  rank  is  less 
+  than  or  equal  to  the  rank  of <code>int</code> and <code>unsigned int</code>.</li>
+  <li>A bit-field of type <code>_Bool</code>, <code>int ,</code>signed int<code>, or</code>unsigned int`.  </li>
+  </ul>
+  
+  <p>If  an <code>int</code> can  represent  all  values  of  the  original  type  (as
+  restricted  by  the  width,  for  a bit-field),  the  value  is 
+  converted  to  an <code>int</code>; otherwise,  it  is  converted  to  an
+  <code>unsigned int</code>. These  are  called  the <em>integer promotions</em>.  All 
+  other  types  are  unchanged  by  the integer promotions.</p>
+</blockquote>
+
+<p>So if a variable has type <code>uint8_t</code> and the value 255, using any operator other than a cast or assignment on it will first convert it to type <code>int</code> with the value 255 before performing the operation.  This is why <code>sizeof(~i)</code> gives you 4 instead of 1. </p>
+
+<p>Section 6.5.3.3 describes that integer promotions apply to the <code>~</code> operator:</p>
+
+<blockquote>
+  <p>The result of the <code>~</code> operator is the bitwise complement <strong>of its
+  (promoted) operand</strong> (that is, each bit in the result is set if and only
+  if the corresponding bit in the converted operand is not  set).   The 
+  integer  promotions  are  performed  on  the  operand,  and  the 
+  result  has  the promoted type.  If the promoted type is an unsigned
+  type, the expression <code>~E</code> is equivalent to the maximum value
+  representable in that type minus <code>E</code>.</p>
+</blockquote>
+
+<p>So assuming a 32 bit <code>int</code>, if <code>counter</code> has the 8 bit value <code>0xff</code> it is converted to the 32 bit value <code>0x000000ff</code>, and applying <code>~</code> to it gives you <code>0xffffff00</code>.</p>
+
+<p>Probably the simplest way to handle this is without having to know the type is to check if the value is 0 after incrementing, and if so decrement it.</p>
+
+<pre><code>if (!++counter) counter--;
+</code></pre>
+
+<p>The wraparound of unsigned integers works in both directions, so decrementing a value of 0 gives you the largest positive value.</p>

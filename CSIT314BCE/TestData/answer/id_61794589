@@ -1,0 +1,15 @@
+<p>The most straightforward translation would be</p>
+
+<pre><code>template &lt;typename IteratorType&gt;
+requires std::same_as&lt;typename std::iterator_traits&lt;IteratorType&gt;::value_type, MyClass&gt;
+void myFunction(IteratorType begin, IteratorType end) {}
+</code></pre>
+
+<p>See:</p>
+
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/language/constraints" rel="nofollow noreferrer">https://en.cppreference.com/w/cpp/language/constraints</a> and</li>
+<li><a href="https://en.cppreference.com/w/cpp/concepts" rel="nofollow noreferrer">https://en.cppreference.com/w/cpp/concepts</a></li>
+</ul>
+
+<p><a href="https://godbolt.org/z/nx38MB" rel="nofollow noreferrer">Godbolt example</a></p>

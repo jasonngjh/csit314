@@ -1,0 +1,32 @@
+<p>Would you be happy with your Python command running another program to get the info?</p>
+
+<p>If so, I'd suggest you have a look at <a href="http://technet.microsoft.com/en-us/sysinternals/bb896682" rel="nofollow">PsList</a> and all its options. For example, The following would tell you about any running iTunes process</p>
+
+<pre><code>PsList itunes
+</code></pre>
+
+<p>If you can work out how to interpret the results, this should hopefully get you going.</p>
+
+<p><strong>Edit:</strong></p>
+
+<p>When I'm <em>not</em> running iTunes, I get the following:</p>
+
+<pre><code>pslist v1.29 - Sysinternals PsList
+Copyright (C) 2000-2009 Mark Russinovich
+Sysinternals
+
+Process information for CLARESPC:
+
+Name                Pid Pri Thd  Hnd   Priv        CPU Time    Elapsed Time
+iTunesHelper       3784   8  10  229   3164     0:00:00.046     3:41:05.053
+</code></pre>
+
+<p>With itunes running, I get this one extra line:</p>
+
+<pre><code>iTunes              928   8  24  813 106168     0:00:08.734     0:02:08.672
+</code></pre>
+
+<p>However, the following command prints out info only about the iTunes program itself, i.e. with the <code>-e</code> argument:</p>
+
+<pre><code>pslist -e itunes
+</code></pre>

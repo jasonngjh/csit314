@@ -1,0 +1,5 @@
+<p>I think your buffer size is causing the out-of-memory error, you may use a smaller number to verify whether it could be the reason or not. </p>
+
+<p>You may use <a href="https://docs.oracle.com/javase/tutorial/essential/io/buffers.html" rel="nofollow noreferrer">buffered I/O streams</a> implementation provided by JDK.</p>
+
+<p>Java <code>BufferedOutputStream</code> class is used for buffering an output stream. It internally uses buffer to store data. It adds more efficiency than to write data directly into a stream. So, it makes the performance fast.</p>

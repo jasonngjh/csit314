@@ -1,0 +1,68 @@
+<p>I have a static method, which calls several other static methods which call requests by initializing a DbContext.
+I would like to test the main method with unit tests using UseInMemoryDatabase of EF Core.
+But I don't know or what is best approach to do this ?</p>
+
+<p>I try this and it works, but how I test my main method who call several static method and initialize each DbContext in static method ?</p>
+
+<pre><code>[TestMethod]
+public void SelectByCodeClientAndSenderAndCheckIfExist()
+{
+    var options = new DbContextOptionsBuilder&lt;MyContext&gt;()
+               .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+               .Options;
+
+    MyContext context = new MyContext(options);
+
+    context.Tierses.Add(new Tiers { Id = 1, SenderId = 1, CodeTiers = "000", NomTiers = "ClientA", CodePostal = codePostal, State = ItemStateEnum.Unchanged } );
+    context.Tierses.Add(new Tiers { Id = 2, CodeTiers = "001", NomTiers = "ClientB", CodePostal = codePostal });
+    context.Tierses.Add(new Tiers { Id = 3, CodeTiers = "001", NomTiers = "ClientB", CodePostal = codePostal });
+    context.SaveChanges();
+
+    ClientSiteRepository clientSiteRepository = new ClientSiteRepository(context);
+
+    var client = clientSiteRepository.SelectByCodeAndSenderOrSenderAll(1, "000");
+
+    Assert.AreEqual("000", client.CodeTiers);
+}
+</code></pre>
+
+<p>Main static method :</p>
+
+<pre><code>public static void GetClientAndSite(int senderId, string clientCode)
+{
+    bool scenarioUpdateClientAndSite = ScenarioHelper.GetScenarioValueBoolean();
+
+    var clientResult = ClientSiteBLL.GetClientByCodeAndSenderOrSenderAll(clientCode, senderId);
+    //some code here
+    //...
+}
+</code></pre>
+
+<p>Others methods statics :</p>
+
+<pre><code>public static bool GetClientByCodeAndSenderOrSenderAll(string clientCode, int senderId)
+{
+    using (var context = new MyContext())
+    using (var tiers = new ClientSiteRepository(context))
+    {
+        Tiers result = tiers.SelectByCodeAndSenderOrSenderAll(senderId, clientCode);
+
+        //Some code here
+        //....
+    }
+}
+
+public static bool GetAffaire(string clientCode, int senderId)
+{
+    using (var context = new MyContext())
+    using (var aff = new AffaireRepository(context))
+    {
+        Affaire result = aff.SelectByClientId(clientCode);
+
+        //Some code here
+        //....
+    }
+}
+</code></pre>
+
+<p>Thanks for your help</p>

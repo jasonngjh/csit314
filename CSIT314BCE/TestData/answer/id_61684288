@@ -1,0 +1,43 @@
+<p>You ask</p>
+
+<blockquote>
+  <p><code>return $ 1 + x</code> [...] but how come ghc does not optimize that??</p>
+</blockquote>
+
+<p>The answer is that strict evaluation and lazy evaluation have subtly different semantics, so having GHC optimise it might break your program.</p>
+
+<p>The difference lies in the treatment of undefined values. Any attempt to evaluate an <code>undefined</code> throws an exception. In GHCi:</p>
+
+<pre><code>Prelude&gt; undefined
+*** Exception: Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:79:14 in base:GHC.Err
+  undefined, called at &lt;interactive&gt;:1:1 in interactive:Ghci1
+</code></pre>
+
+<p>If I have an expression that contains an undefined then the same thing happens:</p>
+
+<pre><code>Prelude&gt; 2 + undefined
+*** Exception: Prelude.undefined [...]
+</code></pre>
+
+<p>However if the evaluation never gets to the undefined then everything is fine:</p>
+
+<pre><code>Prelude&gt; True || undefined
+True
+</code></pre>
+
+<p>Haskell uses "non-strict semantics" and "lazy evaluation". Technically the non-strict semantics are part of the definition of Haskell and lazy evaluation is the implementation mechanism in GHC, but you can think of them as synonyms. When you define a variable the value is not computed immediately, so if you never use the variable then you have no problem:</p>
+
+<pre><code>Prelude&gt; let b = undefined
+Prelude&gt; b
+*** Exception: Prelude.undefined
+</code></pre>
+
+<p>The <code>let</code> works fine, but evaluating the variable it defines throws an exception.</p>
+
+<p>Now consider your towering stack of unevaluated <code>1+</code> calls. GHC has no way of knowing in advance whether you are ever going to use the result (see below), and it also has no way of knowing whether or not there is an exception lurking in there somewhere. As a programmer you might know that there is an exception and carefully not look at the result, relying on the non-strict semantics of Haskell. If GHC prematurely evaluates and gets an exception your program will fail when it should not have.</p>
+
+<p>Actually the GHC compiler includes a piece of optimisation called the <a href="https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/compiler/demand" rel="nofollow noreferrer">Demand Analyser</a> (it used to be called the Strictness Analyser) which looks for opportunities to optimise in exactly the way you want. However it has limits because it can only optimise computations when it can <em>prove</em> that the result is going to be evaluated.</p>
+
+<p>Another wrinkle here is that you have used the <a href="https://hackage.haskell.org/package/mtl-2.2.2" rel="nofollow noreferrer">State monad</a>. This actually comes in two variants; Lazy and Strict. The Strict variant forces the state when it gets written, but the Lazy variant (the default) doesn't.</p>

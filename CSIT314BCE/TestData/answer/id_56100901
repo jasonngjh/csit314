@@ -1,1 +1,0 @@
-<p><code>git fetch --all &amp;&amp; git reset --hard origin/master &amp;&amp; git pull</code></p>

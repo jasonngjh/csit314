@@ -15,15 +15,15 @@ namespace CSIT314BCE.Models
         {
             if (model.Role == "Student")
             {
-                return new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0 };
+                return new Student { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, Ratings = 0, IsEnabled= true };
             }
             else if (model.Role == "Admin")
             {
-                return new Admin { UserName = model.UserName, Email = model.Email, FullName = model.Fullname };
+                return new Admin { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, IsEnabled = true };
             }
             else if (model.Role == "Moderator")
             {
-                return new Moderator { UserName = model.UserName, Email = model.Email, FullName = model.Fullname };
+                return new Moderator { UserName = model.UserName, Email = model.Email, FullName = model.Fullname, IsEnabled = true };
             }
             return null;
         }

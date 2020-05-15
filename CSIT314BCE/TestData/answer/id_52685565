@@ -1,9 +1,0 @@
-<p>This answer is for Java programmers learning Python.
-Every Java file typically contains one public class. You can use that class in two ways: </p>
-
-<ol>
-<li><p>Call the class from other files. You just have to import it in the calling program.</p></li>
-<li><p>Run the class stand alone, for testing purposes. </p></li>
-</ol>
-
-<p>For the latter case, the class should contain a public static void main() method. In Python this purpose is served by the globally defined label <code>'__main__'</code>.</p>

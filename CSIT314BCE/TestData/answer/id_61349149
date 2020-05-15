@@ -1,0 +1,14 @@
+<p>Create a nice and readable function:</p>
+
+<pre><code>def range_with_negatives(start, end):
+    for x in range(start, end):
+        yield x
+        yield -x
+</code></pre>
+
+<p>Usage:</p>
+
+<pre><code>list(range_with_negatives(6, 10))
+</code></pre>
+
+<p>That is how you get a convenient one-liner for anything. Avoid trying to look like a magic pro hacker.</p>

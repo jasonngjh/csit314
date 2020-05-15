@@ -1,0 +1,75 @@
+<p>My app that uses Google Maps SDK (v2) just started crashing with this exception:</p>
+
+<pre class="lang-none prettyprint-override"><code>Process: com.currentlocation.android, PID: 7328
+    java.lang.ArrayIndexOutOfBoundsException: length=1; index=12
+        at com.google.maps.api.android.lib6.gmm6.vector.ct.&lt;init&gt;(:com.google.android.gms.dynamite_mapsdynamite@201216081@20.12.16 (120400-0):9)
+        at com.google.maps.api.android.lib6.gmm6.vector.cv.a(:com.google.android.gms.dynamite_mapsdynamite@201216081@20.12.16 (120400-0):23)
+        at com.google.maps.api.android.lib6.gmm6.util.m.run(:com.google.android.gms.dynamite_mapsdynamite@201216081@20.12.16 (120400-0):14)
+        at java.lang.Thread.run(Thread.java:919)
+</code></pre>
+
+<p>In the v3 beta SDK, the stack trace is:</p>
+
+<pre class="lang-none prettyprint-override"><code>2020-04-23 15:59:06.064 E/AndroidRuntime: FATAL EXCEPTION: main
+    Process: com.example, PID: 22717
+    java.lang.ArrayIndexOutOfBoundsException: length=1; index=12
+        at com.google.android.libraries.maps.bv.zzbs.&lt;init&gt;(ZoomTable.java:24)
+        at com.google.android.libraries.maps.bv.zzbv.zza(ZoomTableQuadTree.java:57)
+        at com.google.android.libraries.maps.br.zzd.zza(Unknown Source:4)
+        at com.google.android.libraries.maps.hi.zzas.zza(Suppliers.java:7)
+        at com.google.android.libraries.maps.br.zza.zzh(SharedMapComponentImpl.java:58)
+        at com.google.android.libraries.maps.gu.zzat.zza(RendererFactoryImpl.java:88)
+        at com.google.android.libraries.maps.it.zzav.zza(GoogleMapImpl.java:59)
+        at com.google.android.libraries.maps.it.zzci.zza(MapFragmentDelegateImpl.java:3)
+        at com.google.android.libraries.maps.it.zzcg.zza(MapFragmentDelegateImpl.java:15)
+        at com.google.android.libraries.maps.SupportMapFragment$zza.onCreateView(SupportMapFragment.java:15)
+        at com.google.android.gms.dynamic.zae.zaa(com.google.android.gms:play-services-base@@17.1.0:4)
+        at com.google.android.gms.dynamic.DeferredLifecycleHelper.zaa(com.google.android.gms:play-services-base@@17.1.0:9)
+        at com.google.android.gms.dynamic.DeferredLifecycleHelper.onCreateView(com.google.android.gms:play-services-base@@17.1.0:25)
+        at com.google.android.libraries.maps.SupportMapFragment.onCreateView(SupportMapFragment.java:34)
+        at androidx.fragment.app.Fragment.performCreateView(Fragment.java:2698)
+        at androidx.fragment.app.FragmentStateManager.createView(FragmentStateManager.java:310)
+        at androidx.fragment.app.FragmentManager.moveToState(FragmentManager.java:1185)
+        at androidx.fragment.app.FragmentManager.moveToState(FragmentManager.java:1354)
+        at androidx.fragment.app.FragmentManager.moveFragmentToExpectedState(FragmentManager.java:1432)
+        at androidx.fragment.app.FragmentManager.moveToState(FragmentManager.java:1495)
+        at androidx.fragment.app.FragmentManager.dispatchStateChange(FragmentManager.java:2617)
+        at androidx.fragment.app.FragmentManager.dispatchActivityCreated(FragmentManager.java:2569)
+        at androidx.fragment.app.Fragment.performActivityCreated(Fragment.java:2722)
+        at androidx.fragment.app.FragmentStateManager.activityCreated(FragmentStateManager.java:336)
+        at androidx.fragment.app.FragmentManager.moveToState(FragmentManager.java:1186)
+        at androidx.fragment.app.FragmentManager.addAddedFragments(FragmentManager.java:2222)
+        at androidx.fragment.app.FragmentManager.executeOpsTogether(FragmentManager.java:1995)
+        at androidx.fragment.app.FragmentManager.removeRedundantOperationsAndExecute(FragmentManager.java:1951)
+        at androidx.fragment.app.FragmentManager.execPendingActions(FragmentManager.java:1847)
+        at androidx.fragment.app.FragmentManager.dispatchStateChange(FragmentManager.java:2621)
+        at androidx.fragment.app.FragmentManager.dispatchActivityCreated(FragmentManager.java:2569)
+        at androidx.fragment.app.Fragment.performActivityCreated(Fragment.java:2722)
+        at androidx.fragment.app.FragmentStateManager.activityCreated(FragmentStateManager.java:336)
+        at androidx.fragment.app.FragmentManager.moveToState(FragmentManager.java:1186)
+        at androidx.fragment.app.FragmentManager.moveToState(FragmentManager.java:1354)
+        at androidx.fragment.app.FragmentManager.moveFragmentToExpectedState(FragmentManager.java:1432)
+        at androidx.fragment.app.FragmentManager.moveToState(FragmentManager.java:1495)
+        at androidx.fragment.app.FragmentManager.dispatchStateChange(FragmentManager.java:2617)
+        at androidx.fragment.app.FragmentManager.dispatchActivityCreated(FragmentManager.java:2569)
+        at androidx.fragment.app.FragmentController.dispatchActivityCreated(FragmentController.java:247)
+        at androidx.fragment.app.FragmentActivity.onStart(FragmentActivity.java:541)
+        at androidx.appcompat.app.AppCompatActivity.onStart(AppCompatActivity.java:201)
+        at android.app.Instrumentation.callActivityOnStart(Instrumentation.java:1432)
+        at android.app.Activity.performStart(Activity.java:7848)
+        at android.app.ActivityThread.handleStartActivity(ActivityThread.java:3294)
+2020-04-23 15:59:06.064 E/AndroidRuntime:     at android.app.servertransaction.TransactionExecutor.performLifecycleSequence(TransactionExecutor.java:221)
+        at android.app.servertransaction.TransactionExecutor.cycleToPath(TransactionExecutor.java:201)
+        at android.app.servertransaction.TransactionExecutor.executeLifecycleState(TransactionExecutor.java:173)
+        at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:97)
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2016)
+        at android.os.Handler.dispatchMessage(Handler.java:107)
+        at android.os.Looper.loop(Looper.java:214)
+        at android.app.ActivityThread.main(ActivityThread.java:7356)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:930)
+
+</code></pre>
+
+<p>What is the cause?</p>

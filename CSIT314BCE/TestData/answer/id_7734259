@@ -1,6 +1,0 @@
-<p>Run</p>
-
-<pre><code>git gui
-</code></pre>
-
-<p>and remove all the files manually or by selecting all of them and clicking on the <em>unstage from commit</em> button.</p>

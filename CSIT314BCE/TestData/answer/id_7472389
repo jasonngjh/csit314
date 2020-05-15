@@ -1,6 +1,0 @@
-<p>I have a strange situation that neither <code>git clean</code> or <code>git reset</code> works. I have to remove the conflicting file from <code>git index</code> by using the following script on every untracked file:</p>
-
-<pre><code>git rm [file]
-</code></pre>
-
-<p>Then I am able to pull just fine.</p>

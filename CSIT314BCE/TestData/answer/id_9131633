@@ -1,5 +1,0 @@
-<p>I would use CSS class <code>.hide { display: none!important; }</code>. </p>
-
-<p>For hiding/showing, I call <code>.addClass("hide")/.removeClass("hide")</code>. For checking visibility, I use <code>.hasClass("hide")</code>.</p>
-
-<p>It's a simple and clear way to check/hide/show elements, if you don't plan to use <code>.toggle()</code> or <code>.animate()</code> methods.</p>

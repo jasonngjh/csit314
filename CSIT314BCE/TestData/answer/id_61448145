@@ -1,0 +1,25 @@
+<p>This is an interesting issue and it would require indeterminate amount of effort to narrow it down since there are many permutations and combinations that need to be tried out and data collected and collated. </p>
+
+<p>Seems as of there has been no resolution to this for some time. Perhaps this might need to be escalated.</p>
+
+<p>EDIT 2: Since "ThreadLocalHandshakes" is deprecated and we can assume that locking is contended, suggest trying without "UseBiasedLocking" to hopefully speed up this scenario.</p>
+
+<p>However there are some suggestions to collect more data and attempt to isolate the issue.</p>
+
+<ol>
+<li>Allocate more than one core [I see that you have tried it and the issue goes away. Seems to be an issue with a thread/s execution precluding others. See no 7 below)</li>
+<li>Allocate more heap (perhaps the demands of v14 is more than that of earlier jdks)</li>
+<li>Allocate more memory to the Win 10 VB. </li>
+<li>Check the OS system messages (Win 10 in your case)</li>
+<li>Run it in an non-virtualized Win 10.</li>
+<li>Try a different build of jdk 14</li>
+<li>Do a thread dump every (or profile)few intervals of time. Analyze what thread is running exclusively. Perhaps there is a setting for equitable time sharing. Perhaps there is a higher priority thread running. What is that thread and what is it doing? In linux you could stat the lightweight processes (threads) associated with a process and its state in realtime. Something similar on Win 10?</li>
+<li>CPU usage? 100% or less? Constrained by CPU or mem? 100% CPU in service threads? Which service thread?</li>
+<li>Have you explicitly set a GC algo? </li>
+</ol>
+
+<p>I have personally witnessed issues within versions that have to do with GC, heap resizing, issues with virtualized containers and so on.</p>
+
+<p>There is no easy answer to that, I think, especially since this question has been around for some time. But we can try, all the best and let us know what is the result of some of these isolation steps.</p>
+
+<p>EDIT 1: from the updated question, it seems to be related to a GC or another service thread taking over the single core non-equitably (Thread-Local Handshakes)?</p>

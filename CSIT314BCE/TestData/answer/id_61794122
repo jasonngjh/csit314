@@ -1,0 +1,2 @@
+<pre><code>print(' '.join(sorted(result)))
+</code></pre>

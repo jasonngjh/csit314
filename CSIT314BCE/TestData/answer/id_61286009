@@ -1,0 +1,12 @@
+<blockquote>
+  <p><em>why does a const char</em> don't need a memory address to point to?*</p>
+</blockquote>
+
+<p>It does.</p>
+
+<p>A C-string literal like </p>
+
+<pre><code>"Anthony"
+</code></pre>
+
+<p>is decayed to the address of its 1<sup>st</sup> character. Like, BTW; any array in C does.</p>

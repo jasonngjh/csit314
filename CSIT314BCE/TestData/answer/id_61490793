@@ -1,0 +1,8 @@
+<p>I'm writing a blog posts series on creating a MVP + Coordinators approach in SwiftUI which may be useful:</p>
+
+<p><a href="https://lascorbe.com/posts/2020-04-27-MVPCoordinators-SwiftUI-part1/" rel="nofollow noreferrer">https://lascorbe.com/posts/2020-04-27-MVPCoordinators-SwiftUI-part1/</a></p>
+
+<p>The full project is available on Github:
+<a href="https://github.com/Lascorbe/SwiftUI-MVP-Coordinator" rel="nofollow noreferrer">https://github.com/Lascorbe/SwiftUI-MVP-Coordinator</a></p>
+
+<p>I'm trying to do it as if it'd be a big app in terms of scalability. I think I've sorted out the navigation problem, but I still have to see how to do deep linking, which is what I'm currently working on. I hope it helps.</p>

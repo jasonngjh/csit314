@@ -1,1 +1,0 @@
-<p>Including <code>use strict</code> in the beginning of your all sensitive JavaScript files from this point is a small way to be a better JavaScript programmer and avoid random variables becoming global and things change silently.</p>

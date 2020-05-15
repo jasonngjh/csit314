@@ -1,0 +1,87 @@
+<p>i am trying to upload a file from front-end to backend and store the file on azurestorage, my code works fine when the file size is less than 30mb, but if file size is great than 30mb does not work</p>
+
+<pre><code>console.log('- 11111 -')
+let fileObj = {};
+let companyId = 'tetst';
+var datetimestamp = Date.now();
+var aux = Math.floor((Math.random() * 1000) + 100);
+datetimestamp = datetimestamp + aux.toString();
+let percentage = 0;
+let body = req.body;
+
+console.log('- 1122112 -')
+
+
+
+let tran;
+try {
+
+    console.log('- 1 -')
+
+    var blobService = azureStorage.createBlobService(storageConnectionString);
+    var form = new multiparty.Form();
+    await form.on('part', async function(part) {
+        if (part.filename) {
+
+            console.log('- 2 -')
+
+            var size = part.byteCount;
+
+            fileObj.originalname = part.filename;
+            fileObj.contenttype = part.headers['content-type'];
+
+            var name = companyId +'/' + datetimestamp + '.' +part.filename.split('.')[part.filename.split('.').length -1];
+
+            fileObj.name = name;
+
+            await blobService.createBlockBlobFromStream(container, name, part, size, async function(error, result, response) {
+                if (error) {
+                    res.status(409).send({ Grrr: error });
+                    return;
+                }
+                console.log('- 22 -')
+                fileObj.BlobResult = result;
+                fileObj.response = response;
+
+                res.status(201).send();
+
+            });
+        } else {
+            form.handlePart(part);
+
+        }
+        part.resume();
+    });
+
+
+    // Close emitted after form parsed
+    await form.on('close', function() {
+        console.log('Upload completed!');
+
+    });
+    await form.on('aborted', () =&gt; {
+        console.log('aborted!!!')
+    });
+    // Errors may be emitted
+    // Note that if you are listening to 'part' events, the same error may be
+    // emitted from the `form` and the `part`.
+    await form.on('error', function(err) {
+        console.log('Error parsing form: ' + err.stack);
+        res.status(400).send(err);
+    });
+    // Parse req
+    form.parse(req);
+
+}
+catch(err) {        
+
+    next(err);
+}
+</code></pre>
+
+<p>if file is great than 30mb no console.log is displayed.</p>
+
+<p>in localhost it works everytime, also if size is great than 30mb (i tested with 104mb file) but when code is in azure (azurewebsites), it does not work</p>
+
+<p>express: v4.16.4
+node: v12.16.2</p>

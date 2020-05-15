@@ -1,0 +1,23 @@
+<p>Before stdint.h the variable sizes can vary from compiler to compiler and the actual variable types in C are still int, long, etc and are still defined by the compiler author as to their size.  Not some standard nor target specific assumptions.  The author(s) then need to create stdint.h to map the two worlds, that is the purpose of stdint.h to map the uint_this that to int, long, short.  </p>
+
+<p>If you are porting code from another compiler and it uses char, short, int, long then you have to go through each type and do the port yourself, there is no way around it.  And either you end up with the right size for the variable, the declaration changes but the code as written works....</p>
+
+<pre><code>if(~counter) counter++;
+</code></pre>
+
+<p>or...supply the mask or typecast directly</p>
+
+<pre><code>if((~counter)&amp;0xFF) counter++;
+if((uint_8)(~counter)) counter++;
+</code></pre>
+
+<p>At the end of the day if you want this code to work you have to port it to the new platform.  Your choice as to how.  Yes, you have to spend the time hit each case and do it right, otherwise you are going to keep coming back to this code which is even more expensive.  </p>
+
+<p>If you isolate the variable types on the code before porting and what size the variable types are, then isolate the variables that do this (should be easy to grep) and change their declarations using stdint.h definitions which hopefully wont change in the future, and you would be surprised but the wrong headers are used sometimes so even put checks in so you can sleep better at night</p>
+
+<pre><code>if(sizeof(uint_8)!=1) return(FAIL);
+</code></pre>
+
+<p>And while that style of coding works (if(~counter) counter++;), for portability desires now and in the future it is best to use a mask to specifically limit the size (and not rely on the declaration), do this when the code is written in the first place or just finish the port and then you wont have to re-port it again some other day.  Or to make the code more readable then do the if x&lt;0xFF then or x!=0xFF or something like that then the compiler can optimize it into the same code it would for any of these solutions, just makes it more readable and less risky...</p>
+
+<p>Depends on how important the product is or how many times you want send out patches/updates or roll a truck or walk to the lab to fix the thing as to whether you try to find a quicky solution or just touch the affected lines of code. if it is only a hundred or few that is not that big of a port.</p>

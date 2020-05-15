@@ -1,0 +1,20 @@
+<p>For Inputs:</p>
+
+<pre><code>l = [["00:00:01","data_update","data1",10.5,"blabla"],
+ ["00:00:02","proc_call","xxx","xxx","blalla"],
+ ["00:00:15","data_update","data2",34.5,"blabla"],
+ ["00:00:25","proc_call","xxx","xxx","blalla"]]
+
+cols = (0, 2, 3)
+</code></pre>
+
+<p>Do:</p>
+
+<pre><code>result = map(lambda sub: [sub[i] for i in cols], filter(lambda sub: "data_update" in sub, l))
+print(list(result))
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>[['00:00:01', 'data1', 10.5], ['00:00:15', 'data2', 34.5]]
+</code></pre>

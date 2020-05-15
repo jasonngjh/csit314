@@ -1,0 +1,21 @@
+<p>I'm writing Automation test case to upload file using Java Selemium. My problem is when I click on upload button, Windows file upload popup appears.
+I tried using Robot class to send file path in popup window it does not type anything, i guess it is not able to set focus on popup window. Tried using driver.switchTo().alert() as well.</p>
+
+<p>My code is as follows:
+List elecount = driver.findElements(By.xpath("//div/img[@title='Insert pictures inline']"));
+        elecount.get(1).click(); //opens the Windows popup</p>
+
+<pre><code>    StringSelection stringSelection = new StringSelection("File path");
+    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+    try{
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+    }
+</code></pre>
+
+<p>Many Thanks in Advance.</p>

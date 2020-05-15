@@ -1,0 +1,18 @@
+<p>This is a variation on a theme (see <a href="https://stackoverflow.com/users/4508178/derte-trdelnik">@Derte Trdelnik</a>'s <a href="https://stackoverflow.com/a/61349149/7844823">answer</a>) following the philosophy of <a href="https://docs.python.org/3/library/itertools.html" rel="noreferrer"><code>itertools</code></a> where</p>
+
+<blockquote>
+  <p>iterator building blocks [...] are useful by themselves or in combination.</p>
+</blockquote>
+
+<p>The idea is that, while we're defining a new function, we might as well make it generic:</p>
+
+<pre><code>def interleaved_negatives(it):
+    for i in it:
+        yield i
+        yield -i
+</code></pre>
+
+<p>and apply it to a particular <a href="https://docs.python.org/3/library/stdtypes.html#range" rel="noreferrer"><code>range</code></a> iterator:</p>
+
+<pre><code>list(interleaved_negatives(range(6, 10)))
+</code></pre>

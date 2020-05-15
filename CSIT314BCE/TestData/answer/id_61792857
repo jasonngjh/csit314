@@ -1,0 +1,15 @@
+<p>You can use css gradient</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-css lang-css prettyprint-override"><code>.btn{
+background: rgb(241,157,6);
+background: linear-gradient(133deg, rgba(241,157,6,1) 20%, rgba(9,9,121,1) 20%, rgba(9,9,121,1) 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;button class="btn"&gt;hello&lt;/button&gt;</code></pre>
+</div>
+</div>
+</p>

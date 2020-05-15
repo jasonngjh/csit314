@@ -1,6 +1,0 @@
-<p>In my case, I need use comments for debug purposes, prior the output of the JSON structure. So I decided to use debug information in the HTTP header, to avoid breaking the client:</p>
-
-<pre><code>header("My-Json-Comment: Yes, I know it's a workaround ;-) ");
-</code></pre>
-
-<p><a href="https://i.stack.imgur.com/yMh3J.png" rel="noreferrer"><img src="https://i.stack.imgur.com/yMh3J.png" alt="Enter image description here"></a></p>

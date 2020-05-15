@@ -1,5 +1,0 @@
-<p>Thank you for a really good discussion but as a real noob I wonder where instructions are kept? In the BEGINNING scientists were deciding between two architectures (von NEUMANN where everything is considered DATA and HARVARD where an area of memory was reserved for instructions and another for data). Ultimately, we went with the von Neumann design and now everything is considered 'the same'. This made it hard for me when I was learning assembly 
-<a href="https://www.cs.virginia.edu/~evans/cs216/guides/x86.html" rel="nofollow noreferrer">https://www.cs.virginia.edu/~evans/cs216/guides/x86.html</a>
-because they talk about registers and stack pointers.  </p>
-
-<p>Everything above talks about DATA. My guess is that since an instruction is a defined thing with a specific memory footprint, it would go on the stack and so all 'those' registers discussed in assembly are on the stack. Of course then came object oriented programming with instructions and data comingled into a structure that was dynamic so now instructions would be kept on the heap as well?</p>

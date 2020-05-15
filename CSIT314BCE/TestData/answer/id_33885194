@@ -1,9 +1,0 @@
-<p>ACCORDING TO C++ TERMINOLOGY : </p>
-
-<ol>
-<li>Primitive Types and their wrappers - Pass by Value</li>
-<li>Other Complex Datatypes            - Pass by Reference</li>
-</ol>
-
-<p>(Although Java is completely Pass by Value, in the second case it passes the reference to the object and in this case the value of the object if changed is reflected in the main function and so I called it Pass by Reference according to C++ Terminology.)
-If you are hailing from C++, then Java is pass by value for Primitive types and their Wrapper Classes like int, Integer, bool, Boolean i.e., if you pass a value of these data types, there will be no change in the original function. For all other kinds of datatypes java just passes them and if any change is made, the change can be seen in the original function(It can be called pass by reference according to c++ terminology)</p>

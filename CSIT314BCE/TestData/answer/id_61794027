@@ -1,0 +1,43 @@
+<p>Here is a solution without modifying the string inbetween, but just tracking the position of the first letter after each rotation.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>// After applying first rotation L 3, the string is: 'deabc'. Here, the first character is 'd'
+// After applying second rotation R 2, the string is: 'bcdea'. Here, the first character is 'b'
+// After applying third rotation R 4, the string is: 'cdeab'. Here, the first character is 'c'
+// Thus, after all the rotations the FIRSTCHARSTRING string will be "dbc" which is an anagram of a sub string of original string "abcde".
+
+const task18 = (str1, str2) =&gt; {
+  // Let's remove whitespace. We don't need that.
+  str2 = str2.replace(/\s/g, "");
+  
+  let result = "";
+  let currPos = 0;
+  // mod is used to ensure that array boundaries are no problem
+  let mod = str1.length;
+  for (let i = 0; i &lt; str2.length; i++) {
+    if (str2[i] === "L") {
+      currPos = currPos + str2[++i] % mod;
+      // Add 'pseudofirst' letter to result.
+      result += str1[currPos];
+    } else {
+      currPos = (mod + currPos - str2[++i]) % mod;
+      // Add 'pseudofirst' letter to result.
+      result += str1[currPos];
+    }
+  }
+  
+  console.log(result);
+  
+  // Check this by reversing the first string and checking whether the result is included.
+  let isAnagram = str1.split("").reverse().join("").includes(result);
+  return isAnagram ? 'YES' : 'NO';
+};
+
+let result = task18("abcde","L 3 R 2 R 4");
+console.log(result);</code></pre>
+</div>
+</div>
+</p>
+
+<p>EDITING due to mistake.</p>

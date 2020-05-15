@@ -1,7 +1,0 @@
-<p>If you get data from REST API in JSON so you have to use content-type </p>
-
-<pre><code>For JSON data: Content-Type:application/json
-For HTML data: Content-Type:text/html,
-For XHTML data: Content-Type:application/xhtml+xml,
-For XML data: Content-Type:text/xml, application/xml
-</code></pre>

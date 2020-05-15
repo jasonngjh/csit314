@@ -1,6 +1,0 @@
-<p>First write properly. You want to navigate within an application for another link from your application for another link. Here is the code:</p>
-
-<pre><code>window.location.href = "http://www.google.com";
-</code></pre>
-
-<p>And if you want to navigate pages within your application then I also have code, if you want.</p>

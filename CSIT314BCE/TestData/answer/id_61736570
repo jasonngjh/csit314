@@ -1,0 +1,5 @@
+<p>Jest deprecated <code>require.requireActual</code> a while back and recently <a href="https://github.com/facebook/jest/pull/9854" rel="nofollow noreferrer">removed it</a> in <a href="https://github.com/facebook/jest/releases/tag/v26.0.0" rel="nofollow noreferrer">version 26</a>.</p>
+
+<p>Downgrade to Jest 25 to fix it, or find what package is using <code>require.requireActual</code> and have them use <code>jest.requireActual</code> instead.</p>
+
+<p>EDIT: <a href="https://github.com/storybookjs/storybook/releases/tag/v6.0.0-beta.3" rel="nofollow noreferrer">Storybook v6.0.0-beta.3</a> includes an update that adds Jest v26 support.</p>

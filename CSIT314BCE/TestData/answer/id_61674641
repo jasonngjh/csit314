@@ -1,0 +1,5 @@
+<p>It doesn't "block" in the traditional sense of "halting the current thread in the current state until some signal is received" (one of the main objectives of async is to increase throughout by allowing more effective use of pool threads, by having them not all sat idly waiting for IO), but yes: if the method reports that it is incomplete, the <em>execution</em> will be suspended by <code>await</code>, and resumed (quite likely on a different shared thread) when the async result is available.</p>
+
+<p>So yes, <em>semantically</em> it has the effect of not running the two things concurrently (note this only applies if the first call is truly asynchronous).</p>
+
+<p>Note that many APIs do not <strong>expect</strong> multiple concurrent async operations, and will have undefined behaviour in the first example.</p>

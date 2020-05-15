@@ -1,0 +1,37 @@
+<p>I have the following code which does not compile at all.
+It says that I cannot convert <code>const Node</code> to <code>Node&amp;</code> but <code>Node</code> is not <code>const</code> nor methods of <code>A</code> refer to a <code>const this</code> nor <code>std::set</code> is const.</p>
+
+<p>Where am I wrong?</p>
+
+<pre><code>#include &lt;set&gt;
+#include &lt;string&gt;
+
+struct Node
+{
+    std::string name;
+};
+
+struct NodeNameComparator
+{
+    using is_transparent = void;
+    bool operator()(const Node &amp;a, const std::string &amp;b) const { return a.name &lt; b; }
+    bool operator()(const std::string &amp;a, const Node &amp;b) const { return a &lt; b.name; }
+    bool operator()(const Node &amp;a, const Node &amp;b) const { return a.name &lt; b.name; }
+};
+
+
+struct A
+{
+    std::set&lt;Node, NodeNameComparator&gt; nodeset;
+    Node &amp;add_or_get_node(const std::string &amp;name)
+    {
+        std::set&lt;Node, NodeNameComparator&gt;::iterator it = nodeset.template find(name);
+        // IT WORKS BUT IT IS A WORKAROUND.
+        //return it == nodeset.end() ? const_cast&lt;Node&amp;&gt;(*(nodeset.insert(*new Node{name}).first)) : const_cast&lt;Node&amp;&gt;(*it);
+        //ERROR!!!
+        return it == nodeset.end() ? *(nodeset.insert(*new Node{name}).first) : *it;
+    };
+};
+
+int main() { return 0; }
+</code></pre>

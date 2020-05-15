@@ -1,0 +1,59 @@
+<p>This is a gradle problem.</p>
+
+<p>You can try:</p>
+
+<pre><code>@Test
+public void true_npe() {
+    try {
+        Object o = null;
+        o.toString();
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw e;
+    }
+}
+</code></pre>
+
+<p>The detailed message is in the printed stack trace but it's not in the junit error message</p>
+
+<p>The problem is from gradle, I believe it's using Object Input/Output Stream to pass execution results from test vm to gradle vm. During this exchange the extended message from the original NPE is lost (is a native method).</p>
+
+<p>You can workaround this with a custom junit 5 extension (should be similar for junit 4):</p>
+
+<pre><code>public class HelpfulNullPointerExceptionExtension implements TestExecutionExceptionHandler {
+    @Override
+    public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
+        if (throwable instanceof NullPointerException) {
+            NullPointerException extended = new NullPointerException(throwable.getMessage());
+            extended.setStackTrace(throwable.getStackTrace());
+            throw extended;
+        }
+        throw throwable;
+    }
+}
+</code></pre>
+
+<p>And register automatically in a META-INF/services/org.junit.jupiter.api.extension.Extension file with content</p>
+
+<pre><code>org.mypackage.HelpfulNullPointerExceptionExtension 
+</code></pre>
+
+<p>Or, if you care about nested NPE:</p>
+
+<pre><code>public class HelpfulNullPointerExceptionExtension implements TestExecutionExceptionHandler {
+@Override
+public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
+    Throwable actual = throwable;
+    do {
+        if (actual instanceof NullPointerException) {
+            var field = Throwable.class.getDeclaredField("detailMessage");
+            field.setAccessible(true);
+            field.set(actual, actual.getMessage());
+        }
+        actual = actual.getCause();
+    } while (actual != null &amp;&amp; actual != throwable);
+    throw throwable;
+}
+</code></pre>
+
+<p>}</p>

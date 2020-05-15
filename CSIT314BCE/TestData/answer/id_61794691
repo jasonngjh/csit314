@@ -1,0 +1,5 @@
+<p>You should frist <a href="https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances#createanewserviceaccount" rel="nofollow noreferrer">create a custom service account</a> with your desired permissions. If you want to grant permissions to specific datasets you can do that from bigquery by adding this particular service account.</p>
+
+<p>Once your service account has all the permissions set you can <a href="https://cloud.google.com/ai-platform/notebooks/docs/create-new#create-with-options" rel="nofollow noreferrer">specify that service account</a> when creating a notebook instance:</p>
+
+<p><a href="https://i.stack.imgur.com/s4jxq.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/s4jxq.png" alt="enter image description here"></a></p>

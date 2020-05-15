@@ -1,0 +1,34 @@
+<p>I did the same tasks as OP, and I can reproduce exactly same result: the second task is ~3 times slower. But when I change the warmup to only 1 iteration, things start to get interesting:</p>
+
+<pre><code># Benchmark: test.ParallelStreamBenchmark.rangedReduceSum
+# Warmup Iteration   1: 3.619 ms/op
+Iteration   1: 3.931 ms/op
+Iteration   2: 3.927 ms/op
+Iteration   3: 3.834 ms/op
+Iteration   4: 4.006 ms/op
+Iteration   5: 4.605 ms/op
+Iteration   6: 6.454 ms/op
+Iteration   7: 6.466 ms/op
+Iteration   8: 6.328 ms/op
+Iteration   9: 6.370 ms/op
+Iteration  10: 6.244 ms/op
+
+# Benchmark: test.ParallelStreamBenchmark.rangedSum
+# Warmup Iteration   1: 3.971 ms/op
+Iteration   1: 4.034 ms/op
+Iteration   2: 3.970 ms/op
+Iteration   3: 3.957 ms/op
+Iteration   4: 4.024 ms/op
+Iteration   5: 4.278 ms/op
+Iteration   6: 19.302 ms/op
+Iteration   7: 19.132 ms/op
+Iteration   8: 19.189 ms/op
+Iteration   9: 18.842 ms/op
+Iteration  10: 18.292 ms/op
+
+Benchmark                                Mode  Cnt   Score    Error  Units
+ParallelStreamBenchmark.rangedReduceSum  avgt   10   5.216 ±  1.871  ms/op
+ParallelStreamBenchmark.rangedSum        avgt   10  11.502 ± 11.879  ms/op
+</code></pre>
+
+<p>Each task all slow down significantly after 5th iteration. For the second task, it slows down 3 times exactly after 5th iteration. If we count warmup as iterations, after 10 iterations, it makes sense to start off slow already. Looks like a bug in Benchmark library, which doesn't play well with GC. But just like the warning says, benchmark result in such cases is just for reference.</p>

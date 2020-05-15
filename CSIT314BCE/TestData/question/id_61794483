@@ -1,0 +1,8 @@
+<p>In my AWS ECS Task, I have 5 containers. One of them is <code>queue</code> container and it failes sometime if queue load is too much or something. I want to use help of <code>healthcheck</code> to check container health and restart it after some times. </p>
+
+<p>This aws <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-taskdefinition-healthcheck.html" rel="nofollow noreferrer">documentation</a> explains it. but my container dont have nginx or port 80 and it gives <code>refuse connection</code> error.</p>
+
+<pre><code>[ "CMD-SHELL", "curl -f http://localhost/ || exit 1" ]
+</code></pre>
+
+<p>How can I do this check when I dont have port 80 or nginx inside the container?</p>

@@ -1,5 +1,0 @@
-<p>If you use <a href="http://json5.org/" rel="noreferrer">JSON5</a> you can include comments.</p>
-
-<hr>
-
-<p><strong>JSON5 is a proposed extension to JSON</strong> that aims to make it easier for humans to write and maintain by hand. It does this by adding some minimal syntax features directly from ECMAScript&nbsp;5.</p>

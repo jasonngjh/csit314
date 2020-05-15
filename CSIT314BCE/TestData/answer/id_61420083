@@ -1,0 +1,16 @@
+<p>That's not "the last digit" of the number. That's the last digit of the <em>string <code>str</code> gave you</em> when passed the number.</p>
+
+<p>When you call <code>str</code> on a float, Python gives you enough digits that calling <code>float</code> on the string will give you the original float. For this purpose, a trailing 1 or 9 is less likely to be necessary than other digits, because a trailing 1 or 9 means the number is very close to the value you'd get by rounding off that digit. There's a good chance no other floats are closer, and if so, that digit can be discarded without sacrificing <code>float(str(original_float))</code> behavior.</p>
+
+<p>If <code>str</code> gave you enough digits to exactly represent the argument, the last digit would almost always be 5, except when <code>random.random()</code> returns 0.0, in which case the last digit would be 0. (Floats can only represent <a href="https://en.wikipedia.org/wiki/Dyadic_rational" rel="noreferrer">dyadic rationals</a>, and the last nonzero decimal digit of a non-integer dyadic rational is always 5.) The outputs would also be extremely long, looking like</p>
+
+<pre><code>&gt;&gt;&gt; import decimal, random
+&gt;&gt;&gt; print(decimal.Decimal(random.random()))
+0.29711195452007921335990658917580731213092803955078125
+</code></pre>
+
+<p>which is one of the reasons <code>str</code> doesn't do that.</p>
+
+<p>If <code>str</code> gave you exactly 17 significant digits (enough to distinguish all float values from each other, but sometimes more digits than necessary), then the effect you're seeing would disappear. There would be a nearly uniform distribution of trailing digits (including 0).</p>
+
+<p>(Also, you forgot that <code>str</code> sometimes returns a string in scientific notation, but that's a minor effect, because there's a low probability of getting a float where that would happen out of <code>random.random()</code>.)</p>

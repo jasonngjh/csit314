@@ -1,0 +1,6 @@
+<p>I used <a href="https://pre-commit.com/" rel="nofollow noreferrer">pre_commit</a> to check my python code style before I commit to git.
+It works very well. But now I am working on an old project, most of my work just modify several lines of the file. But pre_commit always ask me fix all the pep8 issues of the file.</p>
+
+<p>is there a way that let the pro_commit only check the codes I just modified not the whole file?</p>
+
+<p>Thanks.</p>

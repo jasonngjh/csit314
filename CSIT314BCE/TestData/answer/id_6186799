@@ -1,1 +1,0 @@
-<p>Against what seems to be common practice among other programmers, I prefer <code>String</code> over <code>string</code>, just to highlight the fact that <code>String</code> is a reference type, as Jon Skeet mentioned.</p>

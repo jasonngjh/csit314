@@ -1,0 +1,35 @@
+<p>function must take two string arguments: one, a string which is to be rotated and the second string denoting any number of rotations in a particular direction with specific magnitudes. The second string is in the form of : X a X b X c ....... Where X denotes the direction of rotataion which is either L or R. a,b,c... are integers which denotes the magnitude (not more than 9) of the direction which is in their left side.</p>
+
+<p>For example, if these are the arguments : ("abcde","L 3 R 2 R 4")
+The ouput would be YES</p>
+
+<p>Explanation:</p>
+
+<ul>
+<li>Here, number of rotations are 3.</li>
+<li>After applying first rotation L 3, the string is:
+  'deabc'. Here, the first character is 'd'</li>
+<li>After applying second rotation R 2, the string is:
+  'bcdea'. Here, the first character is 'b'</li>
+<li>After applying third rotation R 4, the string is:
+  'cdeab'. Here, the first character is 'c'</li>
+</ul>
+
+<p>Thus, after all the rotations the FIRSTCHARSTRING string will be "dbc" which is an anagram of a sub string of original string "abcde".</p>
+
+<p>here is what i tried but not getting anywhere</p>
+
+<pre><code>
+const task18 = (str1, str2) =&gt; {
+  let count;
+  for (let i in str2) {
+    if (str2[i] === "L") {
+      let ans = str1.substring(str2[i + 1]) + str1.substring(0, str2[i + 1]);
+      count = ans[0];
+      return ans;
+    } else {
+      return str1.substring(str1, str1.length - str2[i + 1]);
+    }
+  }
+};
+</code></pre>

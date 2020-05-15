@@ -1,9 +1,0 @@
-<blockquote>
-  <p>What is the difference between <code>git pull</code> and <code>git fetch</code>?</p>
-</blockquote>
-
-<p>To understand this, you first need to understand that your local git maintains not only your local repository, but it also maintains a local copy of the remote repository.</p>
-
-<p><code>git fetch</code> brings your local copy of the remote repository up to date. For example, if your remote repository is GitHub - you may want to fetch any changes made in the remote repository to your local copy of it the remote repository. This will allow you to perform operations such as compare or merge.</p>
-
-<p><code>git pull</code> on the other hand will bring down the changes in the remote repository to where you keep your own code. Typically, <code>git pull</code> will do a <code>git fetch</code> first to bring the local copy of the remote repository up to date, and then it will merge the changes into your own code repository and possibly your working copy. </p>

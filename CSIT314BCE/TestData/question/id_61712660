@@ -1,0 +1,20 @@
+<p>I have two lists as follows.</p>
+
+<pre><code>mylist1 = [["lemon", 0.1], ["egg", 0.1], ["muffin", 0.3], ["chocolate", 0.5]]
+mylist2 = [["chocolate", 0.5], ["milk", 0.2], ["carrot", 0.8], ["egg", 0.8]]
+</code></pre>
+
+<p>I want to get the mean of the common elements in the two lists as follows.</p>
+
+<pre><code>myoutput = [["chocolate", 0.5], ["egg", 0.45]]
+</code></pre>
+
+<p>My current code is as follows</p>
+
+<pre><code>for item1 in mylist1:
+    for item2 in mylist2:
+        if item1[0] == item2[0]:
+             print(np.mean([item1[1], item2[1]]))
+</code></pre>
+
+<p>However, since there are two <code>for</code> loops (<code>O(n^2)</code> complexity) this is very inefficient for very long lists. I am wondering if there is more standard/efficient way of doing this in Python.</p>

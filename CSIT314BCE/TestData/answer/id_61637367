@@ -1,0 +1,14 @@
+<p>Yes, empty destructuring like that is perfectly fine, it's just useless. This is covered in <a href="https://tc39.es/ecma262/#sec-runtime-semantics-destructuringassignmentevaluation" rel="noreferrer">Runtime Semantics: DestructuringAssignmentEvaluation</a></p>
+
+<blockquote>
+  <p>With parameter value.</p>
+  
+  <p>ObjectAssignmentPattern: <code>{}</code></p>
+  
+  <ol>
+  <li><p>Perform ? RequireObjectCoercible(value).</p></li>
+  <li><p>Return NormalCompletion(empty).</p></li>
+  </ol>
+</blockquote>
+
+<p>All it does (in <a href="https://tc39.es/ecma262/#sec-requireobjectcoercible" rel="noreferrer">RequireObjectCoercible</a>) is require that the right side is not null nor undefined.</p>

@@ -1,7 +1,0 @@
-<p>You can iterate over each <code>array</code>-item and <code>splice</code> it if it exist in your <code>array</code>.</p>
-
-<pre><code>function destroy(arr, val) {
-    for (var i = 0; i &lt; arr.length; i++) if (arr[i] === val) arr.splice(i, 1);
-    return arr;
-}
-</code></pre>

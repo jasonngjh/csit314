@@ -1,0 +1,37 @@
+<p>The OP postulates an interesting finding. Let me simplify the original question as follows. </p>
+
+<p><strong>If the model is trained on a particular time series, why can't the model reconstruct previous time series data, which it was already trained on?</strong></p>
+
+<p>Well, the answer is embedded in the training progress itself. Since <code>EarlyStopping</code> is used here to avoid overfitting, the best model is saved at <code>epoch=5</code>, where <code>val_loss=0.0030</code> as mentioned by the OP. At this instance, the training loss is equal to <code>0.0343</code>, that is, the RMSE of training is <code>0.185</code>. Since the dataset is scaled using <code>MinMaxScalar</code>, we need to undo the scaling of RMSE to understand what's going on.</p>
+
+<p>The minimum and maximum values of the time sequence are found to be <code>2290</code> and <code>3380</code>. Therefore, having <code>0.185</code> as the RMSE of training means that, even for the training set, the predicted values may differ from the ground truth values by approximately <code>0.185*(3380-2290)</code>, that is <code>~200</code> units on average.</p>
+
+<p>This explains why there is a big difference when predicting the training data itself at a previous time step.</p>
+
+<p><strong>What should I do to perfectly emulate training data?</strong></p>
+
+<p>I asked this question from myself. The simple answer is, make the training loss approaching <code>0</code>, that is overfit the model.</p>
+
+<p>After some training, I realized that a model with only 1 LSTM layer that has <code>32</code> cells is not complex enough to reconstruct the training data. Therefore, I have added another LSTM layer as follows.</p>
+
+<pre><code>model = Sequential()
+model.add(LSTM(32, return_sequences=True, activation = 'sigmoid', input_shape=(x_train.shape[1], x_train.shape[2])))
+# model.add(Dropout(0.2))
+# model.add(BatchNormalization())
+model.add(LSTM(units = 64, return_sequences=False,))
+model.add(Dense(y_train.shape[1]))
+model.compile(optimizer = 'adam', loss = 'mse')
+</code></pre>
+
+<p>And the model is trained for <code>1000</code> epochs without considering <code>EarlyStopping</code>.</p>
+
+<pre><code>model.fit(x_train, y_train, batch_size = 64, epochs = 1000, shuffle = True, validation_data = (x_test, y_test))
+</code></pre>
+
+<p>At the end of <code>1000</code>th epoch we have a training loss of <code>0.00047</code> which is much lower than the training loss in your case. So we would expect the model to reconstruct the training data better. Following is the prediction plot for Apr 2-8.</p>
+
+<p><a href="https://i.stack.imgur.com/jV75k.png" rel="noreferrer"><img src="https://i.stack.imgur.com/jV75k.png" alt="prediction"></a></p>
+
+<p><strong>A Final Note:</strong></p>
+
+<p>Training on a particular database does not necessarily mean that the model should be able to perfectly reconstruct the training data. Especially, when the methods such as early stopping, regularization and dropout are introduced to avoid overfitting, the model tends to be more generalizable rather than memorizing training data.</p>

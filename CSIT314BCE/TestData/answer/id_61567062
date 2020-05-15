@@ -1,0 +1,2 @@
+<p>It's under-fitting and to improve that I thing you need to add neurons into your hidden layers.!! 
+Another point is try activation function 'relu'. Sigmoid doesn't give good results. Also you need to define 'softmax' in your output layer.! </p>

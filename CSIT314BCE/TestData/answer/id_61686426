@@ -1,0 +1,30 @@
+<p>A possibility is to use <code>collections.defaultdict</code> with <code>collections.deque</code>:</p>
+
+<pre><code>from collections import defaultdict, deque
+def to_num(a, b):
+  d = defaultdict(deque)
+  for j, k in a:
+     d[k].append(j)
+  return [[d[l].popleft() for l in i] for i in b]
+
+list1 = [('a', 0), ('b', 100), ('c', 200), ('d', 300), ('e', 400), ('f', 500)]
+list2 = [[0, 200, 400], [100, 300, 500]]
+print(to_num(list1, list2))
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>[['a', 'c', 'e'], ['b', 'd', 'f']]
+</code></pre>
+
+<p>With your second test case:</p>
+
+<pre><code>list1 = [('a', 0), ('b', 0), ('c', 0), ('d', 0), ('e', 0), ('f', 0)]
+list2 = [[0, 0, 0], [0, 0, 0]]
+print(to_num(list1, list2))
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>[['a', 'b', 'c'], ['d', 'e', 'f']]
+</code></pre>

@@ -1,8 +1,0 @@
-<p>You could ignore that file with a file in your project base folder:</p>
-
-<p>.gitignore</p>
-
-<pre><code>public/images/*
-</code></pre>
-
-<p>Then pull the changes and then remove that line from your gitignore file.</p>

@@ -1,0 +1,20 @@
+<p>So I have written a program and I get constant Hardfaults and sometimes execution errors ( for example a while loop which is accessed and false but runs for ever ). </p>
+
+<p>The register of stm32 suggest, that an Invalid mem addr (for example 0x6E). is called, but in the piece of code does not access any other mem address and or is written by ST. So I don't think that it is a bug, maybe some thing wrong with code generated from CubeIDE ?</p>
+
+<p>The hole situation makes no sense to me ?!</p>
+
+<p>Edit the code :
+    <code>while (((flag[0]) != 0) &amp;&amp; ((flag[1]) != 0)) {
+}</code>
+is executed while condition is false, checked with debugger</p>
+
+<p><code>while (((flag[0]) != 0) &amp;&amp; ((flag[1]) != 0)) {
+HAL_Delay(1);
+}</code>
+Hardfault in HAL_Delay</p>
+
+<p>that behavior continues when i write other code.
+the voids have run and worked before.</p>
+
+<p>Im using and stm32f103c8 </p>

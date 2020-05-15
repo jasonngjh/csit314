@@ -1,0 +1,9 @@
+<p>Be careful with logging to slow disks, it will slow down your application:</p>
+
+<p><a href="https://engineering.linkedin.com/blog/2016/02/eliminating-large-jvm-gc-pauses-caused-by-background-io-traffic" rel="nofollow noreferrer">https://engineering.linkedin.com/blog/2016/02/eliminating-large-jvm-gc-pauses-caused-by-background-io-traffic</a></p>
+
+<p>But it doesn't seem likely to be the cause of the issue as the CPU is still busy and you don't have to wait for all threads to come to a safe point thanks to thread-local handshake: <a href="https://openjdk.java.net/jeps/312" rel="nofollow noreferrer">https://openjdk.java.net/jeps/312</a> </p>
+
+<p>Also not directly related to the problem you have but more generally if you want to try to squeeze more performance out of your hardware for startup time, take a look at AppCDS (class data sharing):</p>
+
+<p><a href="https://blog.codefx.org/java/application-class-data-sharing/" rel="nofollow noreferrer">https://blog.codefx.org/java/application-class-data-sharing/</a></p>

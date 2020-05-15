@@ -1,0 +1,5 @@
+<p>I am having following dictionary 
+<code>msg = {"response":{"data":{"aPr":"143.90","aSz":"75","avgPr":"190.12","bPr":"143.70","bSz":"75","c":"398.40","ch":"-254.50","chPer":"-63.88","h":"277.60","l":"123.20","lTrdT":"14 May 2020, 03:21:21 PM","ltp":"143.90","ltq":"75","ltt":"14 May 2020, 03:21:21 PM","lttUTC":"14 May 2020, 09:51:21 AM","o":"245.95","oI":"58275","oIChg":"-50100.00","sym":"59605_NFO","tBQ":"347625","tSQ":"44925","ttv":"425688175.07","vol":"2239050","yH":"277.60","yL":"0.00"},"streaming_type":"quote"}}```
+I would like to extract key values from this. I am using below code
+</code>ltp = msg(["ltp"])```
+but it is showing error :string indices must be integers"</p>

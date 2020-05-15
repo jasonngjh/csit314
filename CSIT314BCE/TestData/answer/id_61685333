@@ -1,0 +1,75 @@
+<p>This is a neat little problem, thanks for posting! In the remainder, I'm going to assume no point is <em>dominated</em>, that is, there are no points <code>c</code> such that there exists a point <code>d</code> with <code>c.x &lt; d.x</code> and <code>c.y &lt; d.y</code>. If there are, then it is never optimal to use <code>c</code> (why?), so we can safely ignore any dominated points. None of your example points are dominated.</p>
+
+<p>Your problem exhibits optimal substructure: once we have decided which item is to be included in the first iteration, we have the same problem again with <code>k - 1</code>, and <code>n - 1</code> (we remove the selected item from the set of allowed points). Of course the pay-off depends on the set we choose - we do not want to count areas twice. </p>
+
+<p>I propose we pre-sort all point by their x-value, in increasing order. This ensures the value of a selection of points can be computed as piece-wise areas. I'll illustrate with an example: suppose we have three points, <code>(x1, y1), ..., (x3, y3)</code> with values <code>(2, 3), (3, 1), (4, .5)</code>. Then the total area covered by these points is <code>(4 - 3) * .5 + (3 - 2) * 1 + (2 - 0) * 3</code>. I hope it makes sense in a graph:</p>
+
+<p><a href="https://i.stack.imgur.com/ydoKN.jpg" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/ydoKN.jpg" alt="figure"></a></p>
+
+<p>By our assumption that there are no dominated points, we will always have such a weakly decreasing figure. Thus, pre-sorting solves the entire problem of "counting areas twice"!</p>
+
+<p>Let us turn this into a dynamic programming algorithm. Consider a set of <code>n</code> points, labelled <code>{p_1, p_2, ..., p_n}</code>. Let <code>d[k][m]</code> be the maximum area of a subset of size <code>k + 1</code> where the <code>(k + 1)</code>-th point in the subset is point <code>p_m</code>. Clearly, <code>m</code> cannot be chosen as the <code>(k + 1)</code>-th point if <code>m &lt; k + 1</code>, since then we would have a subset of size less than <code>k + 1</code>, which is never optimal. We have the following recursion,</p>
+
+<pre><code>d[k][m] = max {d[k - 1][l] + (p_m.x - p_l.x) * p_m.y, for all k &lt;= l &lt; m}.
+</code></pre>
+
+<p>The initial cases where <code>k = 1</code> are the rectangular areas of each point. The initial cases together with the updating equation suffice to solve the problem.  I estimate the following code as <code>O(n^2 * k)</code>. The term squared in <code>n</code> can probably be lowered as well, as we have an ordered collection and might be able to apply a binary search to find the best subset in <code>log n</code> time, reducing <code>n^2</code> to <code>n log n</code>. I leave this to you.</p>
+
+<p>In the code, I have re-used my notation above where possible. It is a bit terse, but hopefully clear with the explanation given.</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+typedef struct point
+{
+    double x;
+    double y;
+} point_t;
+
+
+double maxAreaSubset(point_t const *points, size_t numPoints, size_t subsetSize)
+{
+    // This should probably be heap allocated in your program.
+    double d[subsetSize][numPoints];
+
+    for (size_t m = 0; m != numPoints; ++m)
+        d[0][m] = points[m].x * points[m].y;
+
+    for (size_t k = 1; k != subsetSize; ++k)
+        for (size_t m = k; m != numPoints; ++m)
+            for (size_t l = k - 1; l != m; ++l)
+            {
+                point_t const curr = points[m];
+                point_t const prev = points[l];
+
+                double const area = d[k - 1][l] + (curr.x - prev.x) * curr.y;
+
+                if (area &gt; d[k][m])  // is a better subset
+                    d[k][m] = area;
+            }
+
+    // The maximum area subset is now one of the subsets on the last row.
+    double result = 0.;
+
+    for (size_t m = subsetSize; m != numPoints; ++m)
+        if (d[subsetSize - 1][m] &gt; result)
+            result = d[subsetSize - 1][m];
+
+    return result;
+}
+
+int main()
+{
+    // I assume these are entered in sorted order, as explained in the answer.
+    point_t const points[5] = {
+            {0.029394902328, 0.951299438575},
+            {0.176318878234, 0.493630156084},
+            {0.235041868262, 0.438197791997},
+            {0.376508963445, 0.437693410334},
+            {0.948798695015, 0.352125307881},
+    };
+
+    printf("%f\n", maxAreaSubset(points, 5, 3));
+}
+</code></pre>
+
+<p>Using the example data you've provided, I find an optimal result of <code>0.381411</code>, as desired.</p>

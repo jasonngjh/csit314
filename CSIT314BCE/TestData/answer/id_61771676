@@ -1,0 +1,57 @@
+<p>Given this method (typescript, sorry I assume es6 is similar):</p>
+
+<pre><code>private static Foo(test: string, bar?: string): void
+{
+    let args = arguments &amp;&amp; arguments.length ? arguments.length : 0;
+
+    console.log(test, {
+        bar: bar,
+        type: typeof bar,
+        isUndefined: bar === undefined,
+        arguments: args,
+        value: (bar === undefined &amp;&amp; args == 2) ? undefined : (bar === null &amp;&amp; args == 2) ? null : bar ? bar : ""
+    });
+}
+</code></pre>
+
+<p>Called with this:</p>
+
+<pre><code>let u;
+let v = undefined;
+
+this.Foo("no parameter");
+this.Foo("null", null);
+this.Foo("empty", "");
+this.Foo("non-empty", "non-empty");
+this.Foo("undefined", undefined);
+this.Foo("undefined parameter", u);
+this.Foo("parameter with value of undefined", v);
+</code></pre>
+
+<p>We get these results:</p>
+
+<pre><code>no parameter 
+{bar: undefined, type: "undefined", isUndefined: true, arguments: 1, value: ""}
+
+null 
+{bar: null, type: "object", isUndefined: false, arguments: 2, value: null}
+
+empty 
+{bar: "", type: "string", isUndefined: false, arguments: 2, value: ""}
+
+non-empty 
+{bar: "non-empty", type: "string", isUndefined: false, arguments: 2, value: "non-empty"}
+
+undefined 
+{bar: undefined, type: "undefined", isUndefined: true, arguments: 2, value: undefined}
+
+undefined parameter 
+{bar: undefined, type: "undefined", isUndefined: true, arguments: 2, value: undefined}
+
+parameter with value of undefined 
+{bar: undefined, type: "undefined", isUndefined: true, arguments: 2, value: undefined}
+</code></pre>
+
+<p>Thus we can see that we cannot tell the difference between a variable that is undefined and a variable that contains the value undefined.</p>
+
+<p>By looking at the number of arguments we can tell if an argument is missing, and then if it is exactly (===) undefined or null.</p>

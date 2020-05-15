@@ -1,0 +1,87 @@
+<p><strong>The Situation:</strong> </p>
+
+<p>I have three classes: Society, Father and Son. The Society has a list of Fathers. Each Father has one son. It is necessary in this application that the Son knows who his Father is. </p>
+
+<p>I have used direct cross referencing by assigning the Father to a property of the Son class, as below: </p>
+
+<pre><code>public class Society : ISociety
+{
+    public List&lt;IFather&gt; Fathers {get; set;}
+}
+
+
+public class Father : IFather
+{
+    public Father(ISon inp_son)
+    {
+       MySon = inp_son; 
+    }
+
+    public ISon MySon {get; set;} 
+}
+
+
+public class Son : ISon
+{
+    public Son(IFather inp_father)
+    {
+       MyFather = inp_father;  
+    }
+
+    public IFather MyFather {get; set;}
+}
+</code></pre>
+
+<p>To manually implement dependency inversion, I have a public static class called Factory. The Factory returns interfaces of the Society, Father and Son classes through its methods. The methods instantiate Society, Father and Son classes and return them respectively as ISociety, IFather and Ison.</p>
+
+<pre><code>public static Factory
+{
+    public static IFather CreateFather()
+    {
+        return new Father(CreateSon());
+    }
+
+
+    public static ISon CreateSon()
+    {
+        return new Son(CreateFather());
+    }
+}
+
+</code></pre>
+
+<p>The application runs as follows.</p>
+
+<pre><code>.
+.
+.
+     IFather Father = Factory.CreateFather();
+     Society.Fathers.Add(Father);      
+.
+.
+.
+
+</code></pre>
+
+<p><strong>The proeblem</strong>: </p>
+
+<p>Every time the factory creates a Father, it instantiates a Son as its constructor input by invoking the CreateSon() method. When the CreateSon() method creates a Son, it invokes the CreateFather() method. This causes an endless loop, resulting in the StackOverFlow problem.</p>
+
+<p><strong>The big picture</strong>:</p>
+
+<p>I have a large class library. In my library, higher-level classes have lists of lower-level classes. Calculations are performed inside the lower-level classes. The calculations need to access the properties of the higher-level classes. Therefore, the calculations need to somehow find their way to the higher level classes through the low-level class they belong to.</p>
+
+<p>I don't know of a more elegant way to allow the Son to know who the Father is other than these two ways:</p>
+
+<p>1- The above-mentioned approach, which is cross referencing by directly assigning the MyFather property of the son.  </p>
+
+<p>2- Saving an identifier property of the Father (int number or Guid) in the Son. So the son can search for the Father by: 
+Father MyFather = Society.Fathers[MyFathersNumber]. Given the list of Fathers is controlled not to have duplicates. The problem with this approach is that in a long chain of hierarchy, accessing a class several layers up becomes a difficult navigation and a lengthy line of code. </p>
+
+<p>I had previously moved from way-1 to way-2 as a cleaner approach in the absence of dependency inversion. Now I am having StackOverFlow problem when I combine way-2 with the DI principle.</p>
+
+<p><strong>My Question</strong>:</p>
+
+<p>Can someone please tell me what is the elegant way to let the Son know who his father is without causing a conflict with the Dependency Inversion Principle?</p>
+
+<p>Thank you.</p>

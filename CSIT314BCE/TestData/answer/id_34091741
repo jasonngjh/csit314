@@ -1,4 +1,0 @@
-<p>Yet another simplest solution; you have to change branch to do this, but afterwards you can just run:</p>
-
-<pre><code>git branch -f &lt;&lt;branchname&gt;&gt; 0d1d7fc32e5a947fbd92ee598033d85bfc445a50
-</code></pre>

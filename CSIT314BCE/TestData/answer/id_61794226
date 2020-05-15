@@ -1,0 +1,12 @@
+<p>This might help you</p>
+
+<pre><code>from collections import defaultdict
+
+def unique(s1, s2):
+    d = defaultdict(list)
+    for word in s1.split(' '):
+        d[word].append(word)
+    for word in s2.split(' '):
+        d[word].append(word)
+    return [''.join(word) for _, word in d.items()]
+</code></pre>

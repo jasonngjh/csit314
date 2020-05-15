@@ -1,0 +1,9 @@
+<p>When destructuring an object you chose which properties you need:</p>
+
+<pre><code>const {a, c} = {'c': 1, 'b': 2, 'a': 3};
+</code></pre>
+
+<p>Thus having no parameters is accetable, but useless nonetheless:</p>
+
+<pre><code>const {} = {};
+</code></pre>

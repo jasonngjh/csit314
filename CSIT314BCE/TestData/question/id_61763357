@@ -1,0 +1,28 @@
+<p>I have several functions with almost identical signatures (made much shorter than actual code):</p>
+
+<pre><code>int hello(A a, B b, C c, int n);
+int there(A a, B b, C c, int n);
+int how(A a, B b, C c, int n);
+int are(A a, B b, C c, int n);
+...
+</code></pre>
+
+<p>And so on. Then during invocation, the code creates the parameters once and then passes the same objects to every function, except n:</p>
+
+<pre><code>A a; B b; C c;
+hello(a, b, c, 240);
+there(a, b, c, 33);
+how(a, b, c, 54);
+are(a, b, c, 67);
+</code></pre>
+
+<p>What I would like to achieve is something similar to how <code>std::bind</code> is normally used, except I would like to swap out the function. e.g:</p>
+
+<pre><code>auto uber_func = std::something_stack_overflow_recommends(..., a, b, c)
+uber_func(hello, 240);
+uber_func(there, 33);
+uber_func(how, 54);
+uber_func(are, 67);
+</code></pre>
+
+<p>It wasn't clear to me from the documentation of <code>std::bind</code> whether it could do this. Do you have any suggestions?</p>

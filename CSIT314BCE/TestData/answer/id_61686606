@@ -1,0 +1,13 @@
+<p>You can first collect first values of elements of <code>list1</code> depending on second element of values of <code>list1</code>:</p>
+
+<pre><code>from collections import deque, defaultdict
+byvalue = defaultdict(deque)
+for name, value in list1:
+    byvalue[value].append(name)
+</code></pre>
+
+<p>then you can collect back the result by processing <code>list2</code></p>
+
+<pre><code>list3 = [[byvalue[value].popleft() for value in x]
+         for x in list2]
+</code></pre>

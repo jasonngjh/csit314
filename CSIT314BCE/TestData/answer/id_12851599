@@ -1,7 +1,0 @@
-<p>No, it's not pass by reference.</p>
-
-<p>Java is pass by value according to the Java Language Specification:</p>
-
-<blockquote>
-  <p>When the method or constructor is invoked (§15.12), <strong>the values of the actual argument expressions initialize newly created parameter variables</strong>, each of the declared type, before execution of the body of the method or constructor. The Identifier that appears in the DeclaratorId may be used as a simple name in the body of the method or constructor to refer to the <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" rel="noreferrer">formal parameter</a>. </p>
-</blockquote>

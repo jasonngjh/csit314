@@ -1,5 +1,0 @@
-<p>I use the below</p>
-
-<pre><code>contentType: 'application/json',
-data: JSON.stringify(SendData),
-</code></pre>

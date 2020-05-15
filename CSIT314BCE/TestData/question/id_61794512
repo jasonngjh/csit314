@@ -1,0 +1,29 @@
+<p>I am currently working on a bug and do not seem to find a solution that satisfies my senior dev. I have the following problem:</p>
+
+<p>I have a dashboard where the user can drag and drop multiple elements into it and set them the way he wants. Now, whenever a new element is dragged into the dashboard, its z-index gets set to 'auto' and it appears behind the other elements. I want to get the highest z-index available on the dashboard, add 1 to it and set the z-index of the newly added element to that value.</p>
+
+<p>I already have written a function that gets me the highest z-index just fine, as you can see below.</p>
+
+<pre><code>function getZIndexOfElementAndAddOne() {
+  let temp = -1;
+  $('.elementIwant').each(function() {
+    let zIndex = $(this).css('z-index');
+    while (temp &lt;= zIndex) {
+      temp++;
+   }
+</code></pre>
+
+<p>However, my senior dev tells me that it consumes to many resources and that I should swap the while loop with an if statement like so. </p>
+
+<pre><code>function getZIndexOfElementAndAddOne() {
+  let temp = -1;
+  $('.elementIwant').each(function() {
+    let zIndex = $(this).css('z-index');
+    if (temp &lt;= zIndex) {
+      temp++;
+   }
+</code></pre>
+
+<p>But if I actually do that, the function does not return me the z-indexes of the elements but instead something else I don't even know what it is.</p>
+
+<p>I would be really glad if someone could help me with this. Even an advice on how to approach the problem another way is more than welcomed</p>

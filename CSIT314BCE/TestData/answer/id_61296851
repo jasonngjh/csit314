@@ -1,0 +1,3 @@
+<p>It does need a memory address, and it HAS a memory address.  In your example it's simply the memory address of the beginning of the string.  It's the same with any other array variable that's initialized at compile time, for instance "int array [] = {0, 1, 2, 3};".</p>
+
+<p>If you used a binary editor to look at the executable, you would see the string "Anthony" in there.  If you put the line "printf ("a is at %p\n", (void *)a);" in your program, then compile &amp; run it, you'll see the address.</p>

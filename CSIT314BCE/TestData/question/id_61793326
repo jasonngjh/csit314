@@ -1,0 +1,72 @@
+<p>The following visual basic code works fine but only the issue is it generates a text file with duplicate lines. I want to add some lines of code in it that generate text file with unique emails only. I am new to Visual Basic.</p>
+
+<p><strong>My Code:</strong></p>
+
+<pre><code>    '''
+    Const SCRIPT_NAME = "Extract E-mail Addresses"
+    Dim objFSO, objFil, arrAdr, varBuf, varInp, varOtp
+    varInp = InputBox("Enter the path to the input file.", SCRIPT_NAME)
+    varOtp = InputBox("Enter the path to the output file.", SCRIPT_NAME)
+    Set objFSO = CreateObject("Scripting.FileSystemObject")
+    Set objFil = objFSO.OpenTextFile(varInp)
+    varBuf = objFil.ReadAll
+    objFil.Close
+    arrAdr = Split(FindString(varBuf, "\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b"), ",")
+    Set objFil = objFSO.CreateTextFile(varOtp)
+    For Each varBuf In arrAdr
+        objFil.WriteLine varBuf
+    Next
+    objFil.Close
+    Set objFil = Nothing
+    Set objFSO = Nothing
+    MsgBox "Extraction complete.", vbInformation + vbOKOnly, SCRIPT_NAME
+    WScript.Quit
+
+    Function FindString(strText, strFind)
+        Dim objRegEx, colMatches, objMatch
+        Set objRegEx = CreateObject("VBscript.RegExp")
+        With objRegEx
+            .IgnoreCase = True
+            .Global = True
+            .Pattern = strFind
+            Set colMatches = .Execute(strText)
+        End With
+        For Each objMatch In colMatches
+            FindString = FindString &amp; objMatch.Value &amp; ","
+        Next
+        If Len(FindString) &gt; 0 Then
+            FindString = Left(FindString, Len(FindString) - 1)
+        End If
+        Set objRegEx = Nothing
+        Set colMatches = Nothing
+        Set objMatch = Nothing
+    End Function
+
+    '''
+</code></pre>
+
+<p><strong>Output:</strong></p>
+
+<pre><code>AustinStarrMan@gmail.com
+AustinStarrMan@gmail.com
+huntersglen@tramor.com
+sj.kelly0@gmail.com
+AustinStarrMan@gmail.com
+ryanausapts@gmail.com
+getaustin6@gmail.com
+getaustin6@gmail.com.com
+jason.m@primetxproperties.com
+brad@austinadvancerealestate.com
+getaustin6@gmail.com
+getaustin6@gmail.com.com
+brad@austinadvancerealestate.com
+brad@austinadvancerealestate.com
+RentAustin512@yahoo.com
+jyeager@advancelocators.com
+3033548PT@Pointe513.AptJet.com
+getaustin6@gmail.com
+getaustin6@gmail.com.com
+RentAustin512@yahoo.com
+</code></pre>
+
+<p>The output is something like that. So all I want to remove duplicate emails from this output file</p>

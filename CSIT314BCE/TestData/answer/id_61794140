@@ -1,0 +1,17 @@
+<p>You can use <code>Skip</code> method to get specific record like this</p>
+
+<pre class="lang-cs prettyprint-override"><code>private Location GetRecord(int skip)
+{
+    return clientContext.Lobbies.Where(location =&gt; location.FkBranchId == locationRecord.FkBranchId &amp;&amp; !location.FkAppointmentId.HasValue &amp;&amp; location.Status == 1 &amp;&amp; location.IsActive)
+        .OrderBy(location =&gt; location.AddedTime)
+        .Skip(skip)
+        .FirstOrDefault();
+}
+</code></pre>
+
+<p>and use</p>
+
+<pre class="lang-cs prettyprint-override"><code>var data = GetRecord(0);//First Record
+var data = GetRecord(1);//Second record
+var data = GetRecord(9);// 10th record
+</code></pre>

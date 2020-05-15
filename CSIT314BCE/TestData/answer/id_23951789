@@ -1,6 +1,0 @@
-<p><a href="http://underscorejs.org/#without" rel="noreferrer">Underscore.js</a> can be used to solve issues with multiple browsers. It uses in-build browser methods if present. If they are absent like in the case of older Internet&nbsp;Explorer versions it uses its own custom methods.</p>
-
-<p>A simple example to remove elements from array (from the website):</p>
-
-<pre><code>_.without([1, 2, 1, 0, 3, 1, 4], 0, 1); // =&gt; [2, 3, 4]
-</code></pre>

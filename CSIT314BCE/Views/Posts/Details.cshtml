@@ -1,10 +1,17 @@
-﻿@model CSIT314BCE.Models.DetailsViewModel
+﻿@using Microsoft.AspNet.Identity
+@model CSIT314BCE.Models.DetailsViewModel
 
 @{
     ViewBag.Title = Model.Question.Title;
 }
 @Styles.Render("~/Content/Style.css")
 <div class="container-fluid">
+    @{
+        if (Model.Question.ClosedDate != null)
+        {
+            <div class="well well-lg"><h4>This question is closed!</h4></div>
+        }
+    }
     <div id="Question">
         <h2>@Model.Question.Title</h2>
         <div class="row">
@@ -13,13 +20,24 @@
         <hr />
         <div class="row">
             <div class="col-md-1">
-                <div class="row">
+                @{
+                    var voteString = "votes";
+                    if (@Model.Question.VoteCount == 1) { voteString = "vote"; }
+                }
+                @if (User.IsInRole("Student"))
+                {
                     <div id="vote2">
                         <button type="button" class="voteBtn" id="voteUpBtn" onclick="voteUpFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
                         <button type="button" class="voteBtnClicked" id="voteDownBtn" onclick="voteDownFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
-                        <label id="voteCounter">@Model.Question.VoteCount</label> <br /> vote(s) <br />
+                        <label id="voteCounter">@Model.Question.VoteCount</label> <br /> @voteString <br />
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div id="vote2">
+                        <label id="voteCounter">@Model.Question.VoteCount</label> <br />@voteString
+                    </div>
+                }
             </div>
             <div class="col-md-11">
                 @Html.Raw(@Model.Question.Body)
@@ -55,7 +73,10 @@
         <div class="row">
             <div class="PostComment">
                 @{
-                    Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = Model.Question.PostId });
+                    if (Model.Question.ClosedDate == null)
+                    {
+                        Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = Model.Question.PostId });
+                    }
                 }
             </div>
         </div>
@@ -72,16 +93,47 @@
                         <div class="row" id="@answer.PostId">
                             <div class="col-md-1">
                                 <div class="row">
+                                    @{
+                                        var voteAnsString = "votes";
+                                        if (answer.VoteCount == 1) { voteAnsString = "vote"; }
+                                    }
+                                    @if (User.IsInRole("Student"))
+                                    {
                                     <div id="vote2">
-                                        <button type="button" class="voteBtn" id="@("voteUpAnsBtn"+@answer.PostId)" onclick="voteUpAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
-                                        <button type="button" class="voteBtnClicked" id="@("voteDownAnsBtn"+@answer.PostId)" onclick="voteDownAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
-                                        <label id="@("voteAnsCounter"+@answer.PostId)">@answer.VoteCount</label> <br /> vote(s) <br />
+                                        <button type="button" class="voteBtn" id="@("voteUpAnsBtn" + @answer.PostId)" onclick="voteUpAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                                        <button type="button" class="voteBtnClicked" id="@("voteDownAnsBtn" + @answer.PostId)" onclick="voteDownAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
+                                        <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br /> @voteAnsString <br />
                                     </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="vote2">
+                                            <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br />@voteAnsString
+                                        </div>
+                                    }
                                 </div>
                                 @{
-                                    if (answer.PostId == Model.Question.AcceptedAnswerId)
+                                    if (Model.Question.AcceptedAnswerId != 0)
                                     {
-                                        <div class="row" style="text-align:center"><span class="glyphicon glyphicon-ok" style="color:green; font-size:2em;" aria-hidden="true"></span></div>
+                                        if (answer.PostId == Model.Question.AcceptedAnswerId)
+                                        {
+                                            <div class="row" style="text-align:center">
+                                                <span class="glyphicon glyphicon-ok" style="color:green; font-size:2em;" aria-hidden="true"></span>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (User.Identity.GetUserId() == Model.Question.OwnerId)
+                                        {
+                                            <div class="row" style="text-align:center">
+                                                @using (Html.BeginForm("ChooseAnswer", "Posts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                                {
+                                                    <input type="hidden" name="PostId" value="@answer.PostId" />
+                                                    <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-ok" style="color:grey;font-size:2em;" aria-hidden="true"></span></button>
+                                                }
+                                            </div>
+                                        }
                                     }
                                 }
                             </div>
@@ -91,8 +143,8 @@
                             <div class="col-md-10">
                             </div>
                             <div class="col-md-2">
-                                <div class="well">
-                                    Answered by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null)
+                                <div class="well well-answer">
+                                    Answered by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null) on @Html.DisplayFor(modelItem => answer.CreationDate)
                                 </div>
                             </div>
                         </div>
@@ -113,37 +165,130 @@
                             </div>
                         }
                         <div class="row">
-                            <div id="postAnswerComment">
+                            <div id="PostComment">
                                 @{
-                                    Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = answer.PostId });
+                                    if (Model.Question.ClosedDate == null)
+                                    {
+                                        Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = answer.PostId });
+                                        <hr />
+                                    }
                                 }
                             </div>
                         </div>
-                        <hr />
                     }
                 }
             </div>
         }
-        Html.RenderPartial("_PostAnswer", new CSIT314BCE.Models.PostAnsViewModel() { ParentId = Model.Question.PostId });
+    }
+    @{
+        if (Model.Question.ClosedDate == null)
+        {
+            Html.RenderPartial("_PostAnswer", new CSIT314BCE.Models.PostAnsViewModel() { ParentId = Model.Question.PostId });
+        }
     }
 </div>
 @section Scripts{
     <script type="text/javascript">
 
-    var myArray = [];
-    @foreach (var answer in Model.Answer)
-    {
-        @:myArray.push("@answer.PostId");
-    }
+        var myArray = [];
+        @foreach (var answer in Model.Answer)
+        {
+            @:myArray.push("@answer.PostId");
+        }
 
-    $(document).ready(function () {
-        $.ajax({
-        type: "POST",
-            url: "/Posts/checkVoted",
-            data: { id: @Model.Question.PostId },
-            async: true,
-            success: function (data) {
-                if (data.responseText == "TRUE") {
+        $(document).ready(function () {
+            $.ajax({
+            type: "POST",
+                url: "/Posts/checkVoted",
+                data: { id: @Model.Question.PostId },
+                async: true,
+                success: function (data) {
+                    if (data.responseText == "TRUE") {
+                        //disables & hide button
+                        $('#voteUpBtn').hide();
+                        $('#voteUpBtn').attr("disabled", true);
+
+                        //enables & show button
+                        $('#voteDownBtn').show();
+                        $('#voteDownBtn').attr("disabled", false);
+                    }
+                    else if (data.responseText == "FALSE") {
+                        //disables & hide button
+                        $('#voteDownBtn').hide();
+                        $('#voteDownBtn').attr("disabled", true);
+
+                        //enables & show button
+                        $('#voteUpBtn').show();
+                        $('#voteUpBtn').attr("disabled", false);
+                    }
+                    else {
+                        //disables & hide button
+                        $('#voteDownBtn').hide();
+                        $('#voteDownBtn').attr("disabled", true);
+
+                        //disables & hide button
+                        $('#voteUpBtn').hide();
+                        $('#voteUpBtn').attr("disabled", true);
+                    }
+                },
+                error: function () {
+                    return "error";
+                }
+            });
+
+            $.each(myArray, function (index, id) {
+                //alert(id);
+                $.ajax({
+                    type: "POST",
+                    url: "/Posts/checkVoted",
+                    data: { id: id },
+                    async: true,
+                    success: function (data) {
+                        var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
+                        var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
+
+                        if (data.responseText == "TRUE") {
+                            //disables & hide button
+                            $(voteUpAnsBtnId).hide();
+                            $(voteUpAnsBtnId).attr("disabled", true);
+
+                            //enables & show button
+                            $(voteDownAnsBtnId).show();
+                            $(voteDownAnsBtnId).attr("disabled", false);
+                        }
+                        else if (data.responseText == "FALSE") {
+                            //disables & hide button
+                            $(voteDownAnsBtnId).hide();
+                            $(voteDownAnsBtnId).attr("disabled", true);
+
+                            //enables & show button
+                            $(voteUpAnsBtnId).show();
+                            $(voteUpAnsBtnId).attr("disabled", false);
+                        }
+                        else {
+                            //disables & hide button
+                            $(voteDownAnsBtnId).hide();
+                            $(voteDownAnsBtnId).attr("disabled", true);
+
+                            //disables & hide button
+                            $(voteUpAnsBtnId).hide();
+                            $(voteUpAnsBtnId).attr("disabled", true);
+                        }
+                    },
+                    error: function () {
+                        return "error";
+                    }
+                });
+            });
+        });
+
+        function voteUpFunc(id) {
+            $.ajax({
+                type: "POST",
+                url: "/Posts/VoteUp",
+                data: { id: id },
+                async: true,
+                success: function (data) {
                     //disables & hide button
                     $('#voteUpBtn').hide();
                     $('#voteUpBtn').attr("disabled", true);
@@ -151,8 +296,23 @@
                     //enables & show button
                     $('#voteDownBtn').show();
                     $('#voteDownBtn').attr("disabled", false);
+
+                    //displays new vote count
+                    $('#voteCounter').text(data.responseText);
+                },
+                error: function () {
+                    return "error";
                 }
-                else if (data.responseText == "FALSE") {
+            });
+        }
+
+        function voteDownFunc(id) {
+            $.ajax({
+                type: "POST",
+                url: "/Posts/VoteDown",
+                data: { id: id },
+                async: true,
+                success: function (data) {
                     //disables & hide button
                     $('#voteDownBtn').hide();
                     $('#voteDownBtn').attr("disabled", true);
@@ -160,168 +320,68 @@
                     //enables & show button
                     $('#voteUpBtn').show();
                     $('#voteUpBtn').attr("disabled", false);
-                }
-                else {
-                    //disables & hide button
-                    $('#voteDownBtn').hide();
-                    $('#voteDownBtn').attr("disabled", true);
 
-                    //disables & hide button
-                    $('#voteUpBtn').hide();
-                    $('#voteUpBtn').attr("disabled", true);
-                }
-            },
-            error: function () {
-                return "error";
-            }
-        });
-
-        $.each(myArray, function (index, id) {
-            //alert(id);
-            $.ajax({
-                type: "POST",
-                url: "/Posts/checkVoted",
-                data: { id: id },
-                async: true,
-                success: function (data) {
-                    var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
-                    var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
-
-                    if (data.responseText == "TRUE") {
-                        //disables & hide button
-                        $(voteUpAnsBtnId).hide();
-                        $(voteUpAnsBtnId).attr("disabled", true);
-
-                        //enables & show button
-                        $(voteDownAnsBtnId).show();
-                        $(voteDownAnsBtnId).attr("disabled", false);
-                    }
-                    else if (data.responseText == "FALSE") {
-                        //disables & hide button
-                        $(voteDownAnsBtnId).hide();
-                        $(voteDownAnsBtnId).attr("disabled", true);
-
-                        //enables & show button
-                        $(voteUpAnsBtnId).show();
-                        $(voteUpAnsBtnId).attr("disabled", false);
-                    }
-                    else {
-                        //disables & hide button
-                        $(voteDownAnsBtnId).hide();
-                        $(voteDownAnsBtnId).attr("disabled", true);
-
-                        //disables & hide button
-                        $(voteUpAnsBtnId).hide();
-                        $(voteUpAnsBtnId).attr("disabled", true);
-                    }
+                    //displays new vote count
+                    $('#voteCounter').text(data.responseText);
                 },
                 error: function () {
                     return "error";
                 }
             });
-        });
-    });
+        }
 
-    function voteUpFunc(id) {
-        $.ajax({
-            type: "POST",
-            url: "/Posts/VoteUp",
-            data: { id: id },
-            async: true,
-            success: function (data) {
-                //disables & hide button
-                $('#voteUpBtn').hide();
-                $('#voteUpBtn').attr("disabled", true);
+        function voteUpAnswerFunc(id) {
+            $.ajax({
+                type: "POST",
+                url: "/Posts/VoteUp",
+                data: { id: id },
+                async: true,
+                success: function (data) {
+                    //disables & hide button
+                    var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
+                    $(voteUpAnsBtnId).hide();
+                    $(voteUpAnsBtnId).attr("disabled", true);
 
-                //enables & show button
-                $('#voteDownBtn').show();
-                $('#voteDownBtn').attr("disabled", false);
+                    //enables & show button
+                    var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
+                    $(voteDownAnsBtnId).show();
+                    $(voteDownAnsBtnId).attr("disabled", false);
 
-                //displays new vote count
-                $('#voteCounter').text(data.responseText);
-            },
-            error: function () {
-                return "error";
-            }
-        });
-    }
+                    //displays new vote count
+                    var voteAnsCounterId = "#voteAnsCounter" + id;
+                    $(voteAnsCounterId).text(data.responseText);
+                },
+                error: function () {
+                    return "error";
+                }
+            });
+        }
 
-    function voteDownFunc(id) {
-        $.ajax({
-            type: "POST",
-            url: "/Posts/VoteDown",
-            data: { id: id },
-            async: true,
-            success: function (data) {
-                //disables & hide button
-                $('#voteDownBtn').hide();
-                $('#voteDownBtn').attr("disabled", true);
+        function voteDownAnswerFunc(id) {
+            $.ajax({
+                type: "POST",
+                url: "/Posts/VoteDown",
+                data: { id: id },
+                async: true,
+                success: function (data) {
+                    //disables & hide button
+                    var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
+                    $(voteDownAnsBtnId).hide();
+                    $(voteDownAnsBtnId).attr("disabled", true);
 
-                //enables & show button
-                $('#voteUpBtn').show();
-                $('#voteUpBtn').attr("disabled", false);
+                    //enables & show button
+                    var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
+                    $(voteUpAnsBtnId).show();
+                    $(voteUpAnsBtnId).attr("disabled", false);
 
-                //displays new vote count
-                $('#voteCounter').text(data.responseText);
-            },
-            error: function () {
-                return "error";
-            }
-        });
-    }
-
-    function voteUpAnswerFunc(id) {
-        $.ajax({
-            type: "POST",
-            url: "/Posts/VoteUp",
-            data: { id: id },
-            async: true,
-            success: function (data) {
-                //disables & hide button
-                var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
-                $(voteUpAnsBtnId).hide();
-                $(voteUpAnsBtnId).attr("disabled", true);
-
-                //enables & show button
-                var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
-                $(voteDownAnsBtnId).show();
-                $(voteDownAnsBtnId).attr("disabled", false);
-
-                //displays new vote count
-                var voteAnsCounterId = "#voteAnsCounter" + id;
-                $(voteAnsCounterId).text(data.responseText);
-            },
-            error: function () {
-                return "error";
-            }
-        });
-    }
-
-    function voteDownAnswerFunc(id) {
-        $.ajax({
-            type: "POST",
-            url: "/Posts/VoteDown",
-            data: { id: id },
-            async: true,
-            success: function (data) {
-                //disables & hide button
-                var voteDownAnsBtnId = "#voteDownAnsBtn" + id;
-                $(voteDownAnsBtnId).hide();
-                $(voteDownAnsBtnId).attr("disabled", true);
-
-                //enables & show button
-                var voteUpAnsBtnId = "#voteUpAnsBtn" + id;
-                $(voteUpAnsBtnId).show();
-                $(voteUpAnsBtnId).attr("disabled", false);
-
-                //displays new vote count
-                var voteAnsCounterId = "#voteAnsCounter" + id;
-                $(voteAnsCounterId).text(data.responseText);
-            },
-            error: function () {
-                return "error";
-            }
-        });
-    }
+                    //displays new vote count
+                    var voteAnsCounterId = "#voteAnsCounter" + id;
+                    $(voteAnsCounterId).text(data.responseText);
+                },
+                error: function () {
+                    return "error";
+                }
+            });
+        }
     </script>
 }

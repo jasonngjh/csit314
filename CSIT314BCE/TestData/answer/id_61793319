@@ -1,0 +1,6 @@
+<p>change event belongs to InputEvent type interface</p>
+
+<p>Try this:</p>
+
+<pre><code>onQuantity(event: InputEvent, i: number){}
+</code></pre>

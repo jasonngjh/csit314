@@ -1,9 +1,0 @@
-<p>I use this:</p>
-
-<ol>
-<li><code>git status</code></li>
-<li>copy the path of the file</li>
-<li><code>rm &lt;path of file&gt;</code></li>
-</ol>
-
-<p>My project has a lot of generated files created by a giant ANT build script. Using <code>git clean</code> would create chaos.</p>

@@ -1,0 +1,9 @@
+<p>If you double-click English text in Chrome, the whitespace-delimited word you clicked on is highlighted. This is not very surprising. However, the other day I was clicking while reading some text in Japanese and noticed that the some words were highlighted at word boundaries, even though Japanese doesn't have spaces. Here's some example text:</p>
+
+<blockquote>
+  <p>どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。</p>
+</blockquote>
+
+<p>For example, if you click on 薄暗い, Chrome will correctly highlight it as a single word, even though it's not a single character class (this is a mix of kanji and hiragana). Not all the highlights are correct but they don't seem random. </p>
+
+<p>How does Chrome decide what to highlight here? I tried searching the Chrome source for "japanese word" but only found tests for an <a href="https://source.chromium.org/chromium/chromium/src/+/master:v8/test/intl/segmenter/segment-word-next.js?q=japanese%20word&amp;ss=chromium&amp;originalUrl=https:%2F%2Fcs.chromium.org%2F" rel="noreferrer">experimental module</a> that doesn't seem active in my version of Chrome.</p>

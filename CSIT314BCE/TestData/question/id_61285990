@@ -1,0 +1,13 @@
+<p>This may be simple question, but why does a const char* not need a memory address to point to?</p>
+
+<p>Example:</p>
+
+<pre><code>const char* a = "Anthony";
+</code></pre>
+
+<p>and not:</p>
+
+<pre><code>const char *a = // Address to const char
+</code></pre>
+
+<p>like any other types do?</p>

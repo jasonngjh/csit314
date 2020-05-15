@@ -1,0 +1,10 @@
+<p>The short answer:</p>
+
+<p>Set:</p>
+
+<pre><code>batch_size = 1
+epochs = 200
+shuffle = False
+</code></pre>
+
+<p>Intuition: You are describing the priority of high accuracy in the training data. This is describing overfitting. To do that, set the batch size to 1, the epochs high, and shuffling off.</p>

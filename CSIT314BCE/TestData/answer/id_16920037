@@ -1,7 +1,0 @@
-<p>The only difference between <code>git pull</code> and <code>git fetch</code> is that :</p>
-
-<p><code>git pull</code> pulls from a remote branch and merges it.</p>
-
-<p><code>git fetch</code> only fetches from the remote branch but it does not merge</p>
-
-<p>i.e. git pull = git fetch + git merge ...</p>

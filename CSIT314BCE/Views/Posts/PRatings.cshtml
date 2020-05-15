@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CSIT314BCE.Models.Post>
+@Styles.Render("~/Content/Style.css")
+
+<table style="width:100%">
+    <tr>
+        <td><h2>Participation Ratings</h2></td>
+        <td style="text-align:right;width:250px">
+            <div id="vote">
+                Total Participation Ratings: <label id="ratingCounter"></label><br />
+            </div>
+        </td>
+    </tr>
+</table>
+
+@using (Html.BeginForm("Statistics", "Posts", FormMethod.Get))
+{
+    <b>View By:</b>
+    @Html.RadioButton("viewBy", "Questions", true)<text>My Questions</text>
+    @Html.RadioButton("viewBy", "Answers")<text>My Answers</text>
+    @Html.RadioButton("viewBy", "PRatings")<text>My Participation Ratings</text>
+    @Html.TextBox("viewQuestions", "Questions", new { style = "display:none" })
+    @Html.TextBox("viewAnswers", "Answers", new { style = "display:none" })
+    @Html.TextBox("viewParticipatinRatings", "PRatings", new { style = "display:none" })
+    <input type="submit" value="View" />
+}
+<br />
+<h4>Participation Ratings can be earned by actively participating on the platform.</h4>
+1.) You get 5 participation ratings for every question asked
+<br />
+2.) You get 5 participation ratings for every question you answered
+<br />
+3.) You get 10 participation ratings if your answer is chosen to be the correct one
+
+@section Scripts{
+    <script type="text/javascript">
+            $(document).ready(function () {
+        $.ajax({
+        type: "POST",
+            url: "/Posts/getRating",
+            async: true,
+            success: function (data) {
+                //displays new vote count
+                $('#ratingCounter').text(data.responseText);
+            },
+            error: function () {
+                return "error";
+            }
+        });
+    });
+    </script>
+}
+
+
+

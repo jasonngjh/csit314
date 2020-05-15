@@ -1,0 +1,24 @@
+<p>I have an legacy Excel project that automates Excel 2007 on our server in order to produce overnight user authored reports.  It has worked fine but recently on trying to upgrade to Office 365 (also tried 2016) I came across a problem where it appears to throw COMException 0x800AC472 after creating the Excel.Application object.</p>
+
+<p>I can create the object without error but as soon as I try to call any methods of the Application object it faults.</p>
+
+<p>This is a brand new vanilla server with .Net 4.6 and 3.5 installed and Office 365, nothing else.</p>
+
+<p>The code has been re-linked using COM to reference Office 15.0 Interop.  And the same code still works perfectly on the old 2007 server.</p>
+
+<pre><code>Microsoft.Office.Core 16.0
+Microsoft.Office.Interop.Excel 16.0 
+</code></pre>
+
+<p>The Error message in full:</p>
+
+<pre><code>System.Runtime.InteropServices.COMException (0x800AC472): Exception from HRESULT: 0x800AC472
+   at Microsoft.Office.Interop.Excel.ApplicationClass.set_DisplayAlerts(Boolean RHS)
+   at ExcelReportingService.ExcelJob.ProcessExcelBook(String location, String savePath, String testEmailsOnlyTo, Boolean allowEmptyResultFile, StringBuilder&amp; processResults) in W:\\Group\\VIP\\Services\\ExcelReporting\\Classes\\ExcelJob.cs:line 136
+</code></pre>
+
+<p>The code has never had an install package and I'm not sure if this is this is the issue?  Currently i am just copying the DLL's for the app to the service folder and installing with "sc create".  I have not installed any other runtimes or copied any DLL's into the GAC?  But i don't do this with the working 2007 server either?</p>
+
+<p>Am I missing a runtime I need to install on the server?  </p>
+
+<p>PS: I do recognize the reality that Microsoft has said that server automation is not supported for Office, but this is a legacy project that I need to get working ASAP as all servers are being upgraded and office 2007 will not install on newer servers. thanks.</p>

@@ -1,4 +1,0 @@
-<p>Also here's a ternary conditional expression to check the state of the element and then to toggle it:</p>
-
-<pre><code>$('someElement').on('click', function(){ $('elementToToggle').is(':visible') ? $('elementToToggle').hide('slow') : $('elementToToggle').show('slow'); });
-</code></pre>

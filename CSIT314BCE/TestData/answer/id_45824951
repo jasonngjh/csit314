@@ -1,9 +1,0 @@
-<p>Consider:</p>
-
-<pre><code>if __name__ == "__main__":
-    main()
-</code></pre>
-
-<p>It checks if the <code>__name__</code> attribute of the Python script is <code>"__main__"</code>. In other words, if the program itself is executed, the attribute will be <code>__main__</code>, so the program will be executed (in this case the <code>main()</code> function).</p>
-
-<p>However, if your Python script is used by a module, any code outside of the <code>if</code> statement will be executed, so <code>if \__name__ == "\__main__"</code> is used just to check if the program is used as a module or not, and therefore decides whether to run the code.</p>

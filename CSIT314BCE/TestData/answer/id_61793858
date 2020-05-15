@@ -1,0 +1,47 @@
+<p>Given your goal of selecting only the <code>img</code> elements, then all you need is a single jQuery object with a selector which targets them:</p>
+
+<pre><code>let $images = $('.outside_image img');
+</code></pre>
+
+<p><code>find()</code> will also work if you have a reference to a parent element:</p>
+
+<pre><code>let $images = $someParentElement.find('img');
+</code></pre>
+
+<p>Similarly, if you want to build an array of the <code>src</code> attributes from that you can use <code>map()</code>:</p>
+
+<pre><code>let sources = $images.map((i, el) =&gt; el.src).get();
+</code></pre>
+
+<p>Here's a working example:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>let $images = $('.outside_image img');
+console.log($images.length);
+
+let sources = $images.map((i, el) =&gt; el.src).get();
+console.log(sources);</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"&gt;&lt;/script&gt;
+&lt;div class="images_center" imgheight="200"&gt;
+  &lt;div class="outside_image" style=" max-width: 146px "&gt; 
+    &lt;img id="logo" alt="Saint George and the Dragon, &lt;br/&gt;circa 1432-5, Rogier van der Weyden" caption="Saint George and the Dragon, &lt;br/&gt;circa 1432-5, Rogier van der Weyden" sourcename="Wikipedia Commons" sourcehrf="https://commons.wikimedia.org/wiki/File:Rogier_van_der_Weyden_-_Saint_George_and_the_Dragon.jpg" src="https://www.yu51a5.org/wp-content/uploads/horsemen/Rogier_van_der_Weyden_-_Saint_George_and_the_Dragon.jpg" style=" max-height: 200px"&gt;
+    &lt;div class="wp-caption-text" style="max-width: 141px"&gt;Saint George and the Dragon, &lt;br&gt;circa 1432-5, Rogier van der Weyden&lt;/div&gt; 
+    &lt;a href="https://www.yu51a5.org/wp-content/uploads/horsemen/Rogier_van_der_Weyden_-_Saint_George_and_the_Dragon.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;
+    &lt;a href="https://commons.wikimedia.org/wiki/File:Rogier_van_der_Weyden_-_Saint_George_and_the_Dragon.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="outside_image" style="max-width: 355px"&gt;
+    &lt;img alt="St. George and the Dragon, &lt;br/&gt;cr. 1430-35, Paolo Uccello, Florence, Italy" caption="St. George and the Dragon, &lt;br/&gt;cr. 1430-35, Paolo Uccello, Florence, Italy" sourcename="The Jacquemart-André Museum" sourcehrf="https://www.musee-jacquemart-andre.com/en/oeuvres/saint-georges-and-dragon" src="https://www.yu51a5.org/wp-content/uploads/horsemen/uccello_st_georges.jpg" style="max-height: 200px"&gt;
+    &lt;div class="wp-caption-text" style="max-width: 350px"&gt;St. George and the Dragon, &lt;br&gt;cr. 1430-35, Paolo Uccello, Florence, Italy&lt;/div&gt; 
+    &lt;a href="https://www.yu51a5.org/wp-content/uploads/horsemen/uccello_st_georges.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt; &lt;a href="https://www.musee-jacquemart-andre.com/en/oeuvres/saint-georges-and-dragon" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="outside_image" style="max-width: 437px"&gt; 
+    &lt;img alt="The Battle of Nineveh (between Khosrau II and Heraclius, in 627), &lt;br/&gt;cr. 1452-66, Piero della Francesca, Arezzo, Italy" caption="The Battle of Nineveh (between Khosrau II and Heraclius, in 627), &lt;br/&gt;cr. 1452-66, Piero della Francesca, Arezzo, Italy" sourcename="Wikipedia Commons" sourcehrf="https://commons.wikimedia.org/wiki/File:Piero_della_Francesca_021.jpg" src="https://www.yu51a5.org/wp-content/uploads/horsemen/Piero_della_Francesca_021.jpg" style="max-height: 200px"&gt;
+    &lt;div class="wp-caption-text" style="max-width: 432px"&gt;The Battle of Nineveh (between Khosrau II and Heraclius, in 627), &lt;br&gt;cr. 1452-66, Piero della Francesca, Arezzo, Italy&lt;/div&gt; 
+    &lt;a href="https://www.yu51a5.org/wp-content/uploads/horsemen/Piero_della_Francesca_021.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;    
+    &lt;a href="https://commons.wikimedia.org/wiki/File:Piero_della_Francesca_021.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>

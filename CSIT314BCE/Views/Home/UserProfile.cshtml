@@ -1,7 +1,7 @@
 ﻿@model CSIT314BCE.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "UserProfile";
+    ViewBag.Title = "User Profile";
 }
 
 <h2>Profile Information</h2>
@@ -33,17 +33,5 @@
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmailConfirmed)
-        </dd>
-
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Back to Home", "Index")
-</p>

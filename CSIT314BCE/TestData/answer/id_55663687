@@ -1,7 +1,0 @@
-<p>Oftentimes it's better to just create a new array with the <code>filter</code> function.</p>
-
-<pre><code>let array = [1,2,3,4];
-array = array.filter(i =&gt; i !== 4); // [1,2,3]
-</code></pre>
-
-<p>This also improves readability IMHO. I'm not a fan of <code>slice</code>, although it know sometimes you should go for it.</p>

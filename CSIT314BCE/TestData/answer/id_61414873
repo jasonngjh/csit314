@@ -1,0 +1,36 @@
+<p>Drawbacks of solutions above:</p>
+
+<ul>
+<li>ZoomTables.data is deleted on every device, regardless of whether the device is affected by the crash or not</li>
+<li>Workaround only works once, is it sure that this problem never happens again?</li>
+</ul>
+
+<p>Drawbacks of my solution:</p>
+
+<ul>
+<li>on first execution of maps activity on affected device map is empty. After rotation of device or second execution map is shown up</li>
+</ul>
+
+<p>My solution catches the Exception thrown by the Maps SDK, call this in onCreate of the Application class:</p>
+
+<pre><code>public static void catchGoogleMapsException(final Context context)
+{
+  final Thread.UncaughtExceptionHandler defaultHandler =
+    Thread.getDefaultUncaughtExceptionHandler();
+  Thread.setDefaultUncaughtExceptionHandler(
+    (@NonNull final Thread thread, @NonNull final Throwable ex) -&gt;
+    {
+      if (thread.getName().contains("ZoomTableManager"))
+      {
+        new File(context.getFilesDir(), "ZoomTables.data").delete();
+        Log.w("Maps Bug 154855417", "Caught exception and deleted ZoomTables.data");
+      }
+      else
+        if (defaultHandler!=null)
+          defaultHandler.uncaughtException(thread, ex);
+        else
+          throw new RuntimeException(
+            "No default uncaught exception handler.", ex);
+    });
+}
+</code></pre>

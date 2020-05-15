@@ -1,0 +1,56 @@
+<p>I have a pandas dataframe with several columns and a numeric index which looks like:</p>
+
+<pre class="lang-py prettyprint-override"><code>import pandas as pd
+df = pd.DataFrame({'2007':[10,20,30,40], 
+                   '2008':[90,60,70,40], 
+                   '2009':[30,60,70,10], 
+                   '2010':[80,50,30,10]})
+df.index = [0, 0.5, 1, 1.5]
+</code></pre>
+
+<p>I can plot a specific column of this dataset with bokeh, with the following code:</p>
+
+<pre class="lang-py prettyprint-override"><code>from bokeh.plotting import figure
+from bokeh.models import ColumnDataSource, CustomJS
+from bokeh.io import output_notebook, show
+from bokeh.models.tools import HoverTool
+from bokeh.models import Select
+from bokeh.layouts import column
+
+from bokeh.resources import INLINE
+
+output_notebook(INLINE) 
+
+ds = ColumnDataSource(df)
+p = figure(toolbar_location="above", 
+           x_axis_type="linear") 
+
+p.line(source=ds, y='index', x='2007')
+
+hover = HoverTool(tooltips=[("y", 
+                             "@index"),
+                           ])
+
+p.add_tools(hover)
+
+show(p)
+
+</code></pre>
+
+<p>I am now trying to connect a selector to switch between the data frame's columns using a callback:</p>
+
+<pre class="lang-py prettyprint-override"><code>handler = CustomJS(args=dict(source=ds), code="""
+   // code to update data field
+""")
+
+select = Select(title="df-column:", options=list(df.columns))
+select.js_on_change('value', handler)
+
+layout = column(select, p)
+show(layout)
+
+</code></pre>
+
+<p>I don't know how to access and update the values on the X-axis (data field).</p>
+
+<p>Of course, this is due to my lack of understanding of JS and the columndatasource model.</p>

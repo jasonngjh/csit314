@@ -1,0 +1,13 @@
+<p>I would like to be able to use the Adobe Sign API in order to populate a template's pre-defined form fields with information in order to send a contract out to candidates/employees from within an employee tracking system.</p>
+
+<p>How I want it to work:</p>
+
+<ol>
+<li><p>We would to be able to upload a template contract PDF to Adobe Sign and add X amount of read-only form fields (employee name, employee address, employee salary), but leave them not filled in, so just a contract template essentially. This should be done from the Adobe Sign interface and not from our employee tracking system.</p></li>
+<li><p>We would call the API to fill in the template's read-only fields (name, address, salary), to match the employee who's signature is required. </p></li>
+<li><p>We would then like to fetch the filled in documents signing URL for us to send to the employee in an email from us (rather than it being sent from Adobe Sign).</p></li>
+<li><p>We would then like to be notified via webhook (which we know is already possible), that the document has been signed.</p></li>
+</ol>
+
+<p>We're only really struggling with steps 1-3, as it seems that there is no way for us to design a
+template with placeholder form fields in, for us to populate via the API before sending to the employee.</p>

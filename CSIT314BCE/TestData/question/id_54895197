@@ -1,0 +1,9 @@
+<p>Some emails sent by our sever go to spam for certain recipients. E.g when sent to @outlook.com email addresses.</p>
+
+<p>I have been testing our emails using <a href="https://www.mail-tester.com" rel="nofollow noreferrer">https://www.mail-tester.com</a></p>
+
+<p>SpamAssassin gives a score of -0.1 for the issue of 'HEADER_FROM_DIFFERENT_DOMAINS From and EnvelopeFrom 2nd level mail domains are different'</p>
+
+<p>This is the only issue reported. Everything else, such as SPF and DKIM, passes. There is no documentation on their website for this issue and I don't understand what it means or how to fix it.</p>
+
+<p>The email is sent using PHPMailer via AWS SES.</p>

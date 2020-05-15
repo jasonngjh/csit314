@@ -1,8 +1,0 @@
-<p>The best way is:</p>
-
-<pre><code>git reset --hard &lt;commidId&gt; &amp;&amp; git push --force
-</code></pre>
-
-<p>This will reset the branch to the specific commit and then will upload the remote server with the same commits as you have in local (this will completly elimitate the commands after that specific commit)</p>
-
-<p>Be careful with the <code>--force</code> flag removes all the subsequent commits after the selected commit without the option to recover them.</p>

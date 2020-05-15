@@ -1,0 +1,3 @@
+<p><code>rand()</code> is defined by the C standard, and the C standard does not specify which algorithm to use. Obviously, Apple is using an inferior algorithm to your GNU/Linux implementation: The Linux one is indistinguishable from a true random source in your test, while the Apple implementation just shuffles the numbers around.</p>
+
+<p>If you want random numbers of any quality, either use a better PRNG that gives at least some guarantees on the quality of the numbers it returns, or simply read from <code>/dev/urandom</code> or similar. The later gives you cryptographic quality numbers, but is slow. Even if it is too slow by itself, <code>/dev/urandom</code> can provide some excellent seeds to some other, faster PRNG.</p>

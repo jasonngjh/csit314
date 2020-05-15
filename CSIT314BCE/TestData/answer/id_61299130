@@ -1,0 +1,1 @@
+<p>It appears that in some compilers (tried in 1.6.0 and 11.0.7), if a method is large enough the ever need goto_w, it uses <strong>exclusively</strong> goto_w.  Even when it has very local jumps, it still uses goto_w.</p>

@@ -1,3 +1,0 @@
-<p>Considering the question is about explaining it simply as if to a <strong>6-year-old</strong>, my answer would be:</p>
-
-<p><strong>"When you declare a function in JavaScript it has forever access to all the variables and functions that were available in the line before that function declaration. The function and all the outer variables and functions that it has access to is what we call a closure."</strong></p>

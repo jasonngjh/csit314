@@ -1,7 +1,0 @@
-<p>I realised that I had pushed a commit with a typo in it. In order to undo, I did the following:</p>
-
-<pre class="lang-bash prettyprint-override"><code>git commit --amend -m "T-1000, advanced prototype"
-git push --force
-</code></pre>
-
-<p><strong>Warning:</strong> force pushing your changes will overwrite the remote branch with your local one. Make sure that you aren't going to be overwriting anything that you want to keep. Also be cautious about force pushing an amended (rewritten) commit if anyone else shares the branch with you, because they'll need to rewrite their own history if they have the old copy of the commit that you've just rewritten.</p>

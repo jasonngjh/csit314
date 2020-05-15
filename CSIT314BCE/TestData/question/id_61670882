@@ -1,0 +1,54 @@
+<p>I have a problem when I try to run <code>ng serve</code> on a recently created Angular project.
+The version I'm using is 9.1.4, this error does not occur on a project with an older Angular version.</p>
+
+<pre><code>Package                           Version
+-----------------------------------------------------------
+@angular-devkit/architect         0.901.4
+@angular-devkit/build-angular     0.901.4
+@angular-devkit/build-optimizer   0.901.4
+@angular-devkit/build-webpack     0.901.4
+@angular-devkit/core              9.1.4
+@angular-devkit/schematics        9.1.4
+@angular/cli                      9.1.4
+@ngtools/webpack                  9.1.4
+@schematics/angular               9.1.4
+@schematics/update                0.901.4
+rxjs                              6.5.5
+typescript                        3.8.3
+webpack                           4.42.0
+</code></pre>
+
+<p>After executing <code>ng serve</code> or <code>ng build</code>:</p>
+
+<pre><code>chunk {main} main.js, main.js.map (main) 2 kB [initial] [rendered]&lt;br&gt;
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 679 bytes [initial] [rendered]&lt;br&gt;
+chunk {runtime} runtime.js, runtime.js.map (runtime) 6.15 kB [entry] [rendered]&lt;br&gt;
+chunk {styles} styles.js, styles.js.map (styles) 12.4 kB [initial] [rendered]&lt;br&gt;
+chunk {vendor} vendor.js, vendor.js.map (vendor) 339 kB [initial] [rendered]&lt;br&gt;
+Date: 2020-05-08T02:06:46.145Z - Hash: 1a1b937f0ca2bb37634b - Time: 4087ms&lt;br&gt;
+
+**ERROR in TypeError: Cannot read property 'flags' of undefined**
+    at resolveAlias (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:36513:37)
+    at checkAliasSymbol (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:64502:26)
+    at checkImportBinding (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:64534:13)
+    at checkImportDeclaration (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:64552:29)
+    at checkSourceElementWorker (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:64961:28)
+    at checkSourceElement (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:64800:17)
+    at Object.forEach (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:317:30)
+    at checkSourceFileWorker (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:65123:20)
+    at checkSourceFile (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:65091:13)
+    at getDiagnosticsWorker (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:65179:17)
+    at Object.getDiagnostics (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:65165:24)
+    at C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:98703:85
+    at runWithCancellationToken (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:98665:24)
+    at getBindAndCheckDiagnosticsForFileNoCache (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:98691:20)
+    at getAndCacheDiagnostics (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:98956:26)
+    at getBindAndCheckDiagnosticsForFile (C:\Cursos\Angular\ang-hello-world\node_modules\typescript\lib\typescript.js:98688:20)
+
+** **Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/** **
+</code></pre>
+
+<p>The result I get on my browser after running this project is:</p>
+
+<pre><code>Cannot GET /
+</code></pre>

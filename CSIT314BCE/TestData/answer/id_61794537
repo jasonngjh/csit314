@@ -1,0 +1,8 @@
+<p>You should concatenate them using arrays as follows:</p>
+
+<pre><code>var firstName = React.createElement("b", {}, this.state.User["FirstName"])
+var lastName = React.createElement("b", {}, this.state.User["LastName"])
+var message = ["Hello ", firstName, " ", lastName]
+message.push(" You can edit your profile in the Users Table")
+return React.createElement("p", {}, message)
+</code></pre>

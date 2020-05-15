@@ -1,0 +1,40 @@
+<p>While at first it may sound like the macOS <code>rand()</code> is somehow better for not repeating any numbers, one should note that with this amount of numbers generated it is <a href="https://en.wikipedia.org/wiki/Birthday_problem" rel="noreferrer">expected</a> to see plenty of duplicates (in fact, around 790 million, or (2<sup>31</sup>-1)/<i>e</i>). Likewise iterating through the numbers in sequence would also produce no duplicates, but wouldn't be considered very random. So the Linux <code>rand()</code> implementation is <em>in this test</em> indistinguishable from a true random source, whereas the macOS <code>rand()</code> is not.</p>
+
+<p>Another thing that appears surprising at first glance is how the macOS <code>rand()</code> can manage to avoid duplicates so well. Looking at <a href="https://opensource.apple.com/source/Libc/Libc-1353.11.2/stdlib/FreeBSD/rand.c" rel="noreferrer">its source code</a>, we find the implementation to be as follows:</p>
+
+<pre><code>/*
+ * Compute x = (7^5 * x) mod (2^31 - 1)
+ * without overflowing 31 bits:
+ *      (2^31 - 1) = 127773 * (7^5) + 2836
+ * From "Random number generators: good ones are hard to find",
+ * Park and Miller, Communications of the ACM, vol. 31, no. 10,
+ * October 1988, p. 1195.
+ */
+    long hi, lo, x;
+
+    /* Can't be initialized with 0, so use another value. */
+    if (*ctx == 0)
+        *ctx = 123459876;
+    hi = *ctx / 127773;
+    lo = *ctx % 127773;
+    x = 16807 * lo - 2836 * hi;
+    if (x &lt; 0)
+        x += 0x7fffffff;
+    return ((*ctx = x) % ((unsigned long) RAND_MAX + 1));
+</code></pre>
+
+<p>This does indeed result in all numbers between 1 and <code>RAND_MAX</code>, inclusive, exactly once, before the sequence repeats again. Since the next state is based on multiplication, the state can never be zero (or all future states would also be zero). Thus the repeated number you see is the first one, and zero is the one that is never returned.</p>
+
+<p>Apple has been promoting the use of better random number generators in their documentation and examples for at least as long as macOS (or OS X) has existed, so the quality of <code>rand()</code> is probably not deemed important, and they've just stuck with one of the simplest pseudorandom generators available. (As you noted, their <code>rand()</code> is even commented with a recommendation to use <code>arc4random()</code> instead.)</p>
+
+<p>On a related note, the simplest pseudorandom number generator I could find that produces decent results in this (and many other) tests for randomness is <a href="https://en.wikipedia.org/wiki/Xorshift#xorshift*" rel="noreferrer">xorshift*</a>:</p>
+
+<pre><code>uint64_t x = *ctx;
+x ^= x &gt;&gt; 12;
+x ^= x &lt;&lt; 25;
+x ^= x &gt;&gt; 27;
+*ctx = x;
+return (x * 0x2545F4914F6CDD1DUL) &gt;&gt; 33;
+</code></pre>
+
+<p>This implementation results in almost exactly 790 million duplicates in your test.</p>

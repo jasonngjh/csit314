@@ -1,0 +1,45 @@
+<p>I am trying to use a C structure in multiple go packages which I defined in a header file like this:</p>
+
+<pre><code>#error.h
+
+struct GoError_t {
+    const char *pstrErr;
+};
+</code></pre>
+
+<p>Then I wrote a function using it in go:</p>
+
+<pre><code>#error.go
+package c_error
+
+/*
+#include "error.h"
+*/
+import "C"
+
+func CToGoError(cerror C.struct_GoError_t) error {
+    if cerror.pstrErr != nil {
+        return errors.New(C.GoString(cerror.pstrErr))
+    }
+    return nil
+}
+</code></pre>
+
+<p>And now I am trying to use it in some other package</p>
+
+<pre><code>package main
+
+func main() {
+    c_error := C.someFunctionReturning
+    err := error.CToGoError(c_error)
+}
+</code></pre>
+
+<p>But then I get this error:</p>
+
+<pre><code>cannot use c_error (type _Ctype_struct_GoError_t) as type error._Ctype_struct_GoError_t in argument to error.CToGoError
+</code></pre>
+
+<p>So cgo seems to create 2 separate types in the different go packages.</p>
+
+<p>What can I do?</p>

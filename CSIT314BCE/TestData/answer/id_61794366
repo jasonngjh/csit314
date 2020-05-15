@@ -1,0 +1,11 @@
+<pre class="lang-py prettyprint-override"><code>dict1 = {"a": 1, "b": 4}
+dict2 = {"a": 1, "b": 6, "h": 7}
+
+for key, value in dict1.items():
+    if key in dict2 and dict2[key] == value:
+        print(value)
+</code></pre>
+
+<p>What I'm doing here is iterating the first <code>dict</code> (you can use the second as well, It doesn't matter).</p>
+
+<p>I'm checking if the key is in the second <code>dict</code> and if the value is equal.</p>

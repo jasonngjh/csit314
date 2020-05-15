@@ -1,0 +1,57 @@
+<p>We are trying to use detached signing feature of apache pdfbox. We have tried two approaches:</p>
+
+<p><strong>1. Signing using a certificate file and a private key:</strong> In this case, the document gets signed perfectly.<br>
+ <strong>2. Signing using crypto token:</strong> Here we use certificate and signed hash of document (document signature) received from crypto token, the signature is shown as invalid (Reason: Document has been altered or corrupted since it was signed). Following is the code snippet:</p>
+
+<pre><code>//fis = file input stream
+// out = output file path
+PDDocument document = PDDocument.load(fis);
+FileOutputStream fos = new FileOutputStream(out);
+PDSignature signature = new PDSignature();
+signature.setFilter(PDSignature.FILTER_ADOBE_PPKLITE);
+signature.setSubFilter(PDSignature.SUBFILTER_ADBE_PKCS7_DETACHED);
+signature.setName("Example User");
+signature.setLocation("Los Angeles, CA");
+signature.setReason("Testing");
+Calendar date = Calendar.getInstance();
+signature.setSignDate(date);
+document.addSignature(signature);
+ExternalSigningSupport externalSigning = document.saveIncrementalForExternalSigning(fos);
+MessageDigest digest = null;
+ try {
+digest = MessageDigest.getInstance("SHA-256");
+} catch (NoSuchAlgorithmException e1) {
+e1.printStackTrace();
+}
+X509CertificateHolder cer = new X509CertificateHolder(euc); // euc = end user certificate in byte array form
+X509Certificate cervalue = new JcaX509CertificateConverter().getCertificate(cer);
+Certificate certChain[] = new Certificate[1];
+certChain[0] = cervalue;
+CMSSignedDataGenerator gen = new CMSSignedDataGenerator();
+ContentSigner signer = new ContentSigner() {
+@Override
+public byte[] getSignature() {
+return docSig;  //byte[] docSig = byte array of signed hash received from crypto token
+}
+@Override
+public OutputStream getOutputStream() {
+return new ByteArrayOutputStream();
+}
+@Override
+public AlgorithmIdentifier getAlgorithmIdentifier() {
+return new DefaultSignatureAlgorithmIdentifierFinder().find("SHA256WITHRSA");
+}
+};
+gen.addSignerInfoGenerator(new JcaSignerInfoGeneratorBuilder(new JcaDigestCalculatorProviderBuilder().build()).build(signer, cervalue));
+gen.addCertificates(new JcaCertStore(Arrays.asList(certChain)));
+CMSProcessableInputStream msg = new CMSProcessableInputStream(externalSigning.getContent());
+CMSSignedData signedData = gen.generate(msg, false);
+byte[] cmsSignature = signedData.getEncoded();
+externalSigning.setSignature(cmsSignature);
+output.close();
+</code></pre>
+
+<p>Following is the screenshot of document created after signing:
+<a href="https://i.stack.imgur.com/Bx1cv.jpg" rel="nofollow noreferrer">Signed document</a></p>
+
+<p>Please suggest where we are going wrong. Thanks in advance.</p>

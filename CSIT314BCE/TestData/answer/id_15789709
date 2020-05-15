@@ -1,6 +1,0 @@
-<p>When there are certain statements in our module (<code>M.py</code>) we want to be executed when it'll be running as main (not imported), we can place those statements (test-cases, print statements) under this <code>if</code> block.</p>
-
-<p>As by default (when module running as main, not imported) the <code>__name__</code> variable is set to <code>"__main__"</code>, and when it'll be imported the <code>__name__</code> variable will get a different value, most probably the name of the module (<code>'M'</code>).
-This is helpful in running different variants of a modules together, and separating their specific input &amp; output statements and also if there are any test-cases.</p>
-
-<p><strong>In short</strong>, use this '<code>if __name__ == "main"</code> ' block to prevent (certain) code from being run when the module is imported.</p>

@@ -1,0 +1,1 @@
+<p>We have recently migrate into multi-tenant database architecture. In which on same SQL Server we have multiple database copy with different name. Now we are planning to set up SQL jobs for each tenant. Anyone have any idea how we can set up SQL jobs for each tenant in best and suitable way so no need to duplicate the jobs and easy to track.</p>

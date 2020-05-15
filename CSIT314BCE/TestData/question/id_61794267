@@ -1,0 +1,60 @@
+<p>So when i run this code that creates a dataset it gives off the error ValueError: too many values to unpack (expected 2), here's my code:</p>
+
+<pre><code>from google.colab import drive
+drive.mount('/content/drive')
+path_to_file = '/content/drive/My Drive/tgl-eng/tgl.txt'
+
+# Converts the unicode file to ascii
+def unicode_to_ascii(s):
+  return ''.join(c for c in unicodedata.normalize('NFD', s)
+      if unicodedata.category(c) != 'Mn')
+
+def preprocess_sentence(w):
+  w = unicode_to_ascii(w.lower().strip())
+
+  # creating a space between a word and the punctuation following it
+  # eg: "he is a boy." =&gt; "he is a boy ."
+  # Reference:- https://stackoverflow.com/questions/3645931/python-padding-punctuation-with-white-spaces-keeping-punctuation
+  w = re.sub(r"([?.!,¿])", r" \1 ", w)
+  w = re.sub(r'[" "]+', " ", w)
+
+  # replacing everything with space except (a-z, A-Z, ".", "?", "!", ",")
+  w = re.sub(r"[^a-zA-Z?.!,¿]+", " ", w)
+
+  w = w.strip()
+
+  # adding a start and an end token to the sentence
+  # so that the model know when to start and stop predicting.
+  w = '&lt;start&gt; ' + w + ' &lt;end&gt;'
+  return w
+
+en_sentence = u"Hello!"
+tl_sentence = u"Kumusta!"
+print(preprocess_sentence(en_sentence))
+print(preprocess_sentence(tl_sentence).encode('utf-8'))
+
+def create_dataset(path, num_examples):
+  lines = io.open(path, encoding='UTF-8').read().strip().split('\n')
+
+  word_pairs = [[preprocess_sentence(w) for w in l.split('\t')]  for l in lines[:num_examples]]
+
+  return zip(*word_pairs)
+
+en, tl = create_dataset(path_to_file, None)
+print(en[-1])
+print(tl[-1])
+</code></pre>
+
+<p>here's the full error:</p>
+
+<pre><code>---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+&lt;ipython-input-33-879d753ce2cb&gt; in &lt;module&gt;()
+----&gt; 1 en, tl = create_dataset(path_to_file, None)
+      2 print(en[-1])
+      3 print(tl[-1])
+
+ValueError: too many values to unpack (expected 2)
+</code></pre>
+
+<p>The code i am using is modified to try to translate tagalog to english but the program keeps on getting that error. Here's the link to the original code: <a href="https://www.google.com/search?q=nmt+with+attention&amp;oq=n&amp;aqs=chrome.1.69i57j69i59l2j69i60l5.4071j0j7&amp;sourceid=chrome&amp;ie=UTF-8" rel="nofollow noreferrer">https://www.google.com/search?q=nmt+with+attention&amp;oq=n&amp;aqs=chrome.1.69i57j69i59l2j69i60l5.4071j0j7&amp;sourceid=chrome&amp;ie=UTF-8</a></p>

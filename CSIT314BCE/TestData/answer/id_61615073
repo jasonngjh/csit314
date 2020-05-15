@@ -1,0 +1,12 @@
+<p>Not entirely sure about efficiency, but a compact option using <code>purrr</code> and <code>tibble</code> could be:</p>
+
+<pre><code>library(tibble)
+library(purrr)
+map_dfc(purrr::transpose(data), ~ unlist(tibble(.)))
+
+  V1    V2    V3    V4    V5   
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1 A     1     4     7     12   
+2 B     2     5     8     15   
+3 C     3     6     9     18  
+</code></pre>

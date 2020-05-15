@@ -1,0 +1,13 @@
+<p>I have functioning code in Juptyer notebook to simulate a game of snakes and ladders (chutes and ladders in some places).  The code produces additional out that I have no idea where it is coming from our what parts of it mean.  Ideally I'd like to (a) know why its there and (b) supress it.</p>
+
+<p>Next to Out <a href="https://i.stack.imgur.com/o55GB.png" rel="nofollow noreferrer">1</a>: Juptyer is displaying Text(0.5,1.0, 'Simulated Duration of Snakes &amp; Ladders Games Board')</p>
+
+<p>The 'Simulated Duration of Snakes &amp; Ladders Games Board' is the title I've just set.</p>
+
+<p>What does the 0.5,1.0 refer and can I supress the output -- so that just the image is displayed.</p>
+
+<p>I am assuming this is a parameter somewhere I pass to matplotlib or seaborn?</p>
+
+<p>Sorry for such a low level Q.</p>
+
+<p><a href="https://i.stack.imgur.com/o55GB.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/o55GB.png" alt="enter image description here"></a></p>

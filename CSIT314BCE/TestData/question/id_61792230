@@ -1,0 +1,18 @@
+<p>I want to create a program that gets all the .pdf-filenames (ex: test.pdf -> test) and creates an folder with that name. Also the foldername should be cropped after the first "-" (ex: A539B2AA3-GG-81234278 -> A539B2AA3).</p>
+
+<p>This is the code I have made yet, but I have no clue how to proceed. I'm still a beginner, trying to learn C#: </p>
+
+<pre class="lang-cs prettyprint-override"><code>string path = @"C:\pdfs\";
+string[] filenames;
+int lengtharray;
+
+filenames = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly)
+    .Where(s =&gt; (Path.GetExtension(s).ToLower() == ".pdf")).ToArray();
+
+lengtharray = filenames.Length;
+</code></pre>
+
+<p>If someone can help me, I would be very happy.</p>
+
+<p>Sincerely,
+breadhead</p>

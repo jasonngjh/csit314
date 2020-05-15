@@ -1,0 +1,98 @@
+<p>See here:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;iostream&gt;
+
+
+using namespace std;
+class bank
+{
+    char name [100],add[100],y;
+    int balance, amount;
+public:
+    void open_account();
+    void deposite_money();
+    void withdraw_money();
+    void display_account();
+};
+void bank::open_account()//: missing
+{
+    cout &lt;&lt; "Enter your full name: ";
+    cin.ignore();
+    cin.getline(name,100);
+    cout &lt;&lt; "What type of account you want to open savings (s) or current (c)";
+    cin &gt;&gt; y;
+    cout &lt;&lt; "Enter amount of deposite: ";
+    cin &gt;&gt; balance;
+    cout &lt;&lt; "Your account is created ";
+}
+void bank::deposite_money()//: missing
+{
+    int a ;
+    cout &lt;&lt; "Enter how much money you want to deposit: ";
+    cin &gt;&gt; a;
+    balance += a;
+    cout &lt;&lt; "Your total deposit amount\n ";
+}
+void bank::display_account()//: missing
+{
+    cout &lt;&lt; "Enter the name: "&lt;&lt;name&lt;&lt;endl;
+    cout &lt;&lt; "Enter your address: "&lt;&lt;add&lt;&lt;endl;
+    cout &lt;&lt; "Type of account that you open: "&lt;&lt;y&lt;&lt;endl;
+    cout &lt;&lt; "Amount you deposite: "&lt;&lt;balance&lt;&lt;endl;
+}
+void bank::withdraw_money()//: missing
+{
+    cout &lt;&lt; "Withdraw: ";
+    cout &lt;&lt; "Enter the amount of withdrawing";
+    cin &gt;&gt; amount;
+    balance = balance - amount;
+    cout &lt;&lt; "Now your total amount left is" &lt;&lt;balance;
+}
+int main()
+{
+    int ch,x,n;
+    bank obj;
+    do
+    {
+        cout &lt;&lt;"01)open account\n";//Delete " after Number
+        cout &lt;&lt;"02)deposite money\n";
+        cout &lt;&lt;"03)withdraw money\n";
+        cout &lt;&lt;"04)display account\n";
+        cout &lt;&lt;"05)Exit\n";
+        cout &lt;&lt; "Please select from the options above";
+        cin&gt;&gt;ch;
+
+        switch(ch)
+        {
+            case 1:"01)open account\n";//Delete " after Number
+                obj.open_account();
+                break;
+            case 2:"02)deposite money\n";
+                obj.deposite_money();
+                break;
+            case 3:"03)withdraw money\n";
+                obj.withdraw_money();
+                break;
+            case 4:"04)display account\n";
+                obj.display_account();
+                break;
+            case 5:
+                if(ch == 5)
+                {
+                    cout &lt;&lt;  "Exit";
+                }
+            default:
+                cout&lt;&lt; "This is not the proper exit please try again";
+        }
+        cout &lt;&lt; "\ndo you want to select the next step then please press : y\n";
+        cout &lt;&lt; " If you want to exit then press : N";
+        cin &gt;&gt; x;
+        if(x == 'y' || x == 'Y');
+        cout&lt;&lt; "Exit";
+    }
+    while (x == 'y' || x == 'Y');
+}
+</code></pre>
+
+<p>Also don't use using namespace in headers, and in overall learn a better style. This is 80s C with C++ mixed in. Use containers not built in arrays, use iostream and overall get a good C++ book.</p>

@@ -1,8 +1,0 @@
-<p>I like this version of splice, removing an element by its value using <code>$.inArray</code>:</p>
-
-<pre><code>$(document).ready(function(){
-    var arr = ["C#","Ruby","PHP","C","C++"];
-    var itemtoRemove = "PHP";
-    arr.splice($.inArray(itemtoRemove, arr),1);
-});
-</code></pre>

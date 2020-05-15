@@ -1,0 +1,16 @@
+<p>I'm loading data from Flat file into the SQL Server Database using SSIS.</p>
+
+<p>While loading I have load to one column called "Iteration". The value of this column should increment for every 100 rows inserted. For eg.,</p>
+
+<pre><code>+----------------+-------+
+| Columns        | Iter  |
++----------------+-------+
+| First 100 rows | 0     |
++----------------+-------+
+| Next 100 rows  | 1     |
++----------------+-------+
+| Next 100 rows  | 2     |
++----------------+-------+
+</code></pre>
+
+<p>I have no idea how to do this as I'm new to SSIS. I tried using <code>counter</code> with a variable. But not working. Is this possible in SSIS?</p>

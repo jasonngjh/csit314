@@ -1,0 +1,16 @@
+<p>Is there a convenient one-liner to generate a list of numbers and their negative counterparts in Python?</p>
+
+<p>For example, say I want to generate a list with the numbers 6 to 9 and -6 to -9.</p>
+
+<p>My current approach is:</p>
+
+<pre class="lang-py prettyprint-override"><code>l = [x for x in range(6,10)]
+l += [-x for x in l]
+</code></pre>
+
+<p>A simple "one-liner" would be:</p>
+
+<pre class="lang-py prettyprint-override"><code>l = [x for x in range(6,10)] + [y for y in range(-9, -5)]
+</code></pre>
+
+<p>However, generating two lists and then joining them together seems inconvenient.</p>

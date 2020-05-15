@@ -1,0 +1,25 @@
+<pre><code>def random_integers(lb, ub, trials):
+    ri = []
+    for i in range(trials):
+        ri.insert(i, randint(lb, ub))
+    return ri
+</code></pre>
+
+<p>This function creates the list of random integers. (Range of the integers: lb &lt;= the integers &lt;= ub, Length of the integers: trials)
+What I want to do is count the frequency of elements of list that created by this function.
+Ex) [(1, 1), (2, 1), (3, 1), (4, 0), (5,1)] for [1,2,3,5] So I wrote this code:</p>
+
+<pre><code>def freq_integers(num_list):
+    fi = []
+    for i in range(ub - lb + 1)
+        fi.insert(i, (lb + i, num_list.count(lb + i)))
+    return fi
+</code></pre>
+
+<p>If lb, ub in this function is same as random_integers function, it will work well. But lb and ub is only vaild in random_integers function.
+I should use one parameter(num_list) so I can't define function as freq_integers(lb, ub, num_list). And I can't use lb, ub as a global variable because random_integers function has a parameter for that.</p>
+
+<h1>This problem is different from (<a href="https://stackoverflow.com/questions/2161752/how-to-count-the-frequency-of-the-elements-in-an-unordered-list">How to count the frequency of the elements in an unordered list?</a>)</h1>
+
+<p>Because this problem has to count the freuquency of item that not in the list.
+Ex) [(1, 1), (2, 1), (3, 1), (4, 0), (5,1)] for [1,2,3,5]: from this it should count 4 as 0 which is not in the list. If length was 6 it should also count 6 as 0.(6, 0)</p>

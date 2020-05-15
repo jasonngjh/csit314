@@ -1,5 +1,0 @@
-<p>Simply say:</p>
-
-<pre><code>git branch -d &lt;branch-name&gt;
-git push origin :&lt;branch-name&gt;
-</code></pre>

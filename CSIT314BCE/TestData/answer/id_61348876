@@ -1,0 +1,6 @@
+<p>I am unsure if order matters, but you could create a tuple and unpack it in a list comprehension.</p>
+
+<pre><code>nums = [y for x in range(6,10) for y in (x,-x)]
+print(nums)
+[6, -6, 7, -7, 8, -8, 9, -9]
+</code></pre>

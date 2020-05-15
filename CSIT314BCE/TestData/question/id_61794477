@@ -1,0 +1,69 @@
+<p>I made a website that makes use of Bootstrap 4, horizontal scrolling (via <a href="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js" rel="nofollow noreferrer">jquery.mousewheel.js</a>) and native CSS Snapping. I am using Chrome 81, and don't care about old/unsupported browsers.</p>
+
+<p>When I apply <code>scroll-snap-type: x mandatory;</code> to CSS, the horizontal scrolling stops working (no scrolling happens at all). If the CSS property is removed, the scrolling behaves normally. Here is my HTML structure:</p>
+
+<pre><code>&lt;div class="portfolio_content container-fluid h-100"&gt;
+  &lt;div class="row h-100 flex-row flex-nowrap scrollx long_content"&gt;
+    &lt;div class="col-12 h-100 project d-table" id="project1"&gt;
+      &lt;div class="project_title d-table-cell align-middle"&gt;
+        &lt;p&gt;
+          Project 1
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-12 h-100 project d-table" id="project2"&gt;
+      &lt;div class="project_title d-table-cell align-middle"&gt;
+        &lt;p&gt;
+          Project 2
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-12 h-100 project d-table" id="project3"&gt;
+      &lt;div class="project_title d-table-cell align-middle"&gt;
+        &lt;p&gt;
+          Project 3
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-12 h-100 project d-table" id="project4"&gt;
+      &lt;div class="project_title d-table-cell align-middle"&gt;
+        &lt;p&gt;
+          Project 4
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>For CSS, the key entries are here:</p>
+
+<pre><code>html, body {
+    height: 100%;
+}
+.portfolio_content .scrollx {
+    overflow-x: scroll;
+}
+
+.portfolio_content .long_content {
+    scroll-snap-type: x mandatory; /* Comment this to make scrolling works */
+}
+.portfolio_content .project {
+    scroll-snap-align: start;
+}
+.portfolio_content .project_title {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+.portfolio_content .project_title h1 {
+    font-size: 96px;
+    line-height: 0.8;
+}
+</code></pre>
+
+<p>Last, here is the <a href="https://jsfiddle.net/shivanraptor/47auyx2n/9/" rel="nofollow noreferrer">JSFiddle demo</a>. If you comment line 9 in CSS, the demo will be able to scroll.</p>
+
+<p>My aim is to allow the "project" DIV to be snapped when scrolling, i.e. one "project" DIV will be fully shown after scrolling.</p>
+
+<p>How should I change the codes?</p>

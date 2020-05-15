@@ -1,0 +1,9 @@
+<p>According to their <a href="https://poi.apache.org/components/document/" rel="nofollow noreferrer">documentation</a>:</p>
+
+<blockquote>
+  <p><strong>HWPF</strong> is the name of our port of the Microsoft Word 97(-2007) file format to pure Java. It also provides limited read only support for the older Word 6 and Word 95 file formats.</p>
+  
+  <p>The partner to HWPF for the new Word 2007 .docx format is XWPF. Whilst HWPF and XWPF provide similar features, there is not a common interface across the two of them at this time.</p>
+</blockquote>
+
+<p>In other words: nothing in your code should say <code>XWPFDocument</code>, you need to use the corresponding interfaces classes built for HWPF.</p>

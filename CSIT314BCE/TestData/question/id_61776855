@@ -1,0 +1,65 @@
+<p>As an uni assignment, I was supposed to write a function with the type declaration:</p>
+
+<pre><code>pi_approx :: Int -&gt; Double
+</code></pre>
+
+<p>and this was my first attempt:</p>
+
+<pre><code>pi_approx :: Int -&gt; Double
+pi_approx x = let total = sum [1 / (y^2) | y &lt;- [1..x]]
+    in sqrt (6 * total)
+</code></pre>
+
+<p>which threw the below error:</p>
+
+<pre><code>pi_approx.hs:4:8: error:
+    * Couldn't match expected type `Double' with actual type `Int'  
+    * In the expression: sqrt (6 * total)
+      In the expression:
+        let total = sum [1 / (y ^ 2) | y &lt;- ...] in sqrt (6 * total)
+      In an equation for `pi_approx':
+          pi_approx x = let total = sum ... in sqrt (6 * total)
+  |
+4 |     in sqrt (6 * total)
+  |        ^^^^^^^^^^^^^^^^
+</code></pre>
+
+<p>I went step by step trying to understand why the interpreter treats it as an Int:</p>
+
+<pre><code>level1 :: Fractional a =&gt; a -&gt; a
+level1 x = 1 / (x^2)
+</code></pre>
+
+<p>So far so good.</p>
+
+<pre><code>level2 :: (Enum a, Fractional a) =&gt; a -&gt; [a]
+level2 x = [level1 y | y &lt;- [1..x]]
+
+</code></pre>
+
+<p>Also as expected.</p>
+
+<pre><code>level3 :: (Enum a, Fractional a) =&gt; a -&gt; a
+level3 x = sum (level2 x)
+</code></pre>
+
+<p>No Int to be seen...</p>
+
+<pre><code>level4 :: (Enum a, Fractional a) =&gt; a -&gt; a
+level4 x = 6 * (level3 x)
+</code></pre>
+
+<p>and finally</p>
+
+<pre><code>level5 :: (Floating a, Enum a) =&gt; a -&gt; a
+level5 x = sqrt (level4 x)
+</code></pre>
+
+<p>And having gone down this rabbit hole I'm no closer to my answer. I got it running with <code>fromIntegral</code></p>
+
+<pre><code>pi_approx :: Int -&gt; Double
+pi_approx x = let total = sum [(fromIntegral 1) / ((fromIntegral y)^ (fromIntegral 2)) | y &lt;- [1..x]]
+    in sqrt (6*total)
+</code></pre>
+
+<p>but it got me nowhere nearer to understanding what caused the error in the first version. Could someone explain what I'm missing? Why was <code>sqrt (6*total)</code> treated as an <code>Int</code>?</p>

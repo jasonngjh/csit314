@@ -1,9 +1,0 @@
-<p>Hello You Can try this simple an sort</p>
-
-<pre><code>var obj = [];
-
-obj.key1 = {name: "John", room: 1234};
-obj.key2 = {name: "Jim", room: 1234};
-
-delete(obj.key1);
-</code></pre>

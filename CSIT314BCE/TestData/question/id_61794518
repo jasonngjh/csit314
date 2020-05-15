@@ -1,0 +1,19 @@
+<p>I'm getting this error code and have included the relevant code surrounding the line shown</p>
+
+<pre><code>File "test_network.py", line 28, in &lt;module&gt;
+    (Airplane, F15,F16, Bird, MIG, J15) = model.predict(image)[0]
+ValueError: not enough values to unpack (expected 6, got 4)
+</code></pre>
+
+<p>This is the relevant code, is there something that needs changing to fix this error. </p>
+
+<pre><code>(Airplane, F15,F16, Bird, MIG, J15) = model.predict(image)[0] 
+print("F15: ", F15)
+print("F16: ", F16)
+print("Bird: ", Bird)
+print("Airplane: ", Airplane)
+print("MIG: ", MIG)
+print("J15: ", J15)
+classes =["F15", "F16", "Bird", "Airplane", "MIG", "J15"]
+results = [F15, F16, Bird, Airplane, MIG, J15]
+</code></pre>

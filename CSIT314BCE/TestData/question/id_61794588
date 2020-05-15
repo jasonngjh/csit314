@@ -1,0 +1,25 @@
+<p>Heyo,</p>
+
+<pre><code>set WshShell = WScript.CreateObject("WScript.Shell")
+WScript.Sleep 5000
+Do
+WScript.Sleep(Random(11000, 30000, 1))
+WshShell.SendKeys "p"
+WScript.Sleep(Random(1000, 2000, 1))
+WshShell.SendKeys "l"
+WScript.Sleep(Random(1000, 2000, 1))
+WshShell.SendKeys "s"
+WScript.Sleep(Random(1000, 2000, 1))
+WshShell.SendKeys " "
+WScript.Sleep(Random(1000, 2000, 1))
+WshShell.SendKeys "p"
+WScript.Sleep(Random(1000, 2000, 1))
+WshShell.SendKeys "m"
+WScript.Sleep(Random(1000, 2000, 1))
+WshShell.SendKeys "{ENTER}"
+WScript.Sleep(Random(3000, 7000, 1))
+WshShell.SendKeys "r"
+Loop
+</code></pre>
+
+<p>This is my piece of script, but whenever I try to run it, it tells me that: random type mismatch, verse 4 , character 1. What is wrong with the random argument? I've tried to search for this problem in internet, but it seems to work for everyone.</p>

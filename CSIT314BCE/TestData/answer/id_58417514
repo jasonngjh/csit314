@@ -1,0 +1,4 @@
+<pre><code>import subprocess as sp
+for v in str(sp.check_output('powershell "gps | where {$_.MainWindowTitle}"')).split(' '):
+    if len(v) is not 0 and '-' not in v and '\\r\\' not in v and 'iTunes' in v: print('Found !')
+</code></pre>

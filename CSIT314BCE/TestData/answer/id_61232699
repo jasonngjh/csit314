@@ -1,0 +1,25 @@
+<blockquote>
+<strong>6.5.3.3 Unary arithmetic operators</strong><br>
+...<br>
+4 The result of the <code>~</code> operator is the bitwise complement of its (promoted) operand (that is,
+each bit in the result is set if and only if the corresponding bit in the converted operand is
+not set). <strong>The integer promotions are performed on the operand, and the result has the
+promoted type</strong>. If the promoted type is an unsigned type, the expression <code>~E</code> is equivalent
+to the maximum value representable in that type minus <code>E</code>.
+</blockquote>
+
+<p><sup><em><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf" rel="nofollow noreferrer">C 2011 Online Draft</a></em></sup></p>
+
+<p>The issue is that the operand of <code>~</code> is being promoted to <code>int</code> before the operator is applied.  </p>
+
+<p>Unfortunately, I don't think there's an easy way out of this.  Writing</p>
+
+<pre><code>if ( counter + 1 ) counter++;
+</code></pre>
+
+<p>won't help because promotions apply there as well.  The only thing I can suggest is creating some symbolic constants for the maximum <em>value</em> you want that object to represent and testing against that:</p>
+
+<pre><code>#define MAX_COUNTER 255
+...
+if ( counter &lt; MAX_COUNTER-1 ) counter++;
+</code></pre>

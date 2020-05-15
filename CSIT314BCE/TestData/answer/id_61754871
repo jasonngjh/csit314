@@ -1,0 +1,33 @@
+<p>May I propose a pure bit-wise solution?</p>
+
+<pre><code>static List&lt;Integer&gt; onesPositions(int input)
+{
+    List&lt;Integer&gt; result = new ArrayList&lt;Integer&gt;(Integer.bitCount(input));
+
+    while (input != 0)
+    {
+        int one = Integer.lowestOneBit(input);
+        input = input - one;
+        result.add(Integer.numberOfTrailingZeros(one));
+    }
+
+    return result;
+}
+</code></pre>
+
+<p>This solution is algorithmically optimal:</p>
+
+<ol>
+<li>Single memory allocation, using <code>Integer.bitCount</code> to appropriately size the <code>ArrayList</code> in advance.</li>
+<li>Minimum number of loop iterations, one per set bit<sup>1</sup>.</li>
+</ol>
+
+<p>The inner loop is rather simple:</p>
+
+<ul>
+<li><code>Integer.lowestOneBit</code> returns an <code>int</code> with only the lowest bit of the input set.</li>
+<li><code>input - one</code> "unset" this bit from the input, for next iteration.</li>
+<li><code>Integer.numberOfTrailingZeros</code> count the number of trailing zeros, in binary, effectively giving us the index of the lowest 1 bit.</li>
+</ul>
+
+<p><sup>1</sup> <em>It is notable that this may not be the most optimal way once compiled, and that instead an explicit <code>0..n</code> loop based on the <code>bitCount</code> would be easier to unroll for the JIT.</em></p>

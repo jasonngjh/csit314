@@ -64,11 +64,11 @@ namespace CSIT314BCE.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "UserName")]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
 
         [Required]
-        [Display(Name = "Fullname")]
+        [Display(Name = "Full Name")]
         public string Fullname { get; set; }
 
         [Required]

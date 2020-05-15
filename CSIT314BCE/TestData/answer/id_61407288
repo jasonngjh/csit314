@@ -1,0 +1,18 @@
+<p>IMO the approach using <code>itertools.chain</code> presented in a couple of other answers is definitely the cleanest out of those provided so far.</p>
+
+<p>However, since in your case <a href="https://stackoverflow.com/questions/61348795/generate-list-of-numbers-and-their-negative-counterparts-in-python#comment108529386_61348795">the order of the values doesn't matter</a>, you can avoid having to define two explicit <code>range</code> objects, and thus avoid doing all the off-by-one math necessary for negative <code>range</code> indexing, by using <code>itertools.chain.from_iterable</code>:</p>
+
+<pre><code>&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; list(itertools.chain.from_iterable((x, -x) for x in range(6, 10)))
+[6, -6, 7, -7, 8, -8, 9, -9]
+</code></pre>
+
+<p>Tad verbose, but readable enough.</p>
+
+<p>Another similar option is to use tuple/argument unpacking with plain <code>chain</code>:</p>
+
+<pre><code>&gt;&gt;&gt; list(itertools.chain(*((x, -x) for x in range(6, 10))))
+[6, -6, 7, -7, 8, -8, 9, -9]
+</code></pre>
+
+<p>More concise, but I find tuple unpacking harder to grok in a quick scan.</p>

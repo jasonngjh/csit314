@@ -1,8 +1,0 @@
-<p><strong>Answer:</strong> </p>
-
-<ul>
-<li>The browser will try to convert <strong>chucknorris</strong> into a hexadecimal value. </li>
-<li>Since <code>c</code> is the only valid hex character in <strong>chucknorris</strong>, the value turns into: <code>c00c00000000</code>(<strong>0 for all values that were invalid</strong>). </li>
-<li>The browser then divides the result into 3 groupds: <code>Red = c00c</code>, <code>Green = 0000</code>, <code>Blue = 0000</code>.</li>
-<li>Since valid hex values for html backgrounds only contain 2 digits for each color type (<strong>r</strong>, <strong>g</strong>, <strong>b</strong>), the last 2 digits are truncated from each group, leaving an rgb value of <code>c00000</code> which is a brick-reddish toned color.</li>
-</ul>

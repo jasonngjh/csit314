@@ -1,0 +1,71 @@
+<h2>Solution Offered for iOS &amp; Android:</h2>
+
+<p><a href="https://issuetracker.google.com/issues/154855417#comment509" rel="nofollow noreferrer">https://issuetracker.google.com/issues/154855417#comment509</a></p>
+
+<h2>Maps SDK for Android v2 (included in Google Play Services)</h2>
+
+<blockquote>
+  <p>The updates to Google Play Services to fix the crash has been published to all devices with Google Play Services version 17.4.55 and newer. There is no change to the version number of Google Play Services on the device after the update is installed. No action is required from developers or end users to receive the updated Maps module; however, developers can verify that the module is present on a given device with the following adb command:</p>
+</blockquote>
+
+<pre><code>adb shell dumpsys activity provider com.google.android.gms.chimera.container.GmsModuleProvider
+</code></pre>
+
+<p>You should see the line <code>Module Set ID: maps</code> listed in the <code>Module Sets</code> section.</p>
+
+<pre><code>Module Set ID: maps, Module Set Version: 2015120015120000
+</code></pre>
+
+<blockquote>
+  <p>The crash rates of Maps SDK for Android v2 are back to normal.</p>
+  
+  <p>As of now, if you have not updated your app with the client-side code
+  workarounds mentioned below, you do not need to take further action.</p>
+  
+  <p>If you have already updated your app with the workarounds, you can
+  remove the workaround in a subsequent update of your app (but keeping
+  the workaround is safe).</p>
+</blockquote>
+
+<hr>
+
+<h2>Code workaround for Android:</h2>
+
+<p>The productive version was fixed (on google's side) but if you still have problems with your emulator you have to run the following code only once.</p>
+
+<blockquote>
+  <p>The recommended placement for the code is in Application.onCreate():</p>
+</blockquote>
+
+<pre><code>override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+
+    fixGoogleMapBugTemp()   //TODO: Then clean this line
+
+//  ...  
+
+}
+
+/**
+ * Observation: Invoke this method only once
+ */
+private fun fixGoogleMapBugTemp() {
+    val googleBug = getSharedPreferences("google_bug_154855417", Context.MODE_PRIVATE)
+    if (!googleBug.contains("fixed")) {
+        val corruptedZoomTables = File(filesDir, "ZoomTables.data");
+        corruptedZoomTables.delete();
+        googleBug.edit().putBoolean("fixed", true).apply();
+    }
+}
+</code></pre>
+
+<p><strong>Workaround</strong>: Clear application data (not just the cache).</p>
+
+<p><strong>Note</strong>: A copy of the <a href="https://issuetracker.google.com/action/issues/154855417/attachments/29614802?download=true" rel="nofollow noreferrer">problematic file</a> from the app packages on the device if anyone needs it for repro. </p>
+
+<p><a href="https://i.stack.imgur.com/aPpRB.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/aPpRB.png" alt="Block"></a></p>
+
+<p><a href="https://issuetracker.google.com/issues/154855417" rel="nofollow noreferrer">Source</a></p>
+
+<p>GL</p>

@@ -1,0 +1,13 @@
+<p>For a binary to work properly (or in some cases at all) there are a whole lot of ugly details that need to be consistent/correct including but probablly not limited to.</p>
+
+<ul>
+<li>How the C source constructs like procedure calls, parameters, types etc are mapped onto architecture-specific contstructs like registers, memory locations, stack frames etc.</li>
+<li>How the results of compilation are expressed in an executable file so that the binary loader can load them into the correct places in the virtual address space and/or perform "fixups" after they are loaded in an arbitary place.</li>
+<li>How exactly the standard library is implemented, sometimes standard library functions are actual functions in a library, but often they are instead macros, inline functions or even compiler builtins that may rely on non-standard functions in the library.</li>
+<li>Where the boundary between the OS and the application is considered to be, on unix-like systems the C standard library is considered a core platform library. On the other hand on windows the C standard library is considered to be something that the compiler provides and is either compiled into the application or shipped alongside it.</li>
+<li>How are other libraries implemented? what names do they use? how are they loaded? </li>
+</ul>
+
+<p>Differences in one or more of these things are why you can't just take a binary intended for one OS and load it normally on another.</p>
+
+<p>Having said that it <em>is</em> possible to run code intended for one os on another. That is essentially what wine does. It has special translator libraries that translate windows API calls into calls that are available on Linux and a special binary loader that knows how to load both windows and Linux binaries.</p>

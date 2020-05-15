@@ -1,0 +1,22 @@
+<p>I am trying to install a specific version of Kubernetes helm on MAC-OS</p>
+
+<p>I have tried <code>brew install kubernetes-helm@2.16.0;</code> </p>
+
+<p>Error <code>No available formula with the name "kubernetes-helm@2.16.0"</code> </p>
+
+<p>I found that I need to do </p>
+
+<pre><code>brew `install helm@2` 
+brew link --force helm@2
+</code></pre>
+
+<p>But this install the latest version of 2 which is </p>
+
+<pre><code>Client: &amp;version.Version{SemVer:"v2.16.7", GitCommit:"5f2584fd3d35552c4af26036f0c464191287986b", GitTreeState:"clean"}
+
+Server: &amp;version.Version{SemVer:"v2.16.7", GitCommit:"5f2584fd3d35552c4af26036f0c464191287986b", GitTreeState:"clean"}
+</code></pre>
+
+<p>I don't want to install 2.16.7</p>
+
+<p>On windows, I can do <code>choco install Kubernetes-helm --version=2.16.0</code></p>

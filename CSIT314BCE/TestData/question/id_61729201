@@ -1,0 +1,37 @@
+<p>I'm using SpringDoc and trying to add a schema to OpenApi programmatically, but no success.</p>
+
+<pre><code>    @Bean
+public OpenAPI customOpenAPI() {
+     Schema mySchema = new Schema&lt;Object&gt;();
+     mySchema
+     .type("object")
+     .$ref("#/components/schemas/MySchema")
+     .name("MySchema")
+     .addProperties("testStr", new StringSchema());
+
+      return new OpenAPI()
+            .servers(servers)
+            .info(new Info().title(title).version(version).description(description))
+            .components(new Components()
+                    .addSchemas("MySchema" , mySchema)
+            )
+            .tags(tags);
+}
+</code></pre>
+
+<p>The description of mySchema is not added to the list of schemas I see in the YAML file generated and if I try to ref to it:</p>
+
+<pre><code>apiResponses.entrySet().forEach(response -&gt; response.getValue().addHeaderObject("XxX", 
+                  new Header().$ref("#/components/schemas/MySchema")));
+</code></pre>
+
+<p>Following error is displayed in swagger UI:</p>
+
+<blockquote>
+  <p>Resolver error at
+  paths./XX/v1/test/status/{entry}.get.responses.404.headers.XxX.$ref
+  Could not resolve reference: Could not resolve pointer:
+  /components/schemas/MySchema</p>
+</blockquote>
+
+<p>Please, could you help me to understand?</p>

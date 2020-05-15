@@ -1,0 +1,21 @@
+<p>REPLs are funny, but no, this behavior isn't a bug, it is indeed per spec. It's something you couldn't see in a non-REPL environment, though.</p>
+
+<p>A <code>let</code> statement creates a binding¹ upon entry to the scope where <code>let</code> appears, but doesn't initialize it (unlike <code>var</code>, which initializes it with <code>undefined</code>). (In the case of the REPL "entering the scope" is basically just before it executes the code you've given it.) The initialization happens when the initialization part of the <code>let</code> statement happens, later when you you reach that statement in the step-by-step execution.² In your code, though, you never reach that part of the statement, because when the initializer was evaluated, it threw an error.</p>
+
+<p>At that point, there's nothing you can do with <code>a</code>, because it exists but isn't initialized, and the only thing that <em>could</em> have initialized it (the result of the initializer in the original <code>let a = f();</code>) failed and can't be run again.</p>
+
+<p>The reason you can't see that in non-REPL code is that the error would take you out of the scope where <code>a</code> has been created but not initialized. consider:</p>
+
+<pre><code>try {
+    let a = f(); // ReferenceError
+    // Execution in this block never continues
+} catch {
+    // Execution arrives here...but `a` is not in scope
+}
+</code></pre>
+
+<hr>
+
+<p>¹ <em>binding</em> - an entry for the variable in the execution context's <a href="https://tc39.es/ecma262/#sec-environment-records" rel="nofollow noreferrer">environment record</a></p>
+
+<p>² If the <code>let</code> statement doesn't have an initializer, <code>undefined</code> is used at this point.</p>

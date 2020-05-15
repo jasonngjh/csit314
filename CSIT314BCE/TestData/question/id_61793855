@@ -1,0 +1,15 @@
+<p>I'm using python's <code>multiprocessing</code> module to handle a number of functions concurrently. Each spawned-process' function gets some initial input arguments, and a <code>Pipe</code> connection to send its results back. For various reasons, I must use individual processes like this, i.e. tools like <code>Pool.map_async()</code>-methods are off the table.</p>
+
+<p>Occasionally, I need to terminate a process which takes too long to finish.</p>
+
+<p>According to <a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process.terminate" rel="nofollow noreferrer">the Process documentation</a>:</p>
+
+<blockquote>
+  <p><strong>Warning:</strong> If this method is used when the associated process is using a
+  pipe or queue then the pipe or queue is liable to become corrupted and
+  may become unusable by other process. Similarly, if the process has
+  acquired a lock or semaphore etc. then terminating it is liable to
+  cause other processes to deadlock.</p>
+</blockquote>
+
+<p>I'm not worried about the first part, as each process gets their own pipe object, but how do I determine if a process has <em>'acquired a lock or semaphore'</em>, and/or terminate in a way that's safe for the remainder of my program?</p>

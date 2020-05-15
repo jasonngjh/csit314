@@ -1,0 +1,23 @@
+<p>I am trying to grok how async and await works in C#.</p>
+
+<p>Consider the two snippets below:</p>
+
+<pre><code>var appIdTask = GetAppIdAsync();
+var clientSecretTask = GetClientSecretAsync();
+var appId = await appIdTask;
+var clientSecret = await clientSecretTask;
+Execute(appId, clientSecret);
+</code></pre>
+
+<p>and </p>
+
+<pre><code>var appId = await GetAppIdAsync();
+var clientSecret = await GetClientSecretAsync();
+Execute(appId, clientSecret);
+</code></pre>
+
+<p>These two snippets have different implications. Correct?</p>
+
+<p>First one will make the Get calls in parallel whereas the second one will make the calls in serial?</p>
+
+<p>From my understanding, the await keyword on the first call blocks the execution on the second call.</p>

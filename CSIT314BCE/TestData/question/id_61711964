@@ -1,0 +1,1 @@
+<p>I have an executable in my system which has been built via the GHC compiler. Is there a way to find which GHC version was used to build it ?</p>

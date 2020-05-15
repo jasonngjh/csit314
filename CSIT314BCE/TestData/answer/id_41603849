@@ -1,6 +1,0 @@
-<p>This question has already been answered excellently many times over. Still I'd like to draw the group's attention to yet another interesting analysis.</p>
-
-<p>Recently this example (modified very slightly) was also used as a way to demonstrate how a piece of code can be profiled within the program itself on Windows. Along the way, the author also shows how to use the results to determine where the code is spending most of its time in both the sorted &amp; unsorted case. Finally the piece also shows how to use a little known feature of the HAL (Hardware Abstraction Layer) to determine just how much branch misprediction is happening in the unsorted case.</p>
-
-<p>The link is here:
-<a href="http://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/ex/profile/demo.htm">http://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/ex/profile/demo.htm</a></p>

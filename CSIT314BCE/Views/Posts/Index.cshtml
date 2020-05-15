@@ -6,14 +6,10 @@
 
 @Styles.Render("~/Content/Style.css")
 
-
-<table style="width:100%">
-    <tr>
-        <td><h2>Learning Platform</h2></td>
-        <td style="text-align:right">@Html.ActionLink("Ask a question", "Ask", "Posts", null, new { @class = "btn btn-primary" })</td>
-    </tr>
-</table>
-<p>         </p>
+<div class="row">
+    <div class="col-md-10"><h2>Learning Platform</h2></div>
+    <div class="col-md-2">@Html.ActionLink("Ask a question", "Ask", "Posts", null, new { @class = "btn btn-primary" })</div>
+</div>
 <div class="hidden-div">
     @using (Html.BeginForm("Index", "Posts", FormMethod.Get))
     {
@@ -26,20 +22,27 @@
 </div>
 <br />
 <br />
-<table style="width:100%">
-
-
+<table >
     @foreach (var item in Model)
     {
         <tr>
             <td style="width: 100px">
+                @{
+                    var voteString = "votes";
+                    var answerString = "answers";
+                    var answerCss = "answer";
+                    if (item.VoteCount == 1) { voteString = "vote"; }
+                    if (item.AnswerCount == 1) { answerString = "answer"; }
+                    if (item.AcceptedAnswerId != 0) { answerCss = "acceptedAnswer"; }
+
+                }
                 <div id="vote">
-                    @Html.DisplayFor(modelItem => item.VoteCount)<br />
-                    vote(s)
+                    <strong>@Html.DisplayFor(modelItem => item.VoteCount)</strong><br />
+                    @voteString
                 </div>
-                <div id="answer">
-                    @Html.DisplayFor(modelItem => item.AnswerCount)<br />
-                    answer(s)
+                <div id="@answerCss">
+                    <strong>@Html.DisplayFor(modelItem => item.AnswerCount)</strong><br />
+                    @answerString
                 </div>
             </td>
             <td id="post" style="width: 850px">
@@ -52,7 +55,7 @@
             </td>
             <td>
                 <div id="askedBy">
-                    asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
+                     asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
                     on @Html.DisplayFor(modelItem => item.CreationDate)
                 </div>
                 @if (User.IsInRole("Moderator"))

@@ -1,0 +1,39 @@
+<p>Here is one solution that uses <a href="https://docs.python.org/3.8/library/collections.html#collections.defaultdict" rel="noreferrer"><code>collections.defaultdict</code></a> to group the items and calculates the averages with <a href="https://docs.python.org/3/library/statistics.html#statistics.mean" rel="noreferrer"><code>statistics.mean</code></a>:</p>
+
+<pre><code>from collections import defaultdict
+from statistics import mean
+
+mylist1 = [["lemon", 0.1], ["egg", 0.1], ["muffin", 0.3], ["chocolate", 0.5]]
+mylist2 = [["chocolate", 0.5], ["milk", 0.2], ["carrot", 0.8], ["egg", 0.8]]
+
+d = defaultdict(list)
+for lst in (mylist1, mylist2):
+    for k, v in lst:
+        d[k].append(v)
+
+result = [[k, mean(v)] for k, v in d.items()]
+
+print(result)
+# [['lemon', 0.1], ['egg', 0.45], ['muffin', 0.3], ['chocolate', 0.5], ['milk', 0.2], ['carrot', 0.8]]
+</code></pre>
+
+<p>If we only want common keys, just check if the values are more than 1:</p>
+
+<pre><code>result = [[k, mean(v)] for k, v in d.items() if len(v) &gt; 1]
+
+print(result)
+# [['egg', 0.45], ['chocolate', 0.5]]
+</code></pre>
+
+<p>We could also just build the result from set intersection:</p>
+
+<pre><code>mylist1 = [["lemon", 0.1], ["egg", 0.1], ["muffin", 0.3], ["chocolate", 0.5]]
+mylist2 = [["chocolate", 0.5], ["milk", 0.2], ["carrot", 0.8], ["egg", 0.8]]
+
+d1, d2 = dict(mylist1), dict(mylist2)
+
+result = [[k, (d1[k] + d2[k]) / 2] for k in d1.keys() &amp; d2.keys()]
+
+print(result)
+# [['egg', 0.45], ['chocolate', 0.5]]
+</code></pre>

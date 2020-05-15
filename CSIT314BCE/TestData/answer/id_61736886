@@ -1,0 +1,5 @@
+<p>Here is a simple, very Pythonic solution:</p>
+
+<p><code>result = [[x[0], (x[1] + y[1])/2] for x in mylist1 for y in mylist2 if x[0] == y[0]]</code></p>
+
+<p>It probably is not <em>the</em> fastest solution, but it is faster by virtue of using Python list comprehension to iterate the lists and, since neither this solution nor the OP's will work with multiple instances of a list key value, it replaces the np.mean with a simple average of the two values.</p>

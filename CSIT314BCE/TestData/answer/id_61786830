@@ -1,0 +1,10 @@
+<p><strong>Everyone explained why it is wrong but no-one showed you how to fix it.</strong> </p>
+
+<p>Here is how you fix your code so that it works </p>
+
+<pre><code>pi_approx :: Int -&gt; Double
+pi_approx x = let total = sum [1 /(fromIntegral (y^2)) | y &lt;- [1..x]]
+    in sqrt (6 * total)
+</code></pre>
+
+<p>once you add in <code>fromIntegral</code> the type checker will be satisfied. As was explained by the other users the type of the function <code>/</code> wasn't being satisfied. </p>

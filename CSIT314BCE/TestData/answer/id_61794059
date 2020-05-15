@@ -1,0 +1,7 @@
+<p>One approach could be to iteratively update those elements that have the same pairs:</p>
+
+<pre><code>m = np.full(ij.shape[0], True)
+while m.any():
+    ij[m] = np.random.randint(0, N, (m.sum(),2))
+    m = ij[:,0] == ij[:,1]
+</code></pre>

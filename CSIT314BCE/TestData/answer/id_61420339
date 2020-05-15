@@ -1,0 +1,109 @@
+<p><strong>TL;DR</strong> Your example is not actually looking at the last digit. The last digit of a finite binary-represented mantissa converted to base-10 should always be <code>0</code> or <code>5</code>.</p>
+
+<hr>
+
+<p>Take a look at the comment in <a href="https://github.com/python/cpython/blob/0e80b561d442769631d66f1cc8813ac30f97378e/Python/pystrtod.c#L826" rel="nofollow noreferrer"><code>cpython/pystrtod.c</code></a>:</p>
+
+<pre class="lang-cpp prettyprint-override"><code>char * PyOS_double_to_string(double val,
+                                         char format_code,
+                                         int precision,
+                                         int flags,
+                                         int *type)
+{
+    char format[32];
+    Py_ssize_t bufsize;
+    char *buf;
+    int t, exp;
+    int upper = 0;
+
+    /* Validate format_code, and map upper and lower case */
+    switch (format_code) {
+    // ...
+    case 'r':          /* repr format */
+        /* Supplied precision is unused, must be 0. */
+        if (precision != 0) {
+            PyErr_BadInternalCall();
+            return NULL;
+        }
+        /* The repr() precision (17 significant decimal digits) is the
+           minimal number that is guaranteed to have enough precision
+           so that if the number is read back in the exact same binary
+           value is recreated.  This is true for IEEE floating point
+           by design, and also happens to work for all other modern
+           hardware. */
+        precision = 17;
+        format_code = 'g';
+        break;
+    // ...
+}
+</code></pre>
+
+<p><a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format#IEEE_754_double-precision_binary_floating-point_format:_binary64" rel="nofollow noreferrer">Wikipedia</a> confirms this:</p>
+
+<blockquote>
+  <p>The 53-bit significand precision gives from 15 to 17 significant decimal digits precision (2<sup>-53</sup> ≈ 1.11 × 10<sup>-16</sup>). If a decimal string with at most 15 significant digits is converted to IEEE 754 double-precision representation, and then converted back to a decimal string with the same number of digits, the final result should match the original string. <strong>If an IEEE 754 double-precision number is converted to a decimal string with at least 17 significant digits, and then converted back to double-precision representation, the final result must match the original number.</strong></p>
+</blockquote>
+
+<p>Thus, when we use <code>str</code> (or <code>repr</code>), we are only representing 17 significant digits in base-10. This means some of the floating point number will be truncated. In fact, to get the exact representation, you need a precision of 53 significant digits! You can verify this as follows:</p>
+
+<pre><code>&gt;&gt;&gt; counts = Counter(
+...     len(f"{random():.99f}".lstrip("0.").rstrip("0"))
+...     for _ in range(1000000)
+... )
+&gt;&gt;&gt; counts
+Counter({53: 449833,
+         52: 270000,
+         51: 139796,
+         50: 70341,
+         49: 35030,
+         48: 17507,
+         47: 8610,
+         46: 4405,
+         45: 2231,
+         44: 1120,
+         43: 583,
+         42: 272,
+         41: 155,
+         40: 60,
+         39: 25,
+         38: 13,
+         37: 6,
+         36: 5,
+         35: 4,
+         34: 3,
+         32: 1})
+&gt;&gt;&gt; max(counts)
+53
+</code></pre>
+
+<p>Now using the maximum precision, here's the proper way to find the "last digit":</p>
+
+<pre><code>&gt;&gt;&gt; counts = Counter(
+...     int(f"{random():.53f}".lstrip("0.").rstrip("0")[-1])
+...     for _ in range(1000000)
+... )
+&gt;&gt;&gt; counts
+Counter({5: 1000000})
+</code></pre>
+
+<p>Thus, the last digit is always <code>5</code>. (Or, in very rare cases, <code>0</code>.) This makes sense since:</p>
+
+<pre><code>2**0  == 1.0
+2**-1 == 0.5
+2**-2 == 0.25
+2**-3 == 0.125
+2**-4 == 0.0625
+2**-5 == 0.03125
+2**-6 == 0.015625
+2**-7 == 0.0078125
+2**-8 == 0.00390625
+2**-9 == 0.001953125
+...
+2**-k == 0.[k-1 digits]5
+</code></pre>
+
+<p>And all mantissas are some partial sum of these coefficients.</p>
+
+<hr>
+
+<p><strong>NOTE:</strong> As pointed out by user2357112, the correct implementations to look at are <a href="https://github.com/python/cpython/blob/0e80b561d442769631d66f1cc8813ac30f97378e/Python/pystrtod.c#L1243" rel="nofollow noreferrer"><code>PyOS_double_to_string</code></a> and <a href="https://github.com/python/cpython/blob/0e80b561d442769631d66f1cc8813ac30f97378e/Python/pystrtod.c#L995" rel="nofollow noreferrer"><code>format_float_short</code></a>, but I'll leave the current one in because it's more pedagogically interesting.</p>

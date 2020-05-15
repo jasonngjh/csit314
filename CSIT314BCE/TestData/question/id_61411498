@@ -1,0 +1,25 @@
+<p>I was implementing a hashmap in C as part of a project I'm working on and using random inserts to test it when I noticed that <code>rand()</code> on Linux seems to repeat numbers far more often than on Mac. <code>RAND_MAX</code> is 2147483647/0x7FFFFFFF on both platforms. I've reduced it to this test program that makes a byte array <code>RAND_MAX+1</code>-long, generates <code>RAND_MAX</code> random numbers, notes if each is a duplicate, and checks it off the list as seen.</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;time.h&gt;
+
+int main() {
+    size_t size = ((size_t)RAND_MAX) + 1;
+    char *randoms = calloc(size, sizeof(char));
+    int dups = 0;
+    srand(time(0));
+    for (int i = 0; i &lt; RAND_MAX; i++) {
+        int r = rand();
+        if (randoms[r]) {
+            // printf("duplicate at %d\n", r);
+            dups++;
+        }
+        randoms[r] = 1;
+    }
+    printf("duplicates: %d\n", dups);
+}
+</code></pre>
+
+<p>Linux consistently generates around 790 million duplicates. Mac consistently only generates one, so it loops through every random number that it can generate <em>almost</em> without repeating. Can anyone please explain to me how this works? I can't tell anything different from the man pages, can't tell which RNG each is using, and can't find anything online. Thanks!</p>

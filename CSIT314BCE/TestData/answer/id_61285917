@@ -1,0 +1,44 @@
+<p>Python set an unordered collection which do not record element position or order of insertion. There is no index attached to any element in a python set. So they do not support any indexing or slicing operation. </p>
+
+<p>So don't expect your for loop will work in a defined order.</p>
+
+<p><strong>Why does it do 16 iterations?</strong></p>
+
+<p><code>user2357112 supports Monica</code> already explains the main cause. Here, is another way of thinking.</p>
+
+<pre><code>s = {0}
+for i in s:
+     s.add(i + 1)
+     print(s)
+     s.remove(i)
+print(s)
+</code></pre>
+
+<p>When you run this code it gives you output this :</p>
+
+<pre><code>{0, 1}                                                                                                                               
+{1, 2}                                                                                                                               
+{2, 3}                                                                                                                               
+{3, 4}                                                                                                                               
+{4, 5}                                                                                                                               
+{5, 6}                                                                                                                               
+{6, 7}                                                                                                                               
+{7, 8}
+{8, 9}                                                                                                                               
+{9, 10}                                                                                                                              
+{10, 11}                                                                                                                             
+{11, 12}                                                                                                                             
+{12, 13}                                                                                                                             
+{13, 14}                                                                                                                             
+{14, 15}                                                                                                                             
+{16, 15}                                                                                                                             
+{16}       
+</code></pre>
+
+<p>When we access all the elements together like loop or printing the set, there must be a predefined order for it to traverse the whole set.
+So, in last iteration you will see order is changed like from <code>{i,i+1}</code> to <code>{i+1,i}</code>.</p>
+
+<p>After the last iteration it happened that <code>i+1</code> is already traversed so loop exit.</p>
+
+<p><strong>Interesting Fact:</strong>
+Use any value less than 16 except 6 and 7 will always gives you result 16. </p>

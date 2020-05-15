@@ -1,0 +1,23 @@
+<p>Yes, you can pass the <code>--info</code> flag into the RTS option to find that out:</p>
+
+<pre><code>$ tldr +RTS --info -RTS
+ [("GHC RTS", "YES")
+ ,("GHC version", "8.6.5")
+ ,("RTS way", "rts_thr")
+ ,("Build platform", "x86_64-unknown-linux")
+ ,("Build architecture", "x86_64")
+ ,("Build OS", "linux")
+ ,("Build vendor", "unknown")
+ ,("Host platform", "x86_64-unknown-linux")
+ ,("Host architecture", "x86_64")
+ ,("Host OS", "linux")
+ ,("Host vendor", "unknown")
+ ,("Target platform", "x86_64-unknown-linux")
+ ,("Target architecture", "x86_64")
+ ,("Target OS", "linux")
+ ,("Target vendor", "unknown")
+ ,("Word size", "64")
+ ,("Compiler unregisterised", "NO")
+ ,("Tables next to code", "YES")
+ ]
+</code></pre>

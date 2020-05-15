@@ -1,0 +1,14 @@
+<p>You can just test the bits without turning the integer into a string:</p>
+
+<pre class="lang-java prettyprint-override"><code>List&lt;Integer&gt; onePositions(int input) {
+  List&lt;Integer&gt; onePositions = new ArrayList&lt;&gt;();
+  for (int bit = 0; bit &lt; 32; bit++) {
+    if (input &amp; (1 &lt;&lt; bit) != 0) {
+      onePositions.add(bit + 1); // One-based, for better or worse.
+    }
+  }
+  return onePositions;
+}
+</code></pre>
+
+<p>Bits are usually counted from right to left, the rightmost bit being bit 0. The operation <code>1 &lt;&lt; bit</code> gives you an <code>int</code> whose bit numbered <code>bit</code> is set to 1 (and the rest to 0). Then use <code>&amp;</code> (binary and) to check if this bit is set in the <code>input</code>, and if so, record the position in the output array.</p>

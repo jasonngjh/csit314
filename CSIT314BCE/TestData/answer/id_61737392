@@ -1,0 +1,11 @@
+<p>I would definitely prefer Andy's answer myself, even if it seems cryptic at first. But since no one here has an answer with streams yet (even if they are totally out of place here): </p>
+
+<pre><code>public List&lt;Integer&gt;  getList(int x) {
+    String str = Integer.toBinaryString(x);
+    final String reversed = new StringBuilder(str).reverse().toString();
+    return IntStream.range(1, str.length()+1)
+            .filter(i -&gt; reversed.charAt(i-1)=='1')
+            .boxed()
+            .collect(Collectors.toList());
+}
+</code></pre>

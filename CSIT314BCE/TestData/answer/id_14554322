@@ -1,5 +1,0 @@
-<p>I was going to post "read page 19 of Beazley's 'Python: Essential Reference' for a quick description of generators", but so many others have posted good descriptions already.</p>
-
-<p>Also, note that <code>yield</code> can be used in coroutines as the dual of their use in generator functions.  Although it isn't the same use as your code snippet, <code>(yield)</code> can be used as an expression in a function.  When a caller sends a value to the method using the <code>send()</code> method, then the coroutine will execute until the next <code>(yield)</code> statement is encountered.</p>
-
-<p>Generators and coroutines are a cool way to set up data-flow type applications.  I thought it would be worthwhile knowing about the other use of the <code>yield</code> statement in functions.</p>

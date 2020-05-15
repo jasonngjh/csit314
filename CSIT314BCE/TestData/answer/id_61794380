@@ -1,0 +1,5 @@
+<p>When you are calling the <code>findindex()</code> function, pass <code>arr1[x]</code> instead of <code>x</code>.</p>
+
+<p><strong>GFG Verdict:</strong></p>
+
+<p><a href="https://i.stack.imgur.com/TIO3Y.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/TIO3Y.png" alt="enter image description here"></a></p>

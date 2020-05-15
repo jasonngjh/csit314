@@ -1,0 +1,24 @@
+<p>There is a publicly available endpoint. I used to get some data from it (This is a 3rd party service and I have no control of it ). But they have added a ReCaptcha verification for bot detection. This is an HTTP GET request and now it works only in the browser. When I request the data from the browser it gives the response (JSON response), but when I tried to request it through postman or from axios, it's not working (returns an HTML error (returns the ReCaptcha)), if someone has any idea to fix it, please help me!</p>
+
+<p>Steps I followed for fixing</p>
+
+<ul>
+<li>First I Grabbed the cookie from the browser and put it in postman on the cookie header. Then the endpoint gives the result. </li>
+<li>So I tried to do this manually by sending an options request and grabbed the cookies and setting it the get request. BUT IR DIDNT WORKED. </li>
+<li>From axios, I tried it with withCreadentiols option set to true and sent the get request, but it also didn't work.</li>
+</ul>
+
+<p>This is the code I tried. </p>
+
+<pre><code>   axios.get(url,{headers: {
+     'Access-Control-Allow-Origin': '*',
+   },withCredentials: true})
+   .then(function (response) {
+     console.log(response);
+   })
+   .catch(function (error) {
+     console.log(error);
+   });
+</code></pre>
+
+<p>And I don't wanna do any harm to that 3rd part service. Currently, the code for retrieving data is on the backend (NodeJs app), and if I move this to the front end it will work. But I'm trying to keep the code in backend and make this work.  </p>

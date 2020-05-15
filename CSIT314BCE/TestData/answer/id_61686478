@@ -1,0 +1,26 @@
+<pre><code>list1 = [('a', 0), ('b', 100), ('c', 200), ('d', 300), ('e', 400), ('f', 500)]
+
+list2 = [[0, 200, 400], [100, 300, 500]]
+list3 = []
+
+#Loop through each sublist in list 2
+for sublist in list2:
+    #creating an inner list which will go in list3
+    inner = []
+    for el in sublist:
+        for (index, (title, label)) in enumerate(list1):
+            if label == el:
+                inner.append(title)
+                #remove the first element that matches the current label
+                list1.pop(index)
+                break
+
+    list3.append(inner)
+
+print(list3)
+</code></pre>
+
+<p>Output</p>
+
+<pre><code>[['a', 'c', 'e'], ['b', 'd', 'f']]
+</code></pre>

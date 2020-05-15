@@ -1,4 +1,0 @@
-<p>Type <code>git log</code> and find the last commit hash code and then enter:</p>
-
-<pre><code>git reset &lt;the previous co&gt;
-</code></pre>

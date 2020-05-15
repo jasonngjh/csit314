@@ -1,0 +1,9 @@
+<p>While refactoring some code I accidentally discovered that this is valid syntax (or at least, doesn't cause a parser error in Firefox):</p>
+
+<p><code>const {} = somefunc();</code></p>
+
+<p><code>somefunc</code> returns an <code>object</code> and the curly's are supposed to contain variable names for destructuring, at the time I hadn't decided what those names would be so I temporarily left them empty.</p>
+
+<p>The editor didn't highlight a syntax error, so out of curiosity I tested it, and was surprised that Firefox actually had no issue with this syntax.</p>
+
+<p>Why is this syntax valid? Does it actually do something weird?</p>

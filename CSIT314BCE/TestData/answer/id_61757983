@@ -1,0 +1,22 @@
+<blockquote>
+  <p>Doesn't constexpr imply const?</p>
+</blockquote>
+
+<p>It does, on the <em>object</em> being declared, in your case <code>s</code>. The result of applying <code>constexpr</code> is the object </p>
+
+<pre><code>char *const s;
+</code></pre>
+
+<p>It's still declared to point at a non-const object. Only the address has to be a constant expression. Which means it must be to an object with static storage duration.</p>
+
+<blockquote>
+  <p>Is it possible for something to be constexpr but change in some other way such that is not constant?</p>
+</blockquote>
+
+<p>No. But then again, it's not the object being declared <code>constexpr</code> that is allowed to change here. For instance</p>
+
+<pre><code>static char foo[] = "abc"; // Not a constant array
+constexpr  char * s  = foo; // But the address is still a valid initializer.
+</code></pre>
+
+<p>Is a valid pair of declarations.</p>

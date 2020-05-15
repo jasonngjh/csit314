@@ -1,0 +1,36 @@
+<p>You <code>this</code> in click event is referring to button only.</p>
+
+<p>So you have to do something like this</p>
+
+<pre><code>jQuery('.button').click(function() {
+  var itemprice = jQuery('.banner-list-img').attr('data-price');
+  jQuery('.show-price').html(itemprice);
+})
+</code></pre>
+
+<p>Above code only works for one <code>li</code>  element. If there are multiple <code>li</code> elements you should use this code</p>
+
+<pre><code>jQuery('.button').click(function() {
+  jQuery('.banner-list-img').each(function() {
+      var itemprice = jQuery(this).attr('data-price');
+      jQuery(this).children('.show-price').html(itemprice);
+  })
+})
+</code></pre>
+
+<p>After updating question</p>
+
+<pre><code>jQuery('.banner-list-img').each(function() {
+     var itemprice = jQuery(this).attr('data-price');
+     jQuery(this).children('.show-price').html(itemprice);
+ })
+</code></pre>
+
+<p>Or more better way for your example</p>
+
+<pre><code> jQuery('.banner-list-img').each(function() {
+     jQuery(this).prepend('&lt;div class="show-price"&gt;' +  jQuery(this).attr('data-price') + '&lt;/div&gt;');
+ })
+</code></pre>
+
+<p>Here we are adding HTML when prepending <code>div</code> inside <code>li</code></p>

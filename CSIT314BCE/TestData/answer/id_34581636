@@ -1,7 +1,0 @@
-<p>To delete your branch locally and remotely </p>
-
-<ul>
-<li><p>Checkout to master branch -  <code>git checkout master</code></p></li>
-<li><p>Delete your remote branch - <code>git push origin --delete &lt;branch-name&gt;</code></p></li>
-<li><p>Delete your local branch - <code>git branch --delete &lt;branch-name&gt;</code></p></li>
-</ul>

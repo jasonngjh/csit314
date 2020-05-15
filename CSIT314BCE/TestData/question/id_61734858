@@ -1,0 +1,56 @@
+<p>The standard says:</p>
+
+<blockquote>
+  <p>"An integer constant expression with the value 0, or such an expression cast to type <strong><code>void*</code></strong>, is called a <em>null pointer constant</em>.67) If a null pointer constant is converted to a pointer type, the resulting pointer, called a <em>null pointer</em>, is guaranteed to compare unequal to a pointer to any object or function."</p>
+  
+  <hr>
+  
+  <p>"<em>67) The macro NULL is defined in stddef.h (and other headers) as a null pointer constant; see 7.19.</em>"</p>
+  
+  <p>Source: ISO/IEC 9899:2018 (C18), §6.2.3.2/3 "Pointers".</p>
+</blockquote>
+
+<p>The most common <em>null pointer constants</em> are of course, <code>0</code> and <code>(void*) 0</code> used by most implementations as <em>null pointer constant</em>, but as the standard mandates - <em>"<strong>An integer constant expression with the value 0</strong>, or such an expression cast to type <code>void*</code></em>" - a <em>null pointer constant</em> shall also be any of the following:</p>
+
+<ol>
+<li><code>1 * 0</code></li>
+<li><code>0 * 0</code></li>
+<li><code>0 - 0</code></li>
+<li><code>25 - 25</code></li>
+<li><code>(-4) + (4)</code></li>
+<li><code>(0 * ((0 * 25) * 3)</code></li>
+<li><code>(0) * (-100)</code></li>
+</ol>
+
+<p>Like any of their pendants preceded by <code>(void*)</code>, f.e. <code>(void*) (1 * 0)</code> or <code>(void*) (25 - 25)</code>.</p>
+
+<p>As well as boolean expressions:</p>
+
+<ol start="8">
+<li><code>(void*) ((1 + 1) == 25)</code></li>
+<li><code>(void*) !(9)</code></li>
+</ol>
+
+<hr>
+
+<p>Thus, any statement like one of these:</p>
+
+<ol>
+<li><code>int* ptr = 25 - 25;</code></li>
+<li><code>int* ptr = (void*) ((-4) + 4);</code></li>
+<li><code>int* ptr = (0 * ((0 * 25) * 3);</code></li>
+<li><code>int* ptr = (void*) !(9);</code></li>
+<li><code>int* ptr = ((1 + 1) == 25);</code></li>
+</ol>
+
+<p>shall make <code>ptr</code>, per standard, a <em>null pointer</em>.</p>
+
+<hr>
+
+<ul>
+<li>Am I correct or is there anything wrong about my concerns?</li>
+</ul>
+
+<p>I am looking for any part of the C standard which invalidates this thesis.</p>
+
+<p>As far as I searched, there shouldn´t be a duplicate of this question on Stack Overflow.</p>

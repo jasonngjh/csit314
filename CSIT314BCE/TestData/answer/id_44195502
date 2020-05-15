@@ -1,4 +1,0 @@
-<p>Try this</p>
-
-<pre><code>delete myObject['key'];
-</code></pre>

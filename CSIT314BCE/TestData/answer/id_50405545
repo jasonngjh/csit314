@@ -1,4 +1,0 @@
-<pre><code>git push --delete (branch_name) //this will be removing the public version of your branch
-
-git push origin (branch_name) //This will add the previous version back
-</code></pre>

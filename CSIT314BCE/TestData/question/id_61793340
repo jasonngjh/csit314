@@ -1,0 +1,4 @@
+<p>In my project, we are using microservice architecture. Each microservice has its repo in git. We are using gitflow branching for all microservices and deploy feature branches in different environments (eg: qa, uat, staging and production).
+We are planning to use helm charts for deployment for each microservice in all the environments. The structure we are using for the helm chart has one values yaml file per helm chart and override yaml files (one for each environment in a helm chart).
+Initially, we thought of that if we have different override files for different environments, we do not need branching for helm chart repo so we had only one master branch for helm charts. Now if we want to do any change in any of the template files it will affect the deployments in all the environments. 
+This issue with using the same gitflow branching for helm charts is that if we have override files why to use branching on top of that.</p>

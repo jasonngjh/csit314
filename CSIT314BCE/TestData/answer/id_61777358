@@ -1,0 +1,49 @@
+<p>Because of the way typeclasses are type checked, the type error you were shown is not the most helpful one.</p>
+
+<pre><code>[ 1 / (y^2) | y &lt;- [1..x] ]
+</code></pre>
+
+<p>So it 1 probably no surprise that, because <code>x</code> is an <code>Int</code>, <code>[1..x]</code> is a list of <code>Int</code>s and so <code>y</code> is an <code>Int</code>.  Nor is it surprising that <code>y^2</code> is an <code>Int</code>.  Where GHC loses us is when it decides that therefore <code>1 / (y^2)</code> is an <code>Int</code>.</p>
+
+<p>The reason is this: the type of the divide operator is</p>
+
+<pre><code>(/) :: (Fractional a) =&gt; a -&gt; a -&gt; a
+</code></pre>
+
+<p>That is, it takes the same type on both sides, and also returns it. So as soon as the type of <code>y^2</code> is known to be <code>Int</code>, we infer that <code>1</code> and the entire expression are <code>Int</code> also.  <em>Only later</em>, during the constraint checking phase, GHC will make sure that <code>Int</code> is <code>Fractional</code>, which of course it is not.  For example:</p>
+
+<pre><code>recp :: Int -&gt; Int
+recp x = 1 / x
+</code></pre>
+
+<p>Will give you a better error</p>
+
+<pre><code>• No instance for (Fractional Int) arising from a use of ‘/’
+• In the expression: 1 / x
+  In an equation for ‘recp’: recp x = 1 / x
+</code></pre>
+
+<p>But it didn't get that far when checking your function, because there was a type unification failure first.</p>
+
+<p>Sometimes if you can't figure out an error it is helpful to remove the signature and see what type is inferred (more often, it's helpful to add more type signatures, but not always)</p>
+
+<pre><code>ghci&gt; :t pi_approx
+pi_approx :: (Floating a, Enum a) =&gt; a -&gt; a
+</code></pre>
+
+<p>Without the signature, the function actually type-checks.  It works, too:</p>
+
+<pre><code>ghci&gt; pi_approx 100
+3.1320765318091053
+</code></pre>
+
+<p>Here <code>100</code> is defaulted to be a <code>Double</code> to satisfy the <code>Fractional</code> constraint, and the whole definition goes through with everything as <code>Double</code>s.</p>
+
+<p>It's just that it doesn't accept <code>Int</code>s:</p>
+
+<pre><code>ghci&gt; pi_approx (100 :: Int)
+
+&lt;interactive&gt;:1:1: error:
+• No instance for (Floating Int) arising from a use of ‘pi_approx’
+• In the expression: pi_approx (1 :: Int)
+</code></pre>

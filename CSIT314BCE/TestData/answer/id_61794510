@@ -1,0 +1,31 @@
+<p>Don't change the data, change the pointers to the data:</p>
+
+<pre class="lang-py prettyprint-override"><code>import pandas as pd
+
+from bokeh.io import show
+from bokeh.layouts import column
+from bokeh.models import ColumnDataSource, CustomJS
+from bokeh.models import Select
+from bokeh.models.tools import HoverTool
+from bokeh.plotting import figure
+
+df = pd.DataFrame({'2007': [10, 20, 30, 40],
+                   '2008': [90, 60, 70, 40],
+                   '2009': [30, 60, 70, 10],
+                   '2010': [80, 50, 30, 10]},
+                  index=[0, 0.5, 1, 1.5])
+ds = ColumnDataSource(df)
+p = figure(toolbar_location="above", x_axis_type="linear")
+p.add_tools(HoverTool(tooltips=[("y", "@index")]))
+
+line_renderer = p.line('2007', 'index', source=ds)
+
+handler = CustomJS(args=dict(line_renderer=line_renderer), code="""
+   line_renderer.glyph.x = {field: cb_obj.value};
+""")
+
+select = Select(title="df-column:", options=list(df.columns))
+select.js_on_change('value', handler)
+
+show(column(select, p))
+</code></pre>

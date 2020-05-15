@@ -1,0 +1,7 @@
+<pre><code>let m = new Model();
+m.id = 10;
+
+
+const model$ = of(m);
+model$.pipe(map()=&gt; m.id);
+</code></pre>

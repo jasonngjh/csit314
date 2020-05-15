@@ -1,0 +1,34 @@
+<p>I was adding modules and I decided that I don't need them so I deleted them and got this message </p>
+
+<blockquote>
+  <p>TokenError: EOF in multi-line statement at [1,1]</p>
+</blockquote>
+
+<p>Here's my code:</p>
+
+<pre><code>import random
+
+
+class tic_tac_toe:
+
+    a = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]
+
+    _player = None
+
+    row = None
+
+    column = None
+
+    _win = False
+
+    _draw = False
+
+    _moves_iterentor = 0
+
+    def __init__(self, *args, **kwags):
+        self.x = input("Choose your symbol: ")
+        self.o = input("Choose your symbol: ")
+        self._player = random.choice((self.x, self.o))
+        self.game()
+
+</code></pre>

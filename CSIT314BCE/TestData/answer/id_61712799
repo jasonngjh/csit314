@@ -1,0 +1,25 @@
+<p>An <code>O(n)</code> solution that will average all items.<br>
+Construct a dictionary with a list of the values and then average that dictionary afterwards:</p>
+
+<pre><code>In []:
+d = {}
+for lst in (mylist1, mylist2):
+    for i, v in lst:
+        d.setdefault(i, []).append(v)   # alternative use collections.defaultdict
+
+[(k, sum(v)/len(v)) for k, v in d.items()]
+
+Out[]:
+[('lemon', 0.1), ('egg', 0.45), ('muffin', 0.3), ('chocolate', 0.5), ('milk', 0.2), ('carrot', 0.8)]
+</code></pre>
+
+<p>Then if you just want the common ones you can add a guard:</p>
+
+<pre><code>In []:
+[(k, sum(v)/len(v)) for k, v in d.items() if len(v) &gt; 1]
+
+Out[]:
+[('egg', 0.45), ('chocolate', 0.5)]
+</code></pre>
+
+<p>This extends to any number of lists and makes no assumption around the number of common elements.</p>

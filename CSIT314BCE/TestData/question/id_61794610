@@ -1,0 +1,6 @@
+<p>I am wondering how to detect the character set of a file before I read it in using the FileReader Web API. I need to know what the file charset is before I read it in using <code>fileReader.readAsText(file, "UTF-8")</code> where "UTF-8" for me at the moment is unknown.</p>
+
+<p>Is there any npm packages that I can use with Angular or any manual Vanilla way of detecting a character set without looking at the signatures or using a BOM code (files on my PC saved in either ISO-8859-1 or UTF-8 have same signature and no BOM code).</p>
+
+<p><strong>Back story:</strong> 
+ I have a CSV and as soon as it saves in Excel, it saves with the encoding of ISO-8859-1 and I cannot expect all my clients to save their files with a specific encoding (non-technically minded folk). </p>

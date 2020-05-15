@@ -1,0 +1,40 @@
+<p>As others have said already, you should not expect a lot from this. </p>
+
+<p>Nevertheless, I found the following in your code:</p>
+
+<ol>
+<li><p>You are <strong><em>re-fitting</em></strong> the scaler every time during training <strong><em>and</em></strong> testing. You need to save the sacler and only transform data during testing, otherwise, the results will be slightly different:</p>
+
+<pre><code>from sklearn.externals import joblib
+scaler_filename = "scaler.save"
+if new_s_h5:
+    scaler = MinMaxScaler()
+    df_normalized = scaler.fit_transform(df.values)
+    joblib.dump(scaler, scaler_filename)
+
+else:
+    scaler = joblib.load(scaler_filename)
+    df_normalized = scaler.transform(df.values)
+</code></pre></li>
+<li><p>Set <code>shuffle=False</code>. As you do need to keep the order of your dataset.</p></li>
+<li><p>Set <code>batch_size=1</code>. As it will be less overfitting-prone and the learning will be more noisy and the error less averaged.</p></li>
+<li><p>Set <code>epochs=50</code> or more.</p></li>
+</ol>
+
+<hr>
+
+<p>With above-mentioned settings, the model achieved <code>loss: 0.0037 - val_loss: 3.7329e-04</code>. </p>
+
+<p>Check the following samples of prediction:</p>
+
+<h2>From 17/04/2020 --> 23/04/2020:</h2>
+
+<p><a href="https://i.stack.imgur.com/JIKD0.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/JIKD0.png" alt="enter image description here"></a></p>
+
+<h2>From 02/04/2020 --> 08/04/2020:</h2>
+
+<p><a href="https://i.stack.imgur.com/eu13S.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/eu13S.png" alt="enter image description here"></a></p>
+
+<h2>From 25/03/2020 --> 31/03/2020:</h2>
+
+<p><a href="https://i.stack.imgur.com/20Cey.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/20Cey.png" alt="enter image description here"></a></p>

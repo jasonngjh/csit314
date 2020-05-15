@@ -1,0 +1,16 @@
+<p>I could get your function to work with some minor changes:</p>
+
+<pre><code>def func(valueA, listB):
+    new_list = []
+    for i in range(len(listB)): #I changed your in listB with len(listB)
+        if listB[i] == valueA:
+            new_list.append(1)
+        else:
+            new_list.append(0)
+    return new_list
+</code></pre>
+
+<p>and adding the parameter <code>axis = 1</code> to the apply function</p>
+
+<pre><code>s['C'] = s.apply(lambda x: func(x.A, x.B), axis=1)
+</code></pre>

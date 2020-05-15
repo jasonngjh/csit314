@@ -1,0 +1,52 @@
+<p>Nice question. As others said, numbers by default are <code>int</code>, so your operation for <code>a</code> acts on two <code>int</code>s and overflows. I tried to reproduce this, and extend a bit to cast the number into <code>long long</code> variable and then add the <code>1</code> to it, as the <code>c</code> example below:</p>
+
+<pre><code>$ cat test.c 
+#include &lt;stdlib.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+
+void main() {
+  long long a, b, c;
+
+  a = 2147483647 + 1;
+  b = 2147483648;
+
+  c = 2147483647;
+  c = c + 1;
+
+  printf("%lld\n", a);
+  printf("%lld\n", b);
+  printf("%lld\n", c);
+}
+</code></pre>
+
+<p>The compiler does warn about overflow BTW, and normally you should compile production code with <code>-Werror -Wall</code> to avoid mishaps like this:</p>
+
+<pre><code>$ gcc -m64 test.c -o test
+test.c: In function 'main':
+test.c:8:16: warning: integer overflow in expression [-Woverflow]
+ a = 2147483647 + 1;
+                ^
+</code></pre>
+
+<p>Finally, the test results are as expected (<code>int</code> overflow in first case, <code>long long int</code>'s in second and third):</p>
+
+<pre><code>$ ./test 
+-2147483648
+2147483648
+2147483648
+</code></pre>
+
+<p>Another gcc version warns even further:</p>
+
+<pre><code>test.c: In function ‘main’:
+test.c:8:16: warning: integer overflow in expression [-Woverflow]
+ a = 2147483647 + 1;
+                ^
+test.c:9:1: warning: this decimal constant is unsigned only in ISO C90
+ b = 2147483648;
+ ^
+</code></pre>
+
+<p>Note also that technically <code>int</code> and <code>long</code> and variations of that are architecture-dependent, so their bit length can vary. 
+For predictably sized types you can be better off with <code>int64_t</code>, <code>uint32_t</code> and so on that are commonly defined in modern compilers and system headers, so whatever bitness your application is built for, the data types remain predictable. Note also the printing and scanning of such values is compounded by macros like <code>PRIu64</code> etc.</p>

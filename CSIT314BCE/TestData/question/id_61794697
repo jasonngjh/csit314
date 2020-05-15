@@ -1,0 +1,19 @@
+<p>From my API Gateway, I am publishing the JSON payloads to one of my SQS FIFO queue from which again getting consumed and publishing to another FIFO queue.</p>
+
+<p>While publishing my JSON payloads from API Gateway to my first SQS FIFO queue, getting the below error:
+<strong>AmazonSQS; Status Code: 403; Error Code: RequestThrottled</strong></p>
+
+<p>Currently I am working on a performance testing.
+I am sending continuous 200 messages each second and after sometime around 10 mins, I start getting RequestThrottled errors for few requests. Its coming around 2000 throttle errors in total 500000 requests.</p>
+
+<p>I am using simple AWS Java SDK for publishing the message to SQS:</p>
+
+<pre><code>final SendMessageRequest sendMessageRequest = new SendMessageRequest(sqsURL, messageMetaData);
+sendMessageRequest.setMessageGroupId(BoostConstant.GROUP_NAME);
+sendMessageRequest.setMessageDeduplicationId(messageMetaData.getId());
+amazonSQS.sendMessage(sendMessageRequest);
+</code></pre>
+
+<p>For me it looks like as there are so many messages there might be some limit in SQS FIFO. But need your help to understand what are the possible ways to resolve this issue.</p>
+
+<p>Thank you in advance.</p>

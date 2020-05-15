@@ -1,0 +1,15 @@
+<pre><code>def move(s: String){
+
+if(s.equals("l")){
+  al()
+}else if(s.equals("r")){
+  ar()
+}else if(s.equals("u")){
+  au()
+}else if(s.equals("d")){
+  ad()
+} }
+</code></pre>
+
+<p>the code above is something I have tried but doesn't work. It should be able to get multiple strings like (lrudd) in one line and each letter equals to a function. 
+so if lrudd is entered the al(), ar(), au(), ad(), ad() function should be done, its a 2d game so the player should move al()- which is left, ar()- which is right, ar()- which up and ad(),twice as down is entered twice (dd) </p>

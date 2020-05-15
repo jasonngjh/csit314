@@ -1,0 +1,186 @@
+﻿@model IEnumerable<CSIT314BCE.Models.Post>
+@Styles.Render("~/Content/Style.css")
+@{
+    ViewBag.Title = "Reports";
+}
+
+<table style="width:100%">
+    <tr>
+        <td><h2>Reports</h2></td>
+    </tr>
+</table>
+@using (Html.BeginForm("Reports", "Posts", FormMethod.Get))
+{
+    <b>Sort By:</b>
+    @Html.RadioButton("viewBy", "MAnsweredQ", true)<text>Most Answered Questions</text>
+    @Html.RadioButton("viewBy", "MVotedQ")<text>Most Voted Questions</text>
+    @Html.RadioButton("viewBy", "MCommentedQ")<text>Most Commented Questions</text>
+    @Html.RadioButton("viewBy", "TopStudent")<text>Top Student</text>
+    @Html.TextBox("viewAnswered", "MAnsweredQ", new { style = "display:none" })
+    @Html.TextBox("viewVoted", "MVotedQ", new { style = "display:none" })
+    @Html.TextBox("viewCommented", "MCommentedQ", new { style = "display:none" })
+    @Html.TextBox("viewTop", "TopStudent", new { style = "display:none" })
+    <input type="submit" value="Sort" />
+    <br />
+    <table style="width:100%;">
+        <tr id="timespanRow">
+            <td style="width: 150px"><label>Currently displaying:</label></td>
+            <td colspan="3">
+                @Html.DropDownList("timespan", new List<SelectListItem>
+{
+new SelectListItem {Text = "All Time", Value="alltime"  },
+new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
+}, new { @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"><br /></td>
+        </tr>
+        <tr id="timeset">
+            <td style="width: 130px"><label>Select time span: </label></td>
+            <td style="width: 110px">   @Html.TextBox("StartDate", null, new { @class = "form-control", style = "width:100px" }) </td>
+            <td style="width: 20px">  to  </td>
+            <td>@Html.TextBox("EndDate", null, new { @class = "form-control", style = "width:100px" })</td>
+        </tr>
+    </table>
+}
+
+<table style="width:100%">
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="width: 100px">
+                <div id="vote">
+                    @Html.DisplayFor(modelItem => item.VoteCount)<br />
+                    vote(s)
+                </div>
+                <div id="answer">
+                    @Html.DisplayFor(modelItem => item.AnswerCount)<br />
+                    answer(s)
+                </div>
+            </td>
+            <td id="post" style="width: 850px">
+                <div id="questionDetail">
+                    @if (!string.IsNullOrEmpty(item.Title))
+                    {
+                        @Html.ActionLink(item.Title, "Details", "Posts", new { id = item.PostId }, new { style = "text-decoration:none;color:black;" })
+                    }
+                </div>
+            </td>
+            <td>
+                <div id="askedBy">
+                    asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
+                    on @Html.DisplayFor(modelItem => item.CreationDate)
+                </div>
+                @if (User.IsInRole("Moderator"))
+                {
+                    <div id="modOption">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.PostId })
+                        <br />
+                        @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
+                    </div>
+                }
+            </td>
+        </tr>
+    }
+</table>
+@section Scripts{
+    <!-- Bootstrap -->
+    <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js'></script>
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css'
+          media="screen" />
+    <!-- Bootstrap -->
+    <!-- Bootstrap DatePicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <!-- Bootstrap DatePicker -->
+
+    <script type="text/javascript">
+
+    var d = new Date();
+
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+
+    var currentDay = (('' + day).length < 2 ? '0' : '') + day + '/' +
+        (('' + month).length < 2 ? '0' : '') + month + '/' +
+        d.getFullYear();
+
+    var startDate;
+    var endDate;
+
+    $(document).ready(function () {
+        $("#timeset").hide();
+
+        $('#timespan').on('change', function () {
+            if (this.value == 'choosetime') {
+                $("#timeset").show();
+            }
+            else {
+                $("#timeset").hide();
+            }
+        });
+
+        $('input:radio[name="viewBy"]').change(function () {
+            if ($(this).val() == 'TopStudent') {
+                //alert("test");
+                $('#timespan').val("alltime");
+                $('#timespanRow').hide();
+                $("#timeset").hide();
+            } else {
+                $('#timespanRow').show();
+            }
+        });
+
+    });
+
+    $(function () {
+        $('#StartDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            format: "dd/mm/yyyy",
+            language: "tr",
+            todayBtn: 'linked',
+            orientation: "bottom",
+            autoclose: true
+
+        });
+        $('#EndDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            format: "dd/mm/yyyy",
+            language: "tr",
+            todayBtn: 'linked',
+            orientation: "bottom",
+            autoclose: true
+        });
+
+        startDate = new Date(currentDay);
+        endDate = new Date(currentDay);
+
+        $('#StartDate').datepicker()
+            .on('changeDate', function (ev) {
+                startDate = new Date(ev.date);
+                if (ev.date.valueOf() > endDate.valueOf()) {
+                    alert("Starting date cannot be earlier than ending date!");
+                    $("#StartDate").datepicker("setDate", endDate);
+                }
+            });
+
+        $('#EndDate').datepicker()
+            .on('changeDate', function (ev) {
+                endDate = new Date(ev.date);
+                if (ev.date.valueOf() < startDate.valueOf()) {
+                    alert("Ending date cannot be earlier than starting date!");
+                    $("#EndDate").datepicker("setDate", startDate);
+                }
+            });
+
+        $("#StartDate").datepicker("setDate", currentDay);
+        $("#EndDate").datepicker("setDate", currentDay);
+    });
+    </script>
+}

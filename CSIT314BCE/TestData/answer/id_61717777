@@ -1,0 +1,219 @@
+<p>A different idea of animation with less of code:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="true" data-console="true" data-babel="false">
+<div class="snippet-code snippet-currently-hidden">
+<pre class="snippet-code-css lang-css prettyprint-override"><code>:root {
+    --bg: #1a1e24;
+    --color: #eee;
+    --font: Montserrat, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.bone {
+    display: inline-block;
+    text-align: center;
+    background: var(--color);
+    color: var(--bg);
+    font-weight: bold;
+    padding: 1em 1em 1.03em;
+    line-height: 1;
+    border-radius: 0.4em;
+    position: relative;
+    min-width: 8.23em;
+    text-decoration: none;
+    font-family: var(--font);
+    font-size: 1.25rem;
+    filter: url('#goo');
+}
+
+.bone:before {
+    content: "";
+    position: absolute;
+    top:-1em;  
+    bottom:-1em;
+    left:0;
+    right:0;
+    background: 
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) top    left,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) top    right,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) bottom left,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) bottom right;
+    background-size: 0 0;
+    background-repeat:no-repeat;
+    transition:0.8s ease-out;
+}
+.bone:hover::before {
+    background-size: 50px 50px;
+    left:-1em;
+    right:-1em;
+}
+
+/* Demo styles */
+
+body {
+    min-height: 100vh;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg)
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;a class="bone" href="#"&gt;Woof woof&lt;/a&gt;
+
+
+&lt;!-- Filter: https://css-tricks.com/gooey-effect/ --&gt;
+&lt;svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
+    &lt;defs&gt;
+        &lt;filter id="goo"&gt;&lt;feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" /&gt;    
+            &lt;feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" /&gt;
+            &lt;feComposite in="SourceGraphic" in2="goo" operator="atop"/&gt;
+        &lt;/filter&gt;
+    &lt;/defs&gt;
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>You can adjust different values to control the final shape using CSS variables:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-css lang-css prettyprint-override"><code>.bone {
+    --ty:-1em;
+    --tx:-1em;
+    --s:50px;
+    display: inline-block;
+    text-align: center;
+    background: var(--color);
+    color: var(--bg);
+    font-weight: bold;
+    padding: 1em 1em 1.03em;
+    margin:2em;
+    line-height: 1;
+    border-radius: 0.4em;
+    position: relative;
+    min-width: 8.23em;
+    text-decoration: none;
+    font-family:  Montserrat, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    filter: url('#goo');
+}
+
+.bone:before {
+    content: "";
+    position: absolute;
+    top:var(--ty);  
+    bottom:var(--ty);
+    left:0;
+    right:0;
+    background: 
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) top    left,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) top    right,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) bottom left,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) bottom right;
+    background-size: 0 0;
+    background-repeat:no-repeat;
+    transition:0.7s;
+}
+.bone:hover::before {
+    background-size: var(--s) var(--s);
+    left:var(--tx);
+    right:var(--tx);
+}
+
+body {
+    background:var(--bg);
+    --bg:#1a1e24;
+    --color:#eee;
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;a class="bone" href="#"&gt;Woof woof&lt;/a&gt;
+&lt;a class="bone" href="#" style="--ty:-0.5em;--s:35px;"&gt;Woof woof&lt;/a&gt;
+&lt;a class="bone" href="#" style="--tx:-0.5em;--s:40px;"&gt;Woof &lt;/a&gt;
+&lt;a class="bone" href="#" style="--tx:-1.2em;--ty:-1.3em;--s:55px;"&gt;Woof &lt;/a&gt;
+
+
+&lt;!-- Filter: https://css-tricks.com/gooey-effect/ --&gt;
+&lt;svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
+    &lt;defs&gt;
+        &lt;filter id="goo"&gt;&lt;feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" /&gt;    
+            &lt;feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" /&gt;
+            &lt;feComposite in="SourceGraphic" in2="goo" operator="atop"/&gt;
+        &lt;/filter&gt;
+    &lt;/defs&gt;
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>Still another kind of animation:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-css lang-css prettyprint-override"><code>.bone {
+    --ty:-1em;
+    --tx:-1em;
+    --s:50px;
+    display: inline-block;
+    text-align: center;
+    background: var(--color);
+    color: var(--bg);
+    font-weight: bold;
+    padding: 1em 1em 1.03em;
+    margin:2em;
+    line-height: 1;
+    border-radius: 0.4em;
+    position: relative;
+    z-index:0;
+    min-width: 8.23em;
+    text-decoration: none;
+    font-family:  Montserrat, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    filter: url('#goo');
+}
+
+.bone:before {
+    content: "";
+    position: absolute;
+    z-index:-1;
+    top:50%;  
+    bottom:50%;
+    left:50%;
+    right:50%;
+    background: 
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) top    left,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) top    right,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) bottom left,
+      radial-gradient(farthest-side,var(--color) 98%,transparent 100%) bottom right;
+    background-size: var(--s) var(--s);
+    background-repeat:no-repeat;
+    transition:0.7s;
+}
+.bone:hover::before {
+    top:var(--ty);  
+    bottom:var(--ty);
+    left:var(--tx);
+    right:var(--tx);
+}
+
+body {
+    background:var(--bg);
+    --bg:#1a1e24;
+    --color:#eee;
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;a class="bone" href="#"&gt;Woof woof&lt;/a&gt;
+&lt;a class="bone" href="#" style="--ty:-0.5em;--s:35px;"&gt;Woof woof&lt;/a&gt;
+&lt;a class="bone" href="#" style="--tx:-0.5em;--s:40px;"&gt;Woof &lt;/a&gt;
+&lt;a class="bone" href="#" style="--tx:-1.2em;--ty:-1.3em;--s:55px;"&gt;Woof &lt;/a&gt;
+
+
+&lt;!-- Filter: https://css-tricks.com/gooey-effect/ --&gt;
+&lt;svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
+    &lt;defs&gt;
+        &lt;filter id="goo"&gt;&lt;feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" /&gt;    
+            &lt;feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" /&gt;
+            &lt;feComposite in="SourceGraphic" in2="goo" operator="atop"/&gt;
+        &lt;/filter&gt;
+    &lt;/defs&gt;
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+</p>

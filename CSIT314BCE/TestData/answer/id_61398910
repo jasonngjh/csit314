@@ -1,0 +1,11 @@
+<p>Here’s the Google IssueTracker thread on the issue.</p>
+
+<p><a href="https://issuetracker.google.com/issues/154855417" rel="noreferrer">https://issuetracker.google.com/issues/154855417</a></p>
+
+<p>Latest status:</p>
+
+<p>We believe the crashes of Google Maps SDK are partially resolved. Full resolution is expected to complete by Thursday, 2020-04-23 19:45 US/Pacific.</p>
+
+<p>Possible workaround:</p>
+
+<p>Customers for whom clearing application data is safe can recommend their users clear data for the applications (not just the cache). If there is uncertainty about the safety of clearing application data, users can wait for new data to be fetched within the next 3 hours (many users will see resolution of the problem sooner than this).</p>

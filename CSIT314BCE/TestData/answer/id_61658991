@@ -1,0 +1,246 @@
+<p>I will try to answer your points one by one. I will follow a little example where our View that should be reusable is a simple <code>View</code> that shows a <code>Text</code> and a <code>NavigationLink</code> that will go to some <code>Destination</code>.
+I created a <a href="https://gist.github.com/yrave/1797f2e66b7e1e328cd5b8500d913cdd" rel="nofollow noreferrer">Gist: SwiftUI - Flexible Navigation with Coordinators
+</a> if you want to have a look at my full example.</p>
+
+<blockquote>
+  <p>The design problem: NavigationLinks are hardcoded into the View.</p>
+</blockquote>
+
+<p>In your example it is bound to the View but as other answers have already shown, you can inject the destination to your View type <code>struct MyView&lt;Destination: View&gt;: View</code>. You can use any Type conforming to View as your destination now.</p>
+
+<blockquote>
+  <p>But if the view containing this NavigationLink should be reusable I can not hardcode the destination. There has to be a mechanism which provides the destination.</p>
+</blockquote>
+
+<p>With the change above, there are mechanisms to provide the type. One example is:</p>
+
+<pre><code>struct BoldTextView: View {
+    var text: String
+
+    var body: some View {
+        Text(text)
+            .bold()
+    }
+}
+</code></pre>
+
+<pre><code>struct NotReusableTextView: View {
+    var text: String
+
+    var body: some View {
+        VStack {
+            Text(text)
+            NavigationLink("Link", destination: BoldTextView(text: text))
+        }
+    }
+}
+
+</code></pre>
+
+<p>will change to</p>
+
+<pre><code>struct ReusableNavigationLinkTextView&lt;Destination: View&gt;: View {
+    var text: String
+    var destination: () -&gt; Destination
+
+    var body: some View {
+        VStack {
+            Text(text)
+
+            NavigationLink("Link", destination: self.destination())
+        }
+    }
+}
+</code></pre>
+
+<p>and you can pass in your destination like this:</p>
+
+<pre><code>struct BoldNavigationLink: View {
+    let text = "Text"
+    var body: some View {
+        ReusableNavigationLinkTextView(
+            text: self.text,
+            destination: { BoldTextView(text: self.text) }
+        )
+    }
+}
+</code></pre>
+
+<blockquote>
+  <p>As soon as I have multiple reusable screens I run into the logical problem that one reusable view (ViewA) needs a preconfigured view-destination (ViewB). But what if ViewB also needs a preconfigured view-destination ViewC? I would need to create ViewB already in such a way that ViewC is injected already in ViewB before I inject ViewB into ViewA. And so on....</p>
+</blockquote>
+
+<p>Well, obviously you need some kind of logic that will determine your <code>Destination</code>. At some point you need to tell the view what view comes next. I guess what you're trying to avoid is this:</p>
+
+<pre><code>struct NestedMainView: View {
+    @State var text: String
+
+    var body: some View {
+        ReusableNavigationLinkTextView(
+            text: self.text,
+            destination: {
+                ReusableNavigationLinkTextView(
+                    text: self.text,
+                    destination: {
+                        BoldTextView(text: self.text)
+                    }
+                )
+            }
+        )
+    }
+}
+</code></pre>
+
+<p>I put together a simple example that uses <code>Coordinator</code>s to pass around dependencies and to create the views. There is a protocol for the Coordinator and you can implement specific use cases based on that.</p>
+
+<pre><code>protocol ReusableNavigationLinkTextViewCoordinator {
+    associatedtype Destination: View
+    var destination: () -&gt; Destination { get }
+
+    func createView() -&gt; ReusableNavigationLinkTextView&lt;Destination&gt;
+}
+</code></pre>
+
+<p>Now we can create a specific Coordinator that will show the <code>BoldTextView</code> when clicking on the <code>NavigationLink</code>.</p>
+
+<pre><code>struct ReusableNavigationLinkShowBoldViewCoordinator: ReusableNavigationLinkTextViewCoordinator {
+    @Binding var text: String
+
+    var destination: () -&gt; BoldTextView {
+        { return BoldTextView(text: self.text) }
+    }
+
+    func createView() -&gt; ReusableNavigationLinkTextView&lt;Destination&gt; {
+        return ReusableNavigationLinkTextView(text: self.text, destination: self.destination)
+    }
+}
+</code></pre>
+
+<p>If you want, you can also use the <code>Coordinator</code> to implement custom logic that determines the destination of your view. The following Coordinator shows the <code>ItalicTextView</code> after four clicks on the link.</p>
+
+<pre><code>struct ItalicTextView: View {
+    var text: String
+
+    var body: some View {
+        Text(text)
+            .italic()
+    }
+}
+</code></pre>
+
+<pre><code>struct ShowNavigationLinkUntilNumberGreaterFourThenItalicViewCoordinator: ReusableNavigationLinkTextViewCoordinator {
+    @Binding var text: String
+    let number: Int
+    private var isNumberGreaterThan4: Bool {
+        return number &gt; 4
+    }
+
+    var destination: () -&gt; AnyView {
+        {
+            if self.isNumberGreaterThan4 {
+                let coordinator = ItalicTextViewCoordinator(text: self.text)
+                return AnyView(
+                    coordinator.createView()
+                )
+            } else {
+                let coordinator = ShowNavigationLinkUntilNumberGreaterFourThenItalicViewCoordinator(
+                    text: self.$text,
+                    number: self.number + 1
+                )
+                return AnyView(coordinator.createView())
+            }
+        }
+    }
+
+    func createView() -&gt; ReusableNavigationLinkTextView&lt;AnyView&gt; {
+        return ReusableNavigationLinkTextView(text: self.text, destination: self.destination)
+    }
+}
+
+</code></pre>
+
+<p>If you have data that needs to be passed around, create another Coordinator around the other coordinator to hold the value. In this example I have a <code>TextField</code> -> <code>EmptyView</code> -> <code>Text</code> where the value from the TextField should be passed to the <code>Text.</code> The <code>EmptyView</code> must not have this information.</p>
+
+<pre><code>struct TextFieldView&lt;Destination: View&gt;: View {
+    @Binding var text: String
+    var destination: () -&gt; Destination
+
+    var body: some View {
+        VStack {
+            TextField("Text", text: self.$text)
+
+            NavigationLink("Next", destination: self.destination())
+        }
+    }
+}
+
+struct EmptyNavigationLinkView&lt;Destination: View&gt;: View {
+    var destination: () -&gt; Destination
+
+    var body: some View {
+        NavigationLink("Next", destination: self.destination())
+    }
+}
+</code></pre>
+
+<p>This is the coordinator that creates views by calling other coordinators (or creates the views itself). It passes the value from <code>TextField</code> to <code>Text</code> and the <code>EmptyView</code> doesn't know about this.</p>
+
+<pre><code>struct TextFieldEmptyReusableViewCoordinator {
+    @Binding var text: String
+
+    func createView() -&gt; some View {
+        let reusableViewBoldCoordinator = ReusableNavigationLinkShowBoldViewCoordinator(text: self.$text)
+        let reusableView = reusableViewBoldCoordinator.createView()
+
+        let emptyView = EmptyNavigationLinkView(destination: { reusableView })
+
+        let textField = TextFieldView(text: self.$text, destination: { emptyView })
+
+        return textField
+    }
+}
+</code></pre>
+
+<p>To wrap it all up, you can also create a <code>MainView</code> that has some logic that decides what <code>View</code> / <code>Coordinator</code> should be used.</p>
+
+<pre><code>struct MainView: View {
+    @State var text = "Main"
+
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 32) {
+                NavigationLink("Bold", destination: self.reuseThenBoldChild())
+                NavigationLink("Reuse then Italic", destination: self.reuseThenItalicChild())
+                NavigationLink("Greater Four", destination: self.numberGreaterFourChild())
+                NavigationLink("Text Field", destination: self.textField())
+            }
+        }
+    }
+
+    func reuseThenBoldChild() -&gt; some View {
+        let coordinator = ReusableNavigationLinkShowBoldViewCoordinator(text: self.$text)
+        return coordinator.createView()
+    }
+
+    func reuseThenItalicChild() -&gt; some View {
+        let coordinator = ReusableNavigationLinkShowItalicViewCoordinator(text: self.$text)
+        return coordinator.createView()
+    }
+
+    func numberGreaterFourChild() -&gt; some View {
+        let coordinator = ShowNavigationLinkUntilNumberGreaterFourThenItalicViewCoordinator(text: self.$text, number: 1)
+        return coordinator.createView()
+    }
+
+    func textField() -&gt; some View {
+        let coordinator = TextFieldEmptyReusableViewCoordinator(text: self.$text)
+        return coordinator.createView()
+    }
+}
+</code></pre>
+
+<p>I know that I could also create a <code>Coordinator</code> protocol and some base methods, but I wanted to show a simple example on how to work with them.</p>
+
+<p>By the way, this is very similar to the way that I used <code>Coordinator</code> in Swift <code>UIKit</code> apps.</p>
+
+<p>If you have any questions, feedback or things to improve it, let me know.</p>

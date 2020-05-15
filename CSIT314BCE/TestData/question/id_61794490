@@ -1,0 +1,44 @@
+<p>No jQuery, only JS.</p>
+
+<pre><code>var array1 = [
+  {
+    key1: '01',
+    key2: 'abc',
+    key3: 'def'
+  },
+  {
+    key1: '02',
+    key2: 'skip',
+    key3: 'skip'
+  },
+  {
+    key1: '03',
+    key2: 'ghi',
+    key3: 'jkl'
+  },
+];
+
+var filters = ['ab', 'kl'];
+
+function filter_by_part_of_string(array, filters) {
+  return ...
+}
+</code></pre>
+
+<p>I would like to get</p>
+
+<pre><code>[
+  {
+    key1: '01',
+    key2: 'abc',
+    key3: 'def'
+  },
+  {
+    key1: '03',
+    key2: 'ghi',
+    key3: 'jkl'
+  },
+];
+</code></pre>
+
+<p>I would like to filter by just part of string in value at any key. I tried search on stackoverflow, but most of answer i found was just filter by string but not a array and part of string.</p>

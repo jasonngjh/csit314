@@ -1,0 +1,10 @@
+<p>It's really hard to tell what you are trying to do here, but the root cause is that you <strong>cannot nest</strong> sets of <code>&lt;% ... %&gt;</code>.</p>
+
+<p>Probably you just want:</p>
+
+<pre><code>&lt;% for (var j=0; j &lt; items.length; j++) { %&gt;
+    &lt;li&gt;&lt;%= items[j] %&gt;&lt;/li&gt;
+&lt;% } %&gt;
+</code></pre>
+
+<p>Possibly you expect <code>items</code> to be provided by <em>client-side</em> JavaScript and not EJS, in which case see <a href="https://stackoverflow.com/questions/13840429/what-is-the-difference-between-client-side-and-server-side-programming">What is the difference between client-side and server-side programming?</a></p>

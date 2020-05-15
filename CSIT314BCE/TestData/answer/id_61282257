@@ -1,0 +1,32 @@
+<p>There is no reason to use <code>goto_w</code> when the branch fits into a <code>goto</code>. But you seem to have missed that the branches are <em>relative</em>, using a signed offset, as a branch can also go backward.</p>
+
+<p>You don’t notice it when looking at the output of a tool like <code>javap</code>, as it calculates the resulting absolute target address before printing.</p>
+
+<p>So <code>goto</code>’s range of <code>-327678 … +32767‬</code> is not always enough to address each possible target location in the <code>0 … +65535</code> range.</p>
+
+<p>For example, the following method will have a <code>goto_w</code> instruction at the beginning:</p>
+
+<pre><code>public static void methodWithLargeJump(int i) {
+    for(; i == 0;) {
+        try {x();} finally { switch(i){ case 1: try {x();} finally { switch(i){ case 1: 
+        try {x();} finally { switch(i){ case 1: try {x();} finally { switch(i){ case 1: 
+        try {x();} finally { switch(i){ case 1: try {x();} finally { switch(i){ case 1: 
+        try {x();} finally { switch(i){ case 1: try {x();} finally { switch(i){ case 1: 
+        try {x();} finally { switch(i){ case 1: try {x();} finally { switch(i){ case 1: 
+        } } } } } } } } } } } } } } } } } } } } 
+    }
+}
+static void x() {}
+</code></pre>
+
+<p><a href="https://ideone.com/Hkuani" rel="noreferrer">Demo on Ideone</a></p>
+
+<pre class="lang-none prettyprint-override"><code>Compiled from "Main.java"
+class LargeJump {
+  public static void methodWithLargeJump(int);
+    Code:
+       0: iload_0
+       1: ifeq          9
+       4: goto_w        57567
+…
+</code></pre>

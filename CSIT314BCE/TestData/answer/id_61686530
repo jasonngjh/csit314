@@ -1,0 +1,33 @@
+<p>Here's an idea using <code>pop</code> to avoid duplicate items:</p>
+
+<pre><code>def pop_element(inp_list, search_value): 
+    for index, (_, query_value) in enumerate(inp_list): 
+        if query_value == search_value: 
+            return inp_list.pop(index)[0] 
+
+list1 = [('a', 0), ('b', 100), ('c', 200), ('d', 300), ('e', 400), ('f', 500)]
+list2 = [[0, 200, 400], [100, 300, 500]]
+list3 = [[pop_element(list1, value) for value in inner_list] for inner_list in list2]
+
+# list 3 is [['a', 'c', 'e'], ['b', 'd', 'f']]
+</code></pre>
+
+<p>It also works on your other example:</p>
+
+<pre><code>list1 = [('a', 0), ('b', 0), ('c', 0), ('d', 0), ('e', 0), ('f', 0)]   
+list2 = [[0, 0, 0], [0, 0, 0]]                                                                                                                                
+list3 = [[pop_element(list1, value) for value in inner_list] for inner_list in list2]
+
+# list3 is [['a', 'b', 'c'], ['d', 'e', 'f']]
+</code></pre>
+
+<p>And it conveniently places <code>None</code> values when a value from <code>list2</code> is not found:</p>
+
+<pre><code>list1 = [('a', 0), ('b', 0), ('c', 0), ('d', 0), ('e', 0), ('f', 0)]   
+list2 = [[0, 0, 11], [0, 'this is a value', 0]]                                                                                                                                
+list3 = [[pop_element(list1, value) for value in inner_list] for inner_list in list2]
+
+# list3 is [['a', 'b', None], ['c', None, 'd']]
+</code></pre>
+
+<p>The only caveat is that this method turns <code>list1</code> into an empty list, so you might want to do <code>list1_copy = list1.copy()</code> and pass that to the list comprehension instead.</p>

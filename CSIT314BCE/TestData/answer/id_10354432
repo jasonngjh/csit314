@@ -1,3 +1,0 @@
-<p>If you're in a client-side environment, investigating about the cross-browser support is mandatory for a well supported web application.</p>
-
-<p>The right HTTP Content-Type would be <code>application/json</code>, as others already highlighted too, but some clients do not handle it very well, that's why jQuery recommends the default <code>text/html</code>.</p>

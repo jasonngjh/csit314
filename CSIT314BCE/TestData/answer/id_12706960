@@ -1,3 +1,0 @@
-<p>One argument not mentioned elsewhere to prefer the pascal case <code>String</code>:</p>
-
-<p><code>System.String</code> is a reference type, and <em>reference types names are pascal case by convention</em>.</p>

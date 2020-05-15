@@ -1,0 +1,12 @@
+<p>Because range of int in C/C++ is <code>-2147483648</code> to <code>+2147483647</code>. </p>
+
+<p>So when you add <code>1</code>, it overflows the max limit of <code>int</code>. </p>
+
+<p>For better understanding, assume the whole range of <code>int</code> puts on a circle in proper order:</p>
+
+<pre><code>2147483647 + 1 == -2147483648
+
+2147483647 + 2 == -2147483647
+</code></pre>
+
+<p>If you want to overcome this, try to use <code>long long</code> instead of <code>int</code>.</p>

@@ -1,0 +1,40 @@
+<p>I have run into the following code snippet:</p>
+
+<pre><code>int a = 3;
+printf("%d", sizeof(a)++);
+</code></pre>
+
+<p>Apparently this will compile with GCC 9.3.0 and -std=c99.
+While this does not compile:</p>
+
+<pre><code>printf("%d", sizeof(3)++);
+</code></pre>
+
+<p>GCC prints an error</p>
+
+<blockquote>
+  <p>error: lvalue required as increment operand</p>
+</blockquote>
+
+<p>Before I have compiled the first snippet I would have expected such an error.</p>
+
+<p>The operand of the postfix ++ operator shall be an lvalue as of C99 standard</p>
+
+<blockquote>
+  <p>The operand of the postfix increment or decrement operator shall have qualified or unqualified real or pointer type and shall be a modifiable lvalue.</p>
+</blockquote>
+
+<p>About the return value of the sizeof Operator (as expected):</p>
+
+<blockquote>
+  <p>The sizeof operator yields the size (in bytes) of its operand, which may be an
+  expression or the parenthesized name of a type. The size is determined from the type of
+  the operand. The result is an integer. If the type of the operand is a variable length array
+  type, the operand is evaluated; otherwise, the operand is not evaluated and the result is an
+  integer constant.</p>
+  
+  <p>The value of the result is implementation-defined, and its type (an unsigned integer type)
+  is size_t, defined in  (and other headers).</p>
+</blockquote>
+
+<p>How is it possible the <code>sizeof(a)++</code> compiles? Is this undefined behavior or am I missing something?</p>

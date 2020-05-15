@@ -1,0 +1,16 @@
+<p>Moment Released new version that breaks application, </p>
+
+<p>as in your case there is no moment in package.json, if you simply add this to your package </p>
+
+<p><code>moment: "2.24.0"</code></p>
+
+<p>and run npm install it will add this moment package and resolve your issue, </p>
+
+<p>otherwise you can try this cammand </p>
+
+<pre><code>npm install --save --save-exact moment@2.24.0
+</code></pre>
+
+<p>it will automatically add this package to your package.json with this specific version</p>
+
+<p>i hope this works for you</p>

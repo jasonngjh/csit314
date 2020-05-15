@@ -1,0 +1,39 @@
+<p>You could use <code>jQuery.data()</code> to get the data attribute and <code>.find()</code> to only update the element with show-price class which is descendant:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>jQuery('li.banner-list-img').prepend(jQuery('&lt;div class="show-price"&gt;  &lt;/div&gt;'));
+
+jQuery('.banner-list-img').each(function() {
+  jQuery(this).find('.show-price').html(jQuery(this).data('price'));
+})</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;div class="configurator-item"&gt;
+    &lt;ul&gt;
+       &lt;li class="banner-list-img" data-price="122"&gt;&lt;/li&gt;
+       &lt;li class="banner-list-img" data-price="123"&gt;&lt;/li&gt;
+       &lt;li class="banner-list-img" data-price="124"&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>And this could be improved doing the prepend with the data value all in one go:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>jQuery('.banner-list-img').each(function() {
+  jQuery(this).prepend(jQuery('&lt;div class="show-price"&gt;' + jQuery(this).data('price') + '&lt;/div&gt;'));
+})</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;div class="configurator-item"&gt;
+    &lt;ul&gt;
+       &lt;li class="banner-list-img" data-price="122"&gt;&lt;/li&gt;
+       &lt;li class="banner-list-img" data-price="123"&gt;&lt;/li&gt;
+       &lt;li class="banner-list-img" data-price="124"&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>

@@ -1,0 +1,34 @@
+<p>Please read, this is different!</p>
+
+<p>I've used Firebase Functions previously and solved this issue by adding this code:</p>
+
+<pre><code>const cors = require('cors')({ origin: true });
+return cors(req, res, () =&gt; {
+    let format = req.query.format;
+    if (!format) {
+        format = req.body.format;
+    }
+    const formattedDate = moment().format(format);
+    console.log('Sending Formatted date:', formattedDate);
+    res.status(200).send(formattedDate);
+});
+</code></pre>
+
+<p>But now I'm working on a new project, and I'm getting this error no matter what I try to do.</p>
+
+<p>I have read and tried the solutions in over 20 other questions here on <strong>stackoverflow</strong> and around the internet, and none of them work now.</p>
+
+<p>So I went to firebase's GitHub, downloaded the <a href="https://github.com/firebase/functions-samples/blob/master/quickstarts/time-server/functions/index.js" rel="nofollow noreferrer">date example</a> (has the recommended cors fix implemented) and deployed it.</p>
+
+<p>And I still get the same error!</p>
+
+<pre><code>Access to fetch at 'https://us-central1-generation-y-members.cloudfunctions.net/date' from origin
+'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. 
+If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+</code></pre>
+
+<p>The function can be called from postman and does work.
+I've upgraded my project to the blaze plan (didn't help).
+I've tried changing to <strong>origin: "<a href="http://localhost:3000" rel="nofollow noreferrer">http://localhost:3000</a>"</strong> instead of <strong>origin: true</strong>, didn't help at all.</p>
+
+<p>Any pointers would be highly appreciated.</p>

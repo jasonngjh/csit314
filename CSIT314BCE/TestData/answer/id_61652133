@@ -1,0 +1,88 @@
+<h1>This signed integer overflow is undefined behaviour, like always in C/C++</h1>
+
+<p><a href="http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html" rel="nofollow noreferrer">What Every C Programmer Should Know About Undefined Behavior</a></p>
+
+<p>Unless you compile with <a href="https://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html#index-fwrapv" rel="nofollow noreferrer"><code>gcc -fwrapv</code></a> or equivalent to make signed integer overflow well-defined as 2's complement wrap-around.  With <code>gcc -fwrapv</code> or any other implementation that defines integer overflow = wraparound, the wrapping that you happened to see in practice is well-defined and follows from other ISO C rules for types of integer literals and evaluating expressions.</p>
+
+<p><code>T var = expression</code> only implicitly converts the expression to type <code>T</code> <em>after</em> evaluating the expression according to standard rules.  Like <code>(T)(expression)</code>, not like <code>(int64_t)2147483647 + (int64_t)1</code>.</p>
+
+<p>A compiler could have chosen to assume that this path of execution is never reached and emitted an illegal instruction or something.  Implementing 2's complement wraparound on overflow in constant expressions is just a choice that some/most compilers make.</p>
+
+<hr>
+
+<p>The ISO C standard specifies that <strong>a numeric literal has type <code>int</code> unless the value is too large to fit</strong> (it can be <a href="https://stackoverflow.com/questions/41405578/what-are-integer-literal-type-and-how-they-are-stored">long or long long, or unsigned for hex</a>), or if a size override is used.   Then the usual integer promotion rules apply for binary operators like <code>+</code> and <code>*</code>, regardless of whether it's part of a compile-time constant expression or not.</p>
+
+<p>This is a simple and consistent rule that's easy for compilers to implement, even in the early days of C when compilers had to run on limited machines.</p>
+
+<p>Thus in ISO C/C++ <code>2147483647 + 1</code> is <em>undefined behaviour</em> on implementations with 32-bit <code>int</code>.  <strong>Treating it as <code>int</code> (and thus wrapping the value to signed negative) follows naturally from the ISO C rules for what type the expression should have</strong>, and from normal evaluation rules for the non-overflow case.  Current compilers don't choose to define the behaviour differently from that.</p>
+
+<p>ISO C/C++ do leave it undefined, so an implementation could pick literally anything (including nasal demons) without violating the C/C++ standards.  In practice this behaviour (wrap + warn) is one of the less objectionable ones, and follows from treating signed integer overflow as wrapping, which is what often happens in practice at runtime.</p>
+
+<p>Also, some compilers have options to actually <em>define</em> that behaviour officially for all cases, not just compile-time constant expressions. (<code>gcc -fwrapv</code>).</p>
+
+<hr>
+
+<h2>Compilers do warn about this</h2>
+
+<p><strong>Good compilers will warn about many forms of UB when they're visible at compile time, including this.</strong>  GCC and clang warn even without <code>-Wall</code>.  From <a href="https://godbolt.org/#z:OYLghAFBqd5TKALEBjA9gEwKYFFMCWALugE4A0BIEAZugHZEDKqAhgDbYgCMALOQCse5dq3qhUAUgBMAIRmzyAZ2ydURAg2rZ6mAMLp2AVwC29ENPI7MAGQL1sAOVMAjbKRAB2cgAd0S4k16A2MzC19/QIY7B2cTNw9vFTUNBiYiVlIiENNzS2TsdSD0zKIYp1d3L2UMrJyw/Nqy%2Bwr4qs8ASmV0I1JULgByGQBme1RjHABqSWG9JSJCdAA6JBncSQAGAEFNrYA3dAJMSbp0CA7JT3ltydvJ9gZge8fJ1nJJlxnrrbvX6eGACKTaR8Ty8AAcwwAbLxPNM5JNuF9dr8XP8gSDYRDoRDkdtLgDdrsAPTE%2BxEV6kUiSACsskxYMhMLhCkRtMJw2%2BpPJlNI0lpsm4G2kvAAVEKReLhWKJbx2ejplckZ4ObJfurJqTJsBUKhieMxE8OA8AO6TDaTAIAL2wAy67BAAxpA3I5gGGxd6EdegUrKUPT62Hhw24LqIjo9HS6AGsQMMAJxLYaeYbQ8F8KGY7giR28F0mEC8DZLEHSTxQmnxmlg3hQ8EbGmuiOex0upQgDbkcPuu3kOCwFAYEw%2BAicChUCBDkdjkDAePDcg0UdEdztiAuZvkFz2TIAT0dofIQ5MOiIAHl6Ox9z3yDgTIbOJvCKRCho9th2zfsAAPQpGFcHi65KqJu7AEC4pB7gYOCbkQpAEAWAyhl0dCMCwHBcHwgjCKI4hoL6cgiOB7aQF06A%2BKk9CfgAtGe0iTNR36oG2qivkE2i6PU5jcJY1jlHECThH4ASUVxPCWMJUT0PxlQePkrFFGkTRiTxygKZRJRZDJbRyTUpQqY0pTaYJ0hdP6vT9Dw9qOs6TY3l6AzfuCULUTC2q6pMibDJMED4MQZDBtmkwGMOo7uIFHTBQRshhs2UbkEg2CsDgHjnDmAx5uQBbDLwSyeOCnjSDlGy8NINI0iGVZ2R65AOW2HZdnFfaIBAKA9EQPj/pQ1BTmFHjZtghAkP1i4MMwbCPlhJqQT4gHWU6LpujVDkjNwkwmsQSCTE5LluTqqCeUmsU9vFiXJVUaUOhl%2BYWI2S0tgM9Wdt2kYxnGXkpmmGZZulwyLZudWNSdzXwP2yBoOgoVjt1k6Q9OVR7KgPg%2BAA%2Bns3DxijIoo9%2BMKLsuq7UBuN7bvQe6AUekMnowF5Xk%2B2D3uIj43s%2BbHvp%2BNU/n%2BAFIUBjAgTeYEQVBWCDDVcEIXNo1oRNmH8EIli4RI0VES4JFpeRlE0XRDEAOrGixKTsRA1gqVYujGVU2aSaJhi5MINtBJbI0FIp9CadkdthNmrsaU0zvCPM%2Ble9xelaS0AlW2ZAaWdw822fdtWOrjvCTCYSiI5M6OJiKPl%2BcNgXvCF8OkMGplRXICjHa9CVJSl1BvaVSzzoVGzpvG3AY/G4KNldmUFrWJZgsM0g98yZVQtC1UPU9QORiDA4gO1nVEDDvUzrxQ1kMIqHjRhPD8NNrCzbz8f/fZjojPRG1EFtKdpxnB3ZyWmUvXaXRnfXl25jdFV5RPng%2BDDBpGWXgwDp5J0esoBqb94qxihMWTMUJJ7cB7smHu4IqpXT%2BhAwGsD5rSHPstVsc937kHfKQAIWheBAA" rel="nofollow noreferrer"><strong>the Godbolt compiler explorer</strong></a>:</p>
+
+<pre><code>  clang
+&lt;source&gt;:5:20: warning: overflow in expression; result is -2147483648 with type 'int' [-Winteger-overflow]
+    a = 2147483647 + 1;
+                   ^
+</code></pre>
+
+<pre><code>  gcc
+&lt;source&gt;: In function 'void foo()':
+&lt;source&gt;:5:20: warning: integer overflow in expression of type 'int' results in '-2147483648' [-Woverflow]
+    5 |     a = 2147483647 + 1;
+      |         ~~~~~~~~~~~^~~
+</code></pre>
+
+<p>GCC has had this warning enabled by default since at least GCC4.1 in 2006 (oldest version on Godbolt), and clang since 3.3.</p>
+
+<p>MSVC only warns <em>with</em> <code>-Wall</code>, which for MSVC is unusably verbose most of the time, e.g. <code>stdio.h</code> results in tons of warnings like <code>'vfwprintf': unreferenced inline function has been removed</code>. MSVC's warning for this looks like:</p>
+
+<pre><code>  MSVC -Wall
+&lt;source&gt;(5): warning C4307: '+': signed integral constant overflow
+</code></pre>
+
+<hr>
+
+<p><a href="https://stackoverflow.com/questions/61624859/why-does-long-long-2147483647-1-2147483648#comment109041845_61624886">@HumanJHawkins asked</a> why it was designed this way:</p>
+
+<blockquote>
+  <p>To me, this question is asking, why doesn't the compiler also use the smallest data type that the result of a math operation will fit into? With integer literals, it would be possible to know at compile time that an overflow error was occurring. But the compiler does not bother to know this and handle it. Why is that?</p>
+</blockquote>
+
+<p>"Doesn't bother to handle it" is a bit strong accurate; compilers do detect the overflow and warn about it.  But they follow ISO C rules that say <code>int + int</code> has type <code>int</code>, and that the numeric literals each have type <code>int</code>.  Compilers merely choose on purpose to wrap instead of to widening and giving the expression a different type than you'd expect.  (Instead of bailing out entirely because of the UB.)</p>
+
+<p>Wrapping is common when signed overflow happens at run-time, although in loops compilers do aggressively optimize <code>int i</code> / <code>array[i]</code> to <a href="http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html" rel="nofollow noreferrer">avoid redoing sign-extension every iteration</a>.</p>
+
+<p>Widening would bring its own (smaller) set of pitfalls like <code>printf("%d %d\n", 2147483647 + 1, 2147483647);</code> having undefined behaviour (and failing in practice on 32-bit machines) because of a type mismatch with the format string.  If <code>2147483647 + 1</code> implicitly promoted to <code>long long</code>, you'd need a <code>%lld</code> format string.  (And it would break in practice because a 64-bit int is typically passed in two arg-passing slots on a 32-bit machine, so the 2nd <code>%d</code> would probably see the 2nd half of the first <code>long long</code>.)</p>
+
+<p>To be fair, that's already a problem for <code>-2147483648</code>.  As an expression in C/C++ source it has type <code>long</code> or <code>long long</code>.  It's parsed as <code>2147483648</code> separately from the unary <code>-</code> operator, and <code>2147483648</code> doesn't fit in a 32-bit signed <code>int</code>.  Thus it has the next largest type that can represent the value.</p>
+
+<p>However, any program affected by that widening would have had UB (and probably wrapping) without it, and it's more likely that widening will make code happen to work.  There's a design philosophy issue here: too many layers of "happens to work" and forgiving behaviour make it hard to understand exactly why something <em>does</em> work, and hard to verity that it will be portable to other implementations with other type widths.  Unlike "safe" languages like Java, C is very unsafe and has different implementation-defined things on different platforms, but many developers only have one implementation to test on.  (Especially before the internet and online continuous-integration testing.)</p>
+
+<hr>
+
+<p>ISO C doesn't define the behaviour, so yes a compiler <em>could</em> define new behaviour as an extension without breaking compatibility with any UB-free programs.  But unless <em>every</em> compiler supported it, you couldn't use it in portable C programs.  I could imagine it as a GNU extension supported by gcc/clang/ICC at least.</p>
+
+<p>Also, such an options would somewhat conflict with <code>-fwrapv</code> which does define the behaviour.  Overall I think it's unlikely to catch be adopted because there's convenient syntax to specifying the type of a literal (<code>0x7fffffffUL + 1</code> gives you an <code>unsigned long</code> which is guaranteed to be wide enough for that value as a 32-bit unsigned integer.)</p>
+
+<p>But let's consider this as a choice for C in the first place, instead of the current design.</p>
+
+<p><strong>One possible design would be to infer the type of a whole integer constant expression from its value, calculated with arbitrary precision</strong>.  Why arbitrary precision instead of <code>long long</code> or <code>unsigned long long</code>?  Those might not be large enough for intermediate parts of the expression if the final value is small because of <code>/</code>, <code>&gt;&gt;</code>, <code>-</code>, or <code>&amp;</code> operators.</p>
+
+<p>Or a simpler design like the C preprocessor where constant integer expressions are evaluated at some fixed implementation-defined width like at least 64-bit.  (But then assign a type based on the final value, or based on the widest temporary value in an expression?)  But that has the obvious downside for early C on 16-bit machines that it makes compile-time expressions slower to evaluation than if the compiler can use the machine's native integer width internally for <code>int</code> expressions.</p>
+
+<p><strong>Integer constant-expressions are already somewhat special in C, required to be evaluated at compile time in some contexts</strong>, e.g. for <code>static int array[1024 * 1024 * 1024];</code> (where the multiplies will overflow on implementations with 16-bit int.)</p>
+
+<p>Obviously we can't efficiently extend the promotion rule to non-constant expressions; if <code>(a*b)/c</code> might have to evaluate <code>a*b</code> as <code>long long</code> instead of <code>int</code> on a 32-bit machine, the division will require extended precision.  (For example x86's 64-bit / 32-bit => 32-bit division instruction faults on overflow of the quotient instead of silently truncating the result, so even assigning the result to an <code>int</code> wouldn't let the compiler optimize well for some cases.)</p>
+
+<p><strong>Also, do we really want the behaviour / definedness of <code>a * b</code> to depend on whether <code>a</code> and <code>b</code> are <code>static const</code> or not?</strong>  Having compile time evaluation rules match the rules for non-constant expressions seems good in general, even though it leaves these nasty pitfalls.  But again, this is something good compilers can warn about in constant expressions.</p>
+
+<hr>
+
+<p>Other more common cases of this C gotcha are things like <code>1&lt;&lt;40</code> instead of <code>1ULL &lt;&lt; 40</code> to define a bit flag, or writing 1T as <code>1024*1024*1024*1024</code>.</p>

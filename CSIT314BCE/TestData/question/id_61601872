@@ -1,0 +1,11 @@
+<p>I've recently been learning C++ and have realised that string literals in C++ have to be constants, whereas in C, they do not. Here is an example. The following code would be valid in C, but not in C++:</p>
+
+<pre><code>char* str = "Hello World";
+</code></pre>
+
+<p>in order to do the same thing in C++, the following statement has to be used:</p>
+
+<pre><code>const char* str = "Hello World";
+</code></pre>
+
+<p>Could someone explain why?</p>

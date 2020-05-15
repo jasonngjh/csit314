@@ -1,0 +1,82 @@
+<p>I have the following HTML structure. </p>
+
+<p>I need to be able to build the array of attributes of <code>img</code>'s to be able to build a gallery.</p>
+
+<p>So far I was able to build an array of <code>d2</code>'s using <code>find()</code>, but I seem to be unable to use <code>find()</code> on the results of <code>find()</code>, and removing <code>a</code>'s and <code>d3</code>'s also fails (see the fiddle). How to get it right?</p>
+
+<pre><code>&lt;div class="d1"&gt;
+   &lt;div class="d2"&gt;
+        &lt;img src="http://s.com/x.jpg"/&gt;&lt;div class="d3"/&gt;&lt;a/&gt;&lt;a/&gt;
+   &lt;/div&gt;
+   &lt;div class="d2"&gt;
+        &lt;img src="http://s.com/y.jpg"/&gt;&lt;div class="d3"/&gt;&lt;a/&gt;&lt;a/&gt;
+   &lt;/div&gt;
+   &lt;div class="d2"&gt;
+        &lt;img src="http://s.com/z.jpg"/&gt;&lt;div class="d3"/&gt;&lt;a/&gt;&lt;a/&gt;
+   &lt;/div&gt; 
+&lt;/div&gt; 
+</code></pre>
+
+<p>The output I am aiming for is either </p>
+
+<pre><code>&lt;img src="http://s.com/x.jpg"/ style=\"display:none\"&gt;
+&lt;img src="http://s.com/y.jpg"/ style=\"display:none\"&gt;
+&lt;img src="http://s.com/z.jpg"/ style=\"display:none\"&gt;
+</code></pre>
+
+<p>that I will push into a hidden div or </p>
+
+<pre><code>["http://s.com/x.jpg",
+ "http://s.com/y.jpg",
+ "http://s.com/z.jpg"]
+</code></pre>
+
+<p>that I will store in a global variable. </p>
+
+<p>I need this to be able to go back and forth over the images in the gallery. I am not sure which one I will use, so I wanted to be able to use both - or maybe you could tell me which approach is better?</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function get_images_for_gallery(an_image) {
+  var all_outside_images = an_image.parent().parent().find('.outside_image');
+
+  var result = '';
+  $.each(all_outside_images, function(index, outside_image) {
+    console.log("outside_image " + $(outside_image).html());
+    // attempt 1 - find an img
+    var img = $(outside_image).find("img");
+    console.log("img " + $(img).html());
+    // attempt 2 - remove a's and a div
+    var no_a = $(outside_image).remove("a");
+    var no_a_no_div = $(no_a).remove("div");
+    console.log("no_a_no_div " + $(no_a_no_div).html());
+    // add display:none
+    $(no_a_no_div).attr("display", "none");
+    console.log("img 2 " + $(no_a_no_div).html());
+    result += $(img).html();
+  });
+
+  return result;
+}
+
+var obj = $("#logo")[0];
+console.log(get_images_for_gallery($(obj)));</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"&gt;&lt;/script&gt;
+&lt;div class="images_center" imgheight="200"&gt;
+  &lt;div class="outside_image" style=" max-width: 146px "&gt; &lt;img id="logo" alt="Saint George and the Dragon, &lt;br/&gt;circa 1432-5, Rogier van der Weyden" caption="Saint George and the Dragon, &lt;br/&gt;circa 1432-5, Rogier van der Weyden" sourcename="Wikipedia Commons" sourcehrf="https://commons.wikimedia.org/wiki/File:Rogier_van_der_Weyden_-_Saint_George_and_the_Dragon.jpg"
+      src="https://www.yu51a5.org/wp-content/uploads/horsemen/Rogier_van_der_Weyden_-_Saint_George_and_the_Dragon.jpg" style=" max-height: 200px "&gt;
+    &lt;div class="wp-caption-text" style=" max-width: 141px "&gt;Saint George and the Dragon, &lt;br&gt;circa 1432-5, Rogier van der Weyden&lt;/div&gt; &lt;a href="https://www.yu51a5.org/wp-content/uploads/horsemen/Rogier_van_der_Weyden_-_Saint_George_and_the_Dragon.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;    &lt;a href="https://commons.wikimedia.org/wiki/File:Rogier_van_der_Weyden_-_Saint_George_and_the_Dragon.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;&lt;/div&gt;
+  &lt;div class="outside_image" style=" max-width: 355px "&gt; &lt;img alt="St. George and the Dragon, &lt;br/&gt;cr. 1430-35, Paolo Uccello, Florence, Italy" caption="St. George and the Dragon, &lt;br/&gt;cr. 1430-35, Paolo Uccello, Florence, Italy" sourcename="The Jacquemart-André Museum" sourcehrf="https://www.musee-jacquemart-andre.com/en/oeuvres/saint-georges-and-dragon"
+      src="https://www.yu51a5.org/wp-content/uploads/horsemen/uccello_st_georges.jpg" style=" max-height: 200px "&gt;
+    &lt;div class="wp-caption-text" style=" max-width: 350px "&gt;St. George and the Dragon, &lt;br&gt;cr. 1430-35, Paolo Uccello, Florence, Italy&lt;/div&gt; &lt;a href="https://www.yu51a5.org/wp-content/uploads/horsemen/uccello_st_georges.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt; &lt;a href="https://www.musee-jacquemart-andre.com/en/oeuvres/saint-georges-and-dragon"
+      style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;&lt;/div&gt;
+  &lt;div class="outside_image" style=" max-width: 437px "&gt; &lt;img alt="The Battle of Nineveh (between Khosrau II and Heraclius, in 627), &lt;br/&gt;cr. 1452-66, Piero della Francesca, Arezzo, Italy" caption="The Battle of Nineveh (between Khosrau II and Heraclius, in 627), &lt;br/&gt;cr. 1452-66, Piero della Francesca, Arezzo, Italy"
+      sourcename="Wikipedia Commons" sourcehrf="https://commons.wikimedia.org/wiki/File:Piero_della_Francesca_021.jpg" src="https://www.yu51a5.org/wp-content/uploads/horsemen/Piero_della_Francesca_021.jpg" style=" max-height: 200px "&gt;
+    &lt;div class="wp-caption-text"
+      style=" max-width: 432px "&gt;The Battle of Nineveh (between Khosrau II and Heraclius, in 627), &lt;br&gt;cr. 1452-66, Piero della Francesca, Arezzo, Italy&lt;/div&gt; &lt;a href="https://www.yu51a5.org/wp-content/uploads/horsemen/Piero_della_Francesca_021.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;    &lt;a href="https://commons.wikimedia.org/wiki/File:Piero_della_Francesca_021.jpg" style="display:none"&gt;Invisible, to help broken links check&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p><a href="https://jsfiddle.net/yu51a5/j56Lcu94/64/" rel="nofollow noreferrer">JSFiddle is here</a></p>

@@ -1,0 +1,13 @@
+<p>After starting a new application and using NgRx's new action creator pattern, I have found myself missing having an explicit type for an action. For example when I'm testing a service, I would like to know that it dispatched the correct action with the correct properties.</p>
+
+<p>How do I go about this while retaining type safety in TypeScript?</p>
+
+<p>An example:</p>
+
+<pre class="lang-js prettyprint-override"><code>// What should the '???' in the following line be?
+spyOn(store, "dispatch").and.callFake((action: ???) =&gt; {
+  expect(action.type).toBe(fetchProductStructureAction.type);
+  // TypeScript complains here if I don't add the correct type to action
+  expect(action.property).toBe(expectedProperty); // &lt;--
+})
+</code></pre>

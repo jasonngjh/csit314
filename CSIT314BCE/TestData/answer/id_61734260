@@ -1,0 +1,46 @@
+<p>I believe the thing you're seeing here is that <a href="https://doc.rust-lang.org/std/primitive/index.html" rel="nofollow noreferrer">primitive types</a> do not actually call their <code>std::ops</code> equivalents. Those <code>std::ops</code> may just be included for seamless trait extensions, etc. I think the blog post <a href="https://manishearth.github.io/blog/2017/01/11/rust-tidbits-what-is-a-lang-item/" rel="nofollow noreferrer"><em>Rust Tidbits: What Is a Lang Item?</em></a> partially explains this.</p>
+
+<p>I exported the MIR of your example <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=a09a469d1d7584443288f182149cb3cb" rel="nofollow noreferrer">that works with primitive types</a>. I got:</p>
+
+<pre class="lang-none prettyprint-override"><code>    bb5: {
+        StorageDead(_9);                 // bb5[0]: scope 1 at src/main.rs:6:8: 6:9
+        _10 = CheckedAdd((*_8), move _5); // bb5[1]: scope 1 at src/main.rs:6:5: 6:17
+        assert(!move (_10.1: bool), "attempt to add with overflow") -&gt; [success: bb6, unwind: bb4]; // bb5[2]: scope 1 at src/main.rs:6:5: 6:17
+    }
+</code></pre>
+
+<p>I had a lot of difficulty exporting the MIR for the code that was erroring. Outputting MIR without borrow checking is new to me and I couldn't figure out how to do it.</p>
+
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=63c25725edd0e3accc72b6d325344eec" rel="nofollow noreferrer">This</a> playground has a very similar thing, but compiles :)</p>
+
+<p>It gives me an actual call to <code>add_assign</code>:</p>
+
+<pre class="lang-none prettyprint-override"><code>    bb3: {
+        _8 = _9;                         // bb3[0]: scope 1 at src/main.rs:14:5: 14:9
+        StorageDead(_10);                // bb3[1]: scope 1 at src/main.rs:14:8: 14:9
+        StorageLive(_11);                // bb3[2]: scope 1 at src/main.rs:14:14: 14:22
+        (_11.0: i32) = const 1i32;       // bb3[3]: scope 1 at src/main.rs:14:14: 14:22
+                                         // ty::Const
+                                         // + ty: i32
+                                         // + val: Value(Scalar(0x00000001))
+                                         // mir::Constant
+                                         // + span: src/main.rs:14:20: 14:21
+                                         // + literal: Const { ty: i32, val: Value(Scalar(0x00000001)) }
+        _7 = const &lt;MyNum as std::ops::AddAssign&gt;::add_assign(move _8, move _11) -&gt; [return: bb5, unwind: bb4]; // bb3[4]: scope 1 at src/main.rs:14:5: 14:22
+                                         // ty::Const
+                                         // + ty: for&lt;'r&gt; fn(&amp;'r mut MyNum, MyNum) {&lt;MyNum as std::ops::AddAssign&gt;::add_assign}
+                                         // + val: Value(Scalar(&lt;ZST&gt;))
+                                         // mir::Constant
+                                         // + span: src/main.rs:14:5: 14:22
+                                         // + literal: Const { ty: for&lt;'r&gt; fn(&amp;'r mut MyNum, MyNum) {&lt;MyNum as std::ops::AddAssign&gt;::add_assign}, val: Value(Scalar(&lt;ZST&gt;)) }
+    }
+</code></pre>
+
+<p>How does the primitive case pass the borrow checker? Since <code>add_assign</code> is not called, the immutable reference can be dropped before the mutable reference is required. The MIR simply dereferences the needed location earlier on and passes it through by value.</p>
+
+<pre class="lang-none prettyprint-override"><code>    bb3: {
+        _5 = (*_6);                      // bb3[0]: scope 1 at src/main.rs:6:13: 6:17
+        StorageDead(_7);                 // bb3[1]: scope 1 at src/main.rs:6:16: 6:17
+        ...
+    }
+</code></pre>

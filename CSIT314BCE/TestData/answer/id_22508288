@@ -1,9 +1,0 @@
-<p>If you understand it well you can explain it simple. And the simplest way is abstracting it from the context. Code aside, even programming aside. A metaphor example will do it better.</p>
-
-<p>Let's imagine that a function is a room whose walls are of glass, but they are special glass, like the ones in an interrogation room. From outside they are opaque, from inside they are transparent. It can be rooms inside other rooms, and the only way of contact is a phone.</p>
-
-<p>If you call from the outside, you don't know what is in it, but you know that the people inside will do a task if you give them certain information. They can see outside, so they can ask you for stuff that are outside and make changes to that stuff, but you can't change what it is inside from the outside, you don't even see (know) what it is inside. The people inside that room you are calling see what it is outside, but not what it is inside the rooms in that room, so they interact with them the way you are doing from outside. The people inside the most inner rooms can see many things, but the people of the most outer room  don't even know about the most inner rooms' existence.</p>
-
-<p>For each call to an inner room, the people in that room keeps a record of the information about that specific call, and they are so good doing that that they never mistake one call stuff with other call stuff.</p>
-
-<p>Rooms are functions, visibility is scope, people doing task is statements, stuff are objects, phone calls are function calls, phone call information is arguments, call records are scope instances, the most outer room is the global object.</p>

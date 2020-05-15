@@ -1,0 +1,29 @@
+<p>You can use the <a href="https://en.wikipedia.org/wiki/Pandas_%28software%29" rel="nofollow noreferrer">Pandas</a> library to avoid writing any sort of loops yourself.</p>
+
+<p><strong>Your code would be really concise and clean.</strong></p>
+
+<p>Install Pandas like: <code>pip install pandas</code>.</p>
+
+<p>Then try this:</p>
+
+<pre><code>In [132]: import pandas as pd
+
+In [109]: df1 = pd.DataFrame(mylist1)
+
+In [110]: df2 = pd.DataFrame(mylist2)
+
+In [117]: res = pd.merge(df1, df2, on=0)
+
+In [121]: res['mean'] = res.mean(axis=1)
+
+In [125]: res.drop(['1_x', '1_y'], 1, inplace=True)
+
+In [131]: res.values.tolist()
+Out[131]: [['egg', 0.45], ['chocolate', 0.5]]
+</code></pre>
+
+<p><strong>Edit</strong></p>
+
+<p>Pandas is crazy fast because it uses <code>numpy</code> under the hood. Numpy implements highly efficient array operations.</p>
+
+<p>Please check the post : <a href="https://stackoverflow.com/questions/57018511/why-is-pandas-so-madly-fast-how-to-define-such-functions"><code>Why is Pandas so madly fast?</code></a> for more details on calculating <code>mean</code> through <code>pure Python vs Pandas</code>.</p>

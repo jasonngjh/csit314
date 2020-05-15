@@ -1,0 +1,9 @@
+<pre class="lang-php prettyprint-override"><code>require_once("connection.php")
+</code></pre>
+
+<p>You have to put an end to it with <code>;</code></p>
+
+<pre class="lang-php prettyprint-override"><code>require_once("connection.php");   &lt;= semicolon
+</code></pre>
+
+<p>This is true </p>

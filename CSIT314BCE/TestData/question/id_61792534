@@ -1,0 +1,49 @@
+<p>I was trying to implement an encrypt/decrypt program using classes under javax.crypto and file streams for input/output.
+To limit the memory usage, I run with <strong>-Xmx256m</strong> parameter.</p>
+
+<p>It works fine with encryption and decryption with smaller files.
+But when decrypt a huge file (1G in size), there is an out of memory exception:</p>
+
+<pre><code>java.lang.OutOfMemoryError: Java heap space
+    at java.util.Arrays.copyOf(Arrays.java:3236)
+    at java.io.ByteArrayOutputStream.grow(ByteArrayOutputStream.java:118)
+    at java.io.ByteArrayOutputStream.ensureCapacity(ByteArrayOutputStream.java:93)
+    at java.io.ByteArrayOutputStream.write(ByteArrayOutputStream.java:153)
+    at com.sun.crypto.provider.GaloisCounterMode.decrypt(GaloisCounterMode.java:505)
+    at com.sun.crypto.provider.CipherCore.update(CipherCore.java:782)
+    at com.sun.crypto.provider.CipherCore.update(CipherCore.java:667)
+    at com.sun.crypto.provider.AESCipher.engineUpdate(AESCipher.java:380)
+    at javax.crypto.Cipher.update(Cipher.java:1831)
+    at javax.crypto.CipherOutputStream.write(CipherOutputStream.java:166)
+</code></pre>
+
+<p>Here is the decrypt code:</p>
+
+<pre><code>private final int _readSize = 0x10000;//64k
+
+...
+
+GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(gcmTagSize, iv);
+Key keySpec = new SecretKeySpec(key, keyParts[0]);
+Cipher decCipher = Cipher.getInstance("AES/GCM/PKCS5Padding");
+
+decCipher.init(Cipher.DECRYPT_MODE, keySpec, gcmParameterSpec);
+
+try (InputStream fileInStream = Files.newInputStream(inputEncryptedFile);
+    OutputStream fileOutStream = Files.newOutputStream(outputDecryptedFile)) {
+    try (CipherOutputStream cipherOutputStream = new CipherOutputStream(fileOutStream, decCipher)) {
+        long count = 0L;
+        byte[] buffer = new byte[_readSize];
+
+        int n;
+        for (; (n = fileInStream.read(buffer)) != -1; count += (long) n) {
+            cipherOutputStream.write(buffer, 0, n);
+        }
+    }
+}
+</code></pre>
+
+<p>The key parameters like gcmTagSize and iv are read from a key file, and it works fine with smaller files, like some one around size of 50M.</p>
+
+<p>As I understand, every time there are only 64k data passed to decipher, why it runs out of heap memory?
+How can I avoid this?</p>

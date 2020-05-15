@@ -1,5 +1,0 @@
-<p>There is no difference.</p>
-
-<p>The C# keyword <code>string</code> maps to the .NET type <code>System.String</code> - it is an alias that keeps to the naming conventions of the language.</p>
-
-<p>Similarly, <code>int</code> maps to <code>System.Int32</code>.</p>

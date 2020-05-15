@@ -1,0 +1,11 @@
+<p>Since it's using 100% CPU "most of the time", and it takes 10 times longer (!) with Java 14, it means that you're wasting 90% of your CPU in Java 14.</p>
+
+<p>Running out of heap space <em>can</em> do that, as you spend a whole lot of time in GC, but you seem to have ruled that out.</p>
+
+<p>I notice that you're tweaking the biased locking option, and that it makes a significant difference.  That tells me that maybe your program does a lot of concurrent work in multiple threads.  It's possible that your program has a concurrency bug that shows up in Java 14, but not in Java 10.  That could also explain why adding another CPU makes it more than twice as fast.</p>
+
+<p>Concurrency bugs often only show up when you're unlucky, and the trigger could really have been anything, like a change to hashmap organization, etc.</p>
+
+<p>First, if it's feasible, check for any loops that might be busy-waiting instead of sleeping.</p>
+
+<p>Then, run a profiler in sampling mode (jvisualvm will do) and look for methods that are taking a much larger % of total time than they should.  Since your performance is off by a factor of 10, any problems in there should really jump out.</p>

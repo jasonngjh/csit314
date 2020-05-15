@@ -1,0 +1,15 @@
+<pre><code>def unique(one, two):
+    words = {}
+    sentence = one.split() + two.split()
+    for word in sentence:
+        if word in words.keys():
+            words[word] += word
+        else:
+            words[word] = word
+
+    return [word for word in words.values()]
+
+print(unique("I like food", "I like cat"))
+</code></pre>
+
+<p>will print <code>['food', 'cat', 'likelike', 'II']</code></p>

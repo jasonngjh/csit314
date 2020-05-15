@@ -1,0 +1,40 @@
+<p>I'm doing a little project where there goal is to retrieve data in text format from a website. (<a href="http://regsho.finra.org/regsho-Index.html" rel="nofollow noreferrer">http://regsho.finra.org/regsho-Index.html</a>)</p>
+
+<p>The website was nice enough to provide it online but they sorted the data over several days in different links
+<a href="https://i.stack.imgur.com/Zz7nl.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/Zz7nl.png" alt="enter image description here"></a></p>
+
+<p>I thought about looping through the dates and store the data with the following code:</p>
+
+<pre><code>#Download the needed data
+
+my_data &lt;- c()
+
+for (i in 01:13){
+
+my_data &lt;- read.delim(sprintf("http://regsho.finra.org/CNMSshvol202005%i.txt", i), header=TRUE, sep="|")
+
+}
+
+head(my_data)
+</code></pre>
+
+<p>The problem here is that in line </p>
+
+<pre><code>for (i in 01:13){ # The date in the website is 01-02-03 and the loop seems to ommit the 0
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/snIVL.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/snIVL.png" alt="enter image description here"></a></p>
+
+<p>I've used the sprintf() method so I can have a variable in a string. </p>
+
+<p>and this line the empty variable my_data always seems to be overwritten by the last data downloaded. </p>
+
+<pre><code>my_data &lt;- read.delim(sprintf("http://regsho.finra.org/CNMSshvol202005%i.txt", i), header=TRUE, sep="|")  
+# the empty variable my_data always seems to be overwritten by the last data downloaded. 
+</code></pre>
+
+<p>Could somebody reassure me if i'm going in the right direction because i'm starting to doubt myself here</p>
+
+<p>Any help would be greatly appreciated! </p>
+
+<p>Thanks in advance</p>

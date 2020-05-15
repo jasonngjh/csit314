@@ -1,0 +1,6 @@
+<pre><code>from functools import reduce
+sets = (set(val.items()) for val in d.values())
+desired = dict(reduce(set.intersection, sets))
+print(desired)
+# {'noodle.json': 5}
+</code></pre>

@@ -1,0 +1,21 @@
+<blockquote>
+  <p><em>"Why does <code>const char*</code> don't need a pointer to a memory address?"</em></p>
+</blockquote>
+
+<p>In fact, It <strong>does</strong> need an memory address to point to.</p>
+
+<p><code>const char* a</code> means <code>a</code> is a pointer to a string literal or character constant. </p>
+
+<p>A pointer <em>always</em> requires an address to point to because it is the nature of a pointer to point to a specific object in memory. So, <code>a</code> and any other pointer to <code>const char</code> does too. </p>
+
+<p>A string literal like <code>"Hi My Name is Alfred!"</code> by an assignment like:</p>
+
+<pre><code>const char* a;
+a = "Hi My Name is Alfred!";
+</code></pre>
+
+<p>decays to a pointer to the address of the first element of the string literal.</p>
+
+<p>Means in turn, <code>a</code> gets assigned by the address of the first element of the string literal <code>"Hi My Name is Alfred!"</code> which could be stored anywhere in memory dependent on the execution environment.</p>
+
+<p>It is not in the might of a programmer where a string literal is exactly stored. Your assignment is only to assign and handle the respective pointer appropriately.</p>

@@ -1,0 +1,19 @@
+<pre><code>```statsRoute.route("/getPlayerInfos").get(function (req, res) {
+</code></pre>
+
+<p>let statistics = User.findOne({
+    name: req.body.myquery,
+    role: 0,
+  }).populate({
+      path: "Stores",
+      model: "Store",
+      populate: { path: "WorldDetails", model: "WorldDetails" },
+      populate: {
+        path: "Games",
+        model: "Game",
+        populate: { path: "Details", model: "Detail" },
+      },
+    }).exec();
+  let myres = statistics.toObject({ getters: true });
+  res.render("stats", { myres });
+});```</p>

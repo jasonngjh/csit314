@@ -1,0 +1,47 @@
+<p>I currently have a dictionary <code>d</code> with key: <code>string</code>, and values is another <code>dict</code>.</p>
+
+<p><strong>In the <code>d</code> dictionary values, how can I check which key and values are the same?</strong> </p>
+
+<hr>
+
+<p><strong>Example Dictionary:</strong></p>
+
+<p>zybook and zybooks are keys. There can be more than two keys, but I only put two for now. And then the values of <code>d</code> are another dict with {file name : number}</p>
+
+<pre><code>d = {"zybook": 
+        {
+         "noodle.json": 5,
+         "testing.json": 1,
+         "none.json": 5
+        },
+    "zybooks": 
+        {
+         "noodle.json": 5,
+         "ok.json": 1
+        }
+    }
+</code></pre>
+
+<hr>
+
+<p><strong>Expected Output:</strong></p>
+
+<p>Because {"noodle.json": 5} {"noodle.json": 5} are both the same in zybook and zybooks, the output will create another dictionary with both matches. </p>
+
+<pre><code>{"noodle.json": 5}
+</code></pre>
+
+<hr>
+
+<p><strong>My attempt:</strong></p>
+
+<p>I honestly don't know how to approach this.</p>
+
+<pre><code>d = {"zybook": { "noodle.json": 5, "testing.json": 1, "none.json": 5},
+    "zybooks": {"noodle.json": 5, "ok.json": 1}
+}
+
+for key, value in d.items():
+    for k, v in value.items():
+        if     
+</code></pre>

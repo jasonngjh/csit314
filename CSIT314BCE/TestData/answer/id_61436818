@@ -1,0 +1,26 @@
+<p>From my experience performance problems with JDKs are related mostly to one of the following:</p>
+
+<ul>
+<li>JIT Compilation</li>
+<li>VM configuration (heap sizes)</li>
+<li>GC algorithm</li>
+<li>Changes in the JVM/JDK which break known good running applications</li>
+<li>(Oh, and I forgot to mention class loading...)</li>
+</ul>
+
+<p>If you just use the default JVM configuration since OpenJDK11, maybe you should set some of the more prominent options to fixed values, like GC, Heap size, etc.</p>
+
+<p>Maybe some graphical analyse tool could help track your issue down. Like Retrace, AppDynamics or FlightRecorder and the like. These give more overview on the overall state of heap, GC cycles, RAM, threads, CPU load and so on at a given time than log files could provide.</p>
+
+<p>Do I understand correctly that your application writes about 30710 lines to the log within the first second of running (under OpenJDK11)? Why is it "only" writing about 7k lines under OpenJDK14 in the first second? This seems like a huge difference for an application that is just started on different JVMs to me... Are you sure there are not for example high amounts of Exception stacktraces dumped into the log?  </p>
+
+<p>The other numbers are even higher sometimes, so maybe the slowdowns are related to exception logging? Or even swapping, if RAM gets low?  </p>
+
+<p>Actually I am thinking, if an application does not write anything into the log, this is a sign of smooth running without problems (unless it is frozen entirely in this time). What is happening from seconds 12-22 (in the OpenJDK14 case here) is what would concern me more... the logged lines go through the roof... <em>why</em>?  </p>
+
+<p>And afterwards the logging goes down to all time low values of about 1-2k lines... what is the reason for <em>that</em>?? (Well, maybe it is the GC kicking in at second 22 and does a tabula rasa which resolves some things...?)</p>
+
+<p>Another thing may be your statement about "single CPU" machines. Does this imply "single core" also (Idk, maybe your software is tailored on legacy hardware or something)?</p>
+
+<p>And the "single CPU" VMs are running on those machines?
+But I assume, I am wrong about these assumptions, since almost all CPUs are multicore nowadays... but I would investigate on a multithreading issue (deadlock) problem maybe.</p>

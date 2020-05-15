@@ -1,0 +1,20 @@
+<p>This solution worked for me</p>
+
+<ol>
+<li>First open "App Info"</li>
+<li>Choose "Storage"</li>
+<li>Click "Clear data"</li>
+<li><p>Open app again and check if the issue fixed.</p>
+
+<p>Below are suggestions just to help your customers.</p></li>
+<li><p>Send an email to your all users for the inconvenience and describe them the issue they faced and give them above mentioned steps to resolve their issue.</p></li>
+<li><p>You can also send Push Notification to all your users with Firebase Push Notifications, if your app have the push notifications service.</p></li>
+</ol>
+
+<p>Screenshots demonstration:</p>
+
+<p><a href="https://i.stack.imgur.com/8oCxw.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/8oCxw.jpg" alt="enter image description here"></a></p>
+
+<p><a href="https://i.stack.imgur.com/lNOds.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/lNOds.jpg" alt="enter image description here"></a></p>
+
+<p><a href="https://i.stack.imgur.com/XTEIX.jpg" rel="noreferrer"><img src="https://i.stack.imgur.com/XTEIX.jpg" alt="enter image description here"></a></p>

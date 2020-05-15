@@ -1,0 +1,46 @@
+<p><strong>Hello, explained very briefly</strong></p>
+
+<p>in css</p>
+
+<pre class="lang-css prettyprint-override"><code>.chartBars { color: #000; }
+.bars { color: #fff; }
+li { color: #ccc; }
+
+/* if 'bars' in 'chartBars', than color: #999; */
+
+.chartBars .bars{ color: #999; }
+
+/* if 'li' in 'bars', than color: #ccc; */
+
+.bars li{ color: #ccc; }
+
+/* if 'li' in 'bars' and 'bars' is in 'chartBars' color: #eee; */
+
+.chartBars .bars li { color: #eee; }
+</code></pre>
+
+<p>in sass</p>
+
+<pre class="lang-css prettyprint-override"><code>.chartBars { color: #000; }
+.bars { color: #fff; }
+li { color: #ccc; }
+
+.bars {
+ li { 
+  color: #ccc;
+ }
+}
+
+.chartBars {
+  color: #000;
+
+ .bars {
+  color: #999;
+
+  li {
+   color: #eee;
+  }
+ }
+}
+
+</code></pre>

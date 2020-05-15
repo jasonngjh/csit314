@@ -1,3 +1,0 @@
-<p>If you must support older versions of Internet&nbsp;Explorer, I recommend using the following polyfill (note: this is <strong>not</strong> a framework). It's a 100% backwards-compatible replacement of all modern array methods (JavaScript 1.8.5 / ECMAScript 5 Array Extras) that works for Internet Explorer 6+, Firefox 1.5+, Chrome, Safari, &amp; Opera.</p>
-
-<p><a href="https://github.com/plusdude/array-generics" rel="nofollow">https://github.com/plusdude/array-generics</a></p>

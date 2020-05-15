@@ -1,0 +1,26 @@
+<p>The easiest way is using <strong>collections.OrderedDict</strong></p>
+
+<p>code:</p>
+
+<pre><code>list1 = [('a', 0), ('b', 100), ('c', 200), ('d', 300), ('e', 400), ('f', 500)]
+list2 = [[0, 200, 400], [100, 300, 500]]
+list4 = list2[:]
+l1_as_dict = OrderedDict(list1)
+for key,value in l1_as_dict.items():
+
+    #spread out list,find the first position,then break double-loop
+    for i,a_item in enumerate(list2):
+        for j,item in enumerate(list2[i]):
+            if value == item:
+                list4[i][j] = key
+                break
+        else:
+            continue
+        break
+print(list4)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>[['a', 'c', 'e'], ['b', 'd', 'f']]
+</code></pre>

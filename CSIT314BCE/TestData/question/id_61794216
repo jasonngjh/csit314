@@ -1,0 +1,24 @@
+<p>I am facing this unexpected behavior using <code>array.push</code> as you can see the array districts have a length of 1 but when you open it its empty.</p>
+
+<p>code:</p>
+
+<pre><code>  districts_modules.forEach((item) =&gt; {
+    item.modules_id.forEach((insight) =&gt; {
+      userRoles[modules[parseInt(insight) - 1]].buildings.push({
+        districtName: item.districtName,
+        districtId: item.district_id,
+        buildings: [],
+      });
+
+      userRoles[modules[parseInt(insight) - 1]].districts.push({
+        label: item.districtName,
+        value: item.district_id,
+      });
+      console.log(userRoles[modules[parseInt(insight) - 1]]);
+    });
+  });
+</code></pre>
+
+<p><a href="https://i.stack.imgur.com/8ZiW0.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/8ZiW0.png" alt="enter image description here"></a></p>
+
+<p>i don't know why this happening. any explanation.</p>

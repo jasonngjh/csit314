@@ -1,0 +1,416 @@
+<p>I was going through a book called "<em>Data Structures and Program Design in C</em>" where I came across this problem. </p>
+
+<p>The idea is to create an airport simulation for 1 runway and then further modify it to 2 runways and then 3. </p>
+
+<p>I did understand the implementation for 1 runway, but I need some guidance on how to further approach the problem to modify it to 3 runways. I am attaching the program for 1 runway and the modifications that need to be done for the 3 runway problem. </p>
+
+<p>Exact Assignment wording: </p>
+
+<blockquote>
+  <p>Modify the simulation to have three runways, one always reserved for each of landing and takeoff and the third used for landings unless the landing queue is empty, in which case it can be used for takeoffs. </p>
+</blockquote>
+
+<p>My Code :</p>
+
+<pre><code>#include &lt;conio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;math.h&gt;
+#include &lt;time.h&gt;
+#include &lt;limits.h&gt;
+
+#define MAX 3
+#define ARRIVE 0
+#define DEPART 1
+
+struct plane
+{
+    int id;
+    int tm;
+};
+
+struct queue
+{
+    int count;
+    int front;
+    int rear;
+    struct plane p[MAX];
+};
+
+void initqueue(struct queue*);
+void addqueue(struct queue*, struct plane);
+struct plane delqueue(struct queue*);
+int size(struct queue);
+int empty(struct queue);
+int full(struct queue);
+
+void initqueue(struct queue* pq)
+{
+    pq-&gt;count = 0;
+    pq-&gt;front = 0;
+    pq-&gt;rear = -1;
+}
+
+void addqueue(struct queue* pq, struct plane item)
+{
+    if (pq-&gt;count &gt;= MAX)
+    {
+        printf("\nQueue is full.\n");
+        return;
+    }
+    (pq-&gt;count)++;
+
+    pq-&gt;rear = (pq-&gt;rear + 1) % MAX;
+    pq-&gt;p[pq-&gt;rear] = item;
+}
+
+struct plane delqueue(struct queue* pq)
+{
+    struct plane p1;
+
+    if (pq-&gt;count &lt;= 0)
+    {
+        printf("\nQueue is empty.\n");
+        p1.id = 0;
+        p1.tm = 0;
+    }
+    else
+    {
+        (pq-&gt;count)--;
+        p1 = pq-&gt;p[pq-&gt;front];
+        pq-&gt;front = (pq-&gt;front + 1) % MAX;
+    }
+    return p1;
+}
+
+int size(struct queue q)
+{
+    return q.count;
+}
+
+int empty(struct queue q)
+{
+    return (q.count &lt;= 0);
+}
+
+int full(struct queue q)
+{
+    return (q.count &gt;= MAX);
+}
+
+struct airport
+{
+    struct queue landing;
+    struct queue takeoff;
+    struct queue* pl;
+    struct queue* pt;
+    int idletime;
+    int landwait, takeoffwait;
+    int nland, nplanes, nrefuse, ntakeoff;
+    struct plane pln;
+};
+
+void initairport(struct airport*);
+void start(int*, double*, double*);
+void newplane(struct airport*, int, int);
+void refuse(struct airport*, int);
+void land(struct airport*, struct plane, int);
+void fly(struct airport*, struct plane, int);
+void idle(struct airport*, int);
+void conclude(struct airport*, int);
+int randomnumber(double);
+void apaddqueue(struct airport*, char);
+struct plane apdelqueue(struct airport*, char);
+int apsize(struct airport, char);
+int apfull(struct airport, char);
+int apempty(struct airport, char);
+void myrandomize();
+
+void initairport(struct airport* ap)
+{
+    initqueue(&amp;(ap-&gt;landing));
+    initqueue(&amp;(ap-&gt;takeoff));
+
+    ap-&gt;pl = &amp;(ap-&gt;landing);
+    ap-&gt;pt = &amp;(ap-&gt;takeoff);
+    ap-&gt;nplanes = ap-&gt;nland = ap-&gt;ntakeoff = ap-&gt;nrefuse = 0;
+    ap-&gt;landwait = ap-&gt;takeoffwait = ap-&gt;idletime = 0;
+}
+
+void start(int* endtime, double* expectarrive, double* expectdepart)
+{
+    int flag = 0;
+    char wish;
+
+    printf("\nProgram that simulates an airport with only one runway.\n");
+    printf("One plane can land or depart in each unit of time.\n");
+    printf("Up to %d planes can be waiting to land or take off at any time.\n", MAX);
+    printf("How many units of time will the simulation run?");
+    scanf("%d", endtime);
+    myrandomize();
+    do
+    {
+        printf("\nExpected number of arrivals per unit time? ");
+        scanf("%lf", expectarrive);
+        printf("\nExpected number of departures per unit time? ");
+        scanf("%lf", expectdepart);
+
+        if (*expectarrive &lt; 0.0 || *expectdepart &lt; 0.0)
+        {
+            printf("These numbers must be nonnegative.\n");
+            flag = 0;
+        }
+        else
+        {
+            if (*expectarrive + *expectdepart &gt; 1.0)
+            {
+                printf("The airport will become saturated. Read new numbers? ");
+                scanf(" %c", &amp;wish);
+                if (tolower(wish) == 'y')
+                    flag = 0;
+                else
+                    flag = 1;
+            }
+            else
+                flag = 1;
+        }
+    } while (flag == 0);
+}
+
+void newplane(struct airport* ap, int curtime, int action)
+{
+    (ap-&gt;nplanes)++;
+    ap-&gt;pln.id = ap-&gt;nplanes;
+    ap-&gt;pln.tm = curtime;
+
+    switch (action)
+    {
+    case ARRIVE:
+        printf("\n");
+        printf("Plane %d ready to land.\n", ap-&gt;nplanes);
+        break;
+
+    case DEPART:
+        printf("\nPlane %d ready to take off.\n", ap-&gt;nplanes);
+        break;
+    }
+}
+
+void refuse(struct airport* ap, int action)
+{
+    switch (action)
+    {
+    case ARRIVE:
+
+        printf("\tplane  %d directed to another airport.\n", ap-&gt;pln.id);
+        break;
+
+    case DEPART:
+
+        printf("\tplane %d told to try later.\n", ap-&gt;pln.id);
+        break;
+    }
+    (ap-&gt;nrefuse)++;
+}
+
+void land(struct airport* ap, struct plane pl, int curtime)
+{
+    int wait;
+
+    wait = curtime - pl.tm;
+    printf("%d: Plane %d landed ", curtime, pl.id);
+    printf("in queue %d units \n", wait);
+    (ap-&gt;nland)++;
+    (ap-&gt;landwait) += wait;
+}
+
+void fly(struct airport* ap, struct plane pl, int curtime)
+{
+    int wait;
+
+    wait = curtime - pl.tm;
+    printf("%d: Plane %d took off ", curtime, pl.id);
+    printf("in queue %d units \n", wait);
+    (ap-&gt;ntakeoff)++;
+    (ap-&gt;takeoffwait) += wait;
+}
+
+void idle(struct airport* ap, int curtime)
+{
+    printf("%d: Runway is idle.\n", curtime);
+    ap-&gt;idletime++;
+}
+
+void conclude(struct airport* ap, int endtime)
+{
+    printf("\tSimulation has concluded after %d units.\n", endtime);
+    printf("\tTotal number of planes processed: %d\n", ap-&gt;nplanes);
+    printf("\tNumber of planes landed: %d\n", ap-&gt;nland);
+    printf("\tNumber of planes taken off: %d\n", ap-&gt;ntakeoff);
+    printf("\tNumber of planes refused use: %d\n", ap-&gt;nrefuse);
+    printf("\tNumber left ready to land: %d\n", apsize(*ap, 'l'));
+    printf("\tNumber left ready to take off: %d\n", apsize(*ap, 't'));
+
+    if (endtime &gt; 0)
+        printf("\tPercentage of time runway idle: %lf \n", ((double)ap-&gt;idletime / endtime) * 100.0);
+
+    if (ap-&gt;nland &gt; 0)
+        printf("\tAverage wait time to land: %lf \n", ((double)ap-&gt;landwait / ap-&gt;nland));
+
+    if (ap-&gt;ntakeoff &gt; 0)
+        printf("\tAverage wait time to take off: %lf \n", ((double)ap-&gt;takeoffwait / ap-&gt;ntakeoff));
+}
+
+int randomnumber(double expectedvalue)
+{
+    int n = 0; //counter of iteration
+    double limit;
+    double x;  //pseudo random number
+    limit = exp(-expectedvalue);
+    x = rand() / (double) RAND_MAX;
+    while (x &gt; limit) {
+        n++;
+        x *= rand() / (double) RAND_MAX;
+    }
+    return n;
+}
+
+void apaddqueue(struct airport* ap, char type)
+{
+    switch (tolower(type))
+    {
+    case'l':
+        addqueue(ap-&gt;pl, ap-&gt;pln);
+        break;
+
+    case't':
+        addqueue(ap-&gt;pt, ap-&gt;pln);
+        break;
+    }
+}
+
+struct plane apdelqueue(struct airport* ap, char type)
+{
+    struct plane p1;
+
+    switch (tolower(type))
+    {
+    case'l':
+        p1 = delqueue(ap-&gt;pl);
+        break;
+
+    case't':
+        p1 = delqueue(ap-&gt;pl);
+        break;
+    }
+
+    return p1;
+}
+
+int apsize(struct airport ap, char type)
+{
+    switch (tolower(type))
+    {
+    case'l':
+        return (size(*(ap.pl)));
+
+    case't':
+        return (size(*(ap.pt)));
+    }
+
+    return 0;
+}
+
+int apfull(struct airport ap, char type)
+{
+    switch (tolower(type))
+    {
+    case'l':
+        return (full(*(ap.pl)));
+
+    case't':
+        return (full(*(ap.pt)));
+    }
+
+    return 0;
+}
+
+int apempty(struct airport ap, char type)
+{
+    switch (tolower(type))
+    {
+    case'l':
+        return (empty(*(ap.pl)));
+
+    case't':
+        return (empty(*(ap.pt)));
+    }
+
+    return 0;
+}
+
+void myrandomize()
+{
+    srand((unsigned int)(time(NULL) % 10000));
+}
+
+void main()
+{
+    srand(time(NULL));
+    struct airport a;
+    int i, pri, curtime, endtime;
+    double expectarrive, expectdepart;
+    struct plane temp;
+    int test;
+    test = randomnumber(0.47);
+    printf("%d", test);
+    initairport(&amp;a);
+
+    start(&amp;endtime, &amp;expectarrive, &amp;expectdepart);
+
+    for (curtime = 1; curtime &lt;= endtime; curtime++)
+    {
+        pri = randomnumber(expectarrive);
+
+        for (i = 1; i &lt;= pri; i++)
+        {
+            newplane(&amp;a, curtime, ARRIVE);
+            if (apfull(a, 'l'))
+                refuse(&amp;a, ARRIVE);
+            else
+                apaddqueue(&amp;a, 'l');
+        }
+
+        pri = randomnumber(expectdepart);
+        for (i = 1; i &lt;= pri; i++)
+        {
+            newplane(&amp;a, curtime, DEPART);
+            if (apfull(a, 't'))
+                refuse(&amp;a, DEPART);
+            else
+                apaddqueue(&amp;a, 't');
+        }
+
+        if (!(apempty(a, 'l')))
+        {
+            temp = apdelqueue(&amp;a, 'l');
+            land(&amp;a, temp, curtime);
+        }
+        else
+        {
+            if (!(apempty(a, 't')))
+            {
+                temp = apdelqueue(&amp;a, 't');
+                fly(&amp;a, temp, curtime);
+            }
+            else
+                idle(&amp;a, curtime);
+        }
+    }
+
+    conclude(&amp;a, endtime);
+
+} 
+</code></pre>
+
+<p>Any help or guidance would be highly appreciated.</p>

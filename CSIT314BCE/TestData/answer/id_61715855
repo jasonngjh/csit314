@@ -1,0 +1,109 @@
+<p>Let's keep it simple! You can add a <code>span</code> inside your <code>a</code> tag and with that having new pseudo elements available to do the left part of the bone</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-css lang-css prettyprint-override"><code>:root {
+  --bg: #1a1e24;
+  --color: #eee;
+  --font: Montserrat, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.bone {
+  filter: url('#goo');
+  display: inline-block;
+  text-align: center;
+  background: var(--color);
+  color: var(--bg);
+  font-weight: bold;
+  padding: 1em 1em 1.03em;
+  line-height: 1;
+  border-radius: 0.4em;
+  position: relative;
+  min-width: 8.23em;
+  text-decoration: none;
+  font-family: var(--font);
+  font-size: 1.25rem;
+}
+
+.bone::before,
+.bone::after,
+.bone span::before,
+.bone span::after {
+  content: "";
+  width: 2em;
+  height: 2em;
+  position: absolute;
+  display: inline-block;
+  background: var(--color);
+  border-radius: 50%;
+  transition: transform 1s ease;
+  transform: scale(0);
+  z-index: -1;
+}
+
+
+/*top*/
+
+.bone::before,
+.bone span::before {
+  top: 50%;
+}
+
+
+/*bottom*/
+
+.bone::after,
+.bone span::after {
+  bottom: 50%;
+}
+
+
+/*right*/
+
+.bone::before,
+.bone::after {
+  right: -10%;
+}
+
+
+/*left*/
+
+.bone span::before,
+.bone span::after {
+  left: -10%;
+}
+
+.bone:hover::before,
+.bone:hover::after,
+.bone:hover span::before,
+.bone:hover span::after {
+  transform: none;
+}
+
+
+/* Demo styles */
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg)
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;a class="bone" href="#"&gt;
+  &lt;span&gt;Woof woof&lt;/span&gt;
+&lt;/a&gt;
+
+&lt;!-- Filter: https://css-tricks.com/gooey-effect/ --&gt;
+&lt;svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
+    &lt;defs&gt;
+        &lt;filter id="goo"&gt;&lt;feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" /&gt;    
+            &lt;feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" /&gt;
+            &lt;feComposite in="SourceGraphic" in2="goo" operator="atop"/&gt;
+        &lt;/filter&gt;
+    &lt;/defs&gt;
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+</p>

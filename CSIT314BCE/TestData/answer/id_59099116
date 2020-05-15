@@ -1,9 +1,0 @@
-<p>A part of your question is relevant to me as I just came across it.</p>
-
-<p>A third-party provider is providing a REST service that is used by multiple clients of his. It's a straight-forward REST call with query parameters that returns a well-formed JSON. I tested it with PHP and Java where it worked as expected.</p>
-
-<p>My client uses Oracle Service Bus as a gateway between his application server and the Internet. When I made the OSB service, it crashed with an "Invalid message format" error. Turned out that the content type being returned was "text/html". OSB treats responses as per this header; converting between text, XML and JSON. In this case, the response was JSON but the header didn't say so. Contacting the provider, I got the reply: "We're not going to change it as it doesn't effect anyone else".</p>
-
-<p>The content type header specifies what the content <strong>should</strong> be, not what it <strong>actually</strong> is. That is to say, in your consuming program, it's up to you to check or ignore it and process the content in any manner. Another example, you can return GIF data but specify the content type as JSON, then go ahead and ignore the header and read the image data. This won't hurt your program, but may hurt others.</p>
-
-<p>Moral of the story: Play nice.</p>

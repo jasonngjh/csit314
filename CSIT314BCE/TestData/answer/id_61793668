@@ -1,0 +1,13 @@
+<p>Try <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#boolean-indexing" rel="nofollow noreferrer">boolean indexing</a> with <code>==</code> condition, then use <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.value_counts.html" rel="nofollow noreferrer"><code>value_counts</code></a>, <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reindex.html" rel="nofollow noreferrer"><code>reindex</code></a> and <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_dict.html" rel="nofollow noreferrer"><code>to_dict</code></a>:</p>
+
+<pre><code>A = pd.DataFrame([1,2,3,2,1,3])
+B = pd.DataFrame([1,3,3,1,1,3])
+
+d = A[A == B][0].value_counts().reindex(A[0].unique(), fill_value=0).to_dict()
+print(d)
+</code></pre>
+
+<p>[out]</p>
+
+<pre><code>{1: 2, 2: 0, 3: 2}
+</code></pre>

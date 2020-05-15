@@ -1,3 +1,0 @@
-<p>it is common practice to declare a variable using C# keywords.
-In fact, every C# type has an equivalent in .NET. As another example, short and int in C# map to Int16 and Int32 in .NET. So, technically there is no difference between string and String, but 
-In C#, string is an alias for the String class in .NET framework. </p>

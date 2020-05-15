@@ -1,1 +1,0 @@
-<p>Every module in Python has a special attribute called <strong>name</strong>. The value of <strong>name</strong>  attribute is set to '<strong>main</strong>'  when module run as main program. Otherwise, the value of <strong>name</strong>  is set to contain the name of the module.</p>

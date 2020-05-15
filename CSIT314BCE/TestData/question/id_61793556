@@ -1,0 +1,34 @@
+<p>I buit this code to sort the array values acording to <code>car</code> value.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>const arr = [
+    {
+        car: 'audi',
+        age: 2015
+    },
+    {
+        car: 'bmw',
+        age: 1999
+    },
+    {
+        car: 'alfa',
+        age: 2019
+    },
+];
+function createSort(property) {
+    return function compareString(a,b) {
+        return a[property] &lt; b[property]
+    }
+}
+
+const sortByTitle = createSort('car');
+arr.sort(sortByTitle);
+
+console.log(arr);</code></pre>
+</div>
+</div>
+</p>
+
+<p>I can't figure out why it does not sort. 
+<br> What is the issue?</p>

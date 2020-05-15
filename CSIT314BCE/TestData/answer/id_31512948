@@ -1,3 +1,0 @@
-<p><strong>JSON is not a framed protocol</strong>. It is a <em>language free format</em>. So a comment's format is not defined for JSON.</p>
-
-<p>As many people have suggested, there are some tricks, for example, duplicate keys or a specific key <code>_comment</code> that you can use. It's up to you.</p>

@@ -1,0 +1,44 @@
+<p>Suppose I have some inline assembly that needs a particular <code>char</code> value in <code>ah</code>, <code>bh</code>, <code>ch</code>, or <code>dh</code>. How can I tell GCC to put it there? I don't see a relevant constraint to do that, but the GCC manual says "If you must use a specific register, but your Machine Constraints do not provide sufficient control to select the specific register you want, local register variables may provide a solution", so I tried that:</p>
+
+<pre class="lang-c prettyprint-override"><code>void f(char x) {
+    register char y __asm__("ah") = x;
+    __asm__ __volatile__(
+        "# my value ended up in %0" :: "a"(y)
+    );
+}
+</code></pre>
+
+<p>But it didn't work. It put it in <code>al</code> instead:</p>
+
+<pre><code>        movb    4(%esp), %al
+        # my value ended up in %al
+</code></pre>
+
+<p>The x86-specific <code>Q</code> constraint also looks close to what I want, so I tried it in place of <code>a</code>, but it had the same result. I also tried with the more-generic <code>r</code>.</p>
+
+<p>Interestingly, when I compile with Clang instead of GCC (whether with <code>a</code>, <code>Q</code>, or <code>r</code>), then I do get the desired result:</p>
+
+<pre><code>        movb    4(%esp), %ah
+        # my value ended up in %ah
+</code></pre>
+
+<p>I also tried with <code>bh</code>, <code>ch</code>, and <code>dh</code> in place of <code>ah</code>, and every combination of them led to analogous results.</p>
+
+<p>I also tried compiling as 64-bit instead of 32-bit. There, GCC still does basically the same wrong thing:</p>
+
+<pre><code>        movl    %edi, %eax
+        # my value ended up in %al
+</code></pre>
+
+<p>And Clang utterly failed to compile with <code>Cannot encode high byte register in REX-prefixed instruction</code> unless I turned off optimizations (which I opened <a href="https://bugs.llvm.org/show_bug.cgi?id=45865" rel="nofollow noreferrer">LLVM bug #45865</a> about), in which case it did eventually get the value in the right place:</p>
+
+<pre><code>        movb    %dil, -1(%rsp)
+        movb    -1(%rsp), %al
+        movb    %al, -2(%rsp)
+        movb    -2(%rsp), %ah
+        # my value ended up in %ah
+</code></pre>
+
+<p>Is this a bug in GCC that I should report, or is this something that's not supposed to work and is only working by chance in Clang? If the latter, is there  a way to do what I want, or will I have to settle for <code>mov</code>ing it there from somewhere else myself from within the assembly?</p>
+
+<p><a href="https://godbolt.org/z/FaF0df" rel="nofollow noreferrer">32-bit Godbolt link</a>. <a href="https://godbolt.org/z/7Y_v_b" rel="nofollow noreferrer">64-bit Godbolt link</a>.</p>

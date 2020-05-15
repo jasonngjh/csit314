@@ -1,0 +1,11 @@
+<p>In the context of a Monte Carlo simulation I am generating pairs of random indices, using</p>
+
+<pre><code>ij = np.random.randint(0, N, (n,2))
+</code></pre>
+
+<p>where <code>n</code> can be quite large (e.g. <code>10**6</code>). I then loop over these pairs.</p>
+
+<p><strong>Issue:</strong><br>
+I would like the numbers in each pair to be different.</p>
+
+<p>The solutions that I found (e.g., using <code>random.sample</code> or <code>np.random.choice</code>) suggest generating number pair by pair. In my case it means calling the random numbers generator repeatedly in a loop, which slows down the code.</p>

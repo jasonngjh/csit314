@@ -1,0 +1,5 @@
+<p>One important rule about <code>async</code>/<code>awaits</code> is that a method with the <code>async</code> modifier  <strong>will run synchronously until it gets to the first incomplete Task.</strong></p>
+
+<p>Async is not about parallelism but asynchronism. It's not based on the fact that the method is <code>async</code> but on the <strong>state</strong> of the <code>Task</code> being returned.</p>
+
+<p>I invite you to take a look at <a href="http://www.hardkoded.com/blog/async-csharp-5-book-review" rel="nofollow noreferrer">this post, and its code example</a>.</p>

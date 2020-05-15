@@ -1,0 +1,5 @@
+<p>I trying to find information about refactoring of conditional statements. I would like to short up this comparison, do you have any ideas is it generally possible?</p>
+
+<pre><code>if 'text1' in somelist or 'text2' in somelist:
+    do_something()
+</code></pre>

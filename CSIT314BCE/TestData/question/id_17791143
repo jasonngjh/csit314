@@ -1,0 +1,50 @@
+<p>I am using python to go through a file and remove any comments. A comment is defined as a hash and anything to the right of it <em>as long as the hash isn't inside double quotes</em>. I currently have a solution, but it seems sub-optimal:</p>
+
+<pre><code>filelines = []
+    r = re.compile('(".*?")')
+    for line in f:
+        m = r.split(line)
+        nline = ''
+        for token in m:
+            if token.find('#') != -1 and token[0] != '"':
+                nline += token[:token.find('#')]
+                break
+            else:
+                nline += token
+        filelines.append(nline)
+</code></pre>
+
+<p>Is there a way to find the first hash not within quotes without for loops (i.e. through regular expressions?)</p>
+
+<p>Examples:</p>
+
+<pre><code>' "Phone #":"555-1234" ' -&gt; ' "Phone #":"555-1234" '
+' "Phone "#:"555-1234" ' -&gt; ' "Phone "'
+'#"Phone #":"555-1234" ' -&gt; ''
+' "Phone #":"555-1234" #Comment' -&gt; ' "Phone #":"555-1234" '
+</code></pre>
+
+<hr>
+
+<p>Edit: Here is a pure regex solution created by user2357112. I tested it, and it works great:</p>
+
+<pre><code>filelines = []
+r = re.compile('(?:"[^"]*"|[^"#])*(#)')
+for line in f:
+    m = r.match(line)
+    if m != None:
+        filelines.append(line[:m.start(1)])
+    else:
+        filelines.append(line)
+</code></pre>
+
+<p>See his reply for more details on how this regex works.</p>
+
+<p>Edit2: Here's a version of user2357112's code that I modified to account for escape characters (\"). This code also eliminates the 'if' by including a check for end of string ($):</p>
+
+<pre><code>filelines = []
+r = re.compile(r'(?:"(?:[^"\\]|\\.)*"|[^"#])*(#|$)')
+for line in f:
+    m = r.match(line)
+    filelines.append(line[:m.start(1)])
+</code></pre>

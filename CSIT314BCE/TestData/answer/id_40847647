@@ -1,7 +1,0 @@
-<p>Using <a href="http://ramdajs.com/docs/#dissoc" rel="noreferrer">ramda#dissoc</a> you will get a new object without the attribute <code>regex</code>:</p>
-
-<pre><code>const newObject = R.dissoc('regex', myObject);
-// newObject !== myObject
-</code></pre>
-
-<p>You can also use other functions to achieve the same effect - omit, pick, ...</p>

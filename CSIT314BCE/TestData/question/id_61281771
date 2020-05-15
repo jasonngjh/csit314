@@ -1,0 +1,73 @@
+<p>I figure most of you know that <code>goto</code> is a reserved keyword in the Java language but is not actually used. And you probably also know that <code>goto</code> is a Java Virtual Machine (JVM) opcode. I reckon all the sophisticated control flow structures of Java, Scala and Kotlin are, at the JVM level, implemented using some combination of <code>goto</code> and <code>ifeq</code>, <code>ifle</code>, <code>iflt</code>, etc.</p>
+
+<p>Looking at the JVM spec <a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.goto_w" rel="noreferrer">https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.goto_w</a> I see there's also a <code>goto_w</code> opcode. Whereas <code>goto</code> takes a 2-byte branch offset, <code>goto_w</code> takes a 4-byte branch offset. The spec states that </p>
+
+<blockquote>
+  <p>Although the <em>goto_w</em> instruction takes a 4-byte branch offset, other factors limit the size of a method to 65535 bytes (§4.11). This limit may be raised in a future release of the Java Virtual Machine.</p>
+</blockquote>
+
+<p>It sounds to me like <code>goto_w</code> is future-proofing, like some of the other <code>*_w</code> opcodes. But it also occurs to me that maybe <code>goto_w</code> could be used with the two more significant bytes zeroed out and the two less significant bytes the same as for <code>goto</code>, with adjustments as needed.</p>
+
+<p>For example, given this Java Switch-Case (or Scala Match-Case):</p>
+
+<pre><code>     12: lookupswitch  {
+                112785: 48 // case "red"
+               3027034: 76 // case "green"
+              98619139: 62 // case "blue"
+               default: 87
+          }
+      48: aload_2
+      49: ldc           #17                 // String red
+      51: invokevirtual #18
+            // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      54: ifeq          87
+      57: iconst_0
+      58: istore_3
+      59: goto          87
+      62: aload_2
+      63: ldc           #19                 // String green
+      65: invokevirtual #18
+            // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      68: ifeq          87
+      71: iconst_1
+      72: istore_3
+      73: goto          87
+      76: aload_2
+      77: ldc           #20                 // String blue
+      79: invokevirtual #18 
+      // etc.
+</code></pre>
+
+<p>we could rewrite it as </p>
+
+<pre><code>     12: lookupswitch  { 
+                112785: 48
+               3027034: 78
+              98619139: 64
+               default: 91
+          }
+      48: aload_2
+      49: ldc           #17                 // String red
+      51: invokevirtual #18
+            // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      54: ifeq          91 // 00 5B
+      57: iconst_0
+      58: istore_3
+      59: goto_w        91 // 00 00 00 5B
+      64: aload_2
+      65: ldc           #19                 // String green
+      67: invokevirtual #18
+            // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      70: ifeq          91
+      73: iconst_1
+      74: istore_3
+      75: goto_w          91
+      79: aload_2
+      81: ldc           #20                 // String blue
+      83: invokevirtual #18 
+      // etc.
+</code></pre>
+
+<p>I haven't actually tried this, since I've probably made a mistake changing the "line numbers" to accommodate the <code>goto_w</code>s. But since it's in the spec, it should be possible to do it.</p>
+
+<p>My question is whether there is a reason a compiler or other generator of bytecode might use <code>goto_w</code> with the current 65535 limit other than to show that it can be done?</p>

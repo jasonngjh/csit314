@@ -1,4 +1,0 @@
-<p>This works with jQuery:</p>
-
-<pre><code>$(window).attr("location", "http://google.fr");
-</code></pre>

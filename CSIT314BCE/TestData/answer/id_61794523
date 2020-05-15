@@ -1,0 +1,31 @@
+<p>Probably not the easiest to understand reference, but the normative source of information for concepts is the available standard draft. Where a concept definition is specified grammatically as </p>
+
+<blockquote>
+  <p><a href="http://eel.is/c++draft/temp.concept#1" rel="nofollow noreferrer">1</a> A concept is a template that defines constraints on its
+  template arguments.</p>
+
+<pre><code>concept-definition:
+  concept concept-name = constraint-expression ;
+concept-name:
+  identifier
+</code></pre>
+</blockquote>
+
+<p>It's pretty much just like a bool variable template constant, but it's defined with the concept keyword. So to translate your condition directly to a concept is essentially this</p>
+
+<pre><code>template&lt;typename T&gt;
+concept MyClassIter = std::is_same_v&lt;
+                        MyClass, 
+                        typename std::iterator_traits&lt;T&gt;::value_type
+                      &gt;;
+</code></pre>
+
+<p>With the concept in hand, we can use it as a type constraint on a template's type parameter, thus transforming your template into this</p>
+
+<pre><code>template &lt;MyClassIter IteratorType&gt;
+void myFunction( IteratorType begin, IteratorType end ) {}
+</code></pre>
+
+<p>If the constraint is not satisfied for a type, this overload is discarded. Not satisfied in this context also includes substitution failures. So it's the same condition you had originally.  </p>
+
+<p><a href="https://godbolt.org/z/MExNRP" rel="nofollow noreferrer">Live example</a></p>

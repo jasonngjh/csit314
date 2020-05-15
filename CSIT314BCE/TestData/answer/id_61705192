@@ -1,0 +1,53 @@
+<p>From what I can tell, you and I both use the same method to calculate the area, as well as the overall concept, but my code seems to be returning a correct result. Perhaps reviewing it can help you find a discrepancy.</p>
+
+<p>JavaScript code:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>function f(pts, k){
+  // Sort the points by x
+  pts.sort(([a1, b1], [a2, b2]) =&gt; a1 - a2);
+
+  const n = pts.length;
+  let best = 0;
+  
+  // m[k][j] represents the optimal
+  // value if the jth point is chosen
+  // as rightmost for k points
+  let m = new Array(k + 1);
+  
+  // Initialise m
+  for (let i=1; i&lt;=k; i++)
+    m[i] = new Array(n);
+  for (let i=0; i&lt;n; i++)
+    m[1][i] = pts[i][0] * pts[i][1];
+    
+  // Build the table
+  for (let i=2; i&lt;=k; i++){
+    for (let j=i-1; j&lt;n; j++){
+      m[i][j] = 0;
+      for (let jj=j-1; jj&gt;=i-2; jj--){
+        const area = (pts[j][0] - pts[jj][0]) * pts[j][1];
+        m[i][j] = Math.max(m[i][j], area + m[i-1][jj]);
+      }
+      best = Math.max(best, m[i][j]);
+    }
+  }
+
+  return best;
+}
+
+var pts = [
+  [0.376508963445, 0.437693410334],
+  [0.948798695015, 0.352125307881],
+  [0.176318878234, 0.493630156084],
+  [0.029394902328, 0.951299438575],
+  [0.235041868262, 0.438197791997]
+];
+
+var k = 3;
+
+console.log(f(pts, k));</code></pre>
+</div>
+</div>
+</p>

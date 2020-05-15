@@ -1,7 +1,0 @@
-<p>All the answers have pretty much explained the functionality. But I will provide one example of its usage which might help clearing out the concept further.</p>
-
-<p>Assume that you have two Python files, a.py and b.py. Now, a.py imports b.py. We run the a.py file, where the "import b.py" code is executed first. Before the rest of the a.py code runs, the code in the file b.py must run completely.</p>
-
-<p>In the b.py code there is some code that is exclusive to that file b.py and we don't want any other file (other than b.py file), that has imported the b.py file, to run it.</p>
-
-<p>So that is what this line of code checks. If it is the main file (i.e., b.py) running the code, which in this case it is not (a.py is the main file running), then only the code gets executed.</p>

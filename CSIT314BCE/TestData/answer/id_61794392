@@ -1,0 +1,9 @@
+<blockquote>
+  <p><strong>Q</strong> : <em>"<strong>Safe way</strong> to terminate a <strong>python subprocess</strong>?"</em></p>
+</blockquote>
+
+<p>Well, if there were some, you would never run into this.</p>
+
+<p>If your actual needs can justify the costs of doing so right and well, the best workaround would be to learn from Masters of reliable processing, designing robust, resilient, self-healing systems - like Ms.Margaret HAMILTON (MIT) pioneered in NASA operated Apollo Moon Landing Programme, designing the AGC ( Apollo Guidance Computer ) so right and so well, it could survive its own deadlocking risks, preventing the Eagle lander from crashing the Moon surface.</p>
+
+<p>Best inspirations come from <a href="/questions/tagged/distributed-computing" class="post-tag" title="show questions tagged &#39;distributed-computing&#39;" rel="tag">distributed-computing</a>, available for pythonistas if designing safe and self-healing autonomous components using a robust and independent many-node-to-many-node communications-plane frameworks ZeroMQ or nanomsg.</p>

@@ -1,0 +1,99 @@
+<p>I have <code>n</code> points and have to find the maximum united area between <code>k</code> points (<code>k &lt;= n</code>). So, its the sum of those points area minus the common area between them.</p>
+
+<p><img src="https://i.stack.imgur.com/5qgFE.png" alt="enter image description here">]<a href="https://i.stack.imgur.com/5qgFE.png" rel="nofollow noreferrer">1</a></p>
+
+<p>Suppose we have <code>n=4, k=2</code>. As illustrated in the image above, the areas are calculated from each point to the origin and, the final area is the sum of the B area with the D are (only counting the area of their intersection once). No point is dominated</p>
+
+<p>I have implemented a bottom-up dynamic programming algorithm, but it has an error somewhere. Here is the code, that prints out the best result: </p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+typedef struct point {
+    double x, y;
+} point;
+struct point *point_ptr;
+
+int n, k;
+point points_array[1201];
+point result_points[1201];
+
+void qsort(void *base, size_t nitems, size_t size,
+           int (*compar)(const void *, const void *));
+
+int cmpfunc(const void *a, const void *b) {
+    point *order_a = (point *)a;
+    point *order_b = (point *)b;
+    if (order_a-&gt;x &gt; order_b-&gt;x) {
+        return 1;
+    }
+    return -1;
+}
+
+double max(double a, double b) {
+    if (a &gt; b) {
+        return a;
+    }
+    return b;
+}
+
+double getSingleArea(point p) {
+    return p.x * p.y;
+}
+
+double getCommonAreaX(point biggest_x, point new_point) {
+    double new_x;
+    new_x = new_point.x - biggest_x.x;
+    return new_x * new_point.y;
+}
+
+double algo() {
+    double T[k][n], value;
+    int i, j, d;
+    for (i = 0; i &lt; n; i++) {
+        T[0][i] = getSingleArea(points_array[i]);
+    }
+    for (j = 0; j &lt; k; j++) {
+        T[j][0] = getSingleArea(points_array[0]);
+    }
+    for (i = 1; i &lt; k; i++) {
+        for (j = 1; j &lt; n; j++) {
+            for (d = 0; d &lt; j; d++) {
+                value = getCommonAreaX(points_array[j - 1], points_array[j]);
+                T[i][j] = max(T[i - 1][j], value + T[i - 1][d]);
+            }
+        }
+    }
+    return T[k - 1][n - 1];
+}
+
+void read_input() {
+    int i;
+    fscanf(stdin, "%d %d\n", &amp;n, &amp;k);
+    for (i = 0; i &lt; n; i++) {
+        fscanf(stdin, "%lf %lf\n", &amp;points_array[i].x, &amp;points_array[i].y);
+    }
+}
+
+int main() {
+    read_input();
+    qsort(points_array, n, sizeof(point), cmpfunc);
+    printf("%.12lf\n", algo());
+    return 0;
+}
+</code></pre>
+
+<p>with the input: </p>
+
+<pre><code>5 3
+0.376508963445 0.437693410334
+0.948798695015 0.352125307881
+0.176318878234 0.493630156084
+0.029394902328 0.951299438575
+0.235041868262 0.438197791997
+</code></pre>
+
+<p>where the first number equals <code>n</code>, the second <code>k</code> and the following lines the <code>x</code> and <code>y</code> coordinates of every point respectively, the result should be: <code>0.381410589193</code>,</p>
+
+<p>whereas mine is <code>0.366431740966</code>. So I am missing a point?</p>

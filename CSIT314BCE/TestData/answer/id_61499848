@@ -1,7 +1,0 @@
-<p>In this context, -- and > are two different operators. Post increment operator has higher precedence than greater than operator. Therefore the evaluation is like this:</p>
-
-<pre><code>while((x--) &gt; 0)
-{
-//TODO...
-}
-</code></pre>

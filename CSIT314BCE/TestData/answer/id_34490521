@@ -1,5 +1,0 @@
-<p>As pointed out, they are the same thing and <code>string</code> is just an alias to <code>String</code>.</p>
-
-<p>For what it's worth, I use string to declare types - variables, properties, return values and parameters. This is consistent with the use of other system types - <code>int, bool, var</code> etc (although <code>Int32</code> and <code>Boolean</code> are also correct).</p>
-
-<p>I use <code>String</code> when using the static methods on the String class, like <code>String.Split()</code> or <code>String.IsNullOrEmpty()</code>. I feel that this makes more sense because the methods belong to a class, and it is consistent with how I use other static methods.</p>

@@ -1,0 +1,4 @@
+<p>it should be</p>
+
+<pre><code>AllWords.add(sp.getString(i,""));
+</code></pre>

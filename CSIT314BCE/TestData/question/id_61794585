@@ -1,0 +1,92 @@
+<p>I'm trying to make an avatar upload from on my react app with a node, express back-end app.
+I got a status 500 error message! so I checked my back-end using postman and it worked!!
+Here it is my react code
+these are my on change and upload functions to se <strong>imagePreviewUrl: "" and file: ""</strong> in my state</p>
+
+<pre><code> handleUploadImage =async () =&gt; {
+    e.preventDefault();
+    try {
+      let ret = await axios({
+              method: "POST",
+              data: this.state.file,
+              url:"/uploads/profileimage/" + this.props.LoginReducer.user_id,
+
+  });
+
+      if (ret.status &gt;= 200 &amp;&amp; ret.status &lt; 300) {
+        printMessage(
+          "Success! You have registered successfully! Please login to continue"
+        );
+      } else {
+        throw "error";
+      }
+    } catch (error) {
+
+      console.log(Object.keys(error), error.response);
+      printError(error);
+    }
+  };
+
+  handleonChangeImage = (e) =&gt; {
+    e.preventDefault();
+
+  let reader = new FileReader();
+    console.log(e.target.files);
+    let file = e.target.files[0];
+
+    reader.onloadend = () =&gt; {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result,
+      });
+    };
+    console.log(this.state);
+
+    reader.readAsDataURL(file);  };
+</code></pre>
+
+<p>inside render I have following code to set image preview</p>
+
+<pre><code>  let { imagePreviewUrl } = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (
+        &lt;img
+          className="userAvatar full-width height-1-1 bgPosCenter bgSizeCover"
+          src={imagePreviewUrl}
+          alt=""
+        /&gt;
+      );
+    } else {
+      $imagePreview = (
+        &lt;div className="userAvatar full-width height-1-1 bgPosCenter bgSizeCover"&gt;
+          &lt;MyIcon displayValue="add" className="md-24 md-light-green" /&gt;
+        &lt;/div&gt;
+      );
+    }
+</code></pre>
+
+<p>my jsx tags and form</p>
+
+<pre><code> &lt;form&gt;
+                &lt;div className="auth-group"&gt;
+                  &lt;label&gt;
+                    &lt;input
+                      type="file"
+                      name="Usermage"
+                      id="userImage"
+                      onChange={(e) =&gt; {
+                        this.handleonChangeImage(e);
+                      }}
+                    /&gt;
+                  &lt;/label&gt;
+                  &lt;div className="imagepreview"&gt;{$imagePreview}&lt;/div&gt;
+                  &lt;button onClick={(e) =&gt; this.handleUploadImage(e)}&gt;
+                    upload
+                  &lt;/button&gt;
+                &lt;/div&gt;
+              &lt;/form&gt;
+</code></pre>
+
+<p>I use <strong>redux</strong> to get t<strong>his.props.LoginReducer.user_id</strong>
+and this is my error message <strong>"Cannot read property 'filename' of undefined"</strong></p>

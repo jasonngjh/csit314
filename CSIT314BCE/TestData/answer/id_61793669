@@ -1,0 +1,1 @@
+<p>You can add getters and setters for your class properties, add emitters inside, and then add listeners outside the class, which would listen for that emitters fired</p>

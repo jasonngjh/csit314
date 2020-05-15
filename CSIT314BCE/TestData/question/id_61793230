@@ -1,0 +1,36 @@
+<p>I really don't understand what's
+the problem is with this code</p>
+
+<pre><code>&lt;input #quantity type="number" matInput formControlName="quantity" (input)="onQuantity($event, i)" placeholder="Quantity"/&gt;
+
+onQuantity(event: InputEvent, i: number) {
+    if (!this.totals[i]) {
+      this.totals[i] = { price: '0', quantity: 1 };
+    }
+    let value = (event.target as HTMLInputElement).value;
+    value = value ? value : '0';
+    this.totals[i].quantity = parseInt(value, 10);
+  }
+</code></pre>
+
+<p>The compiler get an error
+Argument of type 'Event' is not assignable to parameter of type 'InputEvent'.
+and if I use</p>
+
+<pre><code>onQuantity(event: Event, i: number)
+</code></pre>
+
+<p>I get
+Type 'Event' is missing the following properties from type 'InputEvent': data, inputType, isComposing, detail, and 2 more.</p>
+
+<p>so I don't known what way to turn :(
+Can anyone help me, please?</p>
+
+<h2>UPDATE</h2>
+
+<p>I have worked it out with</p>
+
+<pre><code>(input)="onPrice(price.value, i)"
+</code></pre>
+
+<p><a href="https://angular.io/guide/user-input" rel="nofollow noreferrer">https://angular.io/guide/user-input</a></p>

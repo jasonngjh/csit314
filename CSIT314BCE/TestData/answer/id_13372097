@@ -1,7 +1,0 @@
-<p>On your click function, just add:</p>
-
-<pre><code>window.location.href = "The URL where you want to redirect";
-$('#id').click(function(){
-    window.location.href = "http://www.google.com";
-});
-</code></pre>

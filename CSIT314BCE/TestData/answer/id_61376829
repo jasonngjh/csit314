@@ -1,0 +1,24 @@
+<p>I'd say the simplest solution is to unpack two ranges into a list using the <code>*</code> unpacking operator:</p>
+
+<pre class="lang-py prettyprint-override"><code>&gt;&gt;&gt; [*range(6, 10), *range(-9, -5)]
+[6, 7, 8, 9, -9, -8, -7, -6]
+</code></pre>
+
+<p>Not only is this the shortest answer proposed yet, it's also the most performant, because it only constructs a single list and involves no function calls beyond the two <code>range</code>s.</p>
+
+<p>I verified this by testing all of this question's answers using the <code>timeit</code> module:</p>
+
+<pre>
+Answer ID     Method                                                           timeit result
+--------------------------------------------------------------------------------------------------
+(in question) [x for x in range(6,10)] + [y for y in range(-9, -5)]            0.843 usec per loop
+(this answer) [*range(6, 10), *range(-9, -5)]                                  0.509 usec per loop
+61348876      [y for x in range(6,10) for y in (x,-x)]                         0.754 usec per loop
+61349149      list(range_with_negatives(6, 10))                                0.795 usec per loop
+61348914      list(itertools.chain(range(6, 10), range(-9, -5)))               0.709 usec per loop
+61366995      [sign*x for sign, x in itertools.product((-1, 1), range(6, 10))] 0.899 usec per loop
+61371302      list(range(6, 10)) + list(range(-9, -5))                         0.729 usec per loop
+61367180      list(range_with_negs(6, 10))                                     1.95 usec per loop
+</pre>
+
+<p><sup>(timeit testing performed with Python 3.6.9 on my own computer (average specs))</sup></p>

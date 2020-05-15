@@ -1,0 +1,35 @@
+<p>First of all, this is for an experiment, so I am not looking for a nice super compatible solution :)</p>
+
+<p>I have a table with two columns, the first one have an image and the second one JSon.
+I would like the JSon to be colored and expandable, since it can be really big</p>
+
+<p>I would like something like this:</p>
+
+<p><a href="https://i.stack.imgur.com/ZC1LIm.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/ZC1LIm.png" alt="enter image description here"></a></p>
+
+<p>This is my current code, which produces a proper indented json, but not colored or expandable:</p>
+
+<pre><code>&lt;div&gt;
+    &lt;table style="width:100%; border-spacing: 50px;border-collapse: separate;"&gt;
+        @{
+            ProcessedImageViewModel[] processedImages = ViewBag.ProcessedImages;
+
+            foreach (ProcessedImageViewModel image in processedImages)
+            {
+                &lt;tr&gt;
+                    &lt;td style="width:50%; vertical-align:top"&gt;
+                        &lt;img style="width:100%" src="@image.FilePath" /&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;pre&gt;&lt;code&gt;
+                           &lt;p&gt;@image.OcrText&lt;/p&gt;  // THIS-IS-A-BIG-JSON
+                        &lt;/code&gt;&lt;/pre&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            }
+        }
+    &lt;/table&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>What is the easiest library and how can i use it from MVC to add such panels?</p>

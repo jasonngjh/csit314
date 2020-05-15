@@ -1,0 +1,107 @@
+<p>The main method for detecting memory leaks is heap profiling.  Specifically, you're looking for unexpected growth in the amount of <em>resident</em> (mostly heap) memory, either the maximum residency in the <code>+RTS -s</code> statistics output, or -- more reliably -- a characteristic "pyramid" shape over time in heap profile output generated with the <code>+RTS -h&lt;x&gt;</code> flags and the <code>hp2ps</code> tool.</p>
+
+<p>If I run your toy program with <code>+RTS -s</code>, I see:</p>
+
+<pre><code>   3,281,896,520 bytes allocated in the heap
+   3,383,195,568 bytes copied during GC
+     599,346,304 bytes maximum residency (17 sample(s))
+       5,706,584 bytes maximum slop
+             571 MB total memory in use (0 MB lost due to fragmentation)
+</code></pre>
+
+<p>The first line can generally be ignored.  Haskell programs typically allocate a roughly constant amount of memory per second of runtime, and this allocation rate is either nearly zero (for certain, unusual programs), or 0.5-2.0 gigabytes per second.  This program ran for 4 seconds and allocated 3.8 gigabytes, and that's not unusual.</p>
+
+<p>The bytes copied during GC and maximum residency are concerning, though.  Assuming you have a program that you expect to run in constant space (i.e., there's no ever-growing data structure whose entire contents are needed), a correctly functioning Haskell program will generally not need to copy much data during garbage collection and will tend to have a maximum residency that's a small fraction of the total bytes allocated (e.g., 100 kilobytes rather than half a gigabyte), and this won't grow substantially with the number of "iterations" of whatever it is you're testing.</p>
+
+<p>You can generate a quick heap profile over time without turning on formal profiling.  If you compile with the GHC flag <code>-rtsopts</code>, you can use:</p>
+
+<pre><code>./Toy +RTS -hT
+</code></pre>
+
+<p>and then display the result graphically using the <code>hp2ps</code> tool:</p>
+
+<pre><code>hp2ps -c -e8in Toy.hp
+evince Toy.ps &amp;
+</code></pre>
+
+<p>This sort of pyramid pattern is a red flag:</p>
+
+<p><a href="https://i.stack.imgur.com/oUL9G.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/oUL9G.png" alt="enter image description here"></a></p>
+
+<p>Note that rapid linear increase in heap to the tune of hundreds of megabytes per second followed by a rapid linear collapse.  This is the pattern you see when a huge lazy data structure is being needlessly built up before the entire computation is forced all at once.  You see two pyramids here because both your second and third tests are exhibiting memory leaks.</p>
+
+<p>As an aside, the x-axis is in "MUT seconds" (seconds the "mutator" is running, which excludes garbage collection), so that's why this is less than the actual 4 second runtime.  That's actually another red flag.  A Haskell program that's spending half its time garbage collecting probably isn't running correctly.</p>
+
+<p>To get more detail on what's causing this heap pyramid, you'll need to compile with profiling enabled.  Profiling may cause a program to run somewhat slower but doesn't normally change which optimizations are in place.  However, the flag <code>-fprof-auto</code> (and related flags) which automatically insert cost centers have the potential of causing big performance changes (by interfering with inlining, etc.).  Unfortunately, the cabal <code>--enable-profiling</code> flag turns on profiling (compiler flag <code>-prof</code>) <strong>and</strong> the flag <code>-fprof-auto-top</code> which automatically generates cost centers for top-level functions, so for your toy example, that substantially changes the behavior of your first test case (increasing the runtime from 0.4 seconds to 5 seconds, even with no <code>+RTS</code> flags).  That may be the problem you're seeing with profiling affecting your results.  You don't need any cost centers for several additional kinds of heap profiles, so you can add the cabal flag <code>--profiling-detail=none</code> to shut that off, and then your profiled program should run with timing a little slower but generally similar performance to the unprofiled version.</p>
+
+<p>I don't use Cabal, but compiling with the following (which should be the equivalent of <code>--enable-profiling --profiling-detail=none</code>):</p>
+
+<pre><code>ghc -O2 -rtsopts -prof Toy.hs    # no -fprof-auto...
+</code></pre>
+
+<p>I can run your program with profiling by data type:</p>
+
+<pre><code>./Toy +RTS -hy
+</code></pre>
+
+<p>If I look at the heap profile graph:</p>
+
+<p><a href="https://i.stack.imgur.com/3Eu0r.png" rel="nofollow noreferrer"><img src="https://i.stack.imgur.com/3Eu0r.png" alt="enter image description here"></a></p>
+
+<p>this attributes most of the heap to the <code>Int</code> type -- this narrows my problem down to a bunch of unevaluated lazy <code>Int</code> calculations, which might point me in the right direction.</p>
+
+<p>If I'm really having trouble narrowing things down and am feeling like a technical deep-dive, I can also run a heap profile by closure (flag <code>-hd</code>).  This tells me that the culprits are <code>Main.sat_s7mQ</code> and <code>Main.sat_s7kP</code> for the two pyramids respectively.  This looks very mysterious, but they're the names of functions in the "STG", a low-level intermediate representation of my program generated by the compiler.</p>
+
+<p>If I recompile with the same flags but add <code>-fforce-recomp -ddump-stg -dsuppress-all</code>:</p>
+
+<pre><code>ghc -O2 -rtsopts -prof -fforce-recomp -ddump-stg -dsuppress-all Toy.hs
+</code></pre>
+
+<p>this will dump the STG that contains the definitions of these two functions.  (The generated identifiers can differ with small changes to code and/or compiler flags, so it's best to recompile with the STG dumped and then re-profile that executable, to make sure the identifiers match.)</p>
+
+<p>If I search the STG for the first culprit, I find the definition:</p>
+
+<pre><code>sat_s7mQ =
+    CCCS \u []
+        case ww2_s7mL of {
+          I# y_s7mO -&gt;
+              case +# [1# y_s7mO] of sat_s7mP {
+                __DEFAULT -&gt; I# [sat_s7mP];
+              };
+        };
+</code></pre>
+
+<p>Yes, this is all very technical, but this is STG-speak for the expression <code>1 + y</code>, which would help me zero in on the culprit.</p>
+
+<p>If you don't speak STG, you can try introducing some cost centers.  For example, I tried profiling <em>only</em> your second test case with <code>-fprof-auto</code> (Cabal flag <code>--profiling-detail=all-functions</code>).  The profile output in <code>Toy.prof</code> isn't <em>that</em> useful for memory leaks because it deals with total allocation instead of active (i.e., resident and not garbage collected) allocations over time, but you can create a heap profile by cost center by running:</p>
+
+<pre><code>./Toy +RTS -hc
+</code></pre>
+
+<p>In this case, it attributes everything to a single cost center, namely <code>(315)countNumberCalls</code>.  The "315" is the cost center number which you can look up in the <code>Toy.prof</code> input to find the exact source code lines, if it's not clear from the name.  Anyway, this at least helps narrow down the problem to <code>countNumberCalls</code>.</p>
+
+<p>For more complicated functions, you can sometimes narrow down the problem further by manually specifying cost centers, like so:</p>
+
+<pre><code>countNumberCalls :: (LogFunctionCalls m) =&gt; Int -&gt; m Int
+countNumberCalls 0 = return 0
+countNumberCalls n = do
+  {-# SCC "mytell_call" #-} myTell "countNumberCalls" 1
+  x &lt;- {-# SCC "recursive_call" #-} countNumberCalls $! n - 1
+  {-# SCC "return_statment" #-} return $ {-# SCC "one_plus_x" #-} 1 + x
+</code></pre>
+
+<p>This actually attributes everything to "recursive_call", so it's not that helpful.</p>
+
+<p>It's not wrong, though.  You actually have two memory leaks here -- the <code>x &lt;- countNumberCalls $! n - 1</code> leaks heap because <code>x</code> isn't forced, and the <code>1 + x</code> leaks stack.  You could enable the <code>BangPatterns</code> extension and write:</p>
+
+<pre><code>!x &lt;- countNumebrCalls $1 n - 1
+</code></pre>
+
+<p>and that would actually remove one of the memory leaks, speeding up the second case from 2.5 seconds to 1.0 seconds and dropping the maximum residency from 460 megs to 95 megs (and the bytes copied during GC from 1.5 Gigs to 73 kilobytes!).  However, a heap profile would show linear growing stack accounting for pretty much all of that resident memory.  Because stack isn't as well-tracked as heap, that would be more difficult to track down.</p>
+
+<p>Some additional notes:</p>
+
+<p>Even though the <code>+RTS -h&lt;x&gt;</code> flags are primarily for heap profiling (and are discussed as "heap profiling" options in the GHC documentation), they can technically report on other uses of resident
+memory besides heap including per-thread state, which includes thread state objects and stack.  By default, when running a profiled binary (compiled with <code>-prof</code>), the <code>+RTS -h&lt;x&gt;</code> flags do <em>not</em> report on per-thread state including stack, but you can add the <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html#rts-flag--xt" rel="nofollow noreferrer"><code>-xt</code> flag</a> to add it, as in <code>+RTS -hc -xt</code>.  Due to a probable unintentional oversight, on a non-profiled binary, the <code>+RTS -hT</code> flag (the only <code>-h&lt;x&gt;</code> flag available) includes stack even without the <code>-xt</code> flag.  Due to a compiler <a href="https://gitlab.haskell.org/ghc/ghc/issues/15086" rel="nofollow noreferrer">bug</a>, the <code>-hT</code> flag doesn't work on profiled binaries for GHC 8.6.x and earlier, but it does work on GHC 8.8.x, and for that version, <code>+RTS -hT</code> includes stack on non-profiled binaries but excludes it on profiled binaries unless you also specify <code>-xt</code>.  That's why in the examples above, "Stack" only shows up when running a heap profile on a non-profiled binary.  You can add the <code>-xt</code> flag to see it for all the other heap profiles.  Note that this "STACK" is actual stack use, rather than objects on the heap that are some how affiliated with the stack.</p>
+
+<p>Black holes are primarily a mechanism for supporting concurrency.  When a thread starts evaluating a thunk, it "blackholes" it (i.e., marks it as a black hole), so that if another thread comes along and wants to evaluate the same thunk, it waits on the evaluation instead of trying to re-evaluate it in parallel (which would duplicate the effort of the running thread).  It's also used in the non-threaded runtime, partly because it can detect infinite loops (if a thread encounters its own black hole), but also for some more important reasons that I can't remember.  For <code>-hT</code>, <code>-hd</code>, and <code>-hy</code> heap profiling, heap objects that have been blackholed like this will be marked as "BLACKHOLE".  The limited sampling rate in the profiles above can make it a little unclear, but what's happening in your program is that a large series of <code>Int</code> thunks are being built in a chain, and when the value is finally forced, they are turned into a long chain of <code>BLACKHOLE</code>s, each of which represents a computation that's been initiated and is waiting on the next computation in the chain.</p>

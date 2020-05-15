@@ -1,0 +1,61 @@
+<p>I'm running a Node Server on an EC2 AWS instance. There's a postgres DB running on there too. When I connect via the CLI:</p>
+
+<pre><code>psql -h localhost -U user -d database
+</code></pre>
+
+<p>I get prompted for a password, I provide it and it's all good. However, when using the the pg npm package, I get connection refused when trying to connect:</p>
+
+<pre><code>const { Client } = require("pg");
+
+const options = {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME    
+};
+
+const dbClient = new Client(options);
+
+function Connect() {
+    dbClient.connect(function(err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log("Connected to DB");
+        }
+    });
+}
+</code></pre>
+
+<p>I assume that there's something wrong with either my postgresql.conf or pg_hba.conf.</p>
+
+<p>postgresql.conf:</p>
+
+<pre><code>listen_addresses = '127.0.0.1'          # what IP address(es) to listen on;
+port = 5433                             # (change requires restart)
+max_connections = 100                   # (change requires restart)
+</code></pre>
+
+<p>pg_hba.conf:</p>
+
+<pre><code>local   all             postgres                               md5
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   tap2tap         dbUser                                md5
+host    tap2tap         dbUser        127.0.0.1               md5
+
+#local   all             all                                   md5
+
+# IPv4 local connections:
+host    myDb           dbUser          localhost              md5
+hot     myDb           dbUser          127.0.0.1              md5
+</code></pre>
+
+<p>I am completely new to Postgres so please forgive any rookie mistakes. Any help would be greatly appreciated.</p>
+
+<p>Best,
+Peter</p>

@@ -1,5 +1,0 @@
-<p><strong>Java passes references to objects by value.</strong></p>
-
-<p>So if any modification is done to the Object to which the reference argument points it will be reflected back on the original object.</p>
-
-<p>But if the reference argument point to another Object still the original reference will point to original Object.</p>

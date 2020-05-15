@@ -1,0 +1,10 @@
+<p>Lock files are generally not used on Windows (and rarely on Unix). Typically when a Windows program wants to see if another instance of itself is already running, it will call <a href="http://docs.activestate.com/activepython/2.5/pywin32/win32ui__FindWindow_meth.html"><code>FindWindow</code></a> with a known title or class name.</p>
+
+<pre><code>def iTunesRunning():
+    import win32ui
+    # may need FindWindow("iTunes", None) or FindWindow(None, "iTunes")
+    # or something similar
+    if FindWindow("iTunes", "iTunes"):
+        print "Found an iTunes window"
+        return True
+</code></pre>

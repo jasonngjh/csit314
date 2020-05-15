@@ -1,0 +1,16 @@
+<p>Like this:</p>
+
+<pre><code>In [220]: list3 = []
+
+In [221]: dict1 = dict(list1)
+
+In [225]: for i in list2:
+     ...:     l = [] 
+     ...:     for j in i: 
+     ...:         l.append(list(dict1.keys())[list(dict1.values()).index(j)]) 
+     ...:     list3.append(l) 
+     ...:     
+
+In [226]: list3
+Out[226]: [['a', 'c', 'e'], ['b', 'd', 'f']]
+</code></pre>

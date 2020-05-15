@@ -1,0 +1,43 @@
+<p>I have a program in Java like this one (<a href="https://www3.ntu.edu.sg/home/ehchua/programming/java/J8a_GameIntro-BouncingBalls.html" rel="nofollow noreferrer">https://www3.ntu.edu.sg/home/ehchua/programming/java/J8a_GameIntro-BouncingBalls.html</a>). It is the object oriented one after Example 2 but with some slightly changes. </p>
+
+<p>I want to generate random coordinates for the balls to spawn. But they are not allowed to intersect each other at spawning moment. The generated coordinates are the top left corner of an rectangle around the circle. </p>
+
+<p>So the coordinates need a minimum distance of 2 * ballRadius.</p>
+
+<p>I only got ether coordinates that have the distance of 2 * ballRadius but then there are only unique coordinates for x and y. So i only got one ball per available y coordinate. 
+<a href="https://i.stack.imgur.com/Kwwoy.png" rel="nofollow noreferrer">Example</a> There could be a Ball at the red circle but the one left to it "blocks" the y coordinate.</p>
+
+<p>Every other coordinates i get are intersecting each other.</p>
+
+<p>Thats my code so far.</p>
+
+<pre><code>    int uniqueXY[][] = new int[ballCount][2];
+    for (int i = 0; i &lt; ballCount; i++) {
+        int tempx = 0;
+        int tempy = 0;
+        Boolean foundX = true;
+        Boolean foundY = true;
+        while(foundX &amp;&amp; foundY) {
+            tempx = (int) (Math.random() * field.maxX); // generate random number in range of filed
+            tempy = (int) (Math.random() * field.maxY);
+
+            for (int j = 0; j &lt; ballCount; j++) { // Here it should check if the number is within the given rules
+                if ((uniqueXY[j][0] - (2 * ballRadius) &gt; tempx) || (uniqueXY[j][0] + (2 * ballRadius) &lt; tempx)) {   
+                    foundX = false;
+                } else {
+                    foundX = true;
+                    if ((uniqueXY[j][1] - (2 * ballRadius) &gt; tempy) || (uniqueXY[j][1] + (2 * ballRadius) &lt; tempy)) {
+                        foundY = false;
+                        foundX = false;
+                        break;
+                    } else {
+                        foundY = true;
+                        break;
+                    }
+                }
+            }
+
+        }
+        uniqueXY[i][0] = tempx;
+        uniqueXY[i][1] = tempy;
+</code></pre>

@@ -1,0 +1,12 @@
+<pre><code>import psutil
+
+def check_process_status(process_name):
+    """
+    Return status of process based on process name.
+    """
+    process_status = [ proc.status() for proc in psutil.process_iter() if proc.name() == process_name ]
+    if process_status:
+        print("Process name %s and staus %s"%(process_name, process_status[0]))
+    else:
+        print("Process name not valid", process_name)
+</code></pre>

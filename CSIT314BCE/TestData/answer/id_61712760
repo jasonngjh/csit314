@@ -1,0 +1,13 @@
+<p>To easily manipulate your values, I'd suggest using a <code>dict</code>, find the common keys, and compute the mean:</p>
+
+<pre><code>mylist1 = [["lemon", 0.1], ["egg", 0.1], ["muffin", 0.3], ["chocolate", 0.5]]
+mylist2 = [["chocolate", 0.5], ["milk", 0.2], ["carrot", 0.8], ["egg", 0.8]]
+
+recipe_1 = dict(mylist1)  # {'lemon': 0.1, 'egg': 0.1, 'muffin': 0.3, 'chocolate': 0.5}
+recipe_2 = dict(mylist2)  # {'chocolate': 0.5, 'milk': 0.2, 'carrot': 0.8, 'egg': 0.8}
+
+common_keys = recipe_1.keys() &amp; recipe_2.keys()  # {'chocolate', 'egg'}
+
+myoutput = [[item, np.mean((recipe_1[item], recipe_2[item]))] for item in common_keys]
+myoutput = [[item, (recipe_1[item] + recipe_2[item]) / 2] for item in common_keys]
+</code></pre>

@@ -1,6 +1,0 @@
-<p>This is what I always use:</p>
-
-<pre><code>git clean -fdx
-</code></pre>
-
-<p>For a very large project you might want to run it a couple of times.</p>

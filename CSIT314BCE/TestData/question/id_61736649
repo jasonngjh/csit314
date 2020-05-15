@@ -1,0 +1,8 @@
+<p>I have a legacy application that takes an integer, converts it to a binary string, reverses that string, and then gets the positions of bits (ones) as a list of integers.  For example:</p>
+
+<pre><code>6 -&gt; "110" -&gt; "011" -&gt; (2,3) 
+7 -&gt; "111" -&gt; "111" -&gt; (1,2,3)
+8 -&gt; "1000" -&gt; "0001" -&gt; (4)
+</code></pre>
+
+<p><strong>What is a succinct and clear way to accomplish this in modern Java without the String operations?</strong>  The conversion to and from String seems wasteful to me, and I know there's no simple way to flip a String (no <code>String.reverse()</code>) anyway.</p>

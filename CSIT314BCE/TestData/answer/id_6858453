@@ -1,7 +1,0 @@
-<p>The moral of this strangeness is:</p>
-
-<ul>
-<li>Use dates and times in UTC wherever possible.</li>
-<li>If you can not display a date or time in UTC, always indicate the time-zone.</li>
-<li>If you can not require an input date/time in UTC, require an explicitly indicated time-zone.</li>
-</ul>

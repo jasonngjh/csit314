@@ -1,0 +1,19 @@
+<pre><code>import psutil
+
+for p in psutil.process_iter(attrs=['pid', 'name']):
+    if "itunes.exe" in (p.info['name']).lower():
+        print("yes", (p.info['name']).lower())
+</code></pre>
+
+<p><em>for python 3.7</em></p>
+
+<hr>
+
+<pre><code>import psutil
+
+for p in psutil.process_iter(attrs=['pid', 'name']):
+    if p.info['name'] == "itunes.exe":
+        print("yes", (p.info['name']))
+</code></pre>
+
+<p><em>This works for python 3.8 &amp; psutil 5.7.0, windows</em></p>

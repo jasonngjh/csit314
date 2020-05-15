@@ -1,0 +1,17 @@
+<p>I have written routes to move files from a source directory to a destination directory using Camel. I need some help in moving these file data to a database. This is the route for moving files from one directory to another.</p>
+
+<p>public class Camelroute extends RouteBuilder {</p>
+
+<pre><code>    @Override
+    public void configure() throws Exception {
+          copytextfiles();
+
+    }
+    public void copytextfiles()
+    {
+        from("file:input?include=.*\\.txt").to("file:output\\text");
+
+    }
+</code></pre>
+
+<p>}</p>

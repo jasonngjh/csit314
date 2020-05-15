@@ -1,0 +1,11 @@
+<p>or if you want:</p>
+
+<pre><code>String strValue = Integer.toBinaryString(value);
+List&lt;Integer&gt; collect2 = strValue.codePoints()
+           .collect(ArrayList&lt;Integer&gt;::new,
+                   (l, v) -&gt; l.add(v == '1' ? strValue.length() - l.size() : -1), 
+                   (l1, l2) -&gt; l1.addAll(l2)).stream()
+           .filter(e -&gt; e &gt;= 0)
+           .sorted()
+           .collect(toList());
+</code></pre>

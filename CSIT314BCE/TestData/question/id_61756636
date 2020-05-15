@@ -1,0 +1,37 @@
+<p>I'm using Node v12.14.1 on Windows 10 in cmd.<br>
+When assigning the value of an undefined function to a variable:</p>
+
+<pre><code>let a = f();
+</code></pre>
+
+<p>I get:</p>
+
+<pre><code>Thrown:
+ReferenceError: f is not defined
+</code></pre>
+
+<p>Which is fine. But when I try:</p>
+
+<pre><code>a = 2;
+</code></pre>
+
+<p>I now get:</p>
+
+<pre><code>Thrown:
+ReferenceError: a is not defined
+</code></pre>
+
+<p>And when I try:</p>
+
+<pre><code>let a = 2;
+</code></pre>
+
+<p>I get:</p>
+
+<pre><code>Thrown:
+SyntaxError: Identifier 'a' has already been declared
+</code></pre>
+
+<p>So, a variable declared using let, when assigned the value of an undefined function, has its identifier already declared, and is not defined, at the same time.<br>
+Is this intended? Am I missing something here? Is this a bug?<br>
+The same does not happen when using var in the undefined function assignment, or when not using anything (global variable).</p>

@@ -1,6 +1,0 @@
-<p>If you only want to change your last message you should use the <code>--only</code> flag or its shortcut <code>-o</code> with <code>commit --amend</code>:</p>
-
-<pre class="lang-bash prettyprint-override"><code>git commit --amend -o -m "New commit message"
-</code></pre>
-
-<p>This ensures that you don't accidentally enhance your commit with staged stuff. Of course it's best to have a proper <code>$EDITOR</code> configuration. Then you can leave the <code>-m</code> option out, and Git will pre-fill the commit message with the old one. In this way it can be easily edited.</p>

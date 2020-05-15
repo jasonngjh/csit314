@@ -1,8 +1,0 @@
-<p>A function can be created in order to check for visibility/display attributes in order to gauge whether the element is shown in the UI or not. </p>
-
-<pre><code>function checkUIElementVisible(element) {
-    return ((element.css('display') !== 'none') &amp;&amp; (element.css('visibility') !== 'hidden'));
-}
-</code></pre>
-
-<p><a href="http://jsfiddle.net/w8bytkqc/" rel="noreferrer">Working Fiddle</a></p>

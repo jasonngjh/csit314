@@ -1,0 +1,3 @@
+<p>I have question about poping an alert. I've been working on login/registration page, but i want to pop up some alerts. I've manage to print out about registration succes/failed but i want it to alert it. $_GET['Valid'] is when reg is success, ['Invalid2'] when username is taken. Normal echo works fine in way i done it, but i want it to be as an alert. This is part of code where i added alert but it alerts only $alert not valid/invalid message. Picture of a code is down below. Thanks on ur help
+<br><a href="https://i.stack.imgur.com/knauU.png" rel="nofollow noreferrer">Alert</a><br>
+<a href="https://i.stack.imgur.com/cfDot.png" rel="nofollow noreferrer">Code</a></p>

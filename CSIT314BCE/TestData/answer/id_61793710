@@ -1,0 +1,14 @@
+<p>This is generic function which you can use,</p>
+
+<pre><code>    function createSort (field) {
+      return function sort (data1, data2) {
+      let value1 = data1[field]
+      let value2 = data2[field]
+      return (value1 == null &amp;&amp; value2 != null) ? -1
+      : (value1 != null &amp;&amp; value2 == null) ? 1
+        : (value1 == null &amp;&amp; value2 == null) ? 0
+          : (typeof value1 === 'string' &amp;&amp; typeof value2 === 'string') ? value1.localeCompare(value2)
+            : (value1 &lt; value2) ? -1 : (value1 &gt; value2) ? 1 : 0
+     }
+    }
+</code></pre>

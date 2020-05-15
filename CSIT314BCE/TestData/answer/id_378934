@@ -1,3 +1,0 @@
-<p>In computer science terms, we talk about anonymous functions and named functions. I think the most important difference is that an anonymous function is not bound to an name, hence the name anonymous function. In JavaScript it is a first class object dynamically declared at runtime.</p>
-
-<p>For more information on anonymous functions and lambda calculus, Wikipedia is a good start (<a href="http://en.wikipedia.org/wiki/Anonymous_function" rel="noreferrer">http://en.wikipedia.org/wiki/Anonymous_function</a>).</p>

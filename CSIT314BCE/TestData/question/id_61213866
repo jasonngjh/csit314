@@ -1,0 +1,14 @@
+<p>Trying to understand the Python for-loop, I thought this would give the result <code>{1}</code> for one iteration, or just get stuck in an infinite loop, depending on if it does the iteration like in C or other languages. But actually it did neither.</p>
+
+<pre><code>&gt;&gt;&gt; s = {0}
+&gt;&gt;&gt; for i in s:
+...     s.add(i + 1)
+...     s.remove(i)
+...
+&gt;&gt;&gt; print(s)
+{16}
+</code></pre>
+
+<p>Why does it do 16 iterations? Where does the result <code>{16}</code> come from?</p>
+
+<p>This was using Python 3.8.2. On pypy it makes the expected result <code>{1}</code>.</p>

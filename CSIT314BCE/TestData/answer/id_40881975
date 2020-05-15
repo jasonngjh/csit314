@@ -1,8 +1,0 @@
-<p>I think it's best to break the answer in depth and in simple words:</p>
-
-<p><code>__name__</code>: Every module in Python has a special attribute called <code>__name__</code>.
-It is a built-in variable that returns the name of the module.</p>
-
-<p><code>__main__</code>: Like other programming languages, Python too has an execution entry point, i.e., main. <code>'__main__'</code> <em>is the name of the scope in which top-level code executes</em>. Basically you have two ways of using a Python module: Run it directly as a script, or import it. When a module is run as a script, its <code>__name__</code> is set to <code>__main__</code>.</p>
-
-<p>Thus, the value of the <code>__name__</code> attribute is set to <code>__main__</code> when the module is run as the main program. Otherwise the value of <code>__name__</code>  is set to contain the name of the module.</p>

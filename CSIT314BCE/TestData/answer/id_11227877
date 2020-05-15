@@ -1,3 +1,0 @@
-<p><strong>Branch prediction.</strong></p>
-
-<p>With a sorted array, the condition <code>data[c] &gt;= 128</code> is first <code>false</code> for a streak of values, then becomes <code>true</code> for all later values. That's easy to predict. With an unsorted array, you pay for the branching cost.</p>

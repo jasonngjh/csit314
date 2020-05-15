@@ -1,0 +1,23 @@
+<p>I'm using PHP laravel 7
+I have a coupons table which has a field called code, and this code is 8 characters (numbers and characters)
+this code should be unique among coupon records,
+In admin panel I have a button for admin user, which he can click on and generate as many coupons as he want.
+I'm gonna share with you the best solution came to my mind and ask you if there is a better and more performant solution.</p>
+
+<p>I'm gonna generate unique strings in my php code using following function :</p>
+
+<pre class="lang-php prettyprint-override"><code>substr(uniqid(), 0, 8)
+</code></pre>
+
+<p>then I'll execute a query to check if there is any coupons in my table which it's code is equal to one of my newly generated codes</p>
+
+<pre class="lang-php prettyprint-override"><code>$model-&gt;newQuery()-&gt;whereIn('code', $generated_codes)-&gt;get();
+</code></pre>
+
+<p>if the result list is empty, that's nice I'm gonna insert all of my codes in database. if the list is not empty, I'm gonna delete repeated codes from my generated codes, and also again based on number of repeated codes again generate new codes and again repeat the process, I'm gonna repeat the process as long as none of generated codes exist in database
+then I insert them in database.</p>
+
+<p>my question is different from this question:
+<a href="https://stackoverflow.com/questions/1846202/php-how-to-generate-a-random-unique-alphanumeric-string">PHP: How to generate a random, unique, alphanumeric string?</a></p>
+
+<p>As I'm generating lots of unique codes, not just on code, and then I'm gonna insert these codes in database and I need to have minimum number of queries.</p>

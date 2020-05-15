@@ -1,0 +1,30 @@
+<p>I try to do the architecture for a bigger, production ready SwiftUI App. I am running all the time into the same problem which points to a major design flaw in SwiftUI.</p>
+
+<p>Still nobody could give me a full working, production ready answer. </p>
+
+<p><strong>How to do reusable Views in <code>SwiftUI</code> which contain navigation?</strong> </p>
+
+<p>As the <code>SwiftUI</code> <code>NavigationLink</code> is strongly bound to the view this is simply not possible in such a way that it scales also in bigger Apps. <code>NavigationLink</code> in those small sample Apps works, yes - but not as soon as you want to reuse many Views in one App. And maybe also reuse over module boundaries. (like: reusing View in iOS, WatchOS, etc...)</p>
+
+<p>The design problem: NavigationLinks are hardcoded into the View.</p>
+
+<pre><code>NavigationLink(destination: MyCustomView(item: item))
+</code></pre>
+
+<p>But if the view containing this <code>NavigationLink</code> should be reusable <strong>I can not hardcode</strong> the destination. There has to be a mechanism which provides the destination. I asked this here and got quite a good answer, but still not the full answer:</p>
+
+<p><a href="https://stackoverflow.com/questions/61188131/swiftui-mvvm-coordinator-router-navigationlink/61188788#61188788">SwiftUI MVVM Coordinator/Router/NavigationLink</a></p>
+
+<p>The idea was to inject the Destination Links into the reusable view. Generally the idea works but unfortunately this does not scale to real Production Apps. As soon as I have multiple reusable screens I run into the logical problem that one reusable view (<code>ViewA</code>) needs a preconfigured view-destination (<code>ViewB</code>). But what if <code>ViewB</code> also needs a preconfigured view-destination <code>ViewC</code>? I would need to create <code>ViewB</code> already in such a way that <code>ViewC</code> is injected already in <code>ViewB</code> before I inject <code>ViewB</code> into <code>ViewA</code>. And so on.... but as the data which at that time has to be passed is not available the whole construct fails.</p>
+
+<p>Another idea I had was to use the <code>Environment</code> as dependency injection mechanism to inject destinations for <code>NavigationLink</code>. But I think this should be considered more or less as a hack and not a scalable solution for large Apps. We would end up using the Environment basically for everything. But because Environment also can be used <strong>only</strong> inside View's (not in separate Coordinators or ViewModels) this would again create strange constructs in my opinion.</p>
+
+<p>Like business logic (e.g. view model code) and view have to be separated also navigation and view have to be separated (e.g. the Coordinator pattern) In <code>UIKit</code> it's possible because we access to <code>UIViewController</code> and <code>UINavigationController</code> behind the view. <code>UIKit's</code> MVC already had the problem that it mashed up so many concepts that it become the fun-name "Massive-View-Controller" instead of "Model-View-Controller". Now a similar problem continues in <code>SwiftUI</code> but even worse in my opinion. Navigation and Views are strongly coupled and can not be decoupled. Therefore it's not possible to do reusable views if they contain navigation. It was possible to solve this in <code>UIKit</code> but now I can't see a sane solution in <code>SwiftUI</code>. Unfortunately Apple did not provide us an explanation how to solve architectural issues like that. We got just some small sample Apps.</p>
+
+<p>I would love to be proven wrong. Please show me a clean App design pattern which solves this for big production ready Apps. </p>
+
+<p>Thanks in advance.</p>
+
+<hr>
+
+<p>Update: this bounty will end in a few minutes and unfortunately still nobody was able to provide a working example. But I will start a new bounty to solve this problem if I can't find any other solution and link it here. Thanks to all for their great Contribution!</p>

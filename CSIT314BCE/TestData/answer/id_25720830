@@ -1,9 +1,0 @@
-<p>I like to use the following:</p>
-
-<ol>
-<li><code>git status</code></li>
-<li><code>git add --all</code></li>
-<li><code>git commit -am "message goes here about the change"</code></li>
-<li><code>git pull &lt;origin master&gt;</code></li>
-<li><code>git push &lt;origin master&gt;</code></li>
-</ol>

@@ -1,0 +1,22 @@
+<p>You can use a Lambda, which made <code>std::bind</code> mostly obsolete, as it is easier to use:</p>
+
+<pre><code>  auto uber_func = [&amp;](std::function&lt;int(A, B, C, int)&gt; f, int n) {
+    return f(a, b, c, n);
+  };
+
+  uber_func(hello, 240);
+  uber_func(there, 33);
+  uber_func(how, 54);
+  uber_func(are, 67);
+</code></pre>
+
+<p>The first solution enforces that all functions have the same well-known interface. If needed it could be generalized to support also different types of functions:</p>
+
+<pre><code>  auto uber_func = [&amp;](auto f, int n) {
+    return f(a, b, c, n);
+  };
+</code></pre>
+
+<p>The second solution is more general and avoids the performance overhead of the first solution. Small drawback: it will require a C++14 compiler, while the first should work on any C++11 compiler. If that is no problem, I would prefer the second solution over the first one.</p>
+
+<p>I realized that you asked about how to do it with <code>std::bind</code> and I did not answer that. However, since C++11 Lambdas largely replaced <code>std::bind</code>. Since C++14, it is even clearer, as further improvements have been added. Unless compatibility with C++98 is a strict requirement, I would recommend to <a href="https://stackoverflow.com/a/17545183/783510">avoid <code>std::bind</code> in favor of Lambdas</a>.</p>

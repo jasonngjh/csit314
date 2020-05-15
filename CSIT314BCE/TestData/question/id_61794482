@@ -1,0 +1,3 @@
+<p>I'm trying to make a small client with two <code>BufferedReader</code>: one called <code>inSocket</code> for orders about what to print on console and another called <code>inKeyboard</code> to read from the console. Orders to <code>inSocket</code> come from a thread.</p>
+
+<p>Now I was wondering, if I have a <code>readLine</code> that is waiting for an input from console, is it possible to print something after it was called, and then keep waiting for input? Or I can't print anything on console until <code>readLine</code> got its input first?</p>

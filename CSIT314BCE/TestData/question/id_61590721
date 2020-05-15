@@ -1,0 +1,29 @@
+<p>In C++17 there is normative text [class.mem]/17:</p>
+
+<blockquote>
+  <p>Non-static data members of a (non-union) class with the same access control (Clause 14) are allocated so
+  that later members have higher addresses within a class object. The order of allocation of non-static data members with different access control is unspecified.</p>
+</blockquote>
+
+<p>Also there is [class.mem]/24:</p>
+
+<blockquote>
+  <p>If a standard-layout class object has any non-static data members, its address is the same as the address
+  of its first non-static data member</p>
+</blockquote>
+
+<p>Here are two examples:</p>
+
+<pre><code>struct A { int x, y, z; } a;
+struct F { public: int p; private: int q; public: int r; } f;
+</code></pre>
+
+<p>According to the above standard text, C++17 guaranteed <code>&amp;a.x &lt; &amp;a.y</code>, <code>&amp;a.y &lt; &amp;a.z</code>, and <code>&amp;f.p &lt; &amp;f.r</code>  (but did NOT guarantee <code>&amp;f.p &lt; &amp;f.q</code>, since <code>F</code> is not standard-layout so class.mem/24 does not apply).</p>
+
+<hr>
+
+<p>However, in C++20 final working draft N4860, there has been a change as per <a href="http://open-std.org/JTC1/SC22/WG21/docs/papers/2019/p1510r0.html#2404" rel="noreferrer">CWG 2404</a>. The [class.mem]/17 has been turned into a Note. However, notes are non-normative in ISO standards (meaning the compiler vendor can disregard them) . And I cannot find any other text that might apply.</p>
+
+<p><strong>My question is:</strong> does C++20 still somewhere specify (normatively) the guarantees <code>&amp;a.y &lt; &amp;a.z</code> and/or <code>&amp;f.p &lt; &amp;f.r</code> ?  Or does the compiler now have the licence to reorder class members in all cases except for the first subobject of a standard-layout class?</p>
+
+<p>Assuming there are no further changes between N4860 and the published standard, I guess.</p>

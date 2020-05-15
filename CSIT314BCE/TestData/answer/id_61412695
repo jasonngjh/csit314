@@ -1,0 +1,16 @@
+<p>In general, the rand/srand pair has been considered sort of deprecated for a long time due to low-order bits displaying less randomness than high-order bits in the results.  This may or may not have anything to do with your results, but I think this is still a good opportunity to remember that even though some rand/srand implementations are now more up to date, older implementations persist and it's better to use random(3).  On my Arch Linux box, the following note is still in the man page for rand(3):</p>
+
+<blockquote>
+<pre><code>  The versions of rand() and srand() in the Linux C Library use the  same
+   random number generator as random(3) and srandom(3), so the lower-order
+   bits should be as random as the higher-order bits.  However,  on  older
+   rand()  implementations,  and  on  current implementations on different
+   systems, the lower-order bits are much less random than the  higher-or-
+   der bits.  Do not use this function in applications intended to be por-
+   table when good randomness is needed.  (Use random(3) instead.)
+</code></pre>
+</blockquote>
+
+<p>Just below that, the man page actually gives very short, very simple example implementations of rand and srand that are about the simplest LC RNGs you've ever seen and having a small RAND_MAX.  I don't think they match what's in the C standard library, if they ever did.  Or at least I hope not.</p>
+
+<p>In general, if you're going to use something from the standard library, use random if you can (the man page lists it as POSIX standard back to POSIX.1-2001, but rand is standard way back before C was even standardized).  Or better yet, crack open Numerical Recipes (or look for it online) or Knuth and implement one.  They're really easy and you only really need to do it once to have a general purpose RNG with the attributes you most often need and which is of known quality.</p>

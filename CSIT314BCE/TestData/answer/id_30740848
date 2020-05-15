@@ -1,9 +1,0 @@
-<p>Extending the accepted responses, when you are using JSON in a REST context...</p>
-
-<p>There is a <a href="http://restful-api-design.readthedocs.org/en/latest/resources.html#content-types">strong argument</a> about using <code>application/x-resource+json</code> and <code>application/x-collection+json</code> when you are representing REST resources and collections.</p>
-
-<p>And if you decide to follow the <strong>jsonapi</strong> specification, <a href="http://jsonapi.org/format/#content-negotiation">you should</a> use of <code>application/vnd.api+json</code>, as it is documented.</p>
-
-<p>Altough there is not an universal standard, it is clear that the added semantic to the resources being transfered justify a more explicit <em>Content-Type</em> than just <code>application/json</code>.</p>
-
-<p>Following this reasoning, other contexts could justify a more specific <em>Content-Type</em>.</p>

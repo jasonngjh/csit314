@@ -1,0 +1,29 @@
+<p>This is achievable with <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient" rel="nofollow noreferrer"><code>linear-gradient</code></a>.</p>
+
+<p>The <code>linear-gradient</code> stands for four-parameter:</p>
+
+<ol>
+<li><strong><code>&lt;angel&gt;</code></strong>. Which is the <strong>starting point of <code>linear-gradient</code>, so a value of <code>0deg</code> is equivalent to <code>to top;</code> increasing values rotate clockwise from there</strong>.</li>
+<li><strong><code>color</code></strong>. It will indicate the color of <code>linear-gradient</code>, which <strong>can be either <code>rgb</code>, <code>rgba</code>, or <code>hex</code></strong>.</li>
+<li><strong><code>&lt;linear-color-stop&gt;</code></strong>. This indicates the <strong>stopping point of colors on our <code>linear-gradient</code></strong> (To keep it dynamic for various <code>width</code> you should use it with percentage rather than raw numbers.)</li>
+<li><strong><code>&lt;color-hint&gt;</code></strong>. This one indicates an interpolation hint defining <strong>how the gradient progresses between adjacent color stops</strong>. So whenever you set it to <code>100%</code> it will come up with a hard line where the gradient changes (It should always set for the last color or by indicating color individually).</li>
+</ol>
+
+<pre class="lang-css prettyprint-override"><code>linear-gradient(&lt;angel&gt;, color &lt;linear-color-stop&gt; &lt;color-hint&gt;)
+</code></pre>
+
+<p>Your final code should be something like this:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-css lang-css prettyprint-override"><code>button {
+  width: 200px;
+  height: 50px;
+  border: 1px solid rgba(40, 141, 211, 1);
+  border-radius: 5px;
+  background: linear-gradient(315deg, rgba(40, 141, 211, 1) 90%, rgba(255, 214, 103, 1) 10% 100%);
+}</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;button&gt;&lt;/button&gt;</code></pre>
+</div>
+</div>
+</p>

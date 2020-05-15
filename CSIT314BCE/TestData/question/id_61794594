@@ -1,0 +1,39 @@
+<p>I am new to VueJS.</p>
+
+<p>Let's assume that I plan to create an extensive application. And for example I have 3 separate pages: mypage.com/account, mypage.com/players, mypage.com/orders. Each page has its own controller and in it I return a file with a view (account.blade.php etc.) and pass parameters in variables. Then in each of them I would like to use Vue. And here I have a few questions:</p>
+
+<p><strong>1) Do I need to create separate app.js files for each page with a Vue instance in the / resources / js / folder? Something like:</strong></p>
+
+<p><code>app-account.js</code></p>
+
+<pre><code>const app-account = new Vue({
+    el: '#app-account ',
+});
+</code></pre>
+
+<p><code>app-players.js</code></p>
+
+<pre><code>const app-players= new Vue({
+    el: '#app-players',
+});
+</code></pre>
+
+<p>etc.?</p>
+
+<p>If not - how to do it? Declare all components in one app.js file? And is this correct? Because then when you enter mypage.com/account in the app.js file in / public / js / all other Vue components are stored. So the actual component is displayed on the page and all components are downloaded on the page.</p>
+
+<p><strong>2) Why does every component have to be the default?</strong></p>
+
+<pre><code>Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+</code></pre>
+
+<p><strong>3) How to use Laravel + Vue correctly when you do not want the site to be SPA?</strong></p>
+
+<p><strong>4) Is it correct that all data is transmitted along with the view? Is it better to create controllers only for displaying the view and download data via Vue from api?</strong></p>
+
+<p><strong>5) What about the features from the Blade template system?</strong></p>
+
+<p>I could display a link to the route in them via {{route ('name')}}. The only way to achieve this in Vue is to pass a parameter to the component? Is this the correct way?</p>
+
+<pre><code>&lt;example-component routeToXXX="{{route ('name')}}" /&gt;
+</code></pre>

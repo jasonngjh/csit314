@@ -1,0 +1,15 @@
+<p>If you want to keep the order you've specified, you can make use of Python's built-in range generator with a conditional:</p>
+
+<pre><code>def range_with_negs(start, stop):
+    for value in range(-(stop-1), stop):      
+        if (value &lt;= -start) or (value &gt;= start):
+            yield value
+</code></pre>
+
+<p>Which gives you the output:</p>
+
+<pre><code>In [1]: list(range_with_negs(6, 10))
+Out[1]: [-9, -8, -7, -6, 6, 7, 8, 9]
+</code></pre>
+
+<p>And also works with 0 as the start for the full range.</p>

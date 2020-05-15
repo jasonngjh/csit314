@@ -1,0 +1,18 @@
+<p>You should probably do a radical re-design where you create a struct <code>runway</code>, containing a queue for landing, one for take-off and all the needed variables. Essentially what the airport struct is currently doing. Maybe something along the lines of this:</p>
+
+<pre><code>struct runway
+{
+    struct queue landing;
+    struct queue takeoff;
+    ... // whatever other variables the individual runway needs
+
+};
+
+struct airport
+{
+  struct runway runways[3];
+  ... // variables not related to runways but the whole airport
+};
+</code></pre>
+
+<p>Now you can also add functionality per runway, to give it a certain behavior. For example there might be a "landing only" runway, which is a certain kind of runway. Before you know it, you might be implementing a simplistic version of the OO concept inheritance.</p>

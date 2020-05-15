@@ -1,6 +1,0 @@
-<pre><code>git revert commit
-</code></pre>
-
-<p>This will generate the opposite changes from the commit which you want to revert back, and then just commit that changes. I think this is the simplest way.</p>
-
-<p><a href="https://git-scm.com/docs/git-revert" rel="noreferrer">https://git-scm.com/docs/git-revert</a></p>

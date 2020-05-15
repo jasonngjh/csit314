@@ -1,0 +1,47 @@
+<pre><code>:com.google.android.gms.dynamite_mapsdynamite@201216046@20.12.16 (040306-0) line 9
+com.google.maps.api.android.lib6.gmm6.vector.ct.&lt;init&gt;
+</code></pre>
+
+<p>This error started happening on random devices. Does anyone have the same issue?</p>
+
+<p>I didn't release anything, didn't change anything about the app.</p>
+
+<p>My map fragment XML:</p>
+
+<pre><code>&lt;fragment
+android:id="@+id/map_stops" 
+android:name="com.google.android.gms.maps.SupportMapFragment" android:layout_width="match_parent" 
+android:layout_height="match_parent" tools:context="com.comprovei.entregas.fragments.TabTripsMapFragment" /&gt;
+</code></pre>
+
+<p>The fragment code:</p>
+
+<pre><code>public class TabTripsMapFragment extends Fragment implements OnMapReadyCallback {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.tab_fragment_stops_map, null, false);
+
+        ChildFragmentManager()
+                .findFragmentById(R.id.map_stops);
+        mapFragment.getMapAsync(this);
+
+        return view;
+    }
+
+    @Override
+    public void onMapReady(final GoogleMap googleMap) {
+
+        ...
+
+    }
+
+}
+</code></pre>
+
+<p>edit*: I'm trying to follow this up on Twitter:
+<a href="https://twitter.com/googlemaps/status/1253419390046834691" rel="noreferrer">https://twitter.com/googlemaps/status/1253419390046834691</a></p>
+
+<p>edit:
+<strong>FINAL RESPONSE HERE:</strong> <a href="https://issuetracker.google.com/issues/154855417#comment509" rel="noreferrer">https://issuetracker.google.com/issues/154855417#comment509</a></p>

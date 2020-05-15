@@ -1,8 +1,0 @@
-<p>Advanced Git users can rename manually using:</p>
-
-<pre><code>Rename the old branch under .git/refs/heads to the new name
-
-Rename the old branch under .git/logs/refs/heads to the new name
-
-Update the .git/HEAD to point to yout new branch name
-</code></pre>

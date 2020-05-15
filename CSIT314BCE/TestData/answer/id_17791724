@@ -1,0 +1,11 @@
+<pre><code>r'''(?:        # Non-capturing group
+      "[^"]*"  # A quote, followed by not-quotes, followed by a quote
+      |        # or
+      [^"#]    # not a quote or a hash
+    )          # end group
+    *          # Match quoted strings and not-quote-not-hash characters until...
+    (#)        # the comment begins!
+'''
+</code></pre>
+
+<p>This is a verbose regex, designed to operate on a single line, so make sure to use the <code>re.VERBOSE</code> flag and feed it one line at a time. It'll capture the first unquoted hash as group 1 if there is one, so you can use <code>match.start(1)</code> to get the index. It doesn't handle backslash escapes, if you want to be able to put a backslash-escaped quote in a string. This is untested.</p>

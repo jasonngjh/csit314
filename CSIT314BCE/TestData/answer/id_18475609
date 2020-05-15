@@ -1,8 +1,0 @@
-<p>Use the <code>*</code> command to handle multiple files at a time:</p>
-
-<pre><code>git reset HEAD *.prj
-git reset HEAD *.bmp
-git reset HEAD *gdb*
-</code></pre>
-
-<p>etc.</p>

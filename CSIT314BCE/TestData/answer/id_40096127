@@ -1,6 +1,0 @@
-<p>The proper current standard is <code>application/json</code>. While the default encoding is UTF-8, it is worth mentioning that it could also be UTF-16 or utf-32. When JSON is
-written in UTF-16 or UTF-32, binary content-transfer-encoding must be used.</p>
-
-<p>There is more information about json here: <a href="https://tools.ietf.org/html/rfc4627" rel="noreferrer">https://tools.ietf.org/html/rfc4627</a></p>
-
-<p>more information on binary transfer encoding here: <a href="https://www.w3.org/Protocols/rfc1341/5_Content-Transfer-Encoding.html" rel="noreferrer">https://www.w3.org/Protocols/rfc1341/5_Content-Transfer-Encoding.html</a> </p>

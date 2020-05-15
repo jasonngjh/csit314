@@ -1,6 +1,0 @@
-<p>There are many fantastic answers here, but for me, what worked most simply wasn't removing my element from the array completely, but simply setting the value of it to null.</p>
-
-<p>This works for most cases I have and is a good solution since I will be using the variable later and don't want it gone, just empty for now. Also, this approach is completely cross-browser compatible.</p>
-
-<pre><code>array.key = null;
-</code></pre>

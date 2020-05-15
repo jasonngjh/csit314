@@ -1,0 +1,18 @@
+<p>Using adal-angular 1.0.17 and a single-tenant app registration (note: calling this <strong>app 1</strong>) in Azure that should delegate user rights to <em>another Azure app</em> (note: calling this <strong>app 2</strong>) but the jwt token is issued with any scope resulting in:</p>
+
+<pre><code>AADSTS50105: The signed in user ---- is not assigned to a role for the application '&lt;another Azure app&gt;'
+</code></pre>
+
+<p>The Azure Api permission on <strong>app 1</strong> have a permission == "user_impersonation" against <strong>app 2</strong> which should allow access to <strong>app 2</strong> on behalf of the signed-in user by <strong>app 1</strong>.  Looking at the scopes defined by <strong>app 2</strong> in the portal the <em>user_impersonation</em> scope is defined consenting Admins and users (enabled).</p>
+
+<p>Tried using the extraQueryParameter setting in the adal configuration:</p>
+
+<pre><code> {
+    ....
+    extraQueryParameter: 'scope=user_impersonation'
+ }
+</code></pre>
+
+<p>But the user still is deemed unassigned.  Other users that have explicitly been assigned to both <strong>app 1</strong> and <strong>app 2</strong> successfully proceed through the authorization.</p>
+
+<p>Looking for tips or any better way to debug.</p>

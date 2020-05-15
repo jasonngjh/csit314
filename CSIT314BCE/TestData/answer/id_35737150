@@ -1,9 +1,0 @@
-<p>If you just want to delete the files listed as untracked by 'git status'</p>
-
-<pre><code>git stash save -u
-git stash drop "stash@{0}"
-</code></pre>
-
-<p>I prefer this to 'git clean' because 'git clean' will delete files
-ignored by git, so your next build will have to rebuild everything
-and you may lose your IDE settings too.</p>

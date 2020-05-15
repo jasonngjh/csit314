@@ -1,0 +1,16 @@
+<p>If you are testing application with Behave you can use <code>pywinauto</code>.
+Similar with previously comment, you can use this function:</p>
+
+<pre><code>def check_if_app_is_running(context, processName):
+try:
+    context.controller = pywinauto.Application(backend='uia').connect(best_match = processName, timeout = 5)
+    context.controller.top_window().set_focus()
+    return True
+except pywinauto.application.ProcessNotFoundError:
+    pass
+return False
+</code></pre>
+
+<p><code>backend</code> can be 'uia' or 'win32'</p>
+
+<p><code>timeout</code> if for force reconnect with the applicaction during 5 seconds.</p>

@@ -1,7 +1,0 @@
-<p>One use case of <code>git fetch</code> is that the following will tell you any changes in the remote branch since your last pull... so you can check before doing an actual pull, which could change files in your current branch and working copy.</p>
-
-<pre><code>git fetch
-git diff ...origin
-</code></pre>
-
-<p>See: <a href="https://git-scm.com/docs/git-diff" rel="noreferrer">https://git-scm.com/docs/git-diff</a> regarding double- and triple-dot syntax in the diff command</p>

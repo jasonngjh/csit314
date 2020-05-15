@@ -1,1 +1,0 @@
-<p>you could try <code>git pull --force</code> or maybe stash your commits by using <code>git stash</code> then running <code>git pull</code></p>

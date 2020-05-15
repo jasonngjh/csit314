@@ -1,0 +1,34 @@
+<p><em>example</em>
+ Input: [1,0,2,3,0,4,5,0]. </p>
+
+<p>Explanation: After calling your function , the input array is modified to : [1,0,0,2,3,0,0,4]</p>
+
+<p>This is what I have so far.</p>
+
+<pre><code>public static void main(String[] args)
+{
+    int[]num =new int[6];
+    start(num);
+
+}
+private static void start(int[]num)
+{
+    // TODO: Implement this method
+    num[0]=0;
+    num[1]=7;
+    num[2]=5;
+    num[3]=0;
+    num[4]=6;
+    num[5]=2;
+    int i=0;
+    do{
+        i++;
+
+        if(num[i]==0){
+            //TODO
+        }else{
+            //TODO
+        }
+    }while(i&lt;=num.length);
+}
+</code></pre>

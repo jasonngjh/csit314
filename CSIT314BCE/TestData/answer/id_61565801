@@ -1,0 +1,15 @@
+<blockquote>
+  <p>Why does model show wrong results on its own trained data? I trained data, it must 
+  remember how to predict data on this piece of set, but predicts wrong.</p>
+</blockquote>
+
+<p>Look what are you doing:</p>
+
+<ol>
+<li>Building a model with some layers</li>
+<li>Training model with the training_data</li>
+<li>When you trained the model, all trainable parameters get trained (i.e., weights of model got saved)</li>
+<li>These weights now represent the relationship between input and output.</li>
+<li>When you predict the same training_data again, this time trained model uses weights to get the output.</li>
+<li>The quality of your model now decides the predictions and hence they are different from original results even though data is the same. </li>
+</ol>

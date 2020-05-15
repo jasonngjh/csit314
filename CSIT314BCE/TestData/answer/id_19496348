@@ -1,1 +1,0 @@
-<p>The word <em>closure</em> simply refers to being able to access <em>objects</em> (six-year-old: things) that are <em>closed</em> (six-year-old: private) within a <em>function</em> (six-year-old: box). Even if the <em>function</em> (six-year-old: box) is out of <em>scope</em> (six-year-old: sent far away).</p>

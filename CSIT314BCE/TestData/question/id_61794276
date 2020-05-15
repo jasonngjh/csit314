@@ -1,0 +1,28 @@
+<p>When I started to traverse a code of my friend, I came across two declarations of if clause. </p>
+
+<p>one is declared as follows:</p>
+
+<p>(CASE A)</p>
+
+<pre><code>if x not in ('a', 'b'):
+    pass
+</code></pre>
+
+<p>another is declared like this:</p>
+
+<p>(CASE B)</p>
+
+<pre><code> if x != 'a' or x != 'b':
+        pass
+</code></pre>
+
+<p>(CASE C)</p>
+
+<pre><code>if x != 'a' and x != 'b':
+    pass
+</code></pre>
+
+<p>I've simplified the values as 'a' and 'b' but the actual values are complicated and pretty long. When I run them separately, I got the same output. </p>
+
+<p>Which one does CASE A match with? CASE B or CASE C.
+Also which form of writing is correct? using in or using equality operator.</p>

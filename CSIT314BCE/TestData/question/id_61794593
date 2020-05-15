@@ -1,0 +1,10 @@
+<p>I'm do on React type-script and I try to get config from public/webconfig.js</p>
+
+<p><code>const base = window.globalconfig.base_url;</code></p>
+
+<p>It's give me an error on browser</p>
+
+<pre><code>Property 'globalconfig' does not exist on type 'Window &amp; typeof globalThis'.  TS2339
+</code></pre>
+
+<p>Actually my practice project it's working but it's javascript.</p>

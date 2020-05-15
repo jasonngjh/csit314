@@ -1,0 +1,27 @@
+<p>Sort like below: </p>
+
+<pre><code>   const arr = [
+      {
+          car: 'audi',
+          age: 2015
+      },
+      {
+          car: 'bmw',
+          age: 1999
+      },
+      {
+          car: 'alfa',
+          age: 2019
+      },
+    ];
+    function createSort(property) {
+      return function compareString(a,b) {
+          return a[property] &gt; b[property]
+      }
+    }
+
+    const sortByTitle = createSort('car');
+    arr.sort(sortByTitle);
+
+    console.log(arr);
+</code></pre>

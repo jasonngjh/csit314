@@ -1,0 +1,44 @@
+<p><code>a</code> is a <code>Vec&lt;i32&gt;</code> which can be mutably and immutably referenced in one expression:</p>
+
+<pre class="lang-rust prettyprint-override"><code>fn main() {
+    let mut a = vec![0, 1];
+    a[0] += a[1]; // OK
+}
+</code></pre>
+
+<p>I thought this compiled because <code>i32</code> implements <code>Copy</code>, so I created another type that implements <code>Copy</code> and compiled it like the first example, but it fails:</p>
+
+<pre class="lang-rust prettyprint-override"><code>use std::ops::AddAssign;
+
+#[derive(Clone, Copy, PartialEq, Debug, Default)]
+struct MyNum(i32);
+
+impl AddAssign for MyNum {
+    fn add_assign(&amp;mut self, rhs: MyNum) {
+        *self = MyNum(self.0 + rhs.0)
+    }
+}
+
+fn main() {
+    let mut b = vec![MyNum(0), MyNum(1)];
+    b[0] += b[1];
+}
+</code></pre>
+
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=d8ad987a94f1c70092fb8b45e536152d" rel="noreferrer">playground</a></p>
+
+<pre class="lang-none prettyprint-override"><code>error[E0502]: cannot borrow `b` as immutable because it is also borrowed as mutable
+  --&gt; src/main.rs:14:13
+   |
+14 |     b[0] += b[1];
+   |     --------^---
+   |     |       |
+   |     |       immutable borrow occurs here
+   |     mutable borrow occurs here
+   |     mutable borrow later used here
+</code></pre>
+
+<ol>
+<li>Why does my <code>MyNum</code> not behave in the same way as <code>i32</code> even though it implements <code>Copy</code>?</li>
+<li>Why can the vector be mutably and immutably referenced in one expression?</li>
+</ol>

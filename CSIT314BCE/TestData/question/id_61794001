@@ -1,0 +1,11 @@
+<p>I need to get the first row of the location record in order to added time,</p>
+
+<p>My query as follows,</p>
+
+<pre><code>private Location GetFirstRecord()
+{
+    return clientContext.Lobbies.Where(location =&gt; location.FkBranchId == locationRecord.FkBranchId &amp;&amp; !location.FkAppointmentId.HasValue &amp;&amp; location.Status == 1 &amp;&amp; location.IsActive).OrderBy(location =&gt; location.AddedTime).FirstOrDefault();
+}
+</code></pre>
+
+<p>The above query works fine, now I need to get second, third, fourth.....10th row records from the location. Do I need to write separate 10 separate queries to get data? or have any other possible way to do it. I don't have an idea to how to get second, third, fourth... values from the records. please provide me a sample query to do this. thanks in advance</p>

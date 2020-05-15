@@ -1,0 +1,49 @@
+<p>I'd like to be able to inject a service with a generic constrained to an interface in Angular, using a common factory... I can do it if I declare a provider of every injected type, but that defeats the purpose of why I want it this way.</p>
+
+<p>What I want is something like:</p>
+
+<pre class="lang-js prettyprint-override"><code>interface WorkerServiceContract {
+  doWork(): void;
+}
+
+class MyService&lt;T extends WorkerServiceContract&gt; {
+  constructor(private worker: T) {}
+
+  doWorkWrapper() { this.worker.doWork(); }
+}
+</code></pre>
+
+<p>So at any point I can do a:</p>
+
+<pre class="lang-js prettyprint-override"><code>@Injectable({ providedIn: 'root' })
+class FooWorkerService implements WorkerServiceContract {
+   doWork() { console.log('foo'); }
+}
+
+@Injectable({ providedIn: 'root' })
+class BarWorkerService implements WorkerServiceContract {
+   doWork() { console.log('bar'); }
+}
+
+@Component(/*blabla*/)
+class MyComponent {
+   constructor(private fooWorker: MyService&lt;FooWorkerService&gt;, private barWorker: MyService&lt;BarWorkerService&gt;) {}
+}
+</code></pre>
+
+<p>I understand I can declare the injection using specific tokens for each of the <code>WorkerServiceContract</code> possibilities, but I'm wondering if there's a way (I've looked through the documentation but couldn't figure it out), to have it "open"... so I could do <strong>something like</strong> (this wouldn't obviously work):</p>
+
+<pre class="lang-js prettyprint-override"><code>providers: [
+   {
+      provide: MyService&lt;T extends ServiceWorker&gt;
+      useFactory: (worker: T) =&gt; new MyService&lt;T&gt;(worker);
+      deps: [T]
+   }
+] 
+</code></pre>
+
+<p>I understand that's not possible in the provider definition (since it doesn't know <code>T</code>), but is there any mechanism which would allow something "generic" like this to work? It's probably something obvious but I can seem to get my head around to do it</p>
+
+<p>I'm using Angular 9</p>
+
+<p><em>PS: the code has been written in the S.O. editor and is greatly simplified from the real code, and may not be syntactically-correct... it's the idea that matters, not the actual code</em></p>

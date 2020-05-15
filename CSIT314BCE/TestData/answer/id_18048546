@@ -1,5 +1,0 @@
-<p>I use the <a href="http://git-scm.com/docs/git-gui">Git GUI</a> as much as I can, and that gives you the option to amend the last commit:</p>
-
-<p><img src="https://i.stack.imgur.com/qXMzu.png" alt="Tick that box" title="Check that box &quot;Amend Last Commit&quot;!"></p>
-
-<p>Also, <code>git rebase -i origin/master</code>is a nice mantra that will always present you with the commits you have done on top of master, and give you the option to amend, delete, reorder or squash. No need to get hold of that hash first.</p>

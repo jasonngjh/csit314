@@ -1,0 +1,31 @@
+<p>The size of the method code can be as large as 64K.</p>
+
+<p>The branch offset of the short <code>goto</code> is a signed 16-bit integer: from -32768 to 32767.</p>
+
+<p>So, the short offset is not enough to make a jump from the beginning of 65K method to the end.</p>
+
+<p>Even <code>javac</code> sometimes emits <code>goto_w</code>. Here is an example:</p>
+
+<pre><code>public class WideGoto {
+
+    public static void main(String[] args) {
+        for (int i = 0; i &lt; 1_000_000_000; ) {
+            i += 123456;
+            // ... repeat 10K times ...
+        }
+    }
+}
+</code></pre>
+
+<p>Decompiling with <code>javap -c</code>:</p>
+
+<pre><code>  public static void main(java.lang.String[]);
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: iload_1
+       3: ldc           #2
+       5: if_icmplt     13
+       8: goto_w        50018     // &lt;&lt;&lt; Here it is! A jump to the end of the loop
+          ...
+</code></pre>

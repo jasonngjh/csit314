@@ -1,0 +1,22 @@
+<p>So in the first snippet:</p>
+
+<pre><code>
+var appIdTask = GetAppIdAsync(); // here we are starting the execution of GetAppId on another thread, no "blocking" the main one
+var clientSecretTask = GetClientSecretAsync(); // instantly after starting previous method, run GetClientSecrent on yet another thread
+// at this point there are 2 parallel executions on different threads happening
+var appId = await appIdTask; // wait until GetAppId has finished and assign the result to appId variable
+var clientSecret = await clientSecretTask; // wait until GetClientSecret has finished and assign the result to clientSecret variable
+Execute(appId, clientSecret);
+
+</code></pre>
+
+<p>And the second snippet:</p>
+
+<pre><code>var appId = await GetAppIdAsync(); // start executing GetAppId on different thread (not blocking the main one), and return once it has been completed and assign the result to appId variable
+// at this point GetAppIdAsync is completed
+var clientSecret = await GetClientSecretAsync(); // start executing GetClientSecret on different thread (not blocking the main one), and return once it has been completed and assign the result to appId clientSecret 
+// at this point GetClientSecretAsync is completed
+Execute(appId, clientSecret);
+</code></pre>
+
+<p>If you need to run multiple calls in parallel, I recomend using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task.whenall?view=netcore-3.1" rel="nofollow noreferrer">Task.WhenAll</a></p>

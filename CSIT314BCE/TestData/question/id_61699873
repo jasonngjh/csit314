@@ -1,0 +1,34 @@
+<p>This is a borderline topic. Since I wanted to know about programming,  CPU cache memory, reading CPU cache lines etc, I'm posting it here.</p>
+
+<p>I was implementing AES algorithm in C/C++. Since performing GF(2<sup>8</sup>) multiplications are computationally expensive without hardware support, I've optimized to use lookup tables for the AES S-box. But unfortunately lookup table based implementations are vulnerable to <a href="https://en.wikipedia.org/wiki/Timing_attack" rel="nofollow noreferrer"><strong><em>cache-timing</em></strong> attacks</a>. Therefore, being very naive to CPU caches, I started learning about how it works, and how to circumvent such an attack without any additional computational costs. </p>
+
+<p>I realize that in practice there are AES NI instructions and Bit Slice AES implementations but they are way beyond my current understanding.</p>
+
+<p>I've learned from crypto.SE that the easiest method is to read all cache lines,
+or read the entire table, before I do the lookup. (<em>This also affects my performance</em>)
+But I do not know how to implement it in software, or the intricate concepts behind it.</p>
+
+<p>In the <a href="https://github.com/openssl/openssl/blob/master/crypto/aes/aes_x86core.c" rel="nofollow noreferrer">C implementation reference guide of OpenSSL - <code>aes-x86core.c</code></a>  the authors have implemented a function:</p>
+
+<pre><code>static void prefetch256(const void *table)
+{
+    volatile unsigned long *t=(void *)table,ret;
+    unsigned long sum;
+    int i;
+
+    /* 32 is common least cache-line size */
+    for (sum=0,i=0;i&lt;256/sizeof(t[0]);i+=32/sizeof(t[0]))   sum ^= t[i];
+
+    ret = sum;
+}
+</code></pre>
+
+<ul>
+<li>In the <code>for</code> loop <code>i</code> is incremented by <code>8</code> if <code>sizeof(t[0])</code> is 4. Since the AES sbox is an <code>unsigned char</code> array of 256 elements and when we call <code>prefetch256(sbox)</code> , the sbox pointer is cast to an <code>unsigned long</code> pointer, therefore every element dereferenced using <code>t[i]</code> is 4 bytes. But I don't understand the reasons why we skip 32 bytes, and not read it fully (to protect against cache timing attacks)? </li>
+<li><p>What is the motivation behind <code>sum ^= t[i]</code> and setting <code>ret = sum</code> ?</p></li>
+<li><p>Are there other simpler solutions to protect my implementation from cache timing attacks? Will this following simpler code help me:</p>
+
+<pre><code>   unsigned char tmp[256];
+   memcpy(tmp, sbox, 256); // memcpy reads the full sbox table quickly..  
+</code></pre></li>
+</ul>

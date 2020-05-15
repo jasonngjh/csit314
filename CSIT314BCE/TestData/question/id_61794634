@@ -1,0 +1,36 @@
+<p>I am building a service that retrieves Enum-like instances from various repositories.  The repositories store the data differently, but all can be retrieved into an EnumEntry { int Id; string Name; } class.</p>
+
+<p>My idea is to use a base class that takes Func delegates as selectors to identify the Id and Name fields on each underlying repository record.  e.g.</p>
+
+<pre><code>// constructor:
+BaseEnumService&lt;T&gt;(Table&lt;T&gt; table, 
+                   Expression&lt;Func&lt;T, int&gt;&gt; idSelector, 
+                   Expression&lt;Func&lt;T, string&gt;&gt; nameSelector) {... }
+
+// usage
+var caseCategoryService = new BaseEnumService(CaseCategoriesTable, x =&gt; x.id, x =&gt; x.category)
+</code></pre>
+
+<p>So far so good.</p>
+
+<p>To retrieve an EnumEntry, given that idSelector and nameSelector are Expressions of pure functions, I thought I could use a lambda expression like this and the compiler would figure it all out:</p>
+
+<pre><code>table.Select(x =&gt; new EnumEntry() { Id = idSelector(x), Name = nameSelector(x) }).ToList();
+</code></pre>
+
+<p>...but the database IQueryable implementation complains as it does not like 'external' functions.</p>
+
+<p>Combining everything with expression trees works ok, e.g.</p>
+
+<pre><code>var record = Expression.Parameter(typeof(T));
+ Expression&lt;Func&lt;int, string, EnumEntry&gt;&gt; createEnumExpression = (id, name) =&gt; new EnumEntry() { Id = id, Name = name };
+var selectExpression = Expression.Invoke(createEnumExpression,
+                Expression.Invoke(idSelector, record),
+                Expression.Invoke(nameSelector, record));
+
+return table.Select(Expression.Lambda&lt;Func&lt;T, EnumEntry&gt;&gt;(selectExpression, record));
+</code></pre>
+
+<p>.. but this seems rather verbose and ugly for something so simple.  </p>
+
+<p>Is there no way to combine Expression&lt;>s using lambda syntax in the way I originally tried?</p>

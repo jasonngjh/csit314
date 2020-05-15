@@ -1,0 +1,21 @@
+<blockquote>
+  <p>Don't we target the CPU architecture/instruction set when compiling a C/C++ program?</p>
+</blockquote>
+
+<p>No, you don't.</p>
+
+<p>I mean yes, you are compiling for a CPU instruction set. But that's not <em>all</em> compilation is.</p>
+
+<p>Consider the simplest "Hello, world!" program. All it does is call <code>printf</code>, right? But there's no "printf" instruction set opcode. So... what exactly happens?</p>
+
+<p>Well, that's part of the C standard library. Its <code>printf</code> function does some processing on the string and parameters, then... displays it. How does that happen? Well, it sends the string to standard out. OK... who controls that?</p>
+
+<p>The operating system. And there's no "standard out" opcode either, so sending a string to standard out involves some form of OS call.</p>
+
+<p>And OS calls are not standardized across operating systems. Pretty much every standard library function that does something you couldn't build on your own in C or C++ is going to talk to the OS to do at least some of its work.</p>
+
+<p><code>malloc</code>? Memory doesn't belong to you; it belongs to the OS, and you <em>maybe</em> are allowed to have some. <code>scanf</code>? Standard input doesn't belong to you; it belongs to the OS, and you can maybe read from it. And so on.</p>
+
+<p>Your standard library is built from calls to OS routines. And those OS routines are non-portable, so your standard library implementation is non-portable. So your executable has these non-portable calls in it.</p>
+
+<p>And on top of all of that, different OSs have different ideas of what an "executable" even <em>looks like</em>. An executable isn't just a bunch of opcodes, after all; where do you think all of those constant and pre-initialized <code>static</code> variables get stored? Different OSs have different ways of starting up an executable, and the structure of the executable is a part of that.</p>

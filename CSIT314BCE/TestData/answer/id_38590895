@@ -1,4 +1,0 @@
-<p>Revert to <em>most recent</em> commit and ignoring all local changes:</p>
-
-<pre><code>git reset --hard HEAD
-</code></pre>

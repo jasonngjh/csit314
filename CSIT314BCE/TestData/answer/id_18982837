@@ -1,7 +1,0 @@
-<p>The answers so far have been correct, but here is some additional information:</p>
-
-<p>One can safely rename a branch with '-m' (move), but one has to be careful with '-M', because it forces the rename, even if there is an existing branch with the same name already. Here is the excerpt from the 'git-branch' man page:</p>
-
-<blockquote>
-  <p>With a -m or -M option, <code>&lt;oldbranch&gt;</code> will be renamed to <code>&lt;newbranch&gt;</code>. If <code>&lt;oldbranch&gt;</code> had a corresponding reflog, it is renamed to match <code>&lt;newbranch&gt;</code>, and a reflog entry is created to remember the branch renaming. If <code>&lt;newbranch&gt;</code> exists, -M must be used to force the rename to happen.</p>
-</blockquote>

@@ -1,0 +1,21 @@
+<p>In <code>or</code> statement you are saying that if you found any of the operands true then no need to check the other operands because the result will be true anyway.</p>
+
+<p>In CASE B if <code>x</code> was (not 'a') then it's true and it'll not check if <code>x</code> is equals to 'b'.</p>
+
+<p>You can simply test the cases by printing <code>x</code> as follows:</p>
+
+<pre><code>&gt;&gt;&gt; x='b'
+&gt;&gt;&gt; if x not in ('a', 'b'): #CASE A (nothing printed when x='b')
+...     print(x)
+...
+&gt;&gt;&gt; if x != 'a' or x!='b': #CASE B
+...     print(x)
+...
+b  # The condition is true so x's value printed
+&gt;&gt;&gt; if x != 'a' and x!='b': #CASE C (nothing printed when x='b')
+...     print(x)
+...
+&gt;&gt;&gt;
+</code></pre>
+
+<p>Here you can find that A and C have the same output (which is nothing).</p>

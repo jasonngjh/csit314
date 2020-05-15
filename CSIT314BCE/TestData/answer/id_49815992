@@ -1,5 +1,0 @@
-<pre><code>let array = [5,5,4,4,2,3,4]    
-let newArray = array.join(',').replace('5','').split(',')
-</code></pre>
-
-<p>This example works if you want to remove one current item.</p>

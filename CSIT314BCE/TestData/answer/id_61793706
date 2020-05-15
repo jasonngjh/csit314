@@ -1,0 +1,5 @@
+<p>I might misunderstood you but...
+Why you don't divide your problem into 2 functions?
+The first function takes your string "L1 R2 L5" and gives you back a number that is the sum of the operations. In the case above would be " -1 +2 -5" so -4 (so L4). The second function would take your string and that number like task18("abcde", -4). It would be a lot simpler, isn't it?</p>
+
+<p>Or... instead of L3 R6 L7 you might solve the problem, initially, with an array of operation [-3, 6, 7] (L3 R6 R7). Be focused on the algorithm, when you fix that you can create a parser that does transform "L3 R6 R7" to [-3, 6, 7] </p>

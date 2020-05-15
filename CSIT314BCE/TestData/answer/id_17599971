@@ -1,8 +1,0 @@
-<p>jQuery is not needed. You can do this:</p>
-
-<pre><code>window.open("URL","_self","","")
-</code></pre>
-
-<p>It is that easy!</p>
-
-<p>The best way to initiate an HTTP request is with <code>document.loacation.href.replace('URL')</code>.</p>

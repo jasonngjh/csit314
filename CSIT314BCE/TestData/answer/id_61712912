@@ -1,0 +1,7 @@
+<p>You can do it in the time required for comuting set intersections which is apparently O(min(N1,N2)) where N1, N2 are the list lengths.</p>
+
+<pre><code>intersect = set([a[0] for a in mylist1]).intersection([a[0] for a in mylist2])
+d1=dict(mylist1)
+d2=dict(mylist2)
+{i:(d1[i]+d2[i])/2 for i in intersect}
+</code></pre>

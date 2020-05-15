@@ -1,0 +1,12 @@
+<p>Is it the same?
+- It can be the same or not.
+It is <a href="https://developer.mozilla.org/en-US/docs/Glossary/CSS_preprocessor" rel="nofollow noreferrer">CSS preprocessor</a></p>
+
+<p>First snippet is written as SCSS grammar.
+So it is not normal CSS formatting, but you can say it is the same.
+Because, if it is compiled, it will generate as the second snippet.</p>
+
+<p>Here is an official link of style rules for SCSS
+<a href="https://sass-lang.com/documentation/style-rules#nesting" rel="nofollow noreferrer">https://sass-lang.com/documentation/style-rules#nesting</a></p>
+
+<p>I think you better understand the basics of CSS first and then take a look at CSS preprocessor.</p>

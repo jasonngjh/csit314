@@ -1,0 +1,15 @@
+<p>Just use the <code>indexOf</code> function of the String class</p>
+
+<pre><code>public class TestPosition {
+    public static void main(String[] args) {
+        String word = "110"; // your string
+        String guess = "1"; // since we are looking for 1
+        int totalLength = word.length();
+        int index = word.indexOf(guess);
+        while (index &gt;= 0) {
+            System.out.println(totalLength - index);
+            index = word.indexOf(guess, index + 1);
+        }
+    }
+}
+</code></pre>

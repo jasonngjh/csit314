@@ -1,0 +1,19 @@
+<blockquote>
+  <p>what would be an appropriate way to write <code>foo</code> to achieve this?</p>
+</blockquote>
+
+<p>If you mean to default only when there is no parameter passed to the function call, then you need to check the <code>arguments</code> length, or to spread the arguments if you want to keep an arrow function.</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false" data-console="true" data-babel="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>const foo = (...args) =&gt; {
+  const bar = args.length ? args[0] : "";
+  console.log(bar)
+}
+
+foo(null) // null
+foo(undefined) // undefined
+foo(); // ""</code></pre>
+</div>
+</div>
+</p>

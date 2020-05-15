@@ -1,0 +1,50 @@
+<p>I have a query which looks a bit like this (trimmed down):</p>
+
+<pre><code>select
+    nvl(counts.xml_id, is_100.xml_id) as xml_id,
+    nvl(counts.feature, is_100.feature) as feature,
+    if(is_100 OR hotel_count &gt;=10 then 'implemented', 'first_contact') as impl_status
+    is_100.is_100_hotels,
+    counts.hotel_count,
+    nvl(counts.yyyy_mm_dd, is_100.yyyy_mm_dd) as yyyy_mm_dd
+from(
+    ... 
+    ...
+) as counts
+full outer join(
+    ...
+    ...
+) as is_100
+on counts.id = is_100.id
+and counts.feature = is_100.feature
+and counts.yyyy_mm_dd = is_100.yyyy_mm_dd
+
+inner join
+    default.xml p
+ON p.id = counts.id
+</code></pre>
+
+<p>I want to introduce a third implementation_status with the value 'no_contact'. This should be the result of:</p>
+
+<pre><code>count(p.id) - 
+(count(id) where implementation_status = 'first_contact'
++ count(id) where implementation_status = 'no_contact') as no_contact
+</code></pre>
+
+<p>I have tried to do it like this:</p>
+
+<pre><code>IF(is_100_hotels OR hotel_count &gt;= 10, 'implemented', 'first_contact') AS implementation_status,
+CASE
+    WHEN (is_100_hotels OR hotel_count &gt;= 10) THEN 'implemented'
+    WHEN (not is_100_hotels AND hotel_count &gt; 0) THEN 'first_contact'
+    ELSE count(p.id) - (count((is_100_hotels OR hotel_count &gt;= 10)) + count((not is_100_hotels AND hotel_count &gt; 0)) ) as 'no_contact'
+END as implementation_status2
+</code></pre>
+
+<p>But I get the following error:</p>
+
+<blockquote>
+  <p>missing KW_END at 'as' near ')' in selection target</p>
+</blockquote>
+
+<p>How can I rework my logic for the implementation_status to include no_contact as the result of count(p.id) - (implemented + first_contact)?</p>

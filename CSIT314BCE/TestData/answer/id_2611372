@@ -1,3 +1,0 @@
-<p>If your text file, which is a JSON string, is going to be read by some program, how difficult would it be to strip out either C or C++ style comments before using it?</p>
-
-<p><strong>Answer:</strong> It would be a one liner. If you do that then JSON files could be used as configuration files.</p>

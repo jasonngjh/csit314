@@ -1,0 +1,26 @@
+<p>You are almost correct.</p>
+
+<p>The professor is incorrect. It is true that display finishes at the first <code>NULL</code> (when some approaches are used), but that says nothing about the values of the remainder of the array, which could be trivially examined regardless.</p>
+
+<blockquote>
+  <p><a href="http://eel.is/c++draft/dcl.init#17.5" rel="nofollow noreferrer"><code>[dcl.init/17.5]:</code></a>: <em>[..]</em> the 
+  ith array element is copy-initialized with x<sub>i</sub> for each 1 ≤ i ≤ k, and value-initialized for each k &lt; i ≤ n.  <em>[..]</em></p>
+</blockquote>
+
+<p>However, <em>none</em> of the options is strictly correct and well-worded.</p>
+
+<p>What happens is that NULL is used to initialise the first element, and the other elements are zero-initialised. The end result is effectively Option B.</p>
+
+<p>Thing is, if <code>NULL</code> were defined as an expression of type <code>std::nullptr_t</code> on your platform (<a href="https://stackoverflow.com/q/61699775/4386278">which it isn't, but it is permitted to be</a>), <a href="https://stackoverflow.com/q/13092266/4386278">the example won't even compile</a>!</p>
+
+<p><strong>NULL is a pointer, not a number.</strong> Historically it has been possible to mix and match the two things to some degree, but C++ has tried to tighten that up in recent years, and you should avoid blurring the line.</p>
+
+<p>A better approach is:</p>
+
+<pre><code>char fullName[30] = {};
+</code></pre>
+
+<p>And the best approach is:</p>
+
+<pre><code>std::string fullName;
+</code></pre>

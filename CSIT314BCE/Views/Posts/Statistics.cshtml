@@ -3,10 +3,10 @@
 
 <table style="width:100%">
     <tr>
-        <td><h2>Statistics</h2></td>
-        <td style="text-align:right;width:150px">
+        <td><h2>Questions</h2></td>
+        <td style="text-align:right;width:250px">
             <div id="vote">
-                Total Votes Gained: @Model.Sum(i => i.VoteCount)
+                Total Votes Gained: <b>@Model.Sum(i => i.VoteCount)</b><br />
             </div>
         </td>
     </tr>
@@ -14,10 +14,12 @@
 @using (Html.BeginForm("Statistics", "Posts", FormMethod.Get))
 {
     <b>View By:</b>
-    @Html.RadioButton("viewBy", "Questions", true)<text>Questions</text>
-    @Html.RadioButton("viewBy", "Answers")<text>Answers</text>
+    @Html.RadioButton("viewBy", "Questions", true)<text>My Posted Questions</text>
+    @Html.RadioButton("viewBy", "Answers")<text>My Posted Answers</text>
+    @Html.RadioButton("viewBy", "PRatings")<text>My Participation Ratings</text>
     @Html.TextBox("viewQuestions", "Questions", new { style = "display:none" })
     @Html.TextBox("viewAnswers", "Answers", new { style = "display:none" })
+    @Html.TextBox("viewParticipatinRatings", "PRatings", new { style = "display:none" })
     <input type="submit" value="View" />
 }
 

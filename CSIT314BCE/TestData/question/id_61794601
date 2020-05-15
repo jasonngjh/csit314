@@ -1,0 +1,1 @@
+<p>I have a async method . Which idea is to findById a entity ,make changes to this entity and then save it . When i call this method , the method throws execption that this entity is not found in the database ,but exists in the database . Can you help me with this problem ? Thanks you . </p>

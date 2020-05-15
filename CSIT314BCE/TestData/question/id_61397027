@@ -1,0 +1,12 @@
+<p>I have used Google Maps SDK (v2) in my application and today suddenly it started crashing with below crash message:</p>
+
+<pre><code>2020-04-24 02:26:40.874 22678-22758/com.**.**E/AndroidRuntime: FATAL EXCEPTION: androidmapsapi-ZoomTableManager
+Process: com.**.**, PID: 22678
+java.lang.ArrayIndexOutOfBoundsException: length=1; index=12
+    at com.google.maps.api.android.lib6.gmm6.vector.ct.&lt;init&gt;(:com.google.android.gms.dynamite_mapsdynamite@201216081@20.12.16 (120400-0):9)
+    at com.google.maps.api.android.lib6.gmm6.vector.cv.a(:com.google.android.gms.dynamite_mapsdynamite@201216081@20.12.16 (120400-0):23)
+    at com.google.maps.api.android.lib6.gmm6.util.m.run(:com.google.android.gms.dynamite_mapsdynamite@201216081@20.12.16 (120400-0):14)
+    at java.lang.Thread.run(Thread.java:919)
+</code></pre>
+
+<p>Is there anyone who faced this issue before. It would be very helpful if get help to resolve this Fatal exception issue. </p>

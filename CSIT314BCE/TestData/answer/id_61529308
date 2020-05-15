@@ -1,0 +1,5 @@
+<blockquote>
+  <p>Why does model show wrong results on its own trained data? I trained data, it must remember how to predict data on this piece of set, but predicts wrong.</p>
+</blockquote>
+
+<p>You want the model to learn the relationship between input and output instead of memorization. If a model memorizes the correct output for each input we can say it is over fitting the training data. Often you can force the model to overfit by using a small subset of the data, so if that's the behavior you want to see you can try that. </p>

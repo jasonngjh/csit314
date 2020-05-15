@@ -1,7 +1,0 @@
-<p>Just three steps to replicate change in name on <code>remote</code> as well as on GitHub:</p>
-
-<p>Step 1 <code>git branch -m old_branchname new_branchname</code></p>
-
-<p>Step 2 <code>git push origin :old_branchname new_branchname</code></p>
-
-<p>Step 3 <code>git push --set-upstream origin new_branchname</code></p>

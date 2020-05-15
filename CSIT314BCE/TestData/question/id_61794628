@@ -1,0 +1,51 @@
+<p>why my code showing error.
+''''</p>
+
+<pre><code>&lt;script type="text/javascript"&gt;
+console.log('This is working');
+
+if(localStorage.getItem('cart')==null){
+    var cart = {};
+}
+else{
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+ $(document).on('click', '.atc', function(){
+        console.log("the add to cart button is clicked");
+        var item_id = this.id.toString();
+        console.log(item_id);
+
+        if(cart[item_id] != undefined){
+            cart[item_id] = cart[item_id] + 1;
+         }
+         else{
+            cart[item_id] = 1;
+         }
+         console.log(cart);
+         localStorage.setItem('cart', JSON.stringify(cart));
+         document.getElementById("cart").innerHTML = "cart("+ Object.keys(cart).length +")";
+    });
+
+
+ DisplayCart(cart);
+ function DisplayCart(cart){
+    var cartString ="";
+    cartString += "&lt;h5&gt;This is your cart&lt;/h5&gt;";
+    var cartIndex = 1;
+    for(var x in cart){
+        cartString += cartIndex;
+        cartString += document.getElementById("nm"+x).innerHTML + "Qty:" + cart[x];
+        cartIndex += 1;
+    }
+            $('[data-toggle="popover"]').popover();
+    document.getElementById("cart").setAttribute('data-content',cartString);
+
+}
+</code></pre>
+
+<p>
+''''
+it showing following error in browser console. 
+ Uncaught TypeError: Cannot read property 'innerHTML' of null
+    at DisplayCart ((index):192)
+    at (index):185</p>

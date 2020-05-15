@@ -1,0 +1,49 @@
+<p>I am using Firebase realtime database and Firebase phone auth in an android project, being developed in java.</p>
+
+<p>I have been able to successfully authenticate the user with phone login, 
+now i have set some ValueEventListeners in the databse helper. 
+However after about one hour (as the firebase auth token expires), my value even listener callbacks are not trigerring. </p>
+
+<p>How can i handle that situation. I would like to keep my users authenticated unless they manually logout.</p>
+
+<pre><code>public void refreshUserAuthToken(){
+        try {
+            FirebaseUser thisUser = FirebaseAuth.getInstance().getCurrentUser();
+            thisUser.getIdToken(true).addOnCompleteListener(new OnCompleteListener&lt;GetTokenResult&gt;() {
+                @Override
+                public void onComplete(@NonNull Task&lt;GetTokenResult&gt; task) {
+                    if (task.isSuccessful()){
+                        // nothing
+                        // the task is succesful
+                    }
+                    else {
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    }
+                }
+            })
+        }
+        catch (Exception e){
+//            new Intent(MainActivity.class, this)
+        }
+    }
+</code></pre>
+
+<p>When and how should I call this?
+I tried using it in login activity but the task is always unsuccesful</p>
+
+<p>Also should i call this function everytime an activity is loaded?</p>
+
+<p>I also have the application interacting with a webservice, how can i leverage that? 
+can someone point me to a git repo or provide me with a code flow that can help me keep my users logged in for a long time?</p>
+
+<p>Thanks in advance</p>
+
+<p><strong><em>Edit</em></strong></p>
+
+<p>I changed the getIdToken(true) to getIdToken(false) which is not causing it to fail always.</p>
+
+<p>This somewhat solves my purpose, however i am still not sure how and where to call it, if a user keeps an activity / fragment open for more than one hour.</p>
+
+<p>the next stage is that my firebase realtime database gets internally logged out as it seems, but how to pass this new token ?</p>
+
+<p>Calling this function over and over again, will definitely take me to the login page if the token times out, but how can i keep the firebase callbacks logged in?</p>

@@ -1,0 +1,20 @@
+<p>You can use this solution:</p>
+
+<pre><code>static List&lt;Integer&gt; convert(int input) {
+    List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+    int counter = 1;
+    while (input &gt; 0) {
+        if (input % 2 == 1) list.add(counter);
+        counter++;
+        input /= 2;
+    }
+    return list;
+}
+</code></pre>
+
+<p>It outputs:</p>
+
+<pre><code>[2, 3]
+[1, 2, 3]
+[4]
+</code></pre>

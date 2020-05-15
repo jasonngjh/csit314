@@ -1,6 +1,0 @@
-<p>For JSON, I am using:</p>
-
-<pre><code> Content-Type: application/json
-</code></pre>
-
-<p>This is described in the IETF's JSON Data Interchange Format 7158 proposal, <a href="http://tools.ietf.org/html/rfc7158#section-1.2">Section 1.2: Specifications of JSON</a>.</p>

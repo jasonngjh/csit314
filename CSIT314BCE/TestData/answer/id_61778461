@@ -1,0 +1,7 @@
+<blockquote>
+  <p><code>mainClassName = 'java.Main' // changed to 'Main' and I can "gradle run" seems to actually run Main.java</code></p>
+</blockquote>
+
+<p>This is not correct. Based on screenshot - you have not package named <code>java</code> (also I doubld that this is a valid name for a Java package). Create proper package inside <code>src/main/java</code> directory and specify it in the <code>Main</code> source file and in build.gradle file.</p>
+
+<p>Also make sure you have imported build.gradle file in IDE, see <a href="https://www.jetbrains.com/help/idea/gradle.html#link_gradle_project" rel="nofollow noreferrer">Link a Gradle project to an IntelliJ IDEA project</a></p>
