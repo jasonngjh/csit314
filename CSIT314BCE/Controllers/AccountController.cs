@@ -92,7 +92,14 @@ namespace CSIT314BCE.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         //

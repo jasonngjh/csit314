@@ -255,7 +255,7 @@ namespace CSIT314BCE
             ApplicationDbContext context = new ApplicationDbContext();
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            var userManager = new UserManager<Admin>(new UserStore<Admin>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
             if (!roleManager.RoleExists("Admin"))
             {
@@ -287,6 +287,22 @@ namespace CSIT314BCE
             {
                 var role = new IdentityRole("Moderator");
                 roleManager.Create(role);
+
+                Moderator mod = new Moderator
+                {
+                    UserName = "mod",
+                    FullName = "moderator",
+                    Email="mod@domain.com",
+                    IsEnabled = true
+                };
+
+                string pwd = "@Abc123";
+
+                var newuser = userManager.Create(mod, pwd);
+                if (newuser.Succeeded)
+                {
+                    userManager.AddToRole(mod.Id, "Admin");
+                }
             }
         }
     }
