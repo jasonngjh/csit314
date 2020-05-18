@@ -23,11 +23,11 @@
                     <a href='@Url.Action("Index","Home")'>
                         <img src="~/Images/HomeImages/logo.png" width="170" height="50" style="float:left" />
                     </a>
-                    @if (User.IsInRole("Admin"))
+                    @if (this.User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                     }
-                    @if (Request.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("View Questions", "Index", "Posts")</li>
                     }

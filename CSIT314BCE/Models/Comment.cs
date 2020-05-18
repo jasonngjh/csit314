@@ -31,27 +31,24 @@ namespace CSIT314BCE.Models
 
             if (user != null)
             {
-                Comment comment = new Comment() {
-                    PostId = model.PostId,
-                    Text = model.Text,
-                    CreationDate = DateTime.Now,
-                    OwnerId = user.Id,
-                    OwnerUsername = user.UserName
-                };
 
-                context.Comments.Add(comment);
-                context.SaveChanges();
+                Post post = context.Posts.Find(model.PostId);
 
-                /*using (var db = new ApplicationDbContext())
+                if (post != null) 
                 {
-                    Post post = context.Posts.Find(model.PostId);
-                    if (post != null)
+                    Comment comment = new Comment()
                     {
-                        post.CommentCount += 1;
-                        db.SaveChanges();
-                    }
-                        
-                }*/
+                        PostId = model.PostId,
+                        Text = model.Text,
+                        CreationDate = DateTime.Now,
+                        OwnerId = user.Id,
+                        OwnerUsername = user.UserName
+                    };
+
+                    context.Comments.Add(comment);
+                    post.CommentCount += 1;
+                    context.SaveChanges();
+                }
 
                 return model.PostId;
             }   

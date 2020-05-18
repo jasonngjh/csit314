@@ -34,7 +34,6 @@
                     if (item.VoteCount == 1) { voteString = "vote"; }
                     if (item.AnswerCount == 1) { answerString = "answer"; }
                     if (item.AcceptedAnswerId != 0) { answerCss = "acceptedAnswer"; }
-
                 }
                 <div id="vote">
                     <strong>@Html.DisplayFor(modelItem => item.VoteCount)</strong><br />

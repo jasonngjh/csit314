@@ -11,7 +11,7 @@ namespace CSIT314BCE.Models
         public string Id { get; set; }
 
         [Display(Name = "Email")]
-        [EmailAddress]
+        [RegularExpression(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$", ErrorMessage = "Email is not valid")]
         public string Email { get; set; }
 
         [Required]
@@ -20,7 +20,7 @@ namespace CSIT314BCE.Models
 
         [Required]
         [StringLength(256)]
-        [Display(Name = "User Name")]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
 
         [Display(Name = "Suspended")]
@@ -59,7 +59,7 @@ namespace CSIT314BCE.Models
         public string Fullname { get; set; }
 
         [Required]
-        [EmailAddress]
+        [RegularExpression(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$", ErrorMessage = "Email is not valid")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

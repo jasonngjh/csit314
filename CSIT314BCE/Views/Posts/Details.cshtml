@@ -24,7 +24,7 @@
                     var voteString = "votes";
                     if (@Model.Question.VoteCount == 1) { voteString = "vote"; }
                 }
-                @if (User.IsInRole("Student"))
+                @if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
                 {
                     <div id="vote2">
                         <button type="button" class="voteBtn" id="voteUpBtn" onclick="voteUpFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
@@ -35,7 +35,7 @@
                 else
                 {
                     <div id="vote2">
-                        <label id="voteCounter">@Model.Question.VoteCount</label> <br />@voteString
+                        <label id="voteCounter">@Model.Question.VoteCount</label> <br /> @voteString <br />
                     </div>
                 }
             </div>
@@ -73,7 +73,7 @@
         <div class="row">
             <div class="PostComment">
                 @{
-                    if (Model.Question.ClosedDate == null)
+                    if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
                     {
                         Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = Model.Question.PostId });
                     }
@@ -97,18 +97,18 @@
                                         var voteAnsString = "votes";
                                         if (answer.VoteCount == 1) { voteAnsString = "vote"; }
                                     }
-                                    @if (User.IsInRole("Student"))
+                                    @if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
                                     {
-                                    <div id="vote2">
-                                        <button type="button" class="voteBtn" id="@("voteUpAnsBtn" + @answer.PostId)" onclick="voteUpAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
-                                        <button type="button" class="voteBtnClicked" id="@("voteDownAnsBtn" + @answer.PostId)" onclick="voteDownAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
-                                        <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br /> @voteAnsString <br />
-                                    </div>
+                                        <div id="vote2">
+                                            <button type="button" class="voteBtn" id="@("voteUpAnsBtn" + @answer.PostId)" onclick="voteUpAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                                            <button type="button" class="voteBtnClicked" id="@("voteDownAnsBtn" + @answer.PostId)" onclick="voteDownAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
+                                            <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br /> @voteAnsString <br />
+                                        </div>
                                     }
                                     else
                                     {
                                         <div id="vote2">
-                                            <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br />@voteAnsString
+                                            <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br /> @voteAnsString <br />
                                         </div>
                                     }
                                 </div>
@@ -167,7 +167,7 @@
                         <div class="row">
                             <div id="PostComment">
                                 @{
-                                    if (Model.Question.ClosedDate == null)
+                                    if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
                                     {
                                         Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = answer.PostId });
                                         <hr />
@@ -181,7 +181,7 @@
         }
     }
     @{
-        if (Model.Question.ClosedDate == null)
+        if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
         {
             Html.RenderPartial("_PostAnswer", new CSIT314BCE.Models.PostAnsViewModel() { ParentId = Model.Question.PostId });
         }

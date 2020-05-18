@@ -26,21 +26,6 @@ namespace CSIT314BCE.Controllers
             return View(db.Posts.ToList());
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         public ActionResult UserProfile(string userId)
         {
             if (userId != null)

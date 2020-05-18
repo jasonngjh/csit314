@@ -26,15 +26,21 @@
 <table style="width:100%">
     @foreach (var item in Model)
     {
+        var voteString = "votes";
+        var answerString = "answers";
+        var answerCss = "answer";
+        if (item.VoteCount == 1) { voteString = "vote"; }
+        if (item.AnswerCount == 1) { answerString = "answer"; }
+        if (item.AcceptedAnswerId != 0) { answerCss = "acceptedAnswer"; }
         <tr>
             <td style="width: 100px">
                 <div id="vote">
                     @Html.DisplayFor(modelItem => item.VoteCount)<br />
-                    vote(s)
+                    @voteString
                 </div>
-                <div id="answer">
+                <div id="@answerCss">
                     @Html.DisplayFor(modelItem => item.AnswerCount)<br />
-                    answer(s)
+                    @answerString
                 </div>
             </td>
             <td id="post" style="width: 850px">

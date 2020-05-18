@@ -11,11 +11,11 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="False">@Html.Label("Hello " + User.Identity.GetUserName() + " !")<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>@Html.ActionLink("Profile Information", "UserProfile", "Home")</li>
-                        @if (User.IsInRole("Student"))
+                        @if (this.User.IsInRole("Student"))
                         {
                             <li>@Html.ActionLink("My Statistics", "Statistics", "Posts")</li>
                         }
-                        @if (User.IsInRole("Moderator"))
+                        @if (this.User.IsInRole("Moderator"))
                         {
                             <li>@Html.ActionLink("View Reports", "Reports", "Posts")</li>
                         }

@@ -28,11 +28,13 @@
 
     @foreach (var item in Model)
     {
+        var voteString = "votes";
+        if (item.VoteCount == 1) { voteString = "vote"; }
         <tr>
             <td style="width: 100px">
                 <div id="vote">
                     @Html.DisplayFor(modelItem => item.VoteCount)<br />
-                    vote(s)
+                    @voteString
                 </div>
             </td>
             <td id="post" style="width: 850px">

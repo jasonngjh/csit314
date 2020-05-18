@@ -52,15 +52,21 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
 
     @foreach (var item in Model)
     {
+        var voteString = "votes";
+        var answerString = "answers";
+        var answerCss = "answer";
+        if (item.VoteCount == 1) { voteString = "vote"; }
+        if (item.AnswerCount == 1) { answerString = "answer"; }
+        if (item.AcceptedAnswerId != 0) { answerCss = "acceptedAnswer"; }
         <tr>
             <td style="width: 100px">
                 <div id="vote">
                     @Html.DisplayFor(modelItem => item.VoteCount)<br />
-                    vote(s)
+                    @voteString
                 </div>
-                <div id="answer">
+                <div id="@answerCss">
                     @Html.DisplayFor(modelItem => item.AnswerCount)<br />
-                    answer(s)
+                    @answerString
                 </div>
             </td>
             <td id="post" style="width: 850px">
@@ -89,7 +95,7 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
     }
 </table>
 @section Scripts{
-    <!-- Bootstrap -->
+    <!-- Bootstrap-->
     <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js'></script>
     <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css'

@@ -50,15 +50,19 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
 
     @foreach (var item in Model)
     {
+        var voteString = "votes";
+        var commentString = "comments";
+        if (item.VoteCount == 1) { voteString = "vote"; }
+        if (item.CommentCount == 1) { commentString = "comment"; }
         <tr>
             <td style="width: 100px">
                 <div id="vote">
                     @Html.DisplayFor(modelItem => item.VoteCount)<br />
-                    vote(s)
+                    @voteString
                 </div>
                 <div id="answer">
-                    @Html.DisplayFor(modelItem => item.AnswerCount)<br />
-                    answer(s)
+                    @Html.DisplayFor(modelItem => item.CommentCount)<br />
+                    @commentString
                 </div>
             </td>
             <td id="post" style="width: 850px">

@@ -4,34 +4,29 @@
     ViewBag.Title = "User Profile";
 }
 
-<h2>Profile Information</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
+<div class="row center-block">
+    <h2>Profile Information</h2>
+    <div class="col-md-12" style="float:none">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">@Model.FullName</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
+                    <!-- Table -->
+                    <table class="table">
+                        <tr>
+                            <td style="text-align:right;font-weight:600">Username</td>
+                            <td>@Model.UserName</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;font-weight:600">Email</td>
+                            <td>@Model.Email</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

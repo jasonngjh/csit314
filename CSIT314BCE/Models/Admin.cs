@@ -67,13 +67,6 @@ namespace CSIT314BCE.Models
                     editUserViewModel.isEnabled = true;
                 }
             }
-            /* As of now Admin and moderator does not have additional attributes. so we do not need to cast it.
-             * else if (role.FirstOrDefault() == "Admin")
-             {
-             }
-             else if(role.FirstOrDefault() == "Moderator") { 
-             }*/
-
             return editUserViewModel;
         }
 

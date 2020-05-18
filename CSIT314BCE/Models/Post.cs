@@ -75,6 +75,8 @@ namespace CSIT314BCE.Models
                 return 0;
             }
 
+            Post question = context.Posts.Find(model.ParentId);
+
             Post post = new Post() 
             {
                 Body = model.Body,
@@ -87,6 +89,7 @@ namespace CSIT314BCE.Models
 
             context.Posts.Add(post);
             user.Ratings += 5;
+            question.AnswerCount += 1;
             context.SaveChanges();
             context.Entry(post).GetDatabaseValues();
 
@@ -142,18 +145,22 @@ namespace CSIT314BCE.Models
             }
         }
 
-        public int ChooseAnswer(int postId) 
+        public int ChooseAnswer(int postId)
         {
             Post answer = context.Posts.Find(postId);
-            if (answer != null) 
+            var userManager = new UserManager<Student>(new UserStore<Student>(context));
+            if (answer != null)
             {
                 using (var db = new ApplicationDbContext())
                 {
                     Post question = db.Posts.Find(answer.ParentId);
-                    if (question != null) 
+                    if (question != null)
                     {
                         question.AcceptedAnswerId = postId;
+                        var user = userManager.FindById(answer.OwnerId);
+                        user.Ratings += 10;
                         question.ClosedDate = DateTime.Now;
+                        context.SaveChanges();
                         db.SaveChanges();
                         return question.PostId;
                     }
