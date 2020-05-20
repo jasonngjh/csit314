@@ -144,7 +144,8 @@ namespace CSIT314BCE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetUserPassword(ResetUserPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            var validatePassword = await UserManager.PasswordValidator.ValidateAsync(model.NewPassword);
+            if (ModelState.IsValid && validatePassword.Succeeded)
             {
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
                 var user = userManager.FindById(model.Id);
@@ -160,7 +161,7 @@ namespace CSIT314BCE.Controllers
                     return RedirectToAction("Edit", new { id = model.Id, Message = ManageMessageId.ResetUserPasswordSuccess });
                 }
             }
-
+            AddErrors(validatePassword);
             // If we got this far, something failed, redisplay form
             return View(model);
         }
