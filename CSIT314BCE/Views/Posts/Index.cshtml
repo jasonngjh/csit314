@@ -57,14 +57,6 @@
                     asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
                     on @Html.DisplayFor(modelItem => item.CreationDate)
                 </div>
-                @if (User.IsInRole("Moderator"))
-                {
-                    <div id="modOption">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.PostId })
-                        <br />
-                        @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
-                    </div>
-                }
             </td>
         </tr>
     }

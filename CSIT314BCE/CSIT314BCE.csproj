@@ -271,15 +271,8 @@
     <Content Include="Views\Home\UserProfile.cshtml" />
     <Content Include="Views\Admin\ResetUserPassword.cshtml" />
     <Content Include="Views\Posts\Ask.cshtml" />
-    <Content Include="Views\Posts\Delete.cshtml" />
     <Content Include="Views\Posts\Details.cshtml" />
-    <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\Index.cshtml" />
-    <Content Include="Views\Comments\Create.cshtml" />
-    <Content Include="Views\Comments\Delete.cshtml" />
-    <Content Include="Views\Comments\Details.cshtml" />
-    <Content Include="Views\Comments\Edit.cshtml" />
-    <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Manage\ChangeInfo.cshtml" />
     <Content Include="TestData\answer\id_10044540" />
     <Content Include="TestData\answer\id_10113231" />
