@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
 
 namespace CSIT314BCE.Models
 {
@@ -17,6 +18,11 @@ namespace CSIT314BCE.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
+        }
+
+        public ApplicationUser RetrieveUserProfile(string userId) 
+        {
+            return (new ApplicationDbContext()).Users.FirstOrDefault(s => s.Id == userId);
         }
     }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

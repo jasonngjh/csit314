@@ -11,6 +11,10 @@ namespace CSIT314BCE.Models
     {
         private ApplicationDbContext context = new ApplicationDbContext();
 
+        public List<ApplicationUser> RetrieveUsers(string search) 
+        {
+            return context.Users.Where(x => x.UserName.Contains(search) || search == null).ToList();
+        }
         public ApplicationUser CreateUser(CreateUserViewModel model)
         {
             if (model.Role == "Student")

@@ -1,9 +1,7 @@
-﻿@model IEnumerable<CSIT314BCE.Models.Post>
-
-
+﻿@model IEnumerable<CSIT314BCE.Models.Student>
 @Styles.Render("~/Content/Style.css")
 @{
-    ViewBag.Title = "Reports";
+    ViewBag.Title = "Reports3";
 }
 
 <table style="width:100%">
@@ -11,7 +9,7 @@
         <td><h2>Reports</h2></td>
     </tr>
 </table>
-@using (Html.BeginForm("Reports", "Posts", FormMethod.Get))
+@using (Html.BeginForm("Reports", "Moderator", FormMethod.Post))
 {
     <b>Sort By:</b>
     @Html.RadioButton("viewBy", "MAnsweredQ", true)<text>Most Answered Questions</text>
@@ -40,62 +38,32 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
         </tr>
         <tr id="timeset">
             <td style="width: 130px"><label>Select time span: </label></td>
-            <td style="width: 110px">   @Html.TextBox("StartDate", null, new { @class = "form-control", style = "width:100px" }) </td>
+            <td style="width: 110px">   @Html.TextBox("StartDate", null, new { @class = "form-control", style = "width:100px;cursor:pointer;", @readonly = "readonly" }) </td>
             <td style="width: 20px">  to  </td>
-            <td>@Html.TextBox("EndDate", null, new { @class = "form-control", style = "width:100px" })</td>
+            <td>@Html.TextBox("EndDate", null, new { @class = "form-control", style = "width:100px;cursor:pointer;", @readonly = "readonly" })</td>
         </tr>
     </table>
 }
 
 <table style="width:100%">
 
-
     @foreach (var item in Model)
     {
-        var voteString = "votes";
-        var answerString = "answers";
-        var answerCss = "answer";
-        if (item.VoteCount == 1) { voteString = "vote"; }
-        if (item.AnswerCount == 1) { answerString = "answer"; }
-        if (item.AcceptedAnswerId != 0) { answerCss = "acceptedAnswer"; }
         <tr>
             <td style="width: 100px">
                 <div id="vote">
-                    @Html.DisplayFor(modelItem => item.VoteCount)<br />
-                    @voteString
+                    @Html.DisplayFor(modelItem => item.UserName):
+                    @Html.DisplayFor(modelItem => item.Ratings)<br />
                 </div>
-                <div id="@answerCss">
-                    @Html.DisplayFor(modelItem => item.AnswerCount)<br />
-                    @answerString
-                </div>
-            </td>
-            <td id="post" style="width: 850px">
-                <div id="questionDetail">
-                    @if (!string.IsNullOrEmpty(item.Title))
-                    {
-                        @Html.ActionLink(item.Title, "Details", "Posts", new { id = item.PostId }, new { style = "text-decoration:none;color:black;" })
-                    }
-                </div>
-            </td>
-            <td>
-                <div id="askedBy">
-                    asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
-                    on @Html.DisplayFor(modelItem => item.CreationDate)
-                </div>
-                @if (User.IsInRole("Moderator"))
-                {
-                    <div id="modOption">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.PostId })
-                        <br />
-                        @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
-                    </div>
-                }
             </td>
         </tr>
     }
+
 </table>
 @section Scripts{
-    <!-- Bootstrap-->
+    <script src="/Scripts/jquery-1.9.0.js" type="text/javascript"></script>
+    <script src="/Scripts/bootstrap.js" type="text/javascript"></script>
+    <!-- Bootstrap -->
     <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js'></script>
     <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css'
@@ -122,6 +90,7 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
 
         $(document).ready(function () {
             $("#timeset").hide();
+            $('#timespanRow').hide();
 
             $('#timespan').on('change', function () {
                 if (this.value == 'choosetime') {
@@ -192,4 +161,3 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
         });
     </script>
 }
-

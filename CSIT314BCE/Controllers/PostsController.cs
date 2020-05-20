@@ -23,63 +23,13 @@ namespace CSIT314BCE.Controllers
         [HttpGet]
         public ActionResult Index(string search, string searchBy)
         {
-            if (search != null)
+            var posts = post.RetrievePosts(search, searchBy);
+            if (searchBy == "Answers")
             {
-                if (searchBy == "Questions")
-                {
-                    var posts = db.Posts.Where(x => x.Title.Contains(search) || search == null).ToList();
-                    return View(posts);
-                }
-                else
-                {
-                    var posts = db.Posts.Where(x => x.Body.Contains(search) || search == null).ToList();
-                    return View("~/Views/Posts/AnswerSearch.cshtml", posts);
-                }
+                return View("~/Views/Posts/AnswerSearch.cshtml", posts);
             }
-            else
-            {
-                var posts = db.Posts.Where(p => p.Title != null).Include(p => p.Student);
-                return View(posts.ToList());
-            }
+            return View(posts);
         }
-
-        public ActionResult Statistics(string viewBy, string viewQuestions, string viewAnswers)
-        {
-            if (viewQuestions != null)
-            {
-                if (viewBy == "Questions")
-                {
-                    var userId = User.Identity.GetUserId();
-                    var posts = db.Posts.Where(g => g.OwnerId == userId && g.Title != null).ToList();
-                    return View(posts);
-                }
-                else if (viewBy == "Answers")
-                {
-                    var userId = User.Identity.GetUserId();
-                    var posts = db.Posts.Where(g => g.OwnerId == userId && g.Title == null).ToList();
-                    return View("~/Views/Posts/Statistics2.cshtml", posts);
-                }
-                else
-                {
-                    return View("~/Views/Posts/PRatings.cshtml");
-                }
-            }
-            else
-            {
-                var userId = User.Identity.GetUserId();
-                return View(db.Posts.Where(g => g.OwnerId == userId && g.Title != null).ToList());
-            }
-        }
-
-        [HttpPost]
-        public ActionResult getRating()
-        {
-            var CurrentUserId = User.Identity.GetUserId();
-            var userRecord = db.ApplicationUsers.Where(x => x.Id == CurrentUserId).FirstOrDefault().Ratings;
-
-            return Json(new { success = true, responseText = userRecord }, JsonRequestBehavior.AllowGet);
-        }
-
 
         // GET: Posts/Details/5
         public ActionResult Details(int? id)
@@ -137,6 +87,7 @@ namespace CSIT314BCE.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Student")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PostAnswer(PostAnsViewModel model)
@@ -224,22 +175,7 @@ namespace CSIT314BCE.Controllers
             //get current user id
             var userId = User.Identity.GetUserId();
 
-            //update votecount to increase by 1
-            Post post = db.Posts.Find(id);
-            post.VoteCount += 1;
-
-            //add into user who has voted
-            Vote voted = new Vote
-            {
-                PostId = id,
-                UserId = userId,
-            };
-            db.Votes.Add(voted);
-
-            db.SaveChanges();
-
-            //returns new vote count
-            var newVoteCount = post.VoteCount;
+            var newVoteCount = post.VoteUp(id, userId);
             return Json(new { success = true, responseText = newVoteCount }, JsonRequestBehavior.AllowGet);
         }
 
@@ -249,18 +185,8 @@ namespace CSIT314BCE.Controllers
             //get current user id
             var userId = User.Identity.GetUserId();
 
-            //update votecount to decrease by 1
-            Post post = db.Posts.Find(id);
-            post.VoteCount -= 1;
-
-            //search records and delete from Voted
-            var votedRecord = db.Votes.Where(x => x.PostId == id && x.UserId == userId).Select(x => x.VoteId).FirstOrDefault();
-            Vote voted = db.Votes.Find(votedRecord);
-            db.Votes.Remove(voted);
-            db.SaveChanges();
-
             //returns new vote count
-            var newVoteCount = post.VoteCount;
+            var newVoteCount = post.VoteDown(id, userId);
             return Json(new { success = true, responseText = newVoteCount }, JsonRequestBehavior.AllowGet);
         }
 
@@ -289,75 +215,6 @@ namespace CSIT314BCE.Controllers
                 return RedirectToAction("Details", new { id = result });
             }
             return RedirectToAction("Details", new { id = postId });
-        }
-
-        [Authorize(Roles = "Moderator")]
-        public ActionResult Reports(string viewBy, string viewAnswered, string timespan, string StartDate, string EndDate)
-        {
-
-
-            if (viewAnswered != null)
-            {
-                if (timespan == "alltime")
-                {
-                    if (viewBy == "MAnsweredQ")
-                    {
-                        var posts = db.Posts.Where(g => g.Title != null).OrderByDescending(p => p.AnswerCount).ToList();
-                        return View(posts);
-                    }
-                    else if (viewBy == "MVotedQ")
-                    {
-                        var posts = db.Posts.Where(g => g.Title != null).OrderByDescending(p => p.VoteCount).ToList();
-                        return View(posts);
-                    }
-                    else if (viewBy == "MCommentedQ")
-                    {
-                        var posts = db.Posts.Where(g => g.Title != null).OrderByDescending(p => p.CommentCount).ToList();
-                        return View("~/Views/Posts/Reports2.cshtml", posts);
-                    }
-                    else
-                    {
-                        var users = db.ApplicationUsers.Where(g => g.Id != null).OrderByDescending(p => p.Ratings).ToList();
-                        return View("~/Views/Posts/Reports3.cshtml", users);
-                    }
-                }
-                else
-                {
-                    //time span
-
-                    StartDate = StartDate + " 0:00 AM";
-                    DateTime FromDate = DateTime.ParseExact(StartDate, "dd/MM/yyyy h:mm tt", System.Globalization.CultureInfo.InvariantCulture);
-                    EndDate = EndDate + " 0:00 AM";
-                    DateTime ToDate = DateTime.ParseExact(EndDate, "dd/MM/yyyy h:mm tt", System.Globalization.CultureInfo.InvariantCulture);
-                    ToDate = ToDate.AddDays(1);
-
-                    if (viewBy == "MAnsweredQ")
-                    {
-                        var posts = db.Posts.Where(g => g.Title != null && g.CreationDate >= FromDate && g.CreationDate < ToDate).OrderByDescending(p => p.AnswerCount).ToList();
-                        return View(posts);
-                    }
-                    else if (viewBy == "MVotedQ")
-                    {
-                        var posts = db.Posts.Where(g => g.Title != null && g.CreationDate >= FromDate && g.CreationDate < ToDate).OrderByDescending(p => p.VoteCount).ToList();
-                        return View(posts);
-                    }
-                    else if (viewBy == "MCommentedQ")
-                    {
-                        var posts = db.Posts.Where(g => g.Title != null && g.CreationDate >= FromDate && g.CreationDate < ToDate).OrderByDescending(p => p.CommentCount).ToList();
-                        return View("~/Views/Posts/Reports2.cshtml", posts);
-                    }
-                    else
-                    {
-                        var users = db.ApplicationUsers.Where(g => g.Id != null).OrderByDescending(p => p.Ratings).ToList();
-                        return View("~/Views/Posts/Reports3.cshtml", users);
-                    }
-                }
-            }
-            else
-            {
-                var posts = db.Posts.Where(g => g.Title != null).OrderByDescending(p => p.AnswerCount).ToList();
-                return View(posts);
-            }
         }
 
         protected override void Dispose(bool disposing)

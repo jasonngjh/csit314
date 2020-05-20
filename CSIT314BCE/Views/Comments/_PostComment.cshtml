@@ -9,7 +9,7 @@
 
         <div class="form-group">
             <div class="col-md-8">
-                @Html.TextAreaFor(model => model.Text, new { @class = "form-control", @rows = 3 })
+                @Html.TextAreaFor(model => model.Text, new { @class = "form-control", @rows = 3, required="required" })
                 @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-4"></div>

@@ -42,7 +42,8 @@ namespace CSIT314BCE.Controllers
         // GET: Admin
         public ActionResult Index(string search)
         {
-            return View(_context.Users.Where(x => x.UserName.Contains(search) || search == null).ToList());
+            var users = admin.RetrieveUsers(search);
+            return View(users);
         }
 
         // GET: Admin/CreateUser

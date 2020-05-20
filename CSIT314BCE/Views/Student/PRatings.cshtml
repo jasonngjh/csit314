@@ -12,7 +12,7 @@
     </tr>
 </table>
 
-@using (Html.BeginForm("Statistics", "Posts", FormMethod.Get))
+@using (Html.BeginForm("Statistics", "Student", FormMethod.Post))
 {
     <b>View By:</b>
     @Html.RadioButton("viewBy", "Questions", true)<text>My Questions</text>
@@ -36,7 +36,7 @@
             $(document).ready(function () {
         $.ajax({
         type: "POST",
-            url: "/Posts/getRating",
+            url: "/Student/getRating",
             async: true,
             success: function (data) {
                 //displays new vote count

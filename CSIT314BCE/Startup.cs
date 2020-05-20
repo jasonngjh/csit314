@@ -301,7 +301,7 @@ namespace CSIT314BCE
                 var newuser = userManager.Create(mod, pwd);
                 if (newuser.Succeeded)
                 {
-                    userManager.AddToRole(mod.Id, "Admin");
+                    userManager.AddToRole(mod.Id, "Moderator");
                 }
             }
         }

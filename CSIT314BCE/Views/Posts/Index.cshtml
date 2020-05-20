@@ -6,10 +6,10 @@
 
 @Styles.Render("~/Content/Style.css")
 
-<div class="row">
-    <div class="col-md-10"><h2>Learning Platform</h2></div>
-    <div class="col-md-2">@Html.ActionLink("Ask a question", "Ask", "Posts", null, new { @class = "btn btn-primary" })</div>
-</div>
+    <div class="row">
+        <div class="col-md-10"><h2>Learning Platform</h2></div>
+            <div class="col-md-2">@Html.ActionLink("Ask a question", "Ask", "Posts", null, new { @class = "btn btn-primary" })</div>
+    </div>
 <div class="hidden-div">
     @using (Html.BeginForm("Index", "Posts", FormMethod.Get))
     {
@@ -22,7 +22,7 @@
 </div>
 <br />
 <br />
-<table >
+<table>
     @foreach (var item in Model)
     {
         <tr>
@@ -54,7 +54,7 @@
             </td>
             <td>
                 <div id="askedBy">
-                     asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
+                    asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
                     on @Html.DisplayFor(modelItem => item.CreationDate)
                 </div>
                 @if (User.IsInRole("Moderator"))

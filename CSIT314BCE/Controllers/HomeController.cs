@@ -11,8 +11,7 @@ namespace CSIT314BCE.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private Post post = new Post();
+        private ApplicationUser appuser = new ApplicationUser();
         public HomeController()
         {
         }
@@ -23,14 +22,14 @@ namespace CSIT314BCE.Controllers
         }
         public ActionResult Index()
         {
-            return View(db.Posts.ToList());
+            return View();
         }
 
         public ActionResult UserProfile(string userId)
         {
             if (userId != null)
             {
-                var user = (new ApplicationDbContext()).Users.FirstOrDefault(s => s.Id == userId);
+                var user = appuser.RetrieveUserProfile(userId);
                 return View(user);
             }
             else
@@ -42,7 +41,7 @@ namespace CSIT314BCE.Controllers
                 }
                 else
                 {
-                    var user = (new ApplicationDbContext()).Users.FirstOrDefault(s => s.Id == userId);
+                    var user = appuser.RetrieveUserProfile(userId);
                     return View(user);
                 }
             }

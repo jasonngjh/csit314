@@ -175,7 +175,9 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ModeratorController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +212,7 @@
     <Content Include="Images\HomeImages\logo.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1537,12 +1540,12 @@
     <Content Include="Views\Posts\_PostAnswer.cshtml" />
     <Content Include="Views\Comments\_PostComment.cshtml" />
     <Content Include="Views\Posts\AnswerSearch.cshtml" />
-    <Content Include="Views\Posts\Statistics.cshtml" />
-    <Content Include="Views\Posts\Statistics2.cshtml" />
-    <Content Include="Views\Posts\PRatings.cshtml" />
-    <Content Include="Views\Posts\Reports.cshtml" />
-    <Content Include="Views\Posts\Reports2.cshtml" />
-    <Content Include="Views\Posts\Reports3.cshtml" />
+    <Content Include="Views\Student\Statistics.cshtml" />
+    <Content Include="Views\Student\Statistics2.cshtml" />
+    <Content Include="Views\Student\PRatings.cshtml" />
+    <Content Include="Views\Moderator\Reports.cshtml" />
+    <Content Include="Views\Moderator\Reports2.cshtml" />
+    <Content Include="Views\Moderator\Reports3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

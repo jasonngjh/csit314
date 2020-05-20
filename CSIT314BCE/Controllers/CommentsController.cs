@@ -47,7 +47,11 @@ namespace CSIT314BCE.Controllers
         {
             if (!ModelState.IsValid) 
             {
-                TempData["ViewData"] = ViewData;
+                var post = db.Posts.Find(model.PostId);
+                if (post.ParentId != 0) 
+                {
+                    return RedirectToAction("Details", "Posts", new { id = post.ParentId });
+                }
                 return RedirectToAction("Details", "Posts", new { id = model.PostId });
             }
 

@@ -13,11 +13,11 @@
                         <li>@Html.ActionLink("Profile Information", "UserProfile", "Home")</li>
                         @if (this.User.IsInRole("Student"))
                         {
-                            <li>@Html.ActionLink("My Statistics", "Statistics", "Posts")</li>
+                            <li>@Html.ActionLink("My Statistics", "Statistics", "Student")</li>
                         }
                         @if (this.User.IsInRole("Moderator"))
                         {
-                            <li>@Html.ActionLink("View Reports", "Reports", "Posts")</li>
+                            <li>@Html.ActionLink("View Reports", "Reports", "Moderator")</li>
                         }
                         <li>@Html.ActionLink("Manage Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                     </ul>

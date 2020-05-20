@@ -3,7 +3,7 @@
 
 <table style="width:100%">
     <tr>
-        <td><h2>Answers</h2></td>
+        <td><h2>Questions</h2></td>
         <td style="text-align:right;width:250px">
             <div id="vote">
                 Total Votes Gained: <b>@Model.Sum(i => i.VoteCount)</b><br />
@@ -11,8 +11,7 @@
         </td>
     </tr>
 </table>
-
-@using (Html.BeginForm("Statistics", "Posts", FormMethod.Get))
+@using (Html.BeginForm("Statistics", "Student", FormMethod.Post))
 {
     <b>View By:</b>
     @Html.RadioButton("viewBy", "Questions", true)<text>My Posted Questions</text>
@@ -25,26 +24,36 @@
 }
 
 <table style="width:100%">
-
     @foreach (var item in Model)
     {
         var voteString = "votes";
+        var answerString = "answers";
+        var answerCss = "answer";
         if (item.VoteCount == 1) { voteString = "vote"; }
+        if (item.AnswerCount == 1) { answerString = "answer"; }
+        if (item.AcceptedAnswerId != 0) { answerCss = "acceptedAnswer"; }
         <tr>
             <td style="width: 100px">
                 <div id="vote">
                     @Html.DisplayFor(modelItem => item.VoteCount)<br />
                     @voteString
                 </div>
+                <div id="@answerCss">
+                    @Html.DisplayFor(modelItem => item.AnswerCount)<br />
+                    @answerString
+                </div>
             </td>
             <td id="post" style="width: 850px">
                 <div id="questionDetail">
-                    @Html.ActionLink(item.BodyTrimmed, "Details", "Posts", new { id = item.ParentId }, new { style = "text-decoration:none;color:black;" })
+                    @if (!string.IsNullOrEmpty(item.Title))
+                    {
+                        @Html.ActionLink(item.Title, "Details", "Posts", new { id = item.PostId }, new { style = "text-decoration:none;color:black;" })
+                    }
                 </div>
             </td>
             <td>
                 <div id="askedBy">
-                    Answered By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
+                    Asked By @Html.ActionLink(item.OwnerUsername, "UserProfile", "Home", new { userId = item.OwnerId }, null) <br />
                     on @Html.DisplayFor(modelItem => item.CreationDate)
                 </div>
             </td>
@@ -52,4 +61,3 @@
     }
 
 </table>
-

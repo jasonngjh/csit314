@@ -5,188 +5,188 @@
     ViewBag.Title = Model.Question.Title;
 }
 @Styles.Render("~/Content/Style.css")
-<div class="container-fluid">
-    @{
-        if (Model.Question.ClosedDate != null)
-        {
-            <div class="well well-lg"><h4>This question is closed!</h4></div>
-        }
-    }
-    <div id="Question">
-        <h2>@Model.Question.Title</h2>
-        <div class="row">
-            <div class="col-md-3"><p>Asked on @Model.Question.CreationDate</p></div>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="col-md-1">
-                @{
-                    var voteString = "votes";
-                    if (@Model.Question.VoteCount == 1) { voteString = "vote"; }
-                }
-                @if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
-                {
-                    <div id="vote2">
-                        <button type="button" class="voteBtn" id="voteUpBtn" onclick="voteUpFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
-                        <button type="button" class="voteBtnClicked" id="voteDownBtn" onclick="voteDownFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
-                        <label id="voteCounter">@Model.Question.VoteCount</label> <br /> @voteString <br />
-                    </div>
-                }
-                else
-                {
-                    <div id="vote2">
-                        <label id="voteCounter">@Model.Question.VoteCount</label> <br /> @voteString <br />
-                    </div>
-                }
-            </div>
-            <div class="col-md-11">
-                @Html.Raw(@Model.Question.Body)
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
-            </div>
-            <div class="col-md-2">
-                <div class="well">
-                    Asked by @Html.ActionLink(Model.Question.OwnerUsername, "UserProfile", "Home", new { userId = Model.Question.OwnerId }, null)
-                </div>
-            </div>
-        </div>
+    <div class="container-fluid">
         @{
-            if (Model.Question.comments.Count != 0)
+            if (Model.Question.ClosedDate != null)
             {
-                <div class="row">
-                    <div class="col-md-11">
-                        <hr />
-                        @{
-                            foreach (var qcomment in Model.Question.comments)
-                            {
-                                <p class="col-md-offset-1" style="padding-left:3em;" id="@qcomment.CommentId">@Html.Raw(@qcomment.Text) - @Html.ActionLink(qcomment.OwnerUsername, "UserProfile", "Home", new { userId = qcomment.OwnerId }, null) @qcomment.CreationDate</p>
-                                <hr />
-                            }
-                        }
-                        <hr />
-                    </div>
-                </div>
+                <div class="well well-lg"><h4>This question is closed!</h4></div>
             }
         }
-        <div class="row">
-            <div class="PostComment">
-                @{
-                    if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
-                    {
-                        Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = Model.Question.PostId });
-                    }
-                }
+        <div id="Question">
+            <h2>@Model.Question.Title</h2>
+            <div class="row">
+                <div class="col-md-3"><p>Asked on @Model.Question.CreationDate</p></div>
             </div>
-        </div>
-        <hr />
-    </div>
-    @{
-        if (Model.Answer.Count != 0)
-        {
-            <div class="row"><h3>@Model.Answer.Count Answers</h3></div>
-            <div id="Answers">
-                @{
-                    foreach (var answer in Model.Answer)
+            <hr />
+            <div class="row">
+                <div class="col-md-1">
+                    @{
+                        var voteString = "votes";
+                        if (@Model.Question.VoteCount == 1) { voteString = "vote"; }
+                    }
+                    @if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
                     {
-                        <div class="row" id="@answer.PostId">
-                            <div class="col-md-1">
-                                <div class="row">
-                                    @{
-                                        var voteAnsString = "votes";
-                                        if (answer.VoteCount == 1) { voteAnsString = "vote"; }
-                                    }
-                                    @if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
-                                    {
-                                        <div id="vote2">
-                                            <button type="button" class="voteBtn" id="@("voteUpAnsBtn" + @answer.PostId)" onclick="voteUpAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
-                                            <button type="button" class="voteBtnClicked" id="@("voteDownAnsBtn" + @answer.PostId)" onclick="voteDownAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
-                                            <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br /> @voteAnsString <br />
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div id="vote2">
-                                            <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br /> @voteAnsString <br />
-                                        </div>
-                                    }
-                                </div>
-                                @{
-                                    if (Model.Question.AcceptedAnswerId != 0)
-                                    {
-                                        if (answer.PostId == Model.Question.AcceptedAnswerId)
-                                        {
-                                            <div class="row" style="text-align:center">
-                                                <span class="glyphicon glyphicon-ok" style="color:green; font-size:2em;" aria-hidden="true"></span>
-                                            </div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (User.Identity.GetUserId() == Model.Question.OwnerId)
-                                        {
-                                            <div class="row" style="text-align:center">
-                                                @using (Html.BeginForm("ChooseAnswer", "Posts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                                                {
-                                                    <input type="hidden" name="PostId" value="@answer.PostId" />
-                                                    <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-ok" style="color:grey;font-size:2em;" aria-hidden="true"></span></button>
-                                                }
-                                            </div>
-                                        }
-                                    }
-                                }
-                            </div>
-                            <div class="col-md-11">@Html.Raw(@answer.Body)</div>
+                        <div id="vote2">
+                            <button type="button" class="voteBtn" id="voteUpBtn" onclick="voteUpFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                            <button type="button" class="voteBtnClicked" id="voteDownBtn" onclick="voteDownFunc(@Model.Question.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
+                            <label id="voteCounter">@Model.Question.VoteCount</label> <br /> @voteString <br />
                         </div>
-                        <div class="row">
-                            <div class="col-md-10">
-                            </div>
-                            <div class="col-md-2">
-                                <div class="well well-answer">
-                                    Answered by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null) on @Html.DisplayFor(modelItem => answer.CreationDate)
-                                </div>
-                            </div>
+                    }
+                    else
+                    {
+                        <div id="vote2">
+                            <label id="voteCounter">@Model.Question.VoteCount</label> <br /> @voteString <br />
                         </div>
-                        if (answer.comments.Count != 0)
-                        {
-                            <div>
-                                <div class="col-md-11">
+                    }
+                </div>
+                <div class="col-md-11">
+                    @Html.Raw(@Model.Question.Body)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                </div>
+                <div class="col-md-2">
+                    <div class="well">
+                        Asked by @Html.ActionLink(Model.Question.OwnerUsername, "UserProfile", "Home", new { userId = Model.Question.OwnerId }, null)
+                    </div>
+                </div>
+            </div>
+            @{
+                if (Model.Question.comments.Count != 0)
+                {
+                    <div class="row">
+                        <div class="col-md-11">
+                            <hr />
+                            @{
+                                foreach (var qcomment in Model.Question.comments)
+                                {
+                                    <p class="col-md-offset-1" style="padding-left:3em;" id="@qcomment.CommentId">@Html.Raw(@qcomment.Text) - @Html.ActionLink(qcomment.OwnerUsername, "UserProfile", "Home", new { userId = qcomment.OwnerId }, null) @qcomment.CreationDate</p>
                                     <hr />
-                                    @{
-                                        foreach (var acomment in answer.comments)
+                                }
+                            }
+                            <hr />
+                        </div>
+                    </div>
+                }
+            }
+            <div class="row">
+                <div class="PostComment">
+                    @{
+                        if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
+                        {
+                            Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = Model.Question.PostId });
+                        }
+                    }
+                </div>
+            </div>
+            <hr />
+        </div>
+        @{
+            if (Model.Answer.Count != 0)
+            {
+                <div class="row"><h3>@Model.Answer.Count Answers</h3></div>
+                <div id="Answers">
+                    @{
+                        foreach (var answer in Model.Answer)
+                        {
+                            <div class="row" id="@answer.PostId">
+                                <div class="col-md-1">
+                                    <div class="row">
+                                        @{
+                                            var voteAnsString = "votes";
+                                            if (answer.VoteCount == 1) { voteAnsString = "vote"; }
+                                        }
+                                        @if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
                                         {
-                                            <p class="col-md-offset-1" style="padding-left:3em;" id="@acomment.CommentId">@Html.Raw(@acomment.Text) - @Html.ActionLink(acomment.OwnerUsername, "UserProfile", "Home", new { userId = acomment.OwnerId }, null) @acomment.CreationDate</p>
+                                            <div id="vote2">
+                                                <button type="button" class="voteBtn" id="@("voteUpAnsBtn" + @answer.PostId)" onclick="voteUpAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                                                <button type="button" class="voteBtnClicked" id="@("voteDownAnsBtn" + @answer.PostId)" onclick="voteDownAnswerFunc(@answer.PostId)"><span class="glyphicon glyphicon-chevron-up"></span></button><br />
+                                                <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br /> @voteAnsString <br />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="vote2">
+                                                <label id="@("voteAnsCounter" + @answer.PostId)">@answer.VoteCount</label> <br /> @voteAnsString <br />
+                                            </div>
+                                        }
+                                    </div>
+                                    @{
+                                        if (Model.Question.AcceptedAnswerId != 0)
+                                        {
+                                            if (answer.PostId == Model.Question.AcceptedAnswerId)
+                                            {
+                                                <div class="row" style="text-align:center">
+                                                    <span class="glyphicon glyphicon-ok" style="color:green; font-size:2em;" aria-hidden="true"></span>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (User.Identity.GetUserId() == Model.Question.OwnerId)
+                                            {
+                                                <div class="row" style="text-align:center">
+                                                    @using (Html.BeginForm("ChooseAnswer", "Posts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                                    {
+                                                        <input type="hidden" name="PostId" value="@answer.PostId" />
+                                                        <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-ok" style="color:grey;font-size:2em;" aria-hidden="true"></span></button>
+                                                    }
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="col-md-11">@Html.Raw(@answer.Body)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="well well-answer">
+                                        Answered by @Html.ActionLink(answer.OwnerUsername, "UserProfile", "Home", new { userId = answer.OwnerId }, null) on @Html.DisplayFor(modelItem => answer.CreationDate)
+                                    </div>
+                                </div>
+                            </div>
+                            if (answer.comments.Count != 0)
+                            {
+                                <div>
+                                    <div class="col-md-11">
+                                        <hr />
+                                        @{
+                                            foreach (var acomment in answer.comments)
+                                            {
+                                                <p class="col-md-offset-1" style="padding-left:3em;" id="@acomment.CommentId">@Html.Raw(@acomment.Text) - @Html.ActionLink(acomment.OwnerUsername, "UserProfile", "Home", new { userId = acomment.OwnerId }, null) @acomment.CreationDate</p>
+                                                <hr />
+                                            }
+                                        }
+                                        <hr />
+                                    </div>
+                                </div>
+                            }
+                            <div class="row">
+                                <div id="PostComment">
+                                    @{
+                                        if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
+                                        {
+                                            Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = answer.PostId });
                                             <hr />
                                         }
                                     }
-                                    <hr />
                                 </div>
                             </div>
                         }
-                        <div class="row">
-                            <div id="PostComment">
-                                @{
-                                    if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
-                                    {
-                                        Html.RenderPartial("../Comments/_PostComment", new CSIT314BCE.Models.PostCommentViewModel() { PostId = answer.PostId });
-                                        <hr />
-                                    }
-                                }
-                            </div>
-                        </div>
                     }
-                }
-            </div>
+                </div>
+            }
         }
-    }
-    @{
-        if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
-        {
-            Html.RenderPartial("_PostAnswer", new CSIT314BCE.Models.PostAnsViewModel() { ParentId = Model.Question.PostId });
+        @{
+            if (Model.Question.ClosedDate == null && this.User.IsInRole("Student"))
+            {
+                Html.RenderPartial("_PostAnswer", new CSIT314BCE.Models.PostAnsViewModel() { ParentId = Model.Question.PostId });
+            }
         }
-    }
-</div>
+    </div>
 @section Scripts{
     <script type="text/javascript">
 

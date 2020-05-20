@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,26 @@ namespace CSIT314BCE.Models
 
         [NotMapped]
         public List<Comment> comments { get; set; }
+
+        public List<Post> RetrievePosts(string search, string searchBy) 
+        {
+            if (search != null)
+            {
+                if (searchBy == "Questions")
+                {
+                    return context.Posts.Where(x => x.Title.Contains(search) || search == null).ToList();
+                    
+                }
+                else
+                {
+                    return context.Posts.Where(x => x.Body.Contains(search) || search == null).ToList();
+                }
+            }
+            else
+            {
+                return context.Posts.Where(p => p.Title != null).Include(p => p.Student).ToList();
+            }
+        }
 
         public int Create(AskViewModel model)
         {
@@ -167,6 +188,44 @@ namespace CSIT314BCE.Models
                 }
             }
             return 0;
+        }
+
+        public int VoteUp(int PostId,string UserId) 
+        {
+            //update votecount to increase by 1
+            Post post = context.Posts.Find(PostId);
+            post.VoteCount += 1;
+
+            //add into user who has voted
+            Vote voted = new Vote()
+            {
+                PostId = PostId,
+                UserId = UserId,
+            };
+            context.Votes.Add(voted);
+            context.SaveChanges();
+            context.Entry(post).GetDatabaseValues();
+
+            //returns new vote count
+            return post.VoteCount;
+        }
+
+        public int VoteDown(int PostId, string UserId)
+        {
+            //update votecount to increase by 1
+            Post post = context.Posts.Find(PostId);
+            post.VoteCount -= 1;
+
+            //search records and delete from Voted
+            var votedRecord = context.Votes.Where(x => x.PostId == PostId && x.UserId == UserId).Select(x => x.VoteId).FirstOrDefault();
+            Vote voted = context.Votes.Find(votedRecord);
+            context.Votes.Remove(voted);
+            context.SaveChanges();
+            context.SaveChanges();
+            context.Entry(post).GetDatabaseValues();
+
+            //returns new vote count
+            return post.VoteCount;
         }
     }
 }

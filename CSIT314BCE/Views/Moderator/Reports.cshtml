@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<CSIT314BCE.Models.Post>
+
+
 @Styles.Render("~/Content/Style.css")
 @{
     ViewBag.Title = "Reports";
@@ -9,7 +11,7 @@
         <td><h2>Reports</h2></td>
     </tr>
 </table>
-@using (Html.BeginForm("Reports", "Posts", FormMethod.Get))
+@using (Html.BeginForm("Reports", "Moderator", FormMethod.Post))
 {
     <b>Sort By:</b>
     @Html.RadioButton("viewBy", "MAnsweredQ", true)<text>Most Answered Questions</text>
@@ -38,9 +40,9 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
         </tr>
         <tr id="timeset">
             <td style="width: 130px"><label>Select time span: </label></td>
-            <td style="width: 110px">   @Html.TextBox("StartDate", null, new { @class = "form-control", style = "width:100px" }) </td>
+            <td style="width: 110px">   @Html.TextBox("StartDate", null, new { @class = "form-control", style = "width:100px;cursor:pointer;", @readonly = "readonly" }) </td>
             <td style="width: 20px">  to  </td>
-            <td>@Html.TextBox("EndDate", null, new { @class = "form-control", style = "width:100px" })</td>
+            <td>@Html.TextBox("EndDate", null, new { @class = "form-control", style = "width:100px;cursor:pointer;", @readonly = "readonly" })</td>
         </tr>
     </table>
 }
@@ -51,18 +53,20 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
     @foreach (var item in Model)
     {
         var voteString = "votes";
-        var commentString = "comments";
+        var answerString = "answers";
+        var answerCss = "answer";
         if (item.VoteCount == 1) { voteString = "vote"; }
-        if (item.CommentCount == 1) { commentString = "comment"; }
+        if (item.AnswerCount == 1) { answerString = "answer"; }
+        if (item.AcceptedAnswerId != 0) { answerCss = "acceptedAnswer"; }
         <tr>
             <td style="width: 100px">
                 <div id="vote">
                     @Html.DisplayFor(modelItem => item.VoteCount)<br />
                     @voteString
                 </div>
-                <div id="answer">
-                    @Html.DisplayFor(modelItem => item.CommentCount)<br />
-                    @commentString
+                <div id="@answerCss">
+                    @Html.DisplayFor(modelItem => item.AnswerCount)<br />
+                    @answerString
                 </div>
             </td>
             <td id="post" style="width: 850px">
@@ -91,11 +95,12 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
     }
 </table>
 @section Scripts{
-    <!-- Bootstrap -->
+    <script src="/Scripts/jquery-1.9.0.js" type="text/javascript"></script>
+    <script src="/Scripts/bootstrap.js" type="text/javascript"></script>
+    <!-- Bootstrap-->
     <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js'></script>
-    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css'
-          media="screen" />
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css'media="screen" />
     <!-- Bootstrap -->
     <!-- Bootstrap DatePicker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
@@ -104,87 +109,88 @@ new SelectListItem {Text = "Set Time Span", Value="choosetime"  }
 
     <script type="text/javascript">
 
-    var d = new Date();
+        var d = new Date();
 
-    var month = d.getMonth() + 1;
-    var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
 
-    var currentDay = (('' + day).length < 2 ? '0' : '') + day + '/' +
-        (('' + month).length < 2 ? '0' : '') + month + '/' +
-        d.getFullYear();
+        var currentDay = (('' + day).length < 2 ? '0' : '') + day + '/' +
+            (('' + month).length < 2 ? '0' : '') + month + '/' +
+            d.getFullYear();
 
-    var startDate;
-    var endDate;
+        var startDate;
+        var endDate;
 
-    $(document).ready(function () {
-        $("#timeset").hide();
+        $(document).ready(function () {
+            $("#timeset").hide();
 
-        $('#timespan').on('change', function () {
-            if (this.value == 'choosetime') {
-                $("#timeset").show();
-            }
-            else {
-                $("#timeset").hide();
-            }
-        });
-
-        $('input:radio[name="viewBy"]').change(function () {
-            if ($(this).val() == 'TopStudent') {
-                //alert("test");
-                $('#timespan').val("alltime");
-                $('#timespanRow').hide();
-                $("#timeset").hide();
-            } else {
-                $('#timespanRow').show();
-            }
-        });
-
-    });
-
-    $(function () {
-        $('#StartDate').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            format: "dd/mm/yyyy",
-            language: "tr",
-            todayBtn: 'linked',
-            orientation: "bottom",
-            autoclose: true
-
-        });
-        $('#EndDate').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            format: "dd/mm/yyyy",
-            language: "tr",
-            todayBtn: 'linked',
-            orientation: "bottom",
-            autoclose: true
-        });
-
-        startDate = new Date(currentDay);
-        endDate = new Date(currentDay);
-
-        $('#StartDate').datepicker()
-            .on('changeDate', function (ev) {
-                startDate = new Date(ev.date);
-                if (ev.date.valueOf() > endDate.valueOf()) {
-                    alert("Starting date cannot be earlier than ending date!");
-                    $("#StartDate").datepicker("setDate", endDate);
+            $('#timespan').on('change', function () {
+                if (this.value == 'choosetime') {
+                    $("#timeset").show();
+                }
+                else {
+                    $("#timeset").hide();
                 }
             });
 
-        $('#EndDate').datepicker()
-            .on('changeDate', function (ev) {
-                endDate = new Date(ev.date);
-                if (ev.date.valueOf() < startDate.valueOf()) {
-                    alert("Ending date cannot be earlier than starting date!");
-                    $("#EndDate").datepicker("setDate", startDate);
+            $('input:radio[name="viewBy"]').change(function () {
+                if ($(this).val() == 'TopStudent') {
+                    //alert("test");
+                    $('#timespan').val("alltime");
+                    $('#timespanRow').hide();
+                    $("#timeset").hide();
+                } else {
+                    $('#timespanRow').show();
                 }
             });
 
-        $("#StartDate").datepicker("setDate", currentDay);
-        $("#EndDate").datepicker("setDate", currentDay);
-    });
+        });
+
+        $(function () {
+            $('#StartDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd/mm/yyyy",
+                language: "tr",
+                todayBtn: 'linked',
+                orientation: "bottom",
+                autoclose: true
+
+            });
+            $('#EndDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd/mm/yyyy",
+                language: "tr",
+                todayBtn: 'linked',
+                orientation: "bottom",
+                autoclose: true
+            });
+
+            startDate = new Date(currentDay);
+            endDate = new Date(currentDay);
+
+            $('#StartDate').datepicker()
+                .on('changeDate', function (ev) {
+                    startDate = new Date(ev.date);
+                    if (ev.date.valueOf() > endDate.valueOf()) {
+                        alert("Starting date cannot be earlier than ending date!");
+                        $("#StartDate").datepicker("setDate", endDate);
+                    }
+                });
+
+            $('#EndDate').datepicker()
+                .on('changeDate', function (ev) {
+                    endDate = new Date(ev.date);
+                    if (ev.date.valueOf() < startDate.valueOf()) {
+                        alert("Ending date cannot be earlier than starting date!");
+                        $("#EndDate").datepicker("setDate", startDate);
+                    }
+                });
+
+            $("#StartDate").datepicker("setDate", currentDay);
+            $("#EndDate").datepicker("setDate", currentDay);
+        });
     </script>
 }
+
