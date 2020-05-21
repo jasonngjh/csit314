@@ -16,7 +16,14 @@
             students can ask and answer questions, vote questions and answers, accept an answer, provide comments and
             gain participation ratings.
         </p>
-        <p><a class="btn btn-default" href="@Url.Action("Register", "Account")">Register Now &raquo;</a></p>
+        @if (Request.IsAuthenticated)
+        {
+
+        }
+        else
+        {
+            <p><a class="btn btn-default" href="@Url.Action("Register", "Account")">Register Now &raquo;</a></p>
+        }
     </div>
     <div class="col-md-4">
         <br />
